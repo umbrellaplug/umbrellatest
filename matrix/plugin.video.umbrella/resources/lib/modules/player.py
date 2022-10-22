@@ -100,6 +100,7 @@ class Player(xbmc.Player):
 			if int(control.playlist.size()) < 1 and self.media_type == 'episode': #this is the change made for play next from widget.
 				episodelabel = '%sx%02d %s' % (int(season), int(episode), self.meta.get('title'))
 				item.setLabel(episodelabel) #set the episode name here.
+				control.playlist.clear()
 				control.playlist.add(url, item)
 				playerWindow.setProperty('umbrella.playlistStart_position', str(0))
 				control.player.play(control.playlist)
