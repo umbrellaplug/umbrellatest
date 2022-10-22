@@ -58,24 +58,24 @@
 							<param name="widget_target" value="videos" />
 							<param name="list_id" value="5900" />
 						</include>
-						<include content="WidgetListPoster">
-							<param name="content_path" value="plugin://plugin.video.umbrella/?action=moviesUnfinished&amp;url=traktunfinished&amp;iconImage=player&amp;name=Finish+watching" />
+						<!-- <include content="WidgetListPoster">
+							<param name="content_path" value="plugin://plugin.video.umbrella/?action=moviesUnfinished&amp;url=traktunfinished&amp;iconImage=player&amp;name=Finish+watching&quot;,return" />
 							<param name="widget_header" value="Finish watching" />
 							<param name="widget_target" value="videos" />
 							<param name="list_id" value="5100" />
-						</include>
+						</include> -->
 						<include content="WidgetListPoster">
 							<param name="content_path" value="plugin://plugin.video.umbrella/?action=movies&amp;url=trakttrending&amp;iconImage=trakt" />
 							<param name="widget_header" value="Trending movies" />
 							<param name="widget_target" value="videos" />
 							<param name="list_id" value="5200" />
 						</include>
-						<include content="WidgetListPoster">
+						<!-- <include content="WidgetListPoster">
 							<param name="content_path" value="plugin://plugin.video.umbrella/?action=movies&amp;url=traktwatchlist&amp;iconImage=trakt" />
 							<param name="widget_header" value="Movie Watchlist" />
 							<param name="widget_target" value="videos" />
 							<param name="list_id" value="5300" />
-						</include>
+						</include> -->
 						<include content="WidgetListPoster">
 							<param name="content_path" value="plugin://plugin.video.umbrella/?action=movies&amp;url=trakthistorys&amp;iconImage=watched_recent" />
 							<param name="widget_header" value="Recently watched" />
