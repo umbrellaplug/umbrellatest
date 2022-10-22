@@ -3884,7 +3884,7 @@ msgid "Service interval (hours)"
 msgstr ""
 
 msgctxt "#40252"
-msgid "Unairied movies may not appear with chosen colors in some views if using skins due to inconsistent use of item properties throughout views."
+msgid "Unreleased movies may not appear with chosen colors in some views if using skins due to inconsistent use of item properties throughout views."
 msgstr ""
 
 msgctxt "#40253"
