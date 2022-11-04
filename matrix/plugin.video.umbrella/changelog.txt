@@ -1,4 +1,8 @@
 
+[B][COLOR black]Update - v6.5.79 - Nov 3rd, 2022[/COLOR][/B]
+--[ENHANCEMENT][I] Playnext seasons added.[I]
+--[ENHANCEMENT][I] New "Based on watched" list added.[I]
+
 [B][COLOR black]Update - v6.5.78 - Oct 21th, 2022[/COLOR][/B]
 --[BUG FIX][I] Reverted slider for 24 hour import delay back to 24 hour toggle.[I]
 --[BUG FIX][I] Seasons "title" missing in some views.[I]

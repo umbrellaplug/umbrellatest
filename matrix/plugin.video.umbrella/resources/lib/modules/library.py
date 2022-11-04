@@ -794,7 +794,6 @@ class libtvshows:
 			if service_notification and not control.condVisibility('Window.IsVisible(infodialog)') and not control.condVisibility('Player.HasVideo'):
 				control.notification(title='Updating from list: ' + list_name + ' - ' + type, message=32552)
 			for i in items:
-				#import web_pdb; web_pdb.set_trace()
 				if control.monitor.abortRequested(): return sysexit()
 				try:
 					files_added = self.add(i['title'], i['year'], i['imdb'], i['tmdb'], i['tvdb'], range=True)
