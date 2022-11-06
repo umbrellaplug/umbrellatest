@@ -45,8 +45,6 @@ class Player(xbmc.Player):
 		self.traktCredentials = trakt.getTraktCredentialsInfo()
 		self.onPlayBackEnded_ran = False
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
-		self.seasons_enabled = getSetting('enable.playnext.seasons') == 'true'
-		self.seasons_built = False
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
 		try:
@@ -99,7 +97,7 @@ class Player(xbmc.Player):
 			if 'castandart' in meta: item.setCast(meta.get('castandart', ''))
 			item.setInfo(type='video', infoLabels=control.metadataClean(meta))
 			item.setProperty('IsPlayable', 'true')
-			if int(control.playlist.size()) < 1 and self.media_type == 'episode': #this is the change made for play next from widget.
+			if int(control.playlist.size()) < 1 and self.media_type == 'episode' and self.enable_playnext: #this is the change made for play next from widget.
 				episodelabel = '%sx%02d %s' % (int(season), int(episode), self.meta.get('title'))
 				item.setLabel(episodelabel) #set the episode name here.
 				control.playlist.clear()
@@ -276,9 +274,6 @@ class Player(xbmc.Player):
 							playcount.markEpisodeDuringPlayback(self.imdb, self.tvdb, self.season, self.episode, '5')
 						if self.enable_playnext and not self.play_next_triggered:
 							if int(control.playlist.size()) > 1:
-								if self.seasons_enabled and self.seasons_built == False:
-									self.buildPlaylistSeasons()
-									self.seasons_built == True
 								if self.preScrape_triggered == False:
 									xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_preScrapeNext)')
 									self.preScrape_triggered = True
@@ -303,14 +298,11 @@ class Player(xbmc.Player):
 			elif self.getWatchedPercent() >= 85: self._end_playback()
 
 	def buildPlaylist(self):
+		seasonPlaynext = False
 		currentEpisode = self.episode
 		currentSeason = self.season
-		items = []
-		from resources.lib.menus import seasons, episodes
-		seasons = seasons.Seasons().tmdb_list(tvshowtitle='', imdb='', tmdb=self.tmdb, tvdb='', art=None)
-		for season in seasons:
-				shows = episodes.Episodes().get(self.meta.get('tvshowtitle'), self.meta.get('year'), self.imdb, self.tmdb, self.tvdb, self.meta, season.get('season'), create_directory=True)
-				items.extend(shows)
+		from resources.lib.menus import episodes
+		items = episodes.Episodes().get(self.meta.get('tvshowtitle'), self.meta.get('year'), self.imdb, self.tmdb, self.tvdb, self.meta, self.season, create_directory=True)
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		try:
 			for count, i in enumerate(items):
@@ -347,93 +339,7 @@ class Player(xbmc.Player):
 					if 'castandart' in i: item.setCast(i['castandart'])
 					item.setUniqueIDs({'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb})
 					info = {'episode': int(episode), 'sortepisode': int(episode), 'season': int(season), 'sortseason': int(season), 'year': str(year), 'premiered': i.get('premiered', ''), 'aired': meta.get('airtime', ''), 'imdbnumber': imdb, 'duration': runtime, 'dateadded': '', 'rating': i.get('rating'), 'votes': i.get('votes'), 'mediatype': self.media_type, 'title': i.get('title'), 'originaltitle': i.get('title'), 'sorttitle': i.get('title'), 'plot': i.get('plot'), 'plotoutline': i.get('plot'), 'tvshowtitle': tvshowtitle, 'director': [i.get('director')], 'writer': [i.get('writer')], 'genre': [i.get('genre')], 'studio': [i.get('studio')], 'playcount': 0}
-					if self.seasons_enabled:
-						if int(i.get('season')) == int(currentSeason) and int(episode) > int(currentEpisode):
-							if not i.get('unaired')== 'true':
-								item.setContentLookup(False)
-								item.addStreamInfo("video", {})
-								cm = []
-								item.addContextMenuItems(cm)
-								item.setInfo("video", info)
-								item.setArt(art)
-								item.setProperty('IsPlayable', 'true')
-								item.setProperty('tvshow.tmdb_id', tmdb)
-								control.playlist.add(url=url, listitem=item)
-						if int(i.get('season')) > int(currentSeason):
-							if not i.get('unaired')== 'true':
-								item.setContentLookup(False)
-								item.addStreamInfo("video", {})
-								cm = []
-								item.addContextMenuItems(cm)
-								item.setInfo("video", info)
-								item.setArt(art)
-								item.setProperty('IsPlayable', 'true')
-								item.setProperty('tvshow.tmdb_id', tmdb)
-								control.playlist.add(url=url, listitem=item)
-					else:
-						if int(currentSeason) == int(i.get('season')) and int(episode) > int(currentEpisode):
-							if not i.get('unaired')== 'true':
-								item.setContentLookup(False)
-								item.addStreamInfo("video", {})
-								cm = []
-								item.addContextMenuItems(cm)
-								item.setInfo("video", info)
-								item.setArt(art)
-								item.setProperty('IsPlayable', 'true')
-								item.setProperty('tvshow.tmdb_id', tmdb)
-								control.playlist.add(url=url, listitem=item)
-				except:
-					log_utils.error()
-		except:
-			log_utils.error()
-
-	def buildPlaylistSeasons(self):
-		currentSeason = self.season
-		currentEpisode = self.episode
-		items = []
-		from resources.lib.menus import seasons, episodes
-		seasons = seasons.Seasons().tmdb_list(tvshowtitle='', imdb='', tmdb=self.tmdb, tvdb='', art=None)
-		for season in seasons:
-			if int(season.get('season')) > int(currentSeason):
-				shows = episodes.Episodes().get(self.meta.get('tvshowtitle'), self.meta.get('year'), self.imdb, self.tmdb, self.tvdb, self.meta, season.get('season'), create_directory=True)
-				items.extend(shows)
-		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
-		try:
-			for count, i in enumerate(items):
-				try:
-					tvshowtitle, title, imdb, tmdb, tvdb = i.get('tvshowtitle'), i.get('title'), i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', '')
-					year, season, episode, premiered = i.get('year', ''), i.get('season'), i.get('episode'), i.get('premiered', '')
-					runtime = i.get('duration')
-					if 'label' not in i: i['label'] = title
-					if (not i['label'] or i['label'] == '0'): label = '%sx%02d  %s %s' % (season, int(episode), 'Episode', episode)
-					else: label = '%sx%02d  %s' % (season, int(episode), i['label'])
-					systitle, systvshowtitle, syspremiered = quote_plus(title), quote_plus(tvshowtitle), quote_plus(premiered)
-					meta = dict((k, v) for k, v in iter(i.items()) if v is not None and v != '')
-					mediatype = 'episode'
-					meta.update({'code': imdb, 'imdbnumber': imdb, 'mediatype': mediatype, 'tag': [imdb, tmdb]}) # "tag" and "tagline" for movies only, but works in my skin mod so leave
-					try: meta.update({'title': i['label']})
-					except: pass
-					if self.prefer_tmdbArt: poster = meta.get('poster3') or meta.get('poster') or meta.get('poster2')
-					else: poster = meta.get('poster2') or meta.get('poster3') or meta.get('poster')
-					season_poster = meta.get('season_poster') or poster
-					landscape = meta.get('landscape')
-					fanart = ''
-					thumb = meta.get('thumb') or landscape or fanart or season_poster
-					icon = meta.get('icon') or season_poster or poster
-					banner = meta.get('banner')
-					art = {}
-					art.update({'poster': season_poster, 'tvshow.poster': poster, 'season.poster': season_poster, 'fanart': fanart, 'icon': icon, 'thumb': thumb, 'banner': banner,
-							'clearlogo': meta.get('clearlogo', ''), 'tvshow.clearlogo': meta.get('clearlogo', ''), 'clearart': meta.get('clearart', ''), 'tvshow.clearart': meta.get('clearart', ''), 'landscape': thumb})
-					for k in ('metacache', 'poster2', 'poster3', 'fanart2', 'fanart3', 'banner2', 'banner3', 'trailer'): meta.pop(k, None)
-					meta.update({'poster': poster, 'fanart': fanart, 'banner': banner, 'thumb': thumb, 'icon': icon})
-					sysmeta = quote_plus(jsdumps(meta))
-					url = '%s?action=play_Item&title=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&season=%s&episode=%s&tvshowtitle=%s&premiered=%s&meta=%s' % (
-											sysaddon, systitle, year, imdb, tmdb, tvdb, season, episode, systvshowtitle, syspremiered, sysmeta)
-					item = control.item(label=label, offscreen=True)
-					if 'castandart' in i: item.setCast(i['castandart'])
-					item.setUniqueIDs({'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb})
-					info = {'episode': int(episode), 'sortepisode': int(episode), 'season': int(season), 'sortseason': int(season), 'year': str(year), 'premiered': i.get('premiered', ''), 'aired': meta.get('airtime', ''), 'imdbnumber': imdb, 'duration': runtime, 'dateadded': '', 'rating': i.get('rating'), 'votes': i.get('votes'), 'mediatype': self.media_type, 'title': i.get('title'), 'originaltitle': i.get('title'), 'sorttitle': i.get('title'), 'plot': i.get('plot'), 'plotoutline': i.get('plot'), 'tvshowtitle': tvshowtitle, 'director': [i.get('director')], 'writer': [i.get('writer')], 'genre': [i.get('genre')], 'studio': [i.get('studio')], 'playcount': 0}
-					if int(currentSeason) < int(i.get('season')):
+					if int(episode) > int(currentEpisode):
 						if not i.get('unaired')== 'true':
 							item.setContentLookup(False)
 							item.addStreamInfo("video", {})

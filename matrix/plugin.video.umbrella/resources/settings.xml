@@ -1020,16 +1020,6 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable.playnext.seasons" type="boolean" label="40254" help="40255">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="enable.playnext">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
 				<setting id="enable.playnext.theme" type="boolean" label="40102" help="">
 					<level>0</level>
 					<default>true</default>
