@@ -691,6 +691,11 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="navi.movie.trakt.recentlywatched" type="boolean" label="40255" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="navi.movie.imdb.featured" type="boolean" label="32447" help="">
 					<level>0</level>
 					<default>true</default>
@@ -1644,6 +1649,11 @@
 				<setting id="torrent.remove.uncached" type="boolean" label="32162" help="">
 					<level>0</level>
 					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="sources.nocachepopup" type="boolean" label="40254" help="" parent="torrent.remove.uncached">
+					<level>0</level>
+					<default>false</default>
 					<control type="toggle"/>
 				</setting>
 				<setting id="showHelpremoveUncached" type="action" label="32137" help="">

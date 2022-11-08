@@ -58,6 +58,7 @@ class Movies:
 		self.tmdb_genre_link = 'https://api.themoviedb.org/3/discover/movie?api_key=%s&language=en-US&region=US&primary_release_date.lte=%s&with_genres=%s&sort_by=%s&page=1' % ('%s', self.today_date, '%s', self.tmdb_DiscoverSort())
 		self.tmdb_year_link = 'https://api.themoviedb.org/3/discover/movie?api_key=%s&language=en-US&region=US&primary_release_date.lte=%s&certification_country=US&primary_release_year=%s&sort_by=%s&page=1' % ('%s', self.today_date, '%s', self.tmdb_DiscoverSort())
 		self.tmdb_certification_link = 'https://api.themoviedb.org/3/discover/movie?api_key=%s&language=en-US&region=US&primary_release_date.lte=%s&certification_country=US&certification=%s&sort_by=%s&page=1' % ('%s', self.today_date, '%s', self.tmdb_DiscoverSort())
+		self.tmdb_recommendations = 'https://api.themoviedb.org/3/movie/%s/recommendations?api_key=%s&language=en-US&region=US&page=1'
 
 		self.imdb_link = 'https://www.imdb.com'
 		self.persons_link = 'https://www.imdb.com/search/name/?count=100&name='
@@ -107,7 +108,6 @@ class Movies:
 		self.trakttrending_link = 'https://api.trakt.tv/movies/trending?limit=%s&page=1' % self.page_limit
 		self.traktboxoffice_link = 'https://api.trakt.tv/movies/boxoffice' # Returns the top 10 grossing movies in the U.S. box office last weekend
 		self.traktpopular_link = 'https://api.trakt.tv/movies/popular?limit=%s&page=1' % self.page_limit
-		self.traktrecommendations_link = 'https://api.trakt.tv/recommendations/movies?limit=40'
 		self.trakt_popularLists_link = 'https://api.trakt.tv/lists/popular?limit=%s&page=1' % self.page_limit
 		self.trakt_trendingLists_link = 'https://api.trakt.tv/lists/trending?limit=%s&page=1' % self.page_limit
 		self.mbdlist_list_items = 'https://mdblist.com/api/lists/%s/items?apikey=%s&limit=%s&page=1' % ('%s', mdblist.mdblist_api, self.page_limit)
@@ -120,7 +120,9 @@ class Movies:
 			except: pass
 			try: u = urlparse(url).netloc.lower()
 			except: pass
-			if u in self.trakt_link and '/users/' in url:
+			if url == 'traktbasedonrecent':
+				self.list = self.trakt_based_on_recent()
+			elif u in self.trakt_link and '/users/' in url:
 				try:
 					isTraktHistory = (url.split('&page=')[0] in self.trakthistory_link)
 					if '/users/me/' not in url: raise Exception()
@@ -357,6 +359,22 @@ class Movies:
 		if self.list is None: self.list = []
 		if create_directory: self.movieDirectory(self.list)
 		return self.list
+
+	def trakt_based_on_recent(self):
+		self.list = []
+		try:
+			historyurl = 'https://api.trakt.tv/users/me/history/movies?limit=5&page=1'
+			randomItems = self.trakt_list(historyurl, self.trakt_user)
+			if not randomItems: return
+			import random
+			item = randomItems[random.randint(0, len(randomItems) - 1)]
+			url = self.tmdb_recommendations % (item.get('tmdb'), '%s')
+			self.list = tmdb_indexer().tmdb_list(url)
+			return self.list
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+			return
 
 	def unfinished(self, url, idx=True, create_directory=True):
 		self.list = []

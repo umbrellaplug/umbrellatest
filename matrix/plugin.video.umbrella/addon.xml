@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.80">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.81">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -31,8 +31,10 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.80 - Nov 6th, 2022[/COLOR][/B]
---[BUG FIX][I] Fix for popup after video ends.[I]
+[B][COLOR black]Update - v6.5.81 - Nov 8th, 2022[/COLOR][/B]
+--[BUG FIX][I] Added option to hide "show uncached results" popup[I]
+--[ENHANCEMENT][I] Add a "Based on Recently Watched" list to Movies.[I]
+--[INFORMATION][I] This is just a test version more lists will be added before push to official repo.[I]
 		</news>
 	</extension>
 </addon>
