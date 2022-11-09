@@ -47,6 +47,7 @@ class Movies:
 		self.enable_fanarttv = getSetting('enable.fanarttv') == 'true'
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
 		self.unairedcolor = control.getColor(getSetting('movie.unaired.identify'))
+		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 		self.highlight_color = control.getHighlightColor()
 		self.tmdb_link = 'https://api.themoviedb.org'
 		self.tmdb_popular_link = 'https://api.themoviedb.org/3/movie/popular?api_key=%s&language=en-US&region=US&page=1'
@@ -108,9 +109,9 @@ class Movies:
 		self.trakttrending_link = 'https://api.trakt.tv/movies/trending?limit=%s&page=1' % self.page_limit
 		self.traktboxoffice_link = 'https://api.trakt.tv/movies/boxoffice' # Returns the top 10 grossing movies in the U.S. box office last weekend
 		self.traktpopular_link = 'https://api.trakt.tv/movies/popular?limit=%s&page=1' % self.page_limit
+		self.traktrecommendations_link = 'https://api.trakt.tv/recommendations/movies?limit=40'
 		self.trakt_popularLists_link = 'https://api.trakt.tv/lists/popular?limit=%s&page=1' % self.page_limit
 		self.trakt_trendingLists_link = 'https://api.trakt.tv/lists/trending?limit=%s&page=1' % self.page_limit
-		self.mbdlist_list_items = 'https://mdblist.com/api/lists/%s/items?apikey=%s&limit=%s&page=1' % ('%s', mdblist.mdblist_api, self.page_limit)
 		self.mbdlist_list_items = 'https://mdblist.com/api/lists/%s/items?apikey=%s&limit=%s&page=1' % ('%s', mdblist.mdblist_api, self.page_limit)
 
 	def get(self, url, idx=True, create_directory=True):
@@ -121,7 +122,7 @@ class Movies:
 			try: u = urlparse(url).netloc.lower()
 			except: pass
 			if url == 'traktbasedonrecent':
-				self.list = self.trakt_based_on_recent()
+				return self.trakt_based_on_recent()
 			elif u in self.trakt_link and '/users/' in url:
 				try:
 					isTraktHistory = (url.split('&page=')[0] in self.trakthistory_link)
@@ -360,7 +361,7 @@ class Movies:
 		if create_directory: self.movieDirectory(self.list)
 		return self.list
 
-	def trakt_based_on_recent(self):
+	def trakt_based_on_recent(self, create_directory=True):
 		self.list = []
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/history/movies?limit=5&page=1'
@@ -370,6 +371,14 @@ class Movies:
 			item = randomItems[random.randint(0, len(randomItems) - 1)]
 			url = self.tmdb_recommendations % (item.get('tmdb'), '%s')
 			self.list = tmdb_indexer().tmdb_list(url)
+			if self.useContainerTitles:
+				try: control.setContainerName(getLS(40257)+' '+item.get('title'))
+				except: pass
+			next = ''
+			for i in range(len(self.list)): self.list[i]['next'] = next
+			self.worker()
+			if self.list is None: self.list = []
+			if create_directory: self.movieDirectory(self.list)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils

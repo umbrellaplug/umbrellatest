@@ -377,6 +377,17 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="enable.containerTitles" type="boolean" label="40258" help="">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				
 			</group>
 			<group id="2" label="35055">
 				<setting id="sort.imdbmovies.type" type="integer" label="35054" help="">
@@ -824,6 +835,11 @@
 					<control type="toggle"/>
 				</setting>
 				<setting id="navi.tv.trakt.trending" type="boolean" label="32443" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="navi.tv.trakt.recentlywatched" type="boolean" label="40255" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>

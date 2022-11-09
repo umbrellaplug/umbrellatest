@@ -3903,3 +3903,12 @@ msgctxt "#40256"
 msgid "Based on Recently Watched"
 msgstr ""
 
+msgctxt "#40257"
+msgid "Because you watched"
+msgstr ""
+
+msgctxt "#40258"
+msgid "Show list titles if available"
+msgstr ""
+
+

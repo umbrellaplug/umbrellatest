@@ -181,10 +181,10 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.81 - Nov 8th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.81 - Nov 9th, 2022[/COLOR][/B]
 --[BUG FIX][I] Added option to hide "show uncached results" popup[I]
 --[ENHANCEMENT][I] Add a "Based on Recently Watched" list to Movies.[I]
---[INFORMATION][I] This is just a test version more lists will be added before push to official repo.[I]
+--[INFORMATION][I] Add a "Based on Recently Watched" list to TV Shows.[I]
 		</news>
 	</extension>
 </addon><addon id="repository.umbrellatest" name="Umbrella Test Repository" version="1.0.0" provider-name="Umbrella">
