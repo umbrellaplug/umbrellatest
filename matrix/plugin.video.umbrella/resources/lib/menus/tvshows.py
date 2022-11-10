@@ -217,7 +217,7 @@ class TVshows:
 	def trakt_based_on_recent(self, create_directory=True):
 		self.list = []
 		try:
-			historyurl = 'https://api.trakt.tv/users/me/history/shows?limit=10&page=1'
+			historyurl = 'https://api.trakt.tv/users/me/history/shows?limit=20&page=1'
 			randomItems = self.trakt_list(historyurl, self.trakt_user)
 			if not randomItems: return
 			import random
