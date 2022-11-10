@@ -148,7 +148,7 @@
 [COLOR yellow]--[/COLOR][I] Changed to new settings format.[/I]
 		</news>
 	</extension>
-</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.81">
+</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.82">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -181,7 +181,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.81 - Nov 9th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.82 - Nov 9th, 2022[/COLOR][/B]
 --[BUG FIX][I] Added option to hide "show uncached results" popup[I]
 --[ENHANCEMENT][I] Add a "Based on Recently Watched" list to Movies.[I]
 --[INFORMATION][I] Add a "Based on Recently Watched" list to TV Shows.[I]
