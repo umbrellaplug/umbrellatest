@@ -79,6 +79,7 @@ class TVshows:
 		self.traktrecommendations_link = 'https://api.trakt.tv/recommendations/shows?limit=40'
 		self.trakt_popularLists_link = 'https://api.trakt.tv/lists/popular?limit=40&page=1' # use limit=40 due to filtering out Movie only lists
 		self.trakt_trendingLists_link = 'https://api.trakt.tv/lists/trending?limit=40&page=1'
+		self.tmdb_similar = 'https://api.themoviedb.org/3/movie/%s/similar?api_key=%s&language=en-US&region=US&page=1'
 
 		self.tvmaze_link = 'https://www.tvmaze.com'
 		self.tmdb_key = getSetting('tmdb.apikey')
@@ -109,6 +110,8 @@ class TVshows:
 			except: pass
 			if url == 'traktbasedonrecent':
 				return self.trakt_based_on_recent()
+			if url == 'traktbasedonsimilar':
+				return self.trakt_based_on_similar()
 			if u in self.trakt_link and '/users/' in url:
 				try:
 					if '/users/me/' not in url: raise Exception()
@@ -226,6 +229,30 @@ class TVshows:
 			self.list = tmdb_indexer().tmdb_list(url)
 			if self.useContainerTitles:
 				try: control.setContainerName(getLS(40257)+' '+item.get('title'))
+				except: pass
+			next = ''
+			for i in range(len(self.list)): self.list[i]['next'] = next
+			self.worker()
+			if self.list is None: self.list = []
+			if create_directory: self.tvshowDirectory(self.list)
+			return self.list
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+			return
+
+	def trakt_based_on_similar(self, create_directory=True):
+		self.list = []
+		try:
+			historyurl = 'https://api.trakt.tv/users/me/history/shows?limit=20&page=1'
+			randomItems = self.trakt_list(historyurl, self.trakt_user)
+			if not randomItems: return
+			import random
+			item = randomItems[random.randint(0, len(randomItems) - 1)]
+			url = self.tmdb_similar % (item.get('tmdb'), '%s')
+			self.list = tmdb_indexer().tmdb_list(url)
+			if self.useContainerTitles:
+				try: control.setContainerName(getLS(40259)+' '+item.get('title'))
 				except: pass
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next

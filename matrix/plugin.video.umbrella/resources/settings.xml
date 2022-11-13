@@ -707,6 +707,11 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="navi.movie.trakt.traktsimilar" type="boolean" label="40260" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="navi.movie.imdb.featured" type="boolean" label="32447" help="">
 					<level>0</level>
 					<default>true</default>
@@ -840,6 +845,11 @@
 					<control type="toggle"/>
 				</setting>
 				<setting id="navi.tv.trakt.recentlywatched" type="boolean" label="40255" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="navi.tv.trakt.traktsimilar" type="boolean" label="40260" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>

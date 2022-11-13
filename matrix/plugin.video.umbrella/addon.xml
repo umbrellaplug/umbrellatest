@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.83">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.84">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -31,8 +31,10 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.83 - Nov 10th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.84 - Nov 12th, 2022[/COLOR][/B]
 --[ENHANCEMENT][I] Changed amount of results pulled to generate based on list to 20 for tv and movies.[I]
+--[ENHANCEMENT][I] Added similar to lists for tv and movies.[I]
+--[FIX][I] Added some checks for real-debrid cloud files.[I]
 		</news>
 	</extension>
 </addon>

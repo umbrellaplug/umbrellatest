@@ -60,6 +60,7 @@ class Movies:
 		self.tmdb_year_link = 'https://api.themoviedb.org/3/discover/movie?api_key=%s&language=en-US&region=US&primary_release_date.lte=%s&certification_country=US&primary_release_year=%s&sort_by=%s&page=1' % ('%s', self.today_date, '%s', self.tmdb_DiscoverSort())
 		self.tmdb_certification_link = 'https://api.themoviedb.org/3/discover/movie?api_key=%s&language=en-US&region=US&primary_release_date.lte=%s&certification_country=US&certification=%s&sort_by=%s&page=1' % ('%s', self.today_date, '%s', self.tmdb_DiscoverSort())
 		self.tmdb_recommendations = 'https://api.themoviedb.org/3/movie/%s/recommendations?api_key=%s&language=en-US&region=US&page=1'
+		self.tmdb_similar = 'https://api.themoviedb.org/3/movie/%s/similar?api_key=%s&language=en-US&region=US&page=1'
 
 		self.imdb_link = 'https://www.imdb.com'
 		self.persons_link = 'https://www.imdb.com/search/name/?count=100&name='
@@ -112,6 +113,7 @@ class Movies:
 		self.traktrecommendations_link = 'https://api.trakt.tv/recommendations/movies?limit=40'
 		self.trakt_popularLists_link = 'https://api.trakt.tv/lists/popular?limit=%s&page=1' % self.page_limit
 		self.trakt_trendingLists_link = 'https://api.trakt.tv/lists/trending?limit=%s&page=1' % self.page_limit
+		self.trakt_similiar = 'https://api.trakt.tv/movies/%s/related?limit=%s&page=1' % ('%s', self.page_limit)
 		self.mbdlist_list_items = 'https://mdblist.com/api/lists/%s/items?apikey=%s&limit=%s&page=1' % ('%s', mdblist.mdblist_api, self.page_limit)
 
 	def get(self, url, idx=True, create_directory=True):
@@ -123,6 +125,8 @@ class Movies:
 			except: pass
 			if url == 'traktbasedonrecent':
 				return self.trakt_based_on_recent()
+			elif url == 'traktbasedonsimilar':
+				return self.trakt_based_on_similar()
 			elif u in self.trakt_link and '/users/' in url:
 				try:
 					isTraktHistory = (url.split('&page=')[0] in self.trakthistory_link)
@@ -373,6 +377,30 @@ class Movies:
 			self.list = tmdb_indexer().tmdb_list(url)
 			if self.useContainerTitles:
 				try: control.setContainerName(getLS(40257)+' '+item.get('title'))
+				except: pass
+			next = ''
+			for i in range(len(self.list)): self.list[i]['next'] = next
+			self.worker()
+			if self.list is None: self.list = []
+			if create_directory: self.movieDirectory(self.list)
+			return self.list
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+			return
+
+	def trakt_based_on_similar(self, create_directory=True):
+		self.list = []
+		try:
+			historyurl = 'https://api.trakt.tv/users/me/history/movies?limit=20&page=1'
+			randomItems = self.trakt_list(historyurl, self.trakt_user)
+			if not randomItems: return
+			import random
+			item = randomItems[random.randint(0, len(randomItems) - 1)]
+			url = self.tmdb_similar % (item.get('tmdb'), '%s')
+			self.list = tmdb_indexer().tmdb_list(url)
+			if self.useContainerTitles:
+				try: control.setContainerName(getLS(40259)+' '+item.get('title'))
 				except: pass
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
