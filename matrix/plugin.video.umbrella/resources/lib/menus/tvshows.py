@@ -79,7 +79,7 @@ class TVshows:
 		self.traktrecommendations_link = 'https://api.trakt.tv/recommendations/shows?limit=40'
 		self.trakt_popularLists_link = 'https://api.trakt.tv/lists/popular?limit=40&page=1' # use limit=40 due to filtering out Movie only lists
 		self.trakt_trendingLists_link = 'https://api.trakt.tv/lists/trending?limit=40&page=1'
-		self.tmdb_similar = 'https://api.themoviedb.org/3/movie/%s/similar?api_key=%s&language=en-US&region=US&page=1'
+		self.tmdb_similar = 'https://api.themoviedb.org/3/tv/%s/similar?api_key=%s&language=en-US&region=US&page=1'
 
 		self.tvmaze_link = 'https://www.tvmaze.com'
 		self.tmdb_key = getSetting('tmdb.apikey')
@@ -263,7 +263,7 @@ class TVshows:
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
-			return
+			return self.list
 
 	def traktHiddenManager(self, idx=True):
 		control.busy()
