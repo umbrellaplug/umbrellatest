@@ -482,13 +482,13 @@ class libmovies:
 					content = i['mediatype']
 				except:
 					content = None
-				if content == 'movies' or content == None:
+				if content == 'movies' or content == None or content == 'movie':
 					try:
 						files_added = self.add('%s (%s)' % (i['title'], i['year']), i['title'], i['year'], i['imdb'], i['tmdb'], range=True)
 						if general_notification and files_added > 0: control.notification(title='%s (%s)' % (i['title'], i['year']), message=32554)
 						if files_added > 0: total_added += 1
 					except: log_utils.error()
-				elif content == 'tvshows':
+				elif content == 'tvshows' or content == 'tvshow':
 					try:
 						files_added = libtvshows().add(i['title'], i['year'], i['imdb'], i['tmdb'], i['tvdb'], range=True)
 						if files_added is None: continue
