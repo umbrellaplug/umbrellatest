@@ -31,6 +31,7 @@ class Player(xbmc.Player):
 		xbmc.Player.__init__(self)
 		self.play_next_triggered = False
 		self.preScrape_triggered = False
+		self.playlist_built = False
 		self.playbackStopped_triggered = False
 		self.playback_resumed = False
 		self.onPlayBackStopped_ran = False
@@ -104,8 +105,9 @@ class Player(xbmc.Player):
 				control.playlist.add(url, item)
 				playerWindow.setProperty('umbrella.playlistStart_position', str(0))
 				control.player.play(control.playlist)
-			elif debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-			else: control.resolve(int(argv[1]), True, item)
+			else:
+				if debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
+				else: control.resolve(int(argv[1]), True, item)
 			homeWindow.setProperty('script.trakt.ids', jsdumps(self.ids))
 			self.keepAlive()
 			homeWindow.clearProperty('script.trakt.ids')
@@ -281,8 +283,9 @@ class Player(xbmc.Player):
 								if remaining_time < (self.playnext_time + 1) and remaining_time != 0:
 									xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 									self.play_next_triggered = True
-							if int(control.playlist.size()) == 1:
+							if int(control.playlist.size()) == 1 and self.playlist_built == False:
 								self.buildPlaylist()
+								self.playlist_built = True
 					except: log_utils.error()
 					xbmc.sleep(1000)
 
