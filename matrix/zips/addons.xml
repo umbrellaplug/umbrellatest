@@ -148,7 +148,7 @@
 [COLOR yellow]--[/COLOR][I] Changed to new settings format.[/I]
 		</news>
 	</extension>
-</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.87">
+</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.88">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -181,9 +181,9 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.86/87 - Nov 19th, 2022[/COLOR][/B]
---[FIX][I] Adjustments for playing packs with playnext enabled and auto-resume.[I]
---[FIX][I] Adjustments to library import for errors with checking content types.[I]
+[B][COLOR black]Update - v6.5.88 - Nov 20th, 2022[/COLOR][/B]
+--[FIX][I] Reverted player back to 6.5.85 code.[I]
+--[FIX][I] Library update for episodes restored.[I]
 		</news>
 	</extension>
 </addon><addon id="repository.umbrellatest" name="Umbrella Test Repository" version="1.0.0" provider-name="Umbrella">

@@ -105,9 +105,8 @@ class Player(xbmc.Player):
 				control.playlist.add(url, item)
 				playerWindow.setProperty('umbrella.playlistStart_position', str(0))
 				control.player.play(control.playlist)
-			else:
-				if debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-				else: control.resolve(int(argv[1]), True, item)
+			elif debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
+			else: control.resolve(int(argv[1]), True, item)
 			homeWindow.setProperty('script.trakt.ids', jsdumps(self.ids))
 			self.keepAlive()
 			homeWindow.clearProperty('script.trakt.ids')
