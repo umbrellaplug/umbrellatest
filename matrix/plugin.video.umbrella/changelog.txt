@@ -1,3 +1,9 @@
+[B][COLOR black]Update - v6.5.89 - Nov 22th, 2022[/COLOR][/B]
+--[FIX][I] Library update for episodes restored.[I]
+--[FIX][I] Reverted player back to 6.5.85 code.[I]
+--[INFO][I] There is currently an issue with playnext. I am aware of it and working on it.[I]
+--[INFO][I] If you are getting playback failed or issues. Turn off play next for now.[I]
+
 [B][COLOR black]Update - v6.5.88 - Nov 20th, 2022[/COLOR][/B]
 --[FIX][I] Reverted player back to 6.5.85 code.[I]
 --[FIX][I] Library update for episodes restored.[I]
