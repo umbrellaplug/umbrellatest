@@ -1076,6 +1076,8 @@ class TVshows:
 		try:
 			if self.list[i]['metacache']: return
 			imdb, tmdb, tvdb = self.list[i].get('imdb', ''), self.list[i].get('tmdb', ''), self.list[i].get('tvdb', '')
+			from resources.lib.modules import log_utils
+			log_utils.log('### TV Show Super Function: ids={imdb: %s, tmdb: %s, tvdb: %s} ' % (self.list[i].get('imdb', ''), self.list[i].get('tmdb', ''), self.list[i].get('tvdb', '')), __name__, log_utils.LOGDEBUG) # newlognov
 #### -- Missing id's lookup -- ####
 			trakt_ids = None
 			if (not tmdb or not tvdb) and imdb: trakt_ids = trakt.IdLookup('imdb', imdb, 'show')
