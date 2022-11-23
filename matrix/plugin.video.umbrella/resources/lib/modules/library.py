@@ -908,7 +908,9 @@ class libtvshows:
 				files_added = self.add(i['title'], i['year'], i['imdb'], i['tmdb'], i['tvdb'], range=True)
 				if general_notification and files_added > 0: control.notification(title=i['title'], message=32554)
 				if files_added > 0: total_added += 1
-			except: log_utils.error()
+			except Exception as e: 
+				from resources.lib.modules import log_utils
+				log_utils.log('tvshowtitle: (%s) ids={imdb: %s, tmdb: %s, tvdb: %s} was not added due to exception: %s:' % (i['title'], i['imdb'], i['tmdb'], i['tvdb'], str(e)), __name__, log_utils.LOGDEBUG) # log show that had issues.
 		if self.library_update == 'true' and not control.condVisibility('Library.IsScanningVideo') and total_added > 0:
 			if contains:
 				control.sleep(10000)
