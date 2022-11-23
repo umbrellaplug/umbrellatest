@@ -162,7 +162,9 @@ class SyncTraktCollection:
 	def run(self):
 		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Starting...', LOGINFO)
 		control.execute('RunPlugin(%s?action=library_tvshowsToLibrarySilent&url=traktcollection)' % plugin)
+		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync TV Shows Complete', LOGINFO)
 		control.execute('RunPlugin(%s?action=library_moviesToLibrarySilent&url=traktcollection)' % plugin)
+		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Movies Complete', LOGINFO)
 		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Complete', LOGINFO)
 
 class LibraryService:
