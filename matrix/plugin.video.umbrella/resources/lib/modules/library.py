@@ -911,7 +911,6 @@ class libtvshows:
 				from resources.lib.modules import log_utils
 				log_utils.log('#### adding item: (%s) ids={imdb: %s, tmdb: %s, tvdb: %s year: %s}' % (i['title'], i['imdb'], i['tmdb'], i['tvdb'], i['year']), __name__, log_utils.LOGINFO) # newlognov
 				files_added = self.add(i['title'], i['year'], i['imdb'], i['tmdb'], i['tvdb'], range=True)
-				log_utils.log('#### files_added type: %s' % type(files_added), __name__, log_utils.LOGINFO) # newlognov
 				if general_notification and files_added > 0: control.notification(title=i['title'], message=32554)
 				if files_added:
 					if files_added > 0: total_added += 1

@@ -1,3 +1,7 @@
+
+[B][COLOR black]Update - v6.5.90 - Nov 23rd, 2022[/COLOR][/B]
+--[FIX][I] Adjusted Trakt Sync for devices that do not have "System.InternetState".[I]
+
 [B][COLOR black]Update - v6.5.89 - Nov 22th, 2022[/COLOR][/B]
 --[FIX][I] Library update for episodes restored.[I]
 --[FIX][I] Reverted player back to 6.5.85 code.[I]

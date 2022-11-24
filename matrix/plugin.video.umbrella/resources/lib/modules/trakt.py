@@ -1357,8 +1357,16 @@ def scrobbleResetItems(imdb_ids, tvdb_dicts=None, refresh=True, widgetRefresh=Fa
 def trakt_service_sync():
 	while not control.monitor.abortRequested():
 		control.sleep(5000) # wait 5sec in case of device wake from sleep
-		control.log('[ plugin.video.umbrella ]  Trakt Service Sync Checking..', log_utils.LOGINFO)
-		if getTraktCredentialsInfo(): # run service in case user auth's trakt later
+		control.log('[ plugin.video.umbrella ]  Trakt Service Sync Checking.', log_utils.LOGINFO)
+		try:
+			internets = control.condVisibility('System.InternetState') #added for some systems have removed Internet State apparently.
+			control.log('####internets: %s '% control.condVisibility('System.InternetState'), log_utils.LOGINFO)
+			if internets == False:
+				internets = control.condVisibility('System.HasNetwork')
+				control.log('####internets backup has network: %s '% control.condVisibility('System.HasNetwork'), log_utils.LOGINFO)
+		except:
+			log_utils.error()
+		if internets and getTraktCredentialsInfo(): # run service in case user auth's trakt later
 			activities = getTraktAsJson('/sync/last_activities', silent=True)
 			if getSetting('bookmarks') == 'true' and getSetting('resume.source') == '1':
 				sync_playbackProgress(activities)
