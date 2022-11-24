@@ -1357,7 +1357,8 @@ def scrobbleResetItems(imdb_ids, tvdb_dicts=None, refresh=True, widgetRefresh=Fa
 def trakt_service_sync():
 	while not control.monitor.abortRequested():
 		control.sleep(5000) # wait 5sec in case of device wake from sleep
-		if control.condVisibility('System.InternetState') and getTraktCredentialsInfo(): # run service in case user auth's trakt later
+		control.log('[ plugin.video.umbrella ]  Trakt Service Sync Checking..', log_utils.LOGINFO)
+		if getTraktCredentialsInfo(): # run service in case user auth's trakt later
 			activities = getTraktAsJson('/sync/last_activities', silent=True)
 			if getSetting('bookmarks') == 'true' and getSetting('resume.source') == '1':
 				sync_playbackProgress(activities)

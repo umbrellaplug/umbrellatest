@@ -31,8 +31,8 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.90 - Nov 22th, 2022[/COLOR][/B]
---[FIX][I] Additional logging for library imports.[I]
+[B][COLOR black]Update - v6.5.90 - Nov 23rd, 2022[/COLOR][/B]
+--[FIX][I] Adjusted Trakt Sync for devices that do not have "System.InternetState".[I]
 		</news>
 	</extension>
 </addon>
