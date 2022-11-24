@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.90">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.91">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -31,7 +31,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.90 - Nov 23rd, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.91 - Nov 24th, 2022[/COLOR][/B]
 --[FIX][I] Adjusted Trakt Sync for devices that do not have "System.InternetState".[I]
 		</news>
 	</extension>
