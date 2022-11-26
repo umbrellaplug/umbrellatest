@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.91">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.92">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -31,8 +31,12 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.91 - Nov 24th, 2022[/COLOR][/B]
---[FIX][I] Adjusted Trakt Sync for devices that do not have "System.InternetState".[I]
+[B][COLOR black]Update - v6.5.92 - Nov 25th, 2022[/COLOR][/B]
+--[FIX][I] Removed entire Sync Trakt Collection section from settings.[I]
+--[ENHANCEMENT][I] Add collection to list imports.[I]
+--[ENHANCEMENT][I] Made manual import now and automatic import different settings.[I]
+--[INFORMATION][I] All list importing settings have been moved to the "Library" section of settings.[I]
+--[CREDIT][I] Thanks to user "-fr1sty" for reporting internetstate and library import issues.
 		</news>
 	</extension>
 </addon>

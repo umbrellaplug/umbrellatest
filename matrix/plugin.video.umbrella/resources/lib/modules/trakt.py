@@ -1562,6 +1562,7 @@ def sync_hidden_progress(activities=None, forced=False):
 	except: log_utils.error()
 
 def sync_collection(activities=None, forced=False):
+	log_utils.log('Trakt Collection Sync Running.', __name__, log_utils.LOGINFO)
 	try:
 		link = '/users/me/collection/%s?extended=full'
 		if forced:
@@ -1571,11 +1572,14 @@ def sync_collection(activities=None, forced=False):
 			traktsync.insert_collection(items, 'shows_collection')
 			log_utils.log('Forced - Trakt Collection Sync Complete', __name__, log_utils.LOGDEBUG)
 		else:
+			log_utils.log('Trakt Collection Sync Not Forced', __name__, log_utils.LOGDEBUG)
 			db_last_collected = traktsync.last_sync('last_collected_at')
 			collectedActivity = getCollectedActivity(activities)
+			log_utils.log('Trakt Collection Sync Check...(local db latest "collected_at" = %s, trakt api latest "collected_at" = %s)' % \
+									(str(db_last_collected), str(collectedActivity)), __name__, log_utils.LOGINFO)
 			if collectedActivity > db_last_collected:
 				log_utils.log('Trakt Collection Sync Update...(local db latest "collected_at" = %s, trakt api latest "collected_at" = %s)' % \
-									(str(db_last_collected), str(collectedActivity)), __name__, log_utils.LOGDEBUG)
+									(str(db_last_collected), str(collectedActivity)), __name__, log_utils.LOGINFO)
 				# indicators = cachesyncMovies() # could maybe check watched status here to satisfy sort method
 				items = getTraktAsJson(link % 'movies', silent=True)
 				traktsync.insert_collection(items, 'movies_collection')

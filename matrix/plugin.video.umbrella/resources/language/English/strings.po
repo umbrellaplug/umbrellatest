@@ -3764,7 +3764,7 @@ msgid "# of List Importing:"
 msgstr ""
 
 msgctxt "#40222"
-msgid "Select Lists to Import"
+msgid "Select Lists to Auto-Import"
 msgstr ""
 
 msgctxt "#40223"
@@ -3921,4 +3921,16 @@ msgstr ""
 
 msgctxt "#40261"
 msgid "Similar to Recently Watched"
+msgstr ""
+
+msgctxt "#40262"
+msgid "Select Lists to Manually Import Now (One-time)"
+msgstr ""
+
+msgctxt "#40263"
+msgid "Used to select which Trakt lists to auto import into library. Collection, Watchlist, Liked Lists, and User Lists can be auto-imported. This import repeats."
+msgstr ""
+
+msgctxt "#40264"
+msgid "Used to select Trakt lists to  import into library now. Collection, Watchlist, Liked Lists, and User Lists can be imported."
 msgstr ""

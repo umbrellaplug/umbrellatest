@@ -160,16 +160,21 @@ class VersionIsUpdateCheck:
 
 class SyncTraktCollection:
 	def run(self):
-		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Starting...', LOGINFO)
-		control.execute('RunPlugin(%s?action=library_tvshowsToLibrarySilent&url=traktcollection)' % plugin)
-		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync TV Shows Complete', LOGINFO)
-		control.execute('RunPlugin(%s?action=library_moviesToLibrarySilent&url=traktcollection)' % plugin)
-		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Movies Complete', LOGINFO)
-		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Complete', LOGINFO)
+		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Disabled...', LOGINFO)
+		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Starting...', LOGINFO)
+		#control.execute('RunPlugin(%s?action=library_tvshowsToLibrarySilent&url=traktcollection)' % plugin)
+		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync TV Shows Complete', LOGINFO)
+		#control.execute('RunPlugin(%s?action=library_moviesToLibrarySilent&url=traktcollection)' % plugin)
+		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Movies Complete', LOGINFO)
+		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Complete', LOGINFO)
 
 class LibraryService:
 	def run(self):
-		control.log('[ plugin.video.umbrella ]  Library Update Service Starting (Every 6 Hours)...', LOGINFO)
+		try:
+			library_hours = float(control.setting('library.import.hours'))
+		except:
+			library_hours = int(6)
+		control.log('[ plugin.video.umbrella ]  Library Update Service Starting (Runs Every %s Hours)...' % library_hours,  LOGINFO)
 		from resources.lib.modules import library
 		library.lib_tools().service() # method contains control.monitor().waitForAbort() while loop every 6hrs
 
@@ -277,16 +282,16 @@ def main():
 		syncTraktService = Thread(target=SyncTraktService().run) # run service in case user auth's trakt later, sync will loop and do nothing without valid auth'd account
 		syncTraktService.start()
 
-		if getTraktCredentialsInfo():
-			if control.setting('autoTraktOnStart') == 'true':
-				SyncTraktCollection().run()
-			if int(control.setting('schedTraktTime')) > 0:
-				import threading
-				log_utils.log('#################### STARTING TRAKT SCHEDULING ################', level=LOGINFO)
-				log_utils.log('#################### SCHEDULED TIME FRAME '+ control.setting('schedTraktTime')  + ' HOURS ###############', level=LOGINFO)
-				timeout = 3600 * int(control.setting('schedTraktTime'))
-				schedTrakt = threading.Timer(timeout, SyncTraktCollection().run) # this only runs once at the designated interval time to wait...not repeating
-				schedTrakt.start()
+		# if getTraktCredentialsInfo():
+		# 	if control.setting('autoTraktOnStart') == 'true':
+		# 		SyncTraktCollection().run()
+		# 	if int(control.setting('schedTraktTime')) > 0:
+		# 		import threading
+		# 		log_utils.log('#################### STARTING TRAKT SCHEDULING ################', level=LOGINFO)
+		# 		log_utils.log('#################### SCHEDULED TIME FRAME '+ control.setting('schedTraktTime')  + ' HOURS ###############', level=LOGINFO)
+		# 		timeout = 3600 * int(control.setting('schedTraktTime'))
+		# 		schedTrakt = threading.Timer(timeout, SyncTraktCollection().run) # this only runs once at the designated interval time to wait...not repeating
+		# 		schedTrakt.start()
 		break
 	SettingsMonitor().waitForAbort()
 	control.log('[ plugin.video.umbrella ]  Settings Monitor Service Stopping...', LOGINFO)

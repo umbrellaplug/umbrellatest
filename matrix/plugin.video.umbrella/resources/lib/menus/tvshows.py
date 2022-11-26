@@ -606,13 +606,17 @@ class TVshows:
 	def traktCollection(self, url, create_directory=True):
 		self.list = []
 		try:
-			q = dict(parse_qsl(urlsplit(url).query))
-			index = int(q['page']) - 1
+			try:
+				q = dict(parse_qsl(urlsplit(url).query))
+				index = int(q['page']) - 1
+			except:
+				q = dict(parse_qsl(urlsplit(url).query))
 			self.list = traktsync.fetch_collection('shows_collection')
-			self.sort() # sort before local pagination
-			if getSetting('trakt.paginate.lists') == 'true' and self.list:
-				paginated_ids = [self.list[x:x + int(self.page_limit)] for x in range(0, len(self.list), int(self.page_limit))]
-				self.list = paginated_ids[index]
+			if create_directory:
+				self.sort() # sort before local pagination
+				if getSetting('trakt.paginate.lists') == 'true' and self.list:
+					paginated_ids = [self.list[x:x + int(self.page_limit)] for x in range(0, len(self.list), int(self.page_limit))]
+					self.list = paginated_ids[index]
 			try:
 				if int(q['limit']) != len(self.list): raise Exception()
 				q.update({'page': str(int(q['page']) + 1)})
