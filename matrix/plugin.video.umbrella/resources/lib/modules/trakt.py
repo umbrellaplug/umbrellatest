@@ -1562,7 +1562,6 @@ def sync_hidden_progress(activities=None, forced=False):
 	except: log_utils.error()
 
 def sync_collection(activities=None, forced=False):
-	log_utils.log('Trakt Collection Sync Running.', __name__, log_utils.LOGINFO)
 	try:
 		link = '/users/me/collection/%s?extended=full'
 		if forced:
@@ -1575,17 +1574,18 @@ def sync_collection(activities=None, forced=False):
 			log_utils.log('Trakt Collection Sync Not Forced', __name__, log_utils.LOGDEBUG)
 			db_last_collected = traktsync.last_sync('last_collected_at')
 			collectedActivity = getCollectedActivity(activities)
-			log_utils.log('Trakt Collection Sync Check...(local db latest "collected_at" = %s, trakt api latest "collected_at" = %s)' % \
-									(str(db_last_collected), str(collectedActivity)), __name__, log_utils.LOGINFO)
+			log_utils.log('Trakt Collection Sync Check...(db time= %s, api time= %s) will update: %s' % \
+									(str(db_last_collected), str(collectedActivity), (collectedActivity > db_last_collected)), __name__, log_utils.LOGDEBUG)
 			if collectedActivity > db_last_collected:
 				log_utils.log('Trakt Collection Sync Update...(local db latest "collected_at" = %s, trakt api latest "collected_at" = %s)' % \
-									(str(db_last_collected), str(collectedActivity)), __name__, log_utils.LOGINFO)
+									(str(db_last_collected), str(collectedActivity)), __name__, log_utils.LOGDEBUG)
 				# indicators = cachesyncMovies() # could maybe check watched status here to satisfy sort method
 				items = getTraktAsJson(link % 'movies', silent=True)
 				traktsync.insert_collection(items, 'movies_collection')
 				# indicators = cachesyncTVShows() # could maybe check watched status here to satisfy sort method
 				items = getTraktAsJson(link % 'shows', silent=True)
 				traktsync.insert_collection(items, 'shows_collection')
+				log_utils.log('Not Forced - Trakt Collection Sync Complete', __name__, log_utils.LOGDEBUG)
 	except: log_utils.error()
 
 def sync_watch_list(activities=None, forced=False):
@@ -1600,6 +1600,8 @@ def sync_watch_list(activities=None, forced=False):
 		else:
 			db_last_watchList = traktsync.last_sync('last_watchlisted_at')
 			watchListActivity = getWatchListedActivity(activities)
+			log_utils.log('Trakt Watchlist Sync Check...(db time= %s, activity time= %s) will update if over 60: %s' % \
+									(str(db_last_watchList), str(watchListActivity), (watchListActivity - db_last_watchList)), __name__, log_utils.LOGDEBUG)
 			if watchListActivity - db_last_watchList >= 60: # do not sync unless 1 min difference or more
 				log_utils.log('Trakt Watch List Sync Update...(local db latest "watchlist_at" = %s, trakt api latest "watchlisted_at" = %s)' % \
 									(str(db_last_watchList), str(watchListActivity)), __name__, log_utils.LOGDEBUG)
