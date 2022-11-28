@@ -181,9 +181,10 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.93 - Nov 25th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.93 - Nov 28th, 2022[/COLOR][/B]
 --[FIX][I] Adjustment to watchlist activity for sync.[I]
 --[FIX][I] Additional logging for watchlist sync.[I]
+--[Enhancement][I] Movies and TV Source Select options broken into different settings.[I]
 		</news>
 	</extension>
 </addon><addon id="repository.umbrellatest" name="Umbrella Test Repository" version="1.0.0" provider-name="Umbrella">

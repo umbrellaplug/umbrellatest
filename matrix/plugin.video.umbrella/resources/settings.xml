@@ -1884,6 +1884,37 @@
 							<option label="32334">1</option>
 						</options>
 					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="list" format="string">
+						<heading>32331</heading>
+					</control>
+				</setting>
+				<setting id="play.mode.movie" type="integer" label="40265" help="">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32333">0</option>
+							<option label="32334">1</option>
+						</options>
+					</constraints>
+					<control type="list" format="string">
+						<heading>32331</heading>
+					</control>
+				</setting>
+				<setting id="play.mode.tv" type="integer" label="40266" help="40267">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32333">0</option>
+							<option label="32334">1</option>
+						</options>
+					</constraints>
 					<control type="list" format="string">
 						<heading>32331</heading>
 					</control>

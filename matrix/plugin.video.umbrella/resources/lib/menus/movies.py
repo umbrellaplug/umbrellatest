@@ -1278,7 +1278,7 @@ class Movies:
 			control.hide() ; control.notification(title=32001, message=33049)
 		from resources.lib.modules.player import Bookmarks
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
-		play_mode = getSetting('play.mode')
+		play_mode = getSetting('play.mode.movie')
 		rescrape_useDefault = getSetting('rescrape.default') == 'true'
 		rescrape_method = getSetting('rescrape.default2')
 		is_widget = 'plugin' not in control.infoLabel('Container.PluginName')

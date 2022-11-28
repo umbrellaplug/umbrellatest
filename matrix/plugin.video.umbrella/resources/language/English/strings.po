@@ -3572,7 +3572,7 @@ msgid "session_id"
 msgstr ""
 
 msgctxt "#40174"
-msgid "With this setting enabled, Source Select settings will be overridden for episodes and set to Auto Select"
+msgid "With this setting enabled, Source Select settings will be overridden for TV Shows and set to AutoPlay."
 msgstr ""
 
 msgctxt "#40175"
@@ -3933,4 +3933,16 @@ msgstr ""
 
 msgctxt "#40264"
 msgid "Used to select Trakt lists to  import into library now. Collection, Watchlist, Liked Lists, and User Lists can be imported."
+msgstr ""
+
+msgctxt "#40265"
+msgid "Movie select action"
+msgstr ""
+
+msgctxt "#40266"
+msgid "TV select action"
+msgstr ""
+
+msgctxt "#40267"
+msgid "If Continuous playback (Playnext) is enabled under "TV shows" section Source Select settings will be overridden for TV Shows and set to AutoPlay automatically."
 msgstr ""
