@@ -157,9 +157,18 @@ def traktRevoke(fromSettings=0):
 		control.setSetting('trakt.token.expires', '')
 		control.setSetting('trakt.user.token', '')
 		control.setSetting('trakt.refreshtoken', '')
-		if fromSettings == 1:
-			control.openSettings('6.0', 'plugin.video.umbrella')
-		control.dialog.ok(control.lang(32315), control.lang(40109))
+		try:	
+			from resources.lib.database import traktsync
+			clr_traktSync = {'bookmarks': False, 'hiddenProgress': False, 'liked_lists': False, 'movies_collection': False, 'movies_watchlist': False, 'popular_lists': False,
+					'public_lists': False, 'shows_collection': False, 'shows_watchlist': False, 'trending_lists': False, 'user_lists': False, 'watched': False}
+			cleared = traktsync.delete_tables(clr_traktSync)
+			if cleared:
+				log_utils.log('Trakt tables cleared after revoke.', level=log_utils.LOGINFO)
+			if fromSettings == 1:
+				control.openSettings('6.0', 'plugin.video.umbrella')
+				control.dialog.ok(control.lang(32315), control.lang(40109))
+		except:
+			log_utils.error()
 
 
 def getTraktDeviceCode():
@@ -1492,6 +1501,9 @@ def sync_user_lists(activities=None, forced=False):
 			if user_listActivity > db_last_lists_updatedat:
 				log_utils.log('Trakt User Lists Sync Update...(local db latest "lists_updatedat" = %s, trakt api latest "lists_updatedat" = %s)' % \
 									(str(db_last_lists_updatedat), str(user_listActivity)), __name__, log_utils.LOGDEBUG)
+				clr_traktSync = {'bookmarks': False, 'hiddenProgress': False, 'liked_lists': False, 'movies_collection': False, 'movies_watchlist': False,
+							'public_lists': False, 'shows_collection': False, 'shows_watchlist': False, 'user_lists': True, 'watched': False}
+				traktsync.delete_tables(clr_traktSync)
 				items = getTraktAsJson(link, silent=True)
 				if not items: return
 				for i in items:
@@ -1516,6 +1528,9 @@ def sync_liked_lists(activities=None, forced=False):
 		if (listActivity > db_last_liked) or forced:
 			if not forced: log_utils.log('Trakt Liked Lists Sync Update...(local db latest "liked_at" = %s, trakt api latest "liked_at" = %s)' % \
 								(str(db_last_liked), str(listActivity)), __name__, log_utils.LOGDEBUG)
+			clr_traktSync = {'bookmarks': False, 'hiddenProgress': False, 'liked_lists': True, 'movies_collection': False, 'movies_watchlist': False,
+							'public_lists': False, 'shows_collection': False, 'shows_watchlist': False, 'user_lists': False, 'watched': False}
+			traktsync.delete_tables(clr_traktSync)
 			items = getTraktAsJson(link, silent=True)
 			if not items: return
 			thrd_items = []
@@ -1574,11 +1589,12 @@ def sync_collection(activities=None, forced=False):
 			log_utils.log('Trakt Collection Sync Not Forced', __name__, log_utils.LOGDEBUG)
 			db_last_collected = traktsync.last_sync('last_collected_at')
 			collectedActivity = getCollectedActivity(activities)
-			log_utils.log('Trakt Collection Sync Check...(db time= %s, api time= %s) will update: %s' % \
-									(str(db_last_collected), str(collectedActivity), (collectedActivity > db_last_collected)), __name__, log_utils.LOGDEBUG)
 			if collectedActivity > db_last_collected:
 				log_utils.log('Trakt Collection Sync Update...(local db latest "collected_at" = %s, trakt api latest "collected_at" = %s)' % \
 									(str(db_last_collected), str(collectedActivity)), __name__, log_utils.LOGDEBUG)
+				clr_traktSync = {'bookmarks': False, 'hiddenProgress': False, 'liked_lists': False, 'movies_collection': True, 'movies_watchlist': False,
+							'public_lists': False, 'shows_collection': True, 'shows_watchlist': False, 'user_lists': False, 'watched': False}
+				traktsync.delete_tables(clr_traktSync)
 				# indicators = cachesyncMovies() # could maybe check watched status here to satisfy sort method
 				items = getTraktAsJson(link % 'movies', silent=True)
 				traktsync.insert_collection(items, 'movies_collection')
@@ -1605,6 +1621,9 @@ def sync_watch_list(activities=None, forced=False):
 			if watchListActivity - db_last_watchList >= 60: # do not sync unless 1 min difference or more
 				log_utils.log('Trakt Watch List Sync Update...(local db latest "watchlist_at" = %s, trakt api latest "watchlisted_at" = %s)' % \
 									(str(db_last_watchList), str(watchListActivity)), __name__, log_utils.LOGDEBUG)
+				clr_traktSync = {'bookmarks': False, 'hiddenProgress': False, 'liked_lists': False, 'movies_collection': False, 'movies_watchlist': True,
+							'public_lists': False, 'shows_collection': False, 'shows_watchlist': True, 'user_lists': False, 'watched': False}
+				traktsync.delete_tables(clr_traktSync)
 				items = getTraktAsJson(link % 'movies', silent=True)
 				traktsync.insert_watch_list(items, 'movies_watchlist')
 				items = getTraktAsJson(link % 'shows', silent=True)
