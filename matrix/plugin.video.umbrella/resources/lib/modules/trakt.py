@@ -1426,7 +1426,7 @@ def sync_playbackProgress(activities=None, forced=False):
 			activity = getPausedActivity(activities)
 			if activity - db_last_paused >= 120: # do not sync unless 2 min difference or more
 				log_utils.log('Trakt Playback Progress Sync Update...(local db latest "paused_at" = %s, trakt api latest "paused_at" = %s)' % \
-									(str(db_last_paused), str(activity)), __name__, log_utils.LOGDEBUG)
+									(str(db_last_paused), str(activity)), __name__, log_utils.LOGINFO)
 				items = getTraktAsJson(link, silent=True)
 				if items: traktsync.insert_bookmarks(items)
 	except: log_utils.error()
@@ -1444,7 +1444,7 @@ def sync_watchedProgress(activities=None, forced=False):
 			cache.get(episodes.Episodes().trakt_progress_list, 0, url, trakt_user, lang, direct)
 			if forced: log_utils.log('Forced - Trakt Progress List Sync Complete', __name__, log_utils.LOGDEBUG)
 			else: log_utils.log('Trakt Progress List Sync Update...(local db latest "list_cached_at" = %s, trakt api latest "progress_activity" = %s)' % \
-									(str(local_listCache), str(progressActivity)), __name__, log_utils.LOGDEBUG)
+									(str(local_listCache), str(progressActivity)), __name__, log_utils.LOGINFO)
 	except: log_utils.error()
 
 def sync_watched(activities=None, forced=False): # writes to traktsync.db as of 1-19-2022
@@ -1527,7 +1527,7 @@ def sync_liked_lists(activities=None, forced=False):
 		listActivity = getListActivity(activities)
 		if (listActivity > db_last_liked) or forced:
 			if not forced: log_utils.log('Trakt Liked Lists Sync Update...(local db latest "liked_at" = %s, trakt api latest "liked_at" = %s)' % \
-								(str(db_last_liked), str(listActivity)), __name__, log_utils.LOGDEBUG)
+								(str(db_last_liked), str(listActivity)), __name__, log_utils.LOGINFO)
 			clr_traktSync = {'bookmarks': False, 'hiddenProgress': False, 'liked_lists': True, 'movies_collection': False, 'movies_watchlist': False,
 							'public_lists': False, 'shows_collection': False, 'shows_watchlist': False, 'user_lists': False, 'watched': False}
 			traktsync.delete_tables(clr_traktSync)
@@ -1571,7 +1571,7 @@ def sync_hidden_progress(activities=None, forced=False):
 			hiddenActivity = getHiddenActivity(activities)
 			if hiddenActivity > db_last_hidden:
 				log_utils.log('Trakt Hidden Progress Sync Update...(local db latest "hidden_at" = %s, trakt api latest "hidden_at" = %s)' % \
-									(str(db_last_hidden), str(hiddenActivity)), __name__, log_utils.LOGDEBUG)
+									(str(db_last_hidden), str(hiddenActivity)), __name__, log_utils.LOGINFO)
 				items = getTraktAsJson(link, silent=True)
 				traktsync.insert_hidden_progress(items)
 	except: log_utils.error()
@@ -1591,7 +1591,7 @@ def sync_collection(activities=None, forced=False):
 			collectedActivity = getCollectedActivity(activities)
 			if collectedActivity > db_last_collected:
 				log_utils.log('Trakt Collection Sync Update...(local db latest "collected_at" = %s, trakt api latest "collected_at" = %s)' % \
-									(str(db_last_collected), str(collectedActivity)), __name__, log_utils.LOGDEBUG)
+									(str(db_last_collected), str(collectedActivity)), __name__, log_utils.LOGINFO)
 				clr_traktSync = {'bookmarks': False, 'hiddenProgress': False, 'liked_lists': False, 'movies_collection': True, 'movies_watchlist': False,
 							'public_lists': False, 'shows_collection': True, 'shows_watchlist': False, 'user_lists': False, 'watched': False}
 				traktsync.delete_tables(clr_traktSync)
@@ -1601,7 +1601,6 @@ def sync_collection(activities=None, forced=False):
 				# indicators = cachesyncTVShows() # could maybe check watched status here to satisfy sort method
 				items = getTraktAsJson(link % 'shows', silent=True)
 				traktsync.insert_collection(items, 'shows_collection')
-				log_utils.log('Not Forced - Trakt Collection Sync Complete', __name__, log_utils.LOGDEBUG)
 	except: log_utils.error()
 
 def sync_watch_list(activities=None, forced=False):
@@ -1617,10 +1616,10 @@ def sync_watch_list(activities=None, forced=False):
 			db_last_watchList = traktsync.last_sync('last_watchlisted_at')
 			watchListActivity = getWatchListedActivity(activities)
 			log_utils.log('Trakt Watchlist Sync Check...(db time= %s, activity time= %s) will update if over 60: %s' % \
-									(str(db_last_watchList), str(watchListActivity), (watchListActivity - db_last_watchList)), __name__, log_utils.LOGDEBUG)
+									(str(db_last_watchList), str(watchListActivity), (watchListActivity - db_last_watchList)), __name__, log_utils.LOGINFO)
 			if watchListActivity - db_last_watchList >= 60: # do not sync unless 1 min difference or more
 				log_utils.log('Trakt Watch List Sync Update...(local db latest "watchlist_at" = %s, trakt api latest "watchlisted_at" = %s)' % \
-									(str(db_last_watchList), str(watchListActivity)), __name__, log_utils.LOGDEBUG)
+									(str(db_last_watchList), str(watchListActivity)), __name__, log_utils.LOGINFO)
 				clr_traktSync = {'bookmarks': False, 'hiddenProgress': False, 'liked_lists': False, 'movies_collection': False, 'movies_watchlist': True,
 							'public_lists': False, 'shows_collection': False, 'shows_watchlist': True, 'user_lists': False, 'watched': False}
 				traktsync.delete_tables(clr_traktSync)
@@ -1641,7 +1640,7 @@ def sync_popular_lists(forced=False):
 		cache_expiry = int(cleandate.iso_2_utc(cache_expiry))
 		if (cache_expiry > db_last_popularList) or forced:
 			if not forced: log_utils.log('Trakt Popular Lists Sync Update...(local db latest "popularlist_at" = %s, cache expiry = %s)' % \
-								(str(db_last_popularList), str(cache_expiry)), __name__, log_utils.LOGDEBUG)
+								(str(db_last_popularList), str(cache_expiry)), __name__, log_utils.LOGINFO)
 			items = getTraktAsJson(link, silent=True)
 			if not items: return
 			thrd_items = []
@@ -1649,7 +1648,7 @@ def sync_popular_lists(forced=False):
 				list_item = i.get('list', {})
 				if any(list_item.get('privacy', '') == value for value in ('private', 'friends')): return
 				if list_item.get('user',{}).get('private') is True:
-					log_utils.log('(%s) has marked their list private in Trakt(Popular Lists) and is now causing you errors. Skipping this list' % list_item.get('user',{}).get('username'))
+					log_utils.log('(%s) has marked their list private in Trakt(Popular Lists) and would be causing you errors but we caught it and we are skipping their list.' % list_item.get('user',{}).get('username'))
 					return
 				trakt_id = list_item.get('ids', {}).get('trakt', '')
 				exists = traktsync.fetch_public_list(trakt_id)
@@ -1691,7 +1690,7 @@ def sync_trending_lists(forced=False):
 		cache_expiry = int(cleandate.iso_2_utc(cache_expiry))
 		if (cache_expiry > db_last_trendingList) or forced:
 			if not forced: log_utils.log('Trakt Trending Lists Sync Update...(local db latest "trendinglist_at" = %s, cache expiry = %s)' % \
-								(str(db_last_trendingList), str(cache_expiry)), __name__, log_utils.LOGDEBUG)
+								(str(db_last_trendingList), str(cache_expiry)), __name__, log_utils.LOGINFO)
 			items = getTraktAsJson(link, silent=True)
 			if not items: return
 			thrd_items = []

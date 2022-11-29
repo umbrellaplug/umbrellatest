@@ -245,10 +245,11 @@ class lib_tools:
 
 	def clearListfromDB(self, listId):
 		try:
-			if 'watchlist' in str(listId):
+			if 'watchlist' in str(listId) or 'me/collection' in str(listId):
 				listId = listId
 			else:
 				listId = 'list'+str(listId)
+
 			dbcon = database.connect(control.libcacheFile)
 			dbcur = dbcon.cursor()
 			query = '''DROP TABLE IF EXISTS %s;''' % listId
@@ -424,7 +425,7 @@ class lib_tools:
 			control.makeFile(control.dataPath)
 			dbcon = database.connect(control.libcacheFile)
 			dbcur = dbcon.cursor()
-			dbcur.execute('''DROP TABLE IF EXISTS available_import_list;''')
+			dbcur.execute('''DROP TABLE IF EXISTS available_import_lists;''')
 			dbcur.execute('''CREATE TABLE IF NOT EXISTS available_import_lists (item_count INT, type TEXT, list_owner TEXT, list_owner_slug TEXT, list_name TEXT, list_id TEXT, selected TEXT, url TEXT, UNIQUE(list_id));''')
 			length = len(allItems)
 			for i in range(length):
