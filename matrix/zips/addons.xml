@@ -148,7 +148,7 @@
 [COLOR yellow]--[/COLOR][I] Changed to new settings format.[/I]
 		</news>
 	</extension>
-</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.941">
+</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.942">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -181,12 +181,13 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.941 - Nov 29th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.942 - Nov 29th, 2022[/COLOR][/B]
 --[FIX][I] Adjustment to watchlist activity for sync.[I]
 --[FIX][I] Additional logging for watchlist sync.[I]
 --[FIX][I] Trakt revoke now deletes Trakt Cache.[I]
 --[FIX][I] Fixed typo causing tables to not be dropped correctly when updating lists.[I]
---[ENHANCEMENT] Made changes to version comparison to allow for test version detection.[I]
+--[ENHANCEMENT][I] Added recently released on media formats for lists.[I]
+--[ENHANCEMENT][I] Made changes to version comparison to allow for test version detection.[I]
 --[ENHANCEMENT][I] Movies and TV Source Select options broken into different settings.[I]
 		</news>
 	</extension>

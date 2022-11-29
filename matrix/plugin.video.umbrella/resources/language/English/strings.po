@@ -3946,3 +3946,11 @@ msgstr ""
 msgctxt "#40267"
 msgid "If Continuous playback (Playnext) is enabled under "TV shows" section Source Select settings will be overridden for TV Shows and set to AutoPlay automatically."
 msgstr ""
+
+msgctxt "#40268"
+msgid "Recently Released on Media Formats (TMDb)"
+msgstr ""
+
+msgctxt "#40269"
+msgid "Recently Released on Media Formats"
+msgstr ""
