@@ -3948,9 +3948,9 @@ msgid "If Continuous playback (Playnext) is enabled under "TV shows" section Sou
 msgstr ""
 
 msgctxt "#40268"
-msgid "Recently Released on Media Formats (TMDb)"
+msgid "Recently Released (TMDb)"
 msgstr ""
 
 msgctxt "#40269"
-msgid "Recently Released on Media Formats"
+msgid "Recently Released"
 msgstr ""
