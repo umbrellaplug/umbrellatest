@@ -148,7 +148,7 @@
 [COLOR yellow]--[/COLOR][I] Changed to new settings format.[/I]
 		</news>
 	</extension>
-</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.953">
+</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.954">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -181,7 +181,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.953 - Dec 6th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.954 - Dec 6th, 2022[/COLOR][/B]
 --[FIX][I] Added enable/ disable for EasyNews.[I]
 --[FIX][I] Changed logging when set to kodi log to use higher level so debug logs show without enabling Kodi debug.[I]
 --[FIX][I] Additional logging added to trace red coat crashes.[I]
