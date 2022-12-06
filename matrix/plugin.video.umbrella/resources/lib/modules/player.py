@@ -46,6 +46,8 @@ class Player(xbmc.Player):
 		self.traktCredentials = trakt.getTraktCredentialsInfo()
 		self.onPlayBackEnded_ran = False
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
+		self.playeronly = getSetting('use.playeronly') == 'true'
+		
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
 		try:
@@ -113,7 +115,7 @@ class Player(xbmc.Player):
 				except:
 					if debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
 					else: control.resolve(int(argv[1]), True, item)
-			elif debridPackCall: 
+			elif debridPackCall or self.playeronly: 
 				control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
 				control.log('[plugin.video.umbrella] Played file as player.play', log_utils.LOGDEBUG)
 			else: 

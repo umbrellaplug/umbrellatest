@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.951">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.952">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -31,10 +31,11 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.951 - Dec 6th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.952 - Dec 6th, 2022[/COLOR][/B]
 --[FIX][I] Added enable/ disable for EasyNews.[I]
 --[FIX][I] Changed logging when set to kodi log to use higher level so debug logs show without enabling Kodi debug.[I]
 --[ENHANCEMENT][I] Added color options for providers in source selection. More work to be done there.[I]
+--[ENHANCEMENT][I] Added developer option to use player instead of resolver.[I]
 		</news>
 	</extension>
 </addon>

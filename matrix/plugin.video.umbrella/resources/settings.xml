@@ -4750,6 +4750,16 @@
 					</dependencies>
 					<control type="button" format="action"/>
 				</setting>
+				<setting id="use.playeronly" type="boolean" label="40275" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="dev.mode.enable">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
 				<setting id="dev.disable.single" type="boolean" label="32141" help="">
 					<level>0</level>
 					<default>false</default>

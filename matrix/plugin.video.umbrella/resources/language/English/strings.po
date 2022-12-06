@@ -3974,3 +3974,7 @@ msgstr ""
 msgctxt "#40274"
 msgid "EasyNews Highlight Color"
 msgstr ""
+
+msgctxt "#40275"
+msgid "Use Player instead of Resolver"
+msgstr ""
