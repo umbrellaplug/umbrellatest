@@ -1275,6 +1275,7 @@ def scrobbleEpisode(imdb, tmdb, tvdb, season, episode, watched_percent):
 	except: log_utils.error()
 
 def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh=True, widgetRefresh=False):
+	control.log('[plugin.video.umbrella] scrobbleReset started.', log_utils.LOGDEBUG)
 	if not getTraktCredentialsInfo(): return
 	control.busy()
 	success = False
@@ -1284,6 +1285,7 @@ def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh
 		if resume_info == '0': return control.hide() # returns string "0" if no data in db 
 		headers['Authorization'] = 'Bearer %s' % getSetting('trakt.user.token')
 		success = session.delete('https://api.trakt.tv/sync/playback/%s' % resume_info[1], headers=headers).status_code == 204
+		control.log('[plugin.video.umbrella] scrobbleReset in process.', log_utils.LOGDEBUG)
 		if content_type == 'movie':
 			items = [{'type': 'movie', 'movie': {'ids': {'imdb': imdb}}}]
 			label_string = resume_info[0]

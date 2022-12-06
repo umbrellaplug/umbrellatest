@@ -217,6 +217,7 @@ class Player(xbmc.Player):
 			return (poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta)
 
 	def getWatchedPercent(self):
+		control.log('[plugin.video.umbrella] GetWatchedPercent is checking.', log_utils.LOGDEBUG)
 		if self.isPlayback():
 			try:
 				position = self.getTime()
@@ -278,6 +279,7 @@ class Player(xbmc.Player):
 				if self.media_type == 'movie':
 					try:
 						if watcher and property != '5':
+							control.log('[plugin.video.umbrella] Keep Alive is going to mark during playback.', log_utils.LOGDEBUG)
 							homeWindow.setProperty(pname, '5')
 							playcount.markMovieDuringPlayback(self.imdb, '5')
 					except: pass
