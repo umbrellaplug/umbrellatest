@@ -140,7 +140,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>bottom</aligny>
-						<label>[COLOR $INFO[Window().Property(umbrella.highlight.color)]][B]$INFO[ListItem.Property(umbrella.count)]  $INFO[ListItem.Property(umbrella.name)][/B][/COLOR]</label>
+						<label>[COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]][B]$INFO[ListItem.Property(umbrella.count)]  $INFO[ListItem.Property(umbrella.name)][/B][/COLOR]</label>
 						<visible>!String.Contains(ListItem.Property(umbrella.source),UNCACHED)</visible>
 					</control>
 					<control type="label">
@@ -166,7 +166,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>top</aligny>
-						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.debrid)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]</label>
+						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.debrid)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]</label>
 						<visible>String.IsEqual(ListItem.Property(umbrella.source),CLOUD)</visible>
 					</control>
 					<control type="label">
@@ -179,7 +179,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>top</aligny>
-						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.debrid)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]</label>
+						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.debrid)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]</label>
 						<visible>!String.Contains(ListItem.Property(umbrella.source),DIRECT) + !String.Contains(ListItem.Property(umbrella.source),LOCAL) + !String.Contains(ListItem.Property(umbrella.source),UNCACHED) + !String.Contains(ListItem.Property(umbrella.source),CLOUD)</visible>
 					</control>
 					<control type="label">
@@ -192,7 +192,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>top</aligny>
-						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.debrid)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   SEEDERS: $INFO[ListItem.Property(umbrella.seeders)]</label>
+						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.debrid)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   SEEDERS: $INFO[ListItem.Property(umbrella.seeders)]</label>
 						<visible>String.Contains(ListItem.Property(umbrella.source),UNCACHED)</visible>
 					</control>
 					<control type="label">
@@ -205,7 +205,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>top</aligny>
-						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]</label>
+						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]</label>
 						<visible>!String.Contains(ListItem.Property(umbrella.provider),PLEXSHARE) + [String.Contains(ListItem.Property(umbrella.source),DIRECT) | String.Contains(ListItem.Property(umbrella.source),LOCAL)]</visible>
 					</control>
 					<control type="label">
@@ -218,7 +218,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>top</aligny>
-						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.plexsource)]</label>
+						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.plexsource)]</label>
 						<visible>String.Contains(ListItem.Property(umbrella.provider),PLEXSHARE) + [String.Contains(ListItem.Property(umbrella.source),DIRECT) | String.Contains(ListItem.Property(umbrella.source),LOCAL)]</visible>
 					</control>
 					<control type="label">
@@ -231,7 +231,7 @@
 						<textcolor>white</textcolor>
 						<align>left</align>
 						<aligny>top</aligny>
-						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.debrid)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]   [COLOR $INFO[Window().Property(umbrella.highlight.color)]]|[/COLOR]   HOSTER</label>
+						<label>$INFO[ListItem.Property(umbrella.size_label)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.debrid)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.provider)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   $INFO[ListItem.Property(umbrella.source)]   [COLOR $INFO[ListItem.Property(umbrella.providerhighlight)]]|[/COLOR]   HOSTER</label>
 						<visible>!String.Contains(ListItem.Property(umbrella.source),DIRECT) + !String.Contains(ListItem.Property(umbrella.source),LOCAL) + !String.Contains(ListItem.Property(umbrella.source),TORRENT) + !String.IsEqual(ListItem.Property(umbrella.source),CLOUD)</visible>
 					</control>
 				</itemlayout>
@@ -241,7 +241,7 @@
 						<top>0</top>
 						<width>1350</width>
 						<height>100</height>
-						<texture colordiffuse="$INFO[Window().Property(umbrella.highlight.color)]">common/white.png</texture>
+						<texture colordiffuse="$INFO[ListItem.Property(umbrella.providerhighlight)]">common/white.png</texture>
 					</control>
 					<control type="image">
 						<left>0</left>

@@ -5,7 +5,7 @@
 
 from json import dumps as jsdumps
 from urllib.parse import quote_plus
-from resources.lib.modules.control import joinPath, transPath, dialog, getSourceHighlightColor, notification, setting as getSetting
+from resources.lib.modules.control import joinPath, transPath, dialog, getProviderHighlightColor, getSourceHighlightColor, notification, setting as getSetting
 from resources.lib.modules.source_utils import getFileType
 from resources.lib.modules import tools
 from resources.lib.windows.base import BaseDialog
@@ -167,6 +167,18 @@ class SourceResultsXML(BaseDialog):
 					quality = item.get('quality', 'SD')
 					quality_icon = self.get_quality_iconPath(quality)
 					extra_info = item.get('info')
+					#from resources.lib.modules import log_utils
+					#log_utils.log('Umbrella Sources Make Items: %s' % str(item.get('debrid')), log_utils.LOGINFO)
+					if getSetting('sources.highlightmethod') == '1':
+						if item.get('debrid') is not None and item.get('debrid') !='':
+							providerHighlight = getProviderHighlightColor(str(item.get('debrid')))
+						else:
+							if item.get('provider') == 'easynews':
+								providerHighlight = getProviderHighlightColor('easynews')
+							else:
+								providerHighlight = getSourceHighlightColor()
+					else:
+						providerHighlight = getSourceHighlightColor()
 					size_label = str(round(item.get('size', ''), 2)) + ' GB' if item.get('size') else 'NA'
 					listitem.setProperty('umbrella.source_dict', jsdumps([item]))
 					listitem.setProperty('umbrella.debrid', self.debrid_abv(item.get('debrid')))
@@ -182,6 +194,7 @@ class SourceResultsXML(BaseDialog):
 					listitem.setProperty('umbrella.extra_info', extra_info)
 					listitem.setProperty('umbrella.size_label', size_label)
 					listitem.setProperty('umbrella.count', '%02d.)' % count)
+					listitem.setProperty('umbrella.providerhighlight', str(providerHighlight))
 					yield listitem
 				except:
 					from resources.lib.modules import log_utils

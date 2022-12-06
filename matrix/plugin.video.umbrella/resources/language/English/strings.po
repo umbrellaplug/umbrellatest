@@ -3954,3 +3954,23 @@ msgstr ""
 msgctxt "#40269"
 msgid "Recently Released"
 msgstr ""
+
+msgctxt "#40270"
+msgid "Real-Debrid Highlight Color"
+msgstr ""
+
+msgctxt "#40271"
+msgid "All-Debrid Highlight Color"
+msgstr ""
+
+msgctxt "#40272"
+msgid "Highlight Method"
+msgstr ""
+
+msgctxt "#40273"
+msgid "Premiumize Highlight Color"
+msgstr ""
+
+msgctxt "#40274"
+msgid "EasyNews Highlight Color"
+msgstr ""

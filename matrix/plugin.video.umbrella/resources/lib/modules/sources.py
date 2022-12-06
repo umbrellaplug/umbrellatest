@@ -857,6 +857,10 @@ class Sources:
 		local = [i for i in self.sources if 'local' in i and i['local'] is True] # for library and videoscraper (skips cache check)
 		self.sources = [i for i in self.sources if not i in local]
 		direct = [i for i in self.sources if i['direct'] == True] # acct scrapers (skips cache check)
+		if getSetting('easynews.enable') == 'true':
+			direct = direct
+		else:
+			direct = [i for i in direct if i['provider'] != 'easynews']
 		self.sources = [i for i in self.sources if not i in direct]
 		from copy import deepcopy
 		deepcopy_sources = deepcopy(self.sources)
@@ -891,8 +895,8 @@ class Sources:
 		if threads:
 			[i.start() for i in threads]
 			[i.join() for i in threads]
-
 		self.filter += direct # add direct links in to be considered in priority sorting
+		
 		try:
 			if len(self.prem_providers) > 1: # resort for debrid/direct priorty, when more than 1 account, because of order cache check threads finish
 				self.prem_providers.sort(key=lambda k: k[1])

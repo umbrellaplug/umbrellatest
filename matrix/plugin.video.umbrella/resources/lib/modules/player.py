@@ -106,14 +106,19 @@ class Player(xbmc.Player):
 						control.playlist.add(url, item)
 						playerWindow.setProperty('umbrella.playlistStart_position', str(0))
 						control.player.play(control.playlist)
+						control.log('[plugin.video.umbrella] Played file as playlist', log_utils.LOGDEBUG)
 					else:
 						if debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
 						else: control.resolve(int(argv[1]), True, item)
 				except:
 					if debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
 					else: control.resolve(int(argv[1]), True, item)
-			elif debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-			else: control.resolve(int(argv[1]), True, item)
+			elif debridPackCall: 
+				control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
+				control.log('[plugin.video.umbrella] Played file as player.play', log_utils.LOGDEBUG)
+			else: 
+				control.resolve(int(argv[1]), True, item)
+				control.log('[plugin.video.umbrella] Played file as resolve.', log_utils.LOGDEBUG)
 			homeWindow.setProperty('script.trakt.ids', jsdumps(self.ids))
 			self.keepAlive()
 			homeWindow.clearProperty('script.trakt.ids')

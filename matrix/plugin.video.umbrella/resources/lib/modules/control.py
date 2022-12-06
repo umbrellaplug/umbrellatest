@@ -373,6 +373,13 @@ def getHighlightColor():
 def getSourceHighlightColor():
 	return getColor(setting('sources.highlight.color'))
 
+def getProviderHighlightColor(sourcename):
+    #Real-Debrid
+    #Premiumize.me
+	sourcename = str(sourcename).lower()
+	source = 'sources.'+sourcename+'.color'
+	return getColor(setting(source))
+
 def getPlayNextBackgroundColor():
 	return getBackgroundColor(setting('playnext.background.color'))
 
