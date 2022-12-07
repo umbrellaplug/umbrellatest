@@ -151,6 +151,21 @@ class SourceResultsXML(BaseDialog):
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
+	def get_provider1_iconPath(self, provider):
+		try:
+			if provider == 'premiumize.me': provider = 'premiumize'
+			return joinPath(transPath('special://home/addons/plugin.video.umbrella/resources/skins/Default/media/resolution1'), '%s.png' % provider)
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+
+	def get_quality1_iconPath(self, quality):
+		try:
+			return joinPath(transPath('special://home/addons/plugin.video.umbrella/resources/skins/Default/media/resolution1'), '%s.png' % quality)
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+
 	def debrid_abv(self, debrid):
 		try:
 			d_dict = {'AllDebrid': 'AD', 'Premiumize.me': 'PM', 'Real-Debrid': 'RD'}
@@ -166,15 +181,18 @@ class SourceResultsXML(BaseDialog):
 					listitem = self.make_listitem()
 					quality = item.get('quality', 'SD')
 					quality_icon = self.get_quality_iconPath(quality)
+					quality1_icon = self.get_quality1_iconPath(quality)
 					extra_info = item.get('info')
 					#from resources.lib.modules import log_utils
 					#log_utils.log('Umbrella Sources Make Items: %s' % str(item.get('debrid')), log_utils.LOGINFO)
 					if getSetting('sources.highlightmethod') == '1':
 						if item.get('debrid') is not None and item.get('debrid') !='':
 							providerHighlight = getProviderHighlightColor(str(item.get('debrid')))
+							providerIcon = self.get_provider1_iconPath(str(item.get('debrid')).lower())
 						else:
 							if item.get('provider') == 'easynews':
 								providerHighlight = getProviderHighlightColor('easynews')
+								providerIcon = self.get_provider1_iconPath('easynews')
 							else:
 								providerHighlight = getSourceHighlightColor()
 					else:
@@ -195,6 +213,8 @@ class SourceResultsXML(BaseDialog):
 					listitem.setProperty('umbrella.size_label', size_label)
 					listitem.setProperty('umbrella.count', '%02d.)' % count)
 					listitem.setProperty('umbrella.providerhighlight', str(providerHighlight))
+					listitem.setProperty('umbrella.provider_icon1', str(providerIcon))
+					listitem.setProperty('umbrella.quality_icon1', str(quality1_icon))
 					yield listitem
 				except:
 					from resources.lib.modules import log_utils
@@ -212,7 +232,9 @@ class SourceResultsXML(BaseDialog):
 			self.setProperty('umbrella.season', str(self.meta.get('season', '')))
 			if 'tvshowtitle' in self.meta and 'season' in self.meta and 'episode' in self.meta: self.setProperty('umbrella.seas_ep', 'S%02dE%02d' % (int(self.meta['season']), int(self.meta['episode'])))
 			if self.meta.get('season_poster'):	self.setProperty('umbrella.poster', self.meta.get('season_poster', ''))
+			if self.meta.get('title'): self.setProperty('umbrella.title', self.meta.get('title'))
 			else: self.setProperty('umbrella.poster', self.meta.get('poster', ''))
+			self.setProperty('umbrella.poster1', self.meta.get('poster', ''))
 			self.setProperty('umbrella.clearlogo', self.meta.get('clearlogo', ''))
 			self.setProperty('umbrella.plot', self.meta.get('plot', ''))
 			self.setProperty('umbrella.year', str(self.meta.get('year', '')))

@@ -11,6 +11,76 @@
 			<texture>common/black.png</texture>
 		</control>
 
+<!-- Side Info -->
+        <control type="group">
+            <top>120</top>
+            <left>1400</left>
+            <control type="label">
+                <top>-900</top>
+                <width>400</width>
+                <font>font12</font>
+                <textcolor>AAFFFFFF</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <visible>!String.IsEmpty(Window().Property(umbrella.seas_ep))</visible>
+                <label>Season: [COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(umbrella.seas_ep)] [/COLOR]</label>
+            </control>
+            <control type="image">
+                <width>400</width>
+                <height>600</height>
+                <top>50</top>
+                <texture background="true">$INFO[Window().Property(umbrella.poster)]</texture>
+            </control>
+
+            <control type="group">
+                <top>420</top>
+                <control type="label">
+                    <top>20</top>
+                    <width>400</width>
+                    <font>font14</font>
+                    <textcolor>AAFFFFFF</textcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <label>[COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(item.info.title)] [/COLOR]</label>
+                </control>
+                <control type="label">
+                    <top>150</top>
+                    <width>400</width>
+                    <font>font12</font>
+                    <textcolor>AAFFFFFF</textcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <visible>String.IsEmpty(Window().Property(item.info.season))</visible>
+                    <label>Year: [COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(umbrella.year)] [/COLOR] | Duration: [COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]
+                    </label>
+                </control>
+                <control type="label">
+                    <top>120</top>
+                    <width>400</width>
+                    <font>font12</font>
+                    <textcolor>AAFFFFFF</textcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <visible>!String.IsEmpty(Window().Property(item.info.season))</visible>
+                    <label>Aired: [COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(item.info.aired)] [/COLOR]</label>
+                </control>
+
+                <control type="textbox">
+                    <wrapmultiline>true</wrapmultiline>
+                    <top>360</top>
+                    <left>-70</left>
+                    <height min="20" max="130">auto</height>
+                    <width>550</width>
+                    <font>font12</font>
+                    <textcolor>AAFFFFFF</textcolor>
+                    <align>center</align>
+                    <label>$INFO[Window().Property(umbrella.plot)]</label>
+                </control>
+            </control>
+
+        </control>
+
+<!-- Top Logo/picture  -->
 		<control type="group" id="1">
 			<description>List Header</description>
 			<left>25</left>
@@ -18,17 +88,17 @@
 			<height>80</height>
 			<width min="0" max="1920">auto</width>
 			<control type="textbox">
-				<description>Total Uncached Sources Label</description>
+				<description>Total Sources Label</description>
 				<left>50</left>
 				<top>110</top>
-				<width>425</width>
+				<width>300</width>
 				<height>40</height>
 				<font>font14</font>
 				<textcolor>white</textcolor>
 				<align>left</align>
 				<aligny>bottom</aligny>
 				<autoscroll>false</autoscroll>
-				<label>[COLOR lightblue]$INFO[Window().Property(umbrella.total_results)] Total Uncached Sources[/COLOR]</label>
+				<label>[COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.total_results)] Total Sources[/COLOR]</label>
 			</control>
 			<control type="image">
 				<description>clearlogo</description>
@@ -54,58 +124,7 @@
 				<!-- <visible>String.IsEmpty(Window().Property(umbrella.clearlogo))</visible> -->
 			<!-- </control> -->
 
-			<control type="textbox">
-				<description>Episode details</description>
-				<left>1345</left>
-				<top>110</top>
-				<width>486</width>
-				<height>40</height>
-				<font>font14</font>
-				<textcolor>white</textcolor>
-				<align>center</align>
-				<aligny>bottom</aligny>
-				<autoscroll>false</autoscroll>
-				<!-- <label>$INFO[Window().Property(umbrella.mpaa)]   [COLOR lightblue]|[/COLOR]   $INFO[Window().Property(umbrella.premiered)]   [COLOR lightblue]|[/COLOR]   $INFO[Window().Property(umbrella.duration)]m</label> -->
-				<label>$INFO[Window().Property(umbrella.seas_ep)]  [COLOR lightblue]|[/COLOR]  $INFO[Window().Property(umbrella.mpaa)]  [COLOR lightblue]|[/COLOR]  $INFO[Window().Property(umbrella.premiered)]  [COLOR lightblue]|[/COLOR]  $INFO[Window().Property(umbrella.duration)]m</label>
-				<visible>!String.IsEmpty(Window().Property(umbrella.season))</visible>
-			</control>
-			<control type="textbox">
-				<description>Movie details</description>
-				<left>1345</left>
-				<top>110</top>
-				<width>486</width>
-				<height>40</height>
-				<font>font14</font>
-				<textcolor>white</textcolor>
-				<align>center</align>
-				<aligny>bottom</aligny>
-				<autoscroll>false</autoscroll>
-				<label>$INFO[Window().Property(umbrella.mpaa)]   [COLOR lightblue]|[/COLOR]   $INFO[Window().Property(umbrella.year)]   [COLOR lightblue]|[/COLOR]   $INFO[Window().Property(umbrella.duration)]m</label>
-				<visible>String.IsEmpty(Window().Property(umbrella.season))</visible>
-			</control>
-			<control type="image">
-				<description>Poster</description>
-				<left>1350</left>
-				<top>150</top>
-				<width>486</width>
-				<height>729</height>
-				<aspectratio aligny="top">keep</aspectratio>
-				<texture background="true">$INFO[Window().Property(umbrella.poster)]</texture>
-			</control>
-			<control type="textbox">
-				<description>Plot</description>
-				<left>1350</left>
-				<top>879</top>
-				<width>486</width>
-				<height>185</height>
-				<font>font12</font>
-				<align>justify</align>
-				<aligny>top</aligny>
-				<wrapmultiline>true</wrapmultiline>
-				<label>$INFO[Window().Property(umbrella.plot)]</label>
-				<textcolor>white</textcolor>
-				<autoscroll time="2000" delay="5500" repeat="5000"></autoscroll>
-			</control>
+<!-- Sources List -->
 			<control type="list" id="2001">
 				<description>Uncached Torrent List</description>
 				<viewtype>list</viewtype>
