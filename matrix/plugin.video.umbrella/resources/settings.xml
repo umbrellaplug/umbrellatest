@@ -2335,7 +2335,7 @@
 				</setting>
 				<setting id="sources.easynews.color" type="integer" label="40274" help="">
 					<level>0</level>
-					<default>10</default>
+					<default>7</default>
 					<constraints>
 						<options>
 							<option label="32589">0</option>
@@ -2365,6 +2365,44 @@
 					<control type="list" format="string">
 						<heading>40274</heading>
 					</control>
+				</setting>
+				<setting id="sources.plexshare.color" type="integer" label="40276" help="">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="32589">0</option>
+							<option label="32590">1</option>
+							<option label="32591">2</option>
+							<option label="32592">3</option>
+							<option label="32593">4</option>
+							<option label="32594">5</option>
+							<option label="32595">6</option>
+							<option label="32596">7</option>
+							<option label="32597">8</option>
+							<option label="32666">9</option>
+							<option label="32667">10</option>
+							<option label="32668">11</option>
+							<option label="32669">12</option>
+							<option label="32670">13</option>
+							<option label="32671">14</option>
+							<option label="32598">15</option>
+							<option label="40082">16</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="sources.highlightmethod">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="list" format="string">
+						<heading>40276</heading>
+					</control>
+				</setting>
+				<setting id="sources.usecoloricons" type="boolean" label="40278" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
 				</setting>
 				<setting id="sources.group.sort" type="integer" label="32133" help="">
 					<level>0</level>

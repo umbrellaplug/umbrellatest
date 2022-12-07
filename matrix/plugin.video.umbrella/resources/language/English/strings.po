@@ -3978,3 +3978,15 @@ msgstr ""
 msgctxt "#40275"
 msgid "Use Player instead of Resolver"
 msgstr ""
+
+msgctxt "#40276"
+msgid "Plex Highlight Color"
+msgstr ""
+
+msgctxt "#40277"
+msgid "GDrive Highlight Color"
+msgstr ""
+
+msgctxt "#40278"
+msgid "Match quality icons to provider color"
+msgstr ""

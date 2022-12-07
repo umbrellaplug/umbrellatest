@@ -33,7 +33,7 @@
                 <align>center</align>
                 <aligny>center</aligny>
                 <visible>!String.IsEmpty(Window().Property(umbrella.seas_ep))</visible>
-                <label>Season: [COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(umbrella.seas_ep)] [/COLOR]</label>
+                <label>Season: [COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(umbrella.season)][/COLOR] Episode: [COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(umbrella.episode)][/COLOR]</label>
             </control>
             <control type="image">
                 <width>400</width>
@@ -52,6 +52,7 @@
                     <align>center</align>
                     <aligny>center</aligny>
                     <label>[COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(umbrella.title)] [/COLOR]</label>
+					<scroll>true</scroll>
                 </control>
                 <control type="label">
                     <top>150</top>
@@ -85,6 +86,7 @@
                     <textcolor>AAFFFFFF</textcolor>
                     <align>center</align>
                     <label>$INFO[Window().Property(umbrella.plot)]</label>
+					<autoscroll>true</autoscroll>
                 </control>
             </control>
 
@@ -157,6 +159,57 @@
 						<height>100</height>
 						<align>left</align>
 						<texture>$INFO[ListItem.Property(umbrella.quality_icon)]</texture>
+						<visible>!String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon RD</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="$INFO[Window().Property(umbrella.realdebridcolor)]">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.IsEqual(ListItem.Property(umbrella.debrid),Real-Debrid)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon AD</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="$INFO[Window().Property(umbrella.alldebridcolor)]">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.IsEqual(ListItem.Property(umbrella.debrid),AllDebrid)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon PM</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="$INFO[Window().Property(umbrella.premiumizecolor)]">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.IsEqual(ListItem.Property(umbrella.debrid),Premiumize)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon Plex</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="$INFO[Window().Property(umbrella.plexcolor)]">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.Contains(ListItem.Property(umbrella.provider),PLEXSHARE)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)+String.Contains(ListItem.Property(umbrella.source),DIRECT)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon EasyNews</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="$INFO[Window().Property(umbrella.easynewscolor)]">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.Contains(ListItem.Property(umbrella.provider),EASYNEWS)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)+String.Contains(ListItem.Property(umbrella.source),DIRECT)</visible>
 					</control>
 					<control type="label">
 						<description>Line1 link name</description>
@@ -287,6 +340,57 @@
 						<height>100</height>
 						<align>left</align>
 						<texture>$INFO[ListItem.Property(umbrella.quality_icon)]</texture>
+						<visible>!String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon RD</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="black">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.IsEqual(ListItem.Property(umbrella.debrid),Real-Debrid)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon AD</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="black">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.IsEqual(ListItem.Property(umbrella.debrid),AllDebrid)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon PM</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="black">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.IsEqual(ListItem.Property(umbrella.debrid),Premiumize)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon Plex</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="black">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.Contains(ListItem.Property(umbrella.provider),PLEXSHARE)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)+String.Contains(ListItem.Property(umbrella.source),DIRECT)</visible>
+					</control>
+					<control type="image">
+						<description>Quality Icon EasyNews</description>
+						<left>0</left>
+						<top>0</top>
+						<width>100</width>
+						<height>100</height>
+						<align>left</align>
+						<texture colordiffuse="black">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
+						<visible>String.Contains(ListItem.Property(umbrella.provider),EASYNEWS)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)+String.Contains(ListItem.Property(umbrella.source),DIRECT)</visible>
 					</control>
 					<control type="label">
 						<description>Line1 link name</description>

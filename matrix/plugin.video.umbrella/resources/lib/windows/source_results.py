@@ -5,7 +5,7 @@
 
 from json import dumps as jsdumps
 from urllib.parse import quote_plus
-from resources.lib.modules.control import joinPath, transPath, dialog, getProviderHighlightColor, getSourceHighlightColor, notification, setting as getSetting
+from resources.lib.modules.control import joinPath, transPath, dialog, getColor, getProviderHighlightColor, getSourceHighlightColor, notification, setting as getSetting
 from resources.lib.modules.source_utils import getFileType
 from resources.lib.modules import tools
 from resources.lib.windows.base import BaseDialog
@@ -174,6 +174,14 @@ class SourceResultsXML(BaseDialog):
 			d = ''
 		return d
 
+	def debrid_name(self, debrid):
+		try:
+			d_dict = {'AllDebrid': 'AllDebrid', 'Premiumize.me': 'Premiumize', 'Real-Debrid': 'Real-Debrid'}
+			d = d_dict[debrid]
+		except:
+			d = ''
+		return d
+
 	def make_items(self):
 		def builder():
 			for count, item in enumerate(self.results, 1):
@@ -199,7 +207,8 @@ class SourceResultsXML(BaseDialog):
 						providerHighlight = getSourceHighlightColor()
 					size_label = str(round(item.get('size', ''), 2)) + ' GB' if item.get('size') else 'NA'
 					listitem.setProperty('umbrella.source_dict', jsdumps([item]))
-					listitem.setProperty('umbrella.debrid', self.debrid_abv(item.get('debrid')))
+					listitem.setProperty('umbrella.debrid', self.debrid_name(item.get('debrid')))
+					listitem.setProperty('umbrella.debridabrv', self.debrid_abv(item.get('debrid')))
 					listitem.setProperty('umbrella.provider', item.get('provider').upper())
 					listitem.setProperty('umbrella.plexsource', item.get('plexsource', '').upper())
 					listitem.setProperty('umbrella.source', item.get('source').upper())
@@ -229,15 +238,22 @@ class SourceResultsXML(BaseDialog):
 	def set_properties(self):
 		if self.meta is None: return
 		try:
-			self.setProperty('umbrella.season', str(self.meta.get('season', '')))
-			if 'tvshowtitle' in self.meta and 'season' in self.meta and 'episode' in self.meta: self.setProperty('umbrella.seas_ep', 'S%02dE%02d' % (int(self.meta['season']), int(self.meta['episode'])))
-			if self.meta.get('season_poster'):	self.setProperty('umbrella.poster', self.meta.get('season_poster', ''))
+			#import web_pdb; web_pdb.set_trace()
+			if 'tvshowtitle' in self.meta and 'season' in self.meta and 'episode' in self.meta: 
+				self.setProperty('umbrella.seas_ep', 'S%02dE%02d' % (int(self.meta['season']), int(self.meta['episode'])))
+				self.setProperty('umbrella.season', str(self.meta.get('season', '')))
+				self.setProperty('umbrella.episode', str(self.meta.get('episode', '')))
 			if self.meta.get('title'): self.setProperty('umbrella.title', self.meta.get('title'))
+			if self.meta.get('season_poster'):	self.setProperty('umbrella.poster', self.meta.get('season_poster', ''))
 			else: self.setProperty('umbrella.poster', self.meta.get('poster', ''))
-			self.setProperty('umbrella.poster1', self.meta.get('poster', ''))
+			if self.meta.get('fanart'): self.setProperty('umbrella.poster1', self.meta.get('fanart', ''))
+			else: self.setProperty('umbrella.poster1', 'common/fanart.jpg')
 			self.setProperty('umbrella.clearlogo', self.meta.get('clearlogo', ''))
 			self.setProperty('umbrella.plot', self.meta.get('plot', ''))
-			self.setProperty('umbrella.year', str(self.meta.get('year', '')))
+			if self.meta.get('premiered'):
+				from datetime import datetime
+				pdate = datetime.strptime(self.meta.get('premiered'), '%Y-%m-%d').date().year
+				self.setProperty('umbrella.year', str(pdate))
 			new_date = tools.convert_time(stringTime=str(self.meta.get('premiered', '')), formatInput='%Y-%m-%d', formatOutput='%m-%d-%Y', zoneFrom='utc', zoneTo='utc')
 			self.setProperty('umbrella.premiered', new_date)
 			if self.meta.get('mpaa'): self.setProperty('umbrella.mpaa', self.meta.get('mpaa'))
@@ -248,6 +264,19 @@ class SourceResultsXML(BaseDialog):
 			else: self.setProperty('umbrella.duration', 'NA ')
 			self.setProperty('umbrella.total_results', self.total_results)
 			self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
+			if getSetting('sources.usecoloricons') == 'true':
+				self.setProperty('umbrella.usecoloricons', '1')
+			else:
+				self.setProperty('umbrella.usecoloricons', '0')
+			if getSetting('sources.highlightmethod') == '1':
+				self.setProperty('umbrella.useprovidercolors', '1')
+				self.setProperty('umbrella.realdebridcolor', getColor(getSetting('sources.real-debrid.color')))
+				self.setProperty('umbrella.alldebridcolor', getColor(getSetting('sources.alldebrid.color')))
+				self.setProperty('umbrella.premiumizecolor', getColor(getSetting('sources.premiumize.me.color')))
+				self.setProperty('umbrella.plexcolor', getColor(getSetting('sources.plexshare.color')))
+				self.setProperty('umbrella.easynewscolor', getColor(getSetting('sources.easynews.color')))
+			else:
+				self.setProperty('umbrella.useprovidercolors', '0')
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()

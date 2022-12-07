@@ -7,6 +7,8 @@ from resources.lib.modules import control, log_utils, my_accounts
 from sys import version_info, platform as sys_platform
 from threading import Thread
 import xbmc
+import time
+from datetime import timedelta
 window = control.homeWindow
 pythonVersion = '{}.{}.{}'.format(version_info[0], version_info[1], version_info[2])
 plugin = 'plugin://plugin.video.umbrella/'
@@ -239,31 +241,45 @@ class PremAccntNotification:
 			if account_info:
 				if not account_info['isSubscribed']:
 					# log_utils.log('AD account_info = %s' % account_info, log_utils.LOGINFO)
-					expires = datetime.fromtimestamp(account_info['premiumUntil'])
+					try:
+						expires = datetime.fromtimestamp(account_info['premiumUntil'])
+					except:
+						expires = datetime.today()-timedelta(days=1)
+						control.notification(message='AllDebrid Account has no expiration. Invalid or free account.', icon=control.joinPath(control.artPath(), 'alldebrid.png'))
 					days_remaining = (expires - datetime.today()).days # int
-					if self.withinRangeCheck('alldebrid', days_remaining):
-						control.notification(message='AllDebrid Account expires in %s days' % days_remaining, icon=control.joinPath(control.artPath(), 'alldebrid.png'))
+					if days_remaining >= 0:
+						if self.withinRangeCheck('alldebrid', days_remaining):
+							control.notification(message='AllDebrid Account expires in %s days' % days_remaining, icon=control.joinPath(control.artPath(), 'alldebrid.png'))
 
 		if control.setting('premiumizeusername') != '' and control.setting('premiumizeexpirynotice') == 'true':
 			account_info = premiumize.Premiumize().account_info()
 			if account_info:
 				# log_utils.log('PM account_info = %s' % account_info, log_utils.LOGINFO)
-				expires = datetime.fromtimestamp(account_info['premium_until'])
+				try: 
+					expires = datetime.fromtimestamp(account_info['premium_until'])
+				except:
+					expires = datetime.today()-timedelta(days=1)
+					control.notification(message='Premiumize.me Account has no expiration. Invalid or free account.', icon=control.joinPath(control.artPath(), 'premiumize.png'))
 				days_remaining = (expires - datetime.today()).days # int
-				if self.withinRangeCheck('premiumize', days_remaining):
-					control.notification(message='Premiumize.me Account expires in %s days' % days_remaining, icon=control.joinPath(control.artPath(), 'premiumize.png'))
+				if days_remaining >= 0:
+					if self.withinRangeCheck('premiumize', days_remaining):
+						control.notification(message='Premiumize.me Account expires in %s days' % days_remaining, icon=control.joinPath(control.artPath(), 'premiumize.png'))
 
 		if control.setting('realdebridusername') != '' and control.setting('realdebridexpirynotice') == 'true':
 			account_info = realdebrid.RealDebrid().account_info()
 			if account_info:
-				import time
 				# log_utils.log('RD account_info = %s' % account_info, log_utils.LOGINFO)
 				FormatDateTime = "%Y-%m-%dT%H:%M:%S.%fZ"
 				try: expires = datetime.strptime(account_info['expiration'], FormatDateTime)
-				except: expires = datetime(*(time.strptime(account_info['expiration'], FormatDateTime)[0:6]))
+				except: 
+					try: expires = datetime(*(time.strptime(account_info['expiration'], FormatDateTime)[0:6]))
+					except: 
+						expires = datetime.today()-timedelta(days=1)
+						control.notification(message='Real-Debrid Account has no expiration. Invalid or free account.', icon=control.joinPath(control.artPath(), 'realdebrid.png'))
 				days_remaining = (expires - datetime.today()).days # int
-				if self.withinRangeCheck('realdebrid', days_remaining):
-					control.notification(message='Real-Debrid Account expires in %s days' % days_remaining, icon=control.joinPath(control.artPath(), 'realdebrid.png'))
+				if days_remaining >= 0:
+					if self.withinRangeCheck('realdebrid', days_remaining):
+						control.notification(message='Real-Debrid Account expires in %s days' % days_remaining, icon=control.joinPath(control.artPath(), 'realdebrid.png'))
 
 	def withinRangeCheck(self, debrid_provider, days_remaining):
 		if days_remaining < 15:
