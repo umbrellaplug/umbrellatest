@@ -51,7 +51,7 @@
                     <textcolor>AAFFFFFF</textcolor>
                     <align>center</align>
                     <aligny>center</aligny>
-                    <label>[COLOR $INFO[Window().Property(settings.color)]]$INFO[Window().Property(umbrella.title)] [/COLOR]</label>
+                    <label>$INFO[Window().Property(umbrella.title)]</label>
 					<scroll>true</scroll>
                 </control>
                 <control type="label">
@@ -79,14 +79,14 @@
                 <control type="textbox">
                     <wrapmultiline>true</wrapmultiline>
                     <top>360</top>
-                    <left>-70</left>
+                    <left>-30</left>
                     <height min="20" max="130">auto</height>
-                    <width>550</width>
+                    <width>480</width>
                     <font>font12</font>
                     <textcolor>AAFFFFFF</textcolor>
                     <align>center</align>
                     <label>$INFO[Window().Property(umbrella.plot)]</label>
-					<autoscroll>true</autoscroll>
+					<scroll>true</scroll>
                 </control>
             </control>
 
