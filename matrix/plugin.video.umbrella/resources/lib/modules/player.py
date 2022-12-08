@@ -86,6 +86,7 @@ class Player(xbmc.Player):
 			self.meta = meta
 			poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta = self.getMeta(meta)
 			self.offset = Bookmarks().get(name=self.name, imdb=imdb, tmdb=tmdb, tvdb=tvdb, season=season, episode=episode, year=self.year, runtime=meta.get('duration') if meta else 0)
+			xbmc.log('[ plugin.video.umbrella ] Play_item Function Item URL: %s' % str(url), LOGINFO)
 			if self.offset == '-1':
 				log_utils.log('User requested playback cancel', level=log_utils.LOGDEBUG)
 				control.notification(message=32328)
@@ -108,7 +109,7 @@ class Player(xbmc.Player):
 						control.playlist.add(url, item)
 						playerWindow.setProperty('umbrella.playlistStart_position', str(0))
 						control.player.play(control.playlist)
-						control.log('[plugin.video.umbrella] Played file as playlist', log_utils.LOGDEBUG)
+						control.log('[plugin.video.umbrella] Played file as playlist', log_utils.LOGINFO)
 					else:
 						if debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
 						else: control.resolve(int(argv[1]), True, item)
@@ -117,10 +118,10 @@ class Player(xbmc.Player):
 					else: control.resolve(int(argv[1]), True, item)
 			elif debridPackCall or self.playeronly: 
 				control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-				control.log('[plugin.video.umbrella] Played file as player.play', log_utils.LOGDEBUG)
+				control.log('[plugin.video.umbrella] Played file as player.play', log_utils.LOGINFO)
 			else: 
 				control.resolve(int(argv[1]), True, item)
-				control.log('[plugin.video.umbrella] Played file as resolve.', log_utils.LOGDEBUG)
+				control.log('[plugin.video.umbrella] Played file as resolve.', log_utils.LOGINFO)
 			homeWindow.setProperty('script.trakt.ids', jsdumps(self.ids))
 			self.keepAlive()
 			homeWindow.clearProperty('script.trakt.ids')
@@ -217,7 +218,7 @@ class Player(xbmc.Player):
 			return (poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta)
 
 	def getWatchedPercent(self):
-		control.log('[plugin.video.umbrella] GetWatchedPercent is checking.', log_utils.LOGDEBUG)
+		control.log('[plugin.video.umbrella] GetWatchedPercent is checking.', log_utils.LOGINFO)
 		if self.isPlayback():
 			try:
 				position = self.getTime()
@@ -245,6 +246,7 @@ class Player(xbmc.Player):
 		return remaining_time
 
 	def keepAlive(self):
+		xbmc.log('[ plugin.video.umbrella ] KeepAlive Started', LOGINFO)
 		pname = '%s.player.overlay' % control.addonInfo('id')
 		homeWindow.clearProperty(pname)
 		for i in range(0, 500):
@@ -258,7 +260,7 @@ class Player(xbmc.Player):
 		self.onPlayBackEnded_ran = False
 		try: running_path = self.getPlayingFile() # original video that playlist playback started with
 		except: running_path = ''
-
+		xbmc.log('[ plugin.video.umbrella ] KeepAlive Running Path: %s' % running_path, LOGINFO)
 		if playerWindow.getProperty('umbrella.playlistStart_position'): pass
 		else:
 			if control.playlist.size() > 1: playerWindow.setProperty('umbrella.playlistStart_position', str(control.playlist.getposition()))
@@ -279,7 +281,7 @@ class Player(xbmc.Player):
 				if self.media_type == 'movie':
 					try:
 						if watcher and property != '5':
-							control.log('[plugin.video.umbrella] Keep Alive is going to mark during playback.', log_utils.LOGDEBUG)
+							control.log('[plugin.video.umbrella] KeepAlive is going to mark during playback.', log_utils.LOGINFO)
 							homeWindow.setProperty(pname, '5')
 							playcount.markMovieDuringPlayback(self.imdb, '5')
 					except: pass
@@ -308,6 +310,7 @@ class Player(xbmc.Player):
 				log_utils.error()
 				xbmc.sleep(1000)
 		homeWindow.clearProperty(pname)
+		xbmc.log('[ plugin.video.umbrella ] KeepAlive playlist_skip: %s' % playlist_skip, LOGINFO)
 		if playlist_skip: pass
 		else:
 			if (int(self.current_time) > 180 and (self.getWatchedPercent() < 85)): # kodi is unreliable issuing callback "onPlayBackStopped" and "onPlayBackEnded"

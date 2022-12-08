@@ -1,8 +1,9 @@
 
-[B][COLOR black]Update - v6.5.958 - Dec 7th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.959 - Dec 8th, 2022[/COLOR][/B]
 --[FIX][I] Added enable/ disable for EasyNews.[I]
 --[FIX][I] Changed logging when set to kodi log to use higher level so debug logs show without enabling Kodi debug.[I]
---[FIX][I] Additional logging added to trace red coat crashes.[I]
+--[FIX][I] Even more logging added to trace red coat crashes.[I]
+--[ENHANCEMENT][I] 17 to 43 color selections! Buddy the Elf, What's your favorite color?[I]
 --[ENHANCEMENT][I] Added color options for providers in source selection. More work to be done there.[I]
 --[ENHANCEMENT][I] Adjusted Quality Icons[I]
 --[ENHANCEMENT][I] Added plain icons to go with colors for quality on sources, can be turned off in settings.[I]

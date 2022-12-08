@@ -193,14 +193,15 @@ class SourceResultsXML(BaseDialog):
 					extra_info = item.get('info')
 					#from resources.lib.modules import log_utils
 					#log_utils.log('Umbrella Sources Make Items: %s' % str(item.get('debrid')), log_utils.LOGINFO)
+					providerHighlight = getSourceHighlightColor()
 					if getSetting('sources.highlightmethod') == '1':
 						if item.get('debrid') is not None and item.get('debrid') !='':
 							providerHighlight = getProviderHighlightColor(str(item.get('debrid')))
-							providerIcon = self.get_provider1_iconPath(str(item.get('debrid')).lower())
 						else:
 							if item.get('provider') == 'easynews':
 								providerHighlight = getProviderHighlightColor('easynews')
-								providerIcon = self.get_provider1_iconPath('easynews')
+							elif str(item.get('provider')).lower() == 'plexshare':
+								providerHighlight = getProviderHighlightColor('plexshare')
 							else:
 								providerHighlight = getSourceHighlightColor()
 					else:
@@ -222,7 +223,6 @@ class SourceResultsXML(BaseDialog):
 					listitem.setProperty('umbrella.size_label', size_label)
 					listitem.setProperty('umbrella.count', '%02d.)' % count)
 					listitem.setProperty('umbrella.providerhighlight', str(providerHighlight))
-					listitem.setProperty('umbrella.provider_icon1', str(providerIcon))
 					listitem.setProperty('umbrella.quality_icon1', str(quality1_icon))
 					yield listitem
 				except:
