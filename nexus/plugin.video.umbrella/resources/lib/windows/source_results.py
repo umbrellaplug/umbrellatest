@@ -9,6 +9,7 @@ from resources.lib.modules.control import joinPath, transPath, dialog, getColor,
 from resources.lib.modules.source_utils import getFileType
 from resources.lib.modules import tools
 from resources.lib.windows.base import BaseDialog
+import datetime
 
 
 class SourceResultsXML(BaseDialog):
@@ -251,8 +252,10 @@ class SourceResultsXML(BaseDialog):
 			self.setProperty('umbrella.clearlogo', self.meta.get('clearlogo', ''))
 			self.setProperty('umbrella.plot', self.meta.get('plot', ''))
 			if self.meta.get('premiered'):
-				from datetime import datetime
-				pdate = datetime.strptime(self.meta.get('premiered'), '%Y-%m-%d').date().year
+				try:
+					pdate = datetime.strptime(self.meta.get('premiered'), '%Y-%m-%d').year
+				except:
+					pdate = ''
 				self.setProperty('umbrella.year', str(pdate))
 			new_date = tools.convert_time(stringTime=str(self.meta.get('premiered', '')), formatInput='%Y-%m-%d', formatOutput='%m-%d-%Y', zoneFrom='utc', zoneTo='utc')
 			self.setProperty('umbrella.premiered', new_date)

@@ -16,7 +16,7 @@ LOGFATAL = 4
 LOGNONE = 5 # not used
 
 debug_list = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'FATAL']
-DEBUGPREFIX = '[ Umbrella: %s ]'
+DEBUGPREFIX = '[ plugin.video.umbrella: %s ]'
 LOGPATH = transPath('special://logpath/')
 
 
@@ -61,9 +61,9 @@ def log(msg, caller=None, level=LOGINFO):
 					f.write(line.rstrip('\r\n') + '\n' + log_file)
 		else:
 			import xbmc
-			if level == 0:
-				level = 1
-			xbmc.log('%s: %s' % (DEBUGPREFIX % debug_list[level], msg), level)
+			if level == LOGINFO:
+				mylevel = 2
+			xbmc.log('%s: %s' % (DEBUGPREFIX % debug_list[level], msg), mylevel)
 	except Exception as e:
 		import traceback
 		traceback.print_exc()

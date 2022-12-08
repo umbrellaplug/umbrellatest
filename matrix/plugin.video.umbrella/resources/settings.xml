@@ -95,7 +95,7 @@
 				</setting>
 				<setting id="highlight.color" type="integer" label="40039" help="">
 					<level>0</level>
-					<default>2</default>
+					<default>7</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
@@ -362,7 +362,7 @@
 				</setting>
 				<setting id="movie.unaired.identify" type="integer" label="35526" help="40252">
 					<level>0</level>
-					<default>8</default>
+					<default>42</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
@@ -1047,7 +1047,7 @@
 				</setting>
 				<setting id="unaired.identify" type="integer" label="32608" help="40253">
 					<level>0</level>
-					<default>8</default>
+					<default>42</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
@@ -2183,7 +2183,7 @@
 				</setting>
 				<setting id="scraper.dialog.color" type="integer" label="32164" help="">
 					<level>0</level>
-					<default>5</default>
+					<default>43</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
@@ -2333,7 +2333,7 @@
 				</setting>
 				<setting id="sources.highlight.color" type="integer" label="32132" help="">
 					<level>0</level>
-					<default>5</default>
+					<default>28</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
@@ -2392,7 +2392,7 @@
 				</setting>
 				<setting id="sources.real-debrid.color" type="integer" label="40270" help="">
 					<level>0</level>
-					<default>1</default>
+					<default>17</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
@@ -2510,7 +2510,7 @@
 				</setting>
 				<setting id="sources.premiumize.me.color" type="integer" label="40273" help="">
 					<level>0</level>
-					<default>12</default>
+					<default>26</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
@@ -2569,7 +2569,7 @@
 				</setting>
 				<setting id="sources.easynews.color" type="integer" label="40274" help="">
 					<level>0</level>
-					<default>7</default>
+					<default>19</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
@@ -2628,7 +2628,7 @@
 				</setting>
 				<setting id="sources.plexshare.color" type="integer" label="40276" help="">
 					<level>0</level>
-					<default>0</default>
+					<default>14</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
