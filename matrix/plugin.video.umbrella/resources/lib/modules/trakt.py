@@ -1275,7 +1275,7 @@ def scrobbleEpisode(imdb, tmdb, tvdb, season, episode, watched_percent):
 	except: log_utils.error()
 
 def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh=True, widgetRefresh=False):
-	control.log('[plugin.video.umbrella] scrobbleReset started.', log_utils.LOGINFO)
+	log_utils.log('[plugin.video.umbrella] scrobbleReset started.', level=log_utils.LOGDEBUG)
 	if not getTraktCredentialsInfo(): return
 	control.busy()
 	success = False
@@ -1285,7 +1285,7 @@ def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh
 		if resume_info == '0': return control.hide() # returns string "0" if no data in db 
 		headers['Authorization'] = 'Bearer %s' % getSetting('trakt.user.token')
 		success = session.delete('https://api.trakt.tv/sync/playback/%s' % resume_info[1], headers=headers).status_code == 204
-		control.log('[plugin.video.umbrella] scrobbleReset in process.', log_utils.LOGINFO)
+		log_utils.log('[plugin.video.umbrella] scrobbleReset in process.', level=log_utils.LOGDEBUG)
 		if content_type == 'movie':
 			items = [{'type': 'movie', 'movie': {'ids': {'imdb': imdb}}}]
 			label_string = resume_info[0]
@@ -1300,10 +1300,10 @@ def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh
 			if refresh: control.refresh()
 			if widgetRefresh: control.trigger_widget_refresh() # skinshortcuts handles the widget_refresh when plyback ends, but not a manual clear from Trakt Manager
 			if getSetting('trakt.scrobble.notify') == 'true': control.notification(title=32315, message='Successfuly Removed playback progress:  [COLOR %s]%s[/COLOR]' % (highlight_color, label_string))
-			log_utils.log('Successfuly Removed Trakt Playback Progress:  %s  with resume_id=%s' % (label_string, str(resume_info[1])), __name__, level=log_utils.LOGINFO)
+			log_utils.log('Successfuly Removed Trakt Playback Progress:  %s  with resume_id=%s' % (label_string, str(resume_info[1])), __name__, level=log_utils.LOGDEBUG)
 		else:
 			if getSetting('trakt.scrobble.notify') == 'true': control.notification(title=32315, message='Failed to Remove playback progress:  [COLOR %s]%s[/COLOR]' % (highlight_color, label_string))
-			log_utils.log('Failed to Remove Trakt Playback Progress:  %s  with resume_id=%s' % (label_string, str(resume_info[1])), __name__, level=log_utils.LOGINFO)
+			log_utils.log('Failed to Remove Trakt Playback Progress:  %s  with resume_id=%s' % (label_string, str(resume_info[1])), __name__, level=log_utils.LOGDEBUG)
 	except: log_utils.error()
 
 def scrobbleResetItems(imdb_ids, tvdb_dicts=None, refresh=True, widgetRefresh=False):
@@ -1366,15 +1366,15 @@ def scrobbleResetItems(imdb_ids, tvdb_dicts=None, refresh=True, widgetRefresh=Fa
 
 #############    SERVICE SYNC    ######################
 def trakt_service_sync():
-	control.log('[ plugin.video.umbrella ]  Trakt Service-Sync Checking.', log_utils.LOGDEBUG)
+	log_utils.log('[ plugin.video.umbrella ]  Trakt Service-Sync Checking.', log_utils.LOGDEBUG)
 	while not control.monitor.abortRequested():
 		control.sleep(5000) # wait 5sec in case of device wake from sleep
 		try:
 			internets = control.condVisibility('System.InternetState') #added for some systems have removed Internet State apparently.
-			control.log('[ plugin.video.umbrella ] Trakt Service Sync InternetState: %s '% control.condVisibility('System.InternetState'), log_utils.LOGDEBUG)
+			log_utils.log('[ plugin.video.umbrella ] Trakt Service Sync InternetState: %s '% control.condVisibility('System.InternetState'), log_utils.LOGDEBUG)
 			if internets == False:
 				internets = control.condVisibility('System.HasNetwork')
-				control.log('[ plugin.video.umbrella ] Trakt Service Sync HasNetwork: %s '% control.condVisibility('System.HasNetwork'), log_utils.LOGDEBUG)
+				log_utils.log('[ plugin.video.umbrella ] Trakt Service Sync HasNetwork: %s '% control.condVisibility('System.HasNetwork'), log_utils.LOGDEBUG)
 		except:
 			log_utils.error()
 		if internets and getTraktCredentialsInfo(): # run service in case user auth's trakt later
@@ -1391,6 +1391,7 @@ def trakt_service_sync():
 			sync_watch_list(activities)
 			sync_popular_lists()
 			sync_trending_lists()
+			log_utils.log('[ plugin.video.umbrella ] Trakt Service Sync Completed.', log_utils.LOGDEBUG)
 		if control.monitor.waitForAbort(60*service_syncInterval): break
 
 def force_traktSync():

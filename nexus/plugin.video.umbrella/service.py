@@ -141,6 +141,8 @@ class VersionIsUpdateCheck:
 				window.setProperty('umbrella.updated', 'true')
 				curVersion = control.getUmbrellaVersion()
 				clearDB_version = '6.5.58' # set to desired version to force any db clearing needed
+				if len(curVersion) > 6:
+					clearDB_version = '6.5.500'
 				do_cacheClear = (int(oldVersion.replace('.', '')) < int(clearDB_version.replace('.', '')) <= int(curVersion.replace('.', '')))
 				if do_cacheClear:
 					clr_fanarttv = False
@@ -165,7 +167,7 @@ class VersionIsUpdateCheck:
 
 class SyncTraktCollection:
 	def run(self):
-		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Disabled...', LOGINFO)
+		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Import Disabled...', LOGINFO)
 		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Starting...', LOGINFO)
 		#control.execute('RunPlugin(%s?action=library_tvshowsToLibrarySilent&url=traktcollection)' % plugin)
 		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync TV Shows Complete', LOGINFO)

@@ -951,24 +951,24 @@ class libtvshows:
 		if service_notification and not control.condVisibility('Window.IsVisible(infodialog)') and not control.condVisibility('Player.HasVideo'):
 			control.notification(message=32645)
 		from resources.lib.modules import log_utils
-		log_utils.log('#### silent service called to update library', __name__, log_utils.LOGINFO) # newlognov
+		log_utils.log('[ plugin.video.umbrella ] silent service called to update library', __name__, level=log_utils.LOGDEBUG) # newlognov
 		from resources.lib.menus import tvshows
 		items = tvshows.TVshows().get(url, idx=False)
 		if not items: items = []
 		total_added = 0
-		log_utils.log('#### number items to add: %s' % len(items), __name__, log_utils.LOGINFO) # newlognov
+		log_utils.log('[ plugin.video.umbrella ] number items to add: %s' % len(items), __name__, level=log_utils.LOGDEBUG) # newlognov
 		for i in items:
 			if control.monitor.abortRequested(): return sysexit()
 			try:
 				from resources.lib.modules import log_utils
-				log_utils.log('#### adding item: (%s) ids={imdb: %s, tmdb: %s, tvdb: %s year: %s}' % (i['title'], i['imdb'], i['tmdb'], i['tvdb'], i['year']), __name__, log_utils.LOGINFO) # newlognov
+				log_utils.log('[ plugin.video.umbrella ] adding item: (%s) ids={imdb: %s, tmdb: %s, tvdb: %s year: %s}' % (i['title'], i['imdb'], i['tmdb'], i['tvdb'], i['year']), __name__, level=log_utils.LOGDEBUG) # newlognov
 				files_added = self.add(i['title'], i['year'], i['imdb'], i['tmdb'], i['tvdb'], range=True)
 				if general_notification and files_added > 0: control.notification(title=i['title'], message=32554)
 				if files_added:
 					if files_added > 0: total_added += 1
 			except Exception as e: 
 				from resources.lib.modules import log_utils
-				log_utils.log('tvshowtitle: (%s) ids={imdb: %s, tmdb: %s, tvdb: %s} was not added due to exception: %s:' % (i['title'], i['imdb'], i['tmdb'], i['tvdb'], str(e)), __name__, log_utils.LOGINFO) # log show that had issues.
+				log_utils.log('[ plugin.video.umbrella ] tvshowtitle: (%s) ids={imdb: %s, tmdb: %s, tvdb: %s} was not added due to exception: %s:' % (i['title'], i['imdb'], i['tmdb'], i['tvdb'], str(e)), __name__, level=log_utils.LOGDEBUG) # log show that had issues.
 		if self.library_update == 'true' and not control.condVisibility('Library.IsScanningVideo') and total_added > 0:
 			if contains:
 				control.sleep(10000)

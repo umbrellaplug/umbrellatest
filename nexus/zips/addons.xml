@@ -181,11 +181,12 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.959 - Dec 8th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.959 - Dec 9th, 2022[/COLOR][/B]
 --[ENHANCEMENT][I] 17 to 35 color selections! "Buddy the Elf, What's your favorite color?"[I]
 --[FIX][I] Added enable/ disable for EasyNews.[I]
 --[FIX][I] Changed logging when set to kodi log to use higher level so debug logs show without enabling Kodi debug.[I]
 --[FIX][I] Even more logging added to trace red-coat crashes.[I]
+--[FIX][I] Info logging changed to debug.[I]
 --[ENHANCEMENT][I] Playnext changed to allow for percentage or time. subtitles coming (wtf), explanations later.[I]
 --[ENHANCEMENT][I] Playnext changed to allow themes to be used without skins. It's currently broken af so leave that on default unless you're using that skin.[I]
 --[ENHANCEMENT][I] Added color options for providers in source selection. More work to be done there. Uncached Needs a lot.[I]
