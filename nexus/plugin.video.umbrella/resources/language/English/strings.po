@@ -1984,7 +1984,7 @@ msgid "[COLOR magenta]████████  [B]Magenta[B][/COLOR]"
 msgstr ""
 
 msgctxt "#32597"
-msgid "[COLOR yellowgreen]████████ [B]Yellow Green[/B][/COLOR]"
+msgid "[COLOR yellowgreen]████████  [B]Yellow Green[/B][/COLOR]"
 msgstr ""
 
 msgctxt "#32598"
@@ -4012,7 +4012,7 @@ msgid "[COLOR peru]████████  [B]Peru[/B][/COLOR]"
 msgstr ""
 
 msgctxt "#40288"
-msgid "[COLOR orangered]████████  [B]Orange Red[/B][/COLOR]"
+msgid "[COLOR orangered]████████  [B]Orange[/B][/COLOR]"
 msgstr ""
 
 msgctxt "#40289"
@@ -4123,5 +4123,46 @@ msgctxt "#40315"
 msgid "[COLOR darkgreen]████████  [B]Dark Green[/B][/COLOR]"
 msgstr ""
 
+msgctxt "#40316"
+msgid "Default Theme"
+msgstr ""
 
+msgctxt "#40317"
+msgid "AH2 Style"
+msgstr ""
 
+msgctxt "#40318"
+msgid "Netflix Style"
+msgstr ""
+
+msgctxt "#40319"
+msgid "Playnext Popup Theme"
+msgstr ""
+
+msgctxt "#40320"
+msgid "Seconds Remaining"
+msgstr ""
+
+msgctxt "#40321"
+msgid "Percentage"
+msgstr ""
+
+msgctxt "#40322"
+msgid "Subtitles"
+msgstr ""
+
+msgctxt "#40323"
+msgid "Playnext Popup Trigger"
+msgstr ""
+
+msgctxt "#40324"
+msgid "Playnext Notification Percentage"
+msgstr ""
+
+msgctxt "#40325"
+msgid "Playnext Backup Time"
+msgstr ""
+
+msgctxt "#40326"
+msgid "Playnext will attempt to use the time from the last subtitle to trigger popup. If no subtitles found, backup time is used."
+msgstr ""

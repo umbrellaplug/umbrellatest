@@ -32,7 +32,7 @@
                 <textcolor>AAFFFFFF</textcolor>
                 <align>center</align>
                 <aligny>center</aligny>
-                <visible>!String.IsEmpty(Window().Property(umbrella.seas_ep))</visible>
+                <visible>!String.IsEmpty(Window().Property(umbrella.season))</visible>
                 <label>Season: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.season)][/COLOR] Episode: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.episode)][/COLOR]</label>
             </control>
             <control type="image">
@@ -61,8 +61,8 @@
                     <textcolor>AAFFFFFF</textcolor>
                     <align>center</align>
                     <aligny>center</aligny>
-                    <visible>String.IsEmpty(Window().Property(umbrella.season))</visible>
-                    <label>Year: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.year)] [/COLOR] | Duration: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]
+                    <visible>!String.IsEmpty(Window().Property(umbrella.season))</visible>
+                    <label>$INFO[Window().Property(umbrella.mpaa)] | Year: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.year)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]
                     </label>
                 </control>
                 <control type="label">
@@ -72,8 +72,8 @@
                     <textcolor>AAFFFFFF</textcolor>
                     <align>center</align>
                     <aligny>center</aligny>
-                    <visible>!String.IsEmpty(Window().Property(umbrella.season))</visible>
-                    <label>Premiered: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.premiered)] [/COLOR]</label>
+                    <visible>String.IsEmpty(Window().Property(umbrella.season))</visible>
+                    <label>$INFO[Window().Property(umbrella.mpaa)] | Premiered: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.premiered)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]</label>
                 </control>
 
                 <control type="textbox">
@@ -169,7 +169,7 @@
 						<height>100</height>
 						<align>left</align>
 						<texture colordiffuse="$INFO[Window().Property(umbrella.realdebridcolor)]">$INFO[ListItem.Property(umbrella.quality_icon1)]</texture>
-						<visible>String.IsEqual(ListItem.Property(umbrella.debrid),Real-Debrid)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
+						<visible>String.IsEqual(ListItem.Property(umbrella.debrid),Real-Debrid)+String.IsEqual(Window().Property(umbrella.usecoloricons),1)+String.IsEqual(Window().Property(umbrella.useprovidercolors),1)</visible>
 					</control>
 					<control type="image">
 						<description>Quality Icon AD</description>

@@ -361,15 +361,15 @@ def autoTraktSubscription(tvshowtitle, year, imdb, tvdb): #---start adding TMDb 
 # 	return color
 
 def getBackgroundColor(n):
-	colorChart = ('black','white','whitesmoke', 'lightgray', 'gray', 'beige', 'darkgoldenrod', 'gold', 'yellow', 'peru', 'orangered',
-						'red', 'pink','deeppink','fuchsia','lightcoral', 'darkred', 'maroon', 'blueviolet', 'darkorchid', 'purple', 'indigo', 'darkslateblue', 'slateblue','navy', 'blue', 'deepskyblue', 'dodgerblue','skyblue', 'powderblue', 'turquoise', 'cyan', 'aqua','aquamarine','greenyellow','mediumspringgreen','green', 'lime', 'limegreen', 'yellowgreen', 'forestgreen', 'lawngreen', 'darkgreen')
+	colorChart = ('black','white', 'lightgray', 'gray', 'beige', 'darkgoldenrod', 'gold', 'yellow', 'peru', 'orangered',
+						'pink','deeppink','fuchsia','lightcoral', 'darkred', 'maroon', 'blueviolet', 'darkorchid', 'purple', 'indigo', 'darkslateblue', 'slateblue','navy', 'blue', 'deepskyblue', 'dodgerblue','skyblue', 'powderblue', 'turquoise', 'cyan', 'aqua','aquamarine','greenyellow','mediumspringgreen','green', 'lime')
 	if not n: n = '0'
 	color = colorChart[int(n)]
 	return color 
 
 def getColor(n):
-	colorChart = ('black','white','whitesmoke', 'lightgray', 'gray', 'beige', 'darkgoldenrod', 'gold', 'yellow', 'peru', 'orangered',
-						'red', 'pink','deeppink','fuchsia','lightcoral', 'darkred', 'maroon', 'blueviolet', 'darkorchid', 'purple', 'indigo', 'darkslateblue', 'slateblue','navy', 'blue', 'deepskyblue', 'dodgerblue','skyblue', 'powderblue', 'turquoise', 'cyan', 'aqua','aquamarine','greenyellow','mediumspringgreen','green', 'lime', 'limegreen', 'yellowgreen', 'forestgreen', 'lawngreen', 'darkgreen')
+	colorChart = ('black','white', 'lightgray', 'gray', 'beige', 'darkgoldenrod', 'gold', 'yellow', 'peru', 'orangered',
+						'pink','deeppink','fuchsia','lightcoral', 'darkred', 'maroon', 'blueviolet', 'darkorchid', 'purple', 'indigo', 'darkslateblue', 'slateblue','navy', 'blue', 'deepskyblue', 'dodgerblue','skyblue', 'powderblue', 'turquoise', 'cyan', 'aqua','aquamarine','greenyellow','mediumspringgreen','green', 'lime')
 	if not n: n = '0'
 	color = colorChart[int(n)]
 	return color

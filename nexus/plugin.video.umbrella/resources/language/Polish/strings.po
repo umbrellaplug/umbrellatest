@@ -5075,3 +5075,195 @@ msgstr ""
 msgctxt "#40274"
 msgid "EasyNews Highlight Color"
 msgstr ""
+
+msgctxt "#40275"
+msgid "Use Player instead of Resolver"
+msgstr ""
+
+msgctxt "#40276"
+msgid "Plex Highlight Color"
+msgstr ""
+
+msgctxt "#40277"
+msgid "GDrive Highlight Color"
+msgstr ""
+
+msgctxt "#40278"
+msgid "Match quality icons to provider color"
+msgstr ""
+
+msgctxt "#40283"
+msgid "[COLOR lightgray]████████  [B]Light Gray[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40284"
+msgid "[COLOR gray]████████  [B]Gray[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40285"
+msgid "[COLOR beige]████████  [B]Beige[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40286"
+msgid "[COLOR darkgoldenrod]████████  [B]Dark Goldenrod[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40287"
+msgid "[COLOR peru]████████  [B]Peru[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40288"
+msgid "[COLOR orangered]████████  [B]Orange[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40289"
+msgid "[COLOR pink]████████  [B]Pink[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40290"
+msgid "[COLOR fuchsia]████████  [B]Fuchsia[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40291"
+msgid "[COLOR lightcoral]████████  [B]Light Coral[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40292"
+msgid "[COLOR darkred]████████  [B]Dark Red[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40293"
+msgid "[COLOR maroon]████████  [B]Maroon[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40294"
+msgid "[COLOR blueviolet]████████  [B]Blue Violet[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40295"
+msgid "[COLOR darkorchid]████████  [B]Dark Orchid[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40296"
+msgid "[COLOR purple]████████  [B]Purple[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40297"
+msgid "[COLOR indigo]████████  [B]Indigo[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40298"
+msgid "[COLOR darkslateblue]████████  [B]Dark Slate Blue[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40299"
+msgid "[COLOR slateblue]████████  [B]Slate Blue[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40300"
+msgid "[COLOR navy]████████  [B]Navy[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40301"
+msgid "[COLOR blue]████████  [B]Blue[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40302"
+msgid "[COLOR dodgerblue]████████  [B]Dodger Blue[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40303"
+msgid "[COLOR skyblue]████████  [B]Sky Blue[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40304"
+msgid "[COLOR powderblue]████████  [B]Powder Blue[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40305"
+msgid "[COLOR turquoise]████████  [B]Turquoise[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40306"
+msgid "[COLOR cyan]████████  [B]Cyan[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40307"
+msgid "[COLOR aqua]████████  [B]Aqua[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40308"
+msgid "[COLOR aquamarine]████████  [B]Aqua Marine[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40309"
+msgid "[COLOR greenyellow]████████  [B]Green Yellow[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40310"
+msgid "[COLOR mediumspringgreen]████████  [B]Medium Spring Green[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40311"
+msgid "[COLOR green]████████  [B]Green[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40312"
+msgid "[COLOR lime]████████  [B]Lime[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40313"
+msgid "[COLOR forestgreen]████████  [B]Forest Green[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40314"
+msgid "[COLOR lawngreen]████████  [B]Lawn Green[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40315"
+msgid "[COLOR darkgreen]████████  [B]Dark Green[/B][/COLOR]"
+msgstr ""
+
+msgctxt "#40316"
+msgid "Default Theme"
+msgstr ""
+
+msgctxt "#40317"
+msgid "AH2 Style"
+msgstr ""
+
+msgctxt "#40318"
+msgid "Netflix Style"
+msgstr ""
+
+msgctxt "#40319"
+msgid "Playnext Popup Theme"
+msgstr ""
+
+msgctxt "#40320"
+msgid "Seconds Remaining"
+msgstr ""
+
+msgctxt "#40321"
+msgid "Percentage"
+msgstr ""
+
+msgctxt "#40322"
+msgid "Subtitles"
+msgstr ""
+
+msgctxt "#40323"
+msgid "Playnext Popup Trigger"
+msgstr ""
+
+msgctxt "#40324"
+msgid "Playnext Notification Percentage"
+msgstr ""
+
+msgctxt "#40325"
+msgid "Playnext Backup Time"
+msgstr ""
+
+msgctxt "#40326"
+msgid "Playnext will attempt to use the time from the last subtitle to trigger popup. If no subtitles found, backup time is used."
+msgstr ""

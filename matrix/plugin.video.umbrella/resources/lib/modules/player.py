@@ -43,6 +43,7 @@ class Player(xbmc.Player):
 		self.meta = {}
 		self.enable_playnext = getSetting('enable.playnext') == 'true'
 		self.playnext_time = int(getSetting('playnext.time')) or 60
+		self.playnext_percentage = int(getSetting('playnext.percent')) or 80
 		self.traktCredentials = trakt.getTraktCredentialsInfo()
 		self.onPlayBackEnded_ran = False
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
@@ -297,9 +298,21 @@ class Player(xbmc.Player):
 									xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_preScrapeNext)')
 									self.preScrape_triggered = True
 								remaining_time = self.getRemainingTime()
-								if remaining_time < (self.playnext_time + 1) and remaining_time != 0:
-									xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
-									self.play_next_triggered = True
+								if getSetting('playnext.method')== '0':
+									if remaining_time < (self.playnext_time + 1) and remaining_time != 0:
+										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
+										self.play_next_triggered = True
+								elif getSetting('playnext.method')== '1':	
+									if self.getWatchedPercent() >= int(self.playnext_percentage) and remaining_time != 0:
+										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
+										self.play_next_triggered = True
+								elif getSetting('playnext.method')=='2':
+									xbmc.log('[ plugin.video.umbrella ] Playnext is set to subtitle but this method is not ready. Stop pressing buttons. :) Diverting to 80 percent.', LOGINFO)
+									if self.getWatchedPercent() >= int(self.playnext_percentage) and remaining_time != 0:
+										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
+										self.play_next_triggered = True
+								else:
+									xbmc.log('[ plugin.video.umbrella ] No match found for playnext method.', LOGINFO)
 							if int(control.playlist.size()) == 1 and self.playlist_built == False:
 								self.buildPlaylist()
 								self.playlist_built = True
@@ -541,12 +554,11 @@ class PlayNext(xbmc.Player):
 			next_meta = self.getNext_meta()
 			if not next_meta: raise Exception()
 			#some changes here for playnext and themes.
-			skin = control.skin
 			from resources.lib.windows.playnext import PlayNextXML
-			if skin in ('skin.arctic.horizon.2') and control.setting('enable.playnext.theme')=='true':
-				window = PlayNextXML('ahplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif skin in ('skin.auramod') and control.setting('enable.playnext.theme')=='true':
+			if getSetting('playnext.theme') == '2':
 				window = PlayNextXML('auraplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
+			elif getSetting('playnext.theme') == '1':
+				window = PlayNextXML('ahplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			else:
 				window = PlayNextXML('playnext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			window.run()
@@ -560,12 +572,11 @@ class PlayNext(xbmc.Player):
 		try:
 			next_meta = self.getNext_meta()
 			if not next_meta: raise Exception()
-			skin = control.skin
 			from resources.lib.windows.playnext_stillwatching import StillWatchingXML
-			if skin in ('skin.arctic.horizon.2') and control.setting('enable.playnext.theme')=='true':
-				window = StillWatchingXML('ahplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif skin in ('skin.auramod') and control.setting('enable.playnext.theme')=='true':
+			if getSetting('playnext.theme') == '1':
 				window = StillWatchingXML('auraplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
+			elif getSetting('playnext.theme') == '2':
+				window = StillWatchingXML('ahplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
 			else:
 				window = StillWatchingXML('playnext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
 			window.run()

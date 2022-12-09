@@ -100,47 +100,40 @@
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<control type="list" format="string">
@@ -367,47 +360,40 @@
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<control type="list" format="string">
@@ -1052,47 +1038,40 @@
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -1134,25 +1113,104 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="enable.playnext.theme" type="boolean" label="40102" help="">
+				<setting id="playnext.theme" type="integer" label="40319" help="" parent="enable.playnext">
 					<level>0</level>
-					<default>true</default>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="40316">0</option>
+							<option label="40317">1</option>
+							<option label="40318">2</option>
+						</options>
+					</constraints>
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="enable.playnext">true</condition>
 						</dependency>
 					</dependencies>
+					<control type="spinner" format="string"/>
+				</setting>
+				<setting id="playnext.background.color" type="integer" label="40091" help="" parent="enable.playnext">
+					<level>0</level>
+					<default>0</default>
+					<constraints>
+						<options>
+							<option label="40082">0</option>
+							<option label="32670">1</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
+						</options>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="enable.playnext">true</condition>
+							<condition operator="is" setting="playnext.theme">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="list" format="string">
+						<heading>40091</heading>
+					</control>
+				</setting>
+				<setting id="enable.playnext.theme" type="boolean" label="40102" help="" parent="enable.playnext">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting id="showHelpPlayNext" type="action" label="32137" help="">
+				<setting id="playnext.method" type="integer" label="40323" help="">
 					<level>0</level>
-					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_ShowHelp&amp;name=playnext)</data>
+					<default>0</default>
 					<constraints>
-						<allowempty>true</allowempty>
+						<options>
+							<option label="40320">0</option>
+							<option label="40321">1</option>
+							<option label="40322">2</option>
+						</options>
 					</constraints>
-					<control type="button" format="action"/>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="enable.playnext">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="spinner" format="string"/>
 				</setting>
-				<setting id="playnext.time" type="integer" label="40029" help="" parent="">
+				<setting id="playnext.time" type="integer" label="40029" help="" parent="playnext.method">
 					<level>0</level>
 					<default>60</default>
 					<constraints>
@@ -1162,6 +1220,42 @@
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="is" setting="enable.playnext">true</condition>
+							<condition operator="is" setting="playnext.method">0</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="playnext.percent" type="integer" label="40324" help="" parent="playnext.method">>
+					<level>0</level>
+					<default>80</default>
+					<constraints>
+						<minimum>30</minimum>
+						<maximum>100</maximum>
+						<step>5</step>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="enable.playnext">true</condition>
+							<condition operator="is" setting="playnext.method">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="playnext.subtitles" type="integer" label="40325" help="40326" parent="playnext.method">>
+					<level>0</level>
+					<default>60</default>
+					<constraints>
+						<minimum>10</minimum>
+						<maximum>300</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="enable.playnext">true</condition>
+							<condition operator="is" setting="playnext.method">2</condition>
 						</dependency>
 					</dependencies>
 					<control type="slider" format="integer">
@@ -1185,65 +1279,6 @@
 					</dependencies>
 					<control type="list" format="string">
 						<heading>40065</heading>
-					</control>
-				</setting>
-				<setting id="playnext.background.color" type="integer" label="40091" help="" parent="">
-					<level>0</level>
-					<default>0</default>
-					<constraints>
-						<options>
-							<option label="40082">0</option>
-							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
-						</options>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="enable.playnext">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="list" format="string">
-						<heading>40091</heading>
 					</control>
 				</setting>
 				<setting id="playnext.hidebutton" type="boolean" label="40101" help="" parent="">
@@ -1290,6 +1325,14 @@
 					<control type="list" format="string">
 						<heading>40025</heading>
 					</control>
+				</setting>
+				<setting id="showHelpPlayNext" type="action" label="32137" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_ShowHelp&amp;name=playnext)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action"/>
 				</setting>
 			</group>
 			<group id="3" label="35056">
@@ -2183,52 +2226,45 @@
 				</setting>
 				<setting id="scraper.dialog.color" type="integer" label="32164" help="">
 					<level>0</level>
-					<default>43</default>
+					<default>0</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<control type="list" format="string">
@@ -2338,47 +2374,40 @@
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -2397,47 +2426,40 @@
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -2456,47 +2478,40 @@
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -2515,47 +2530,40 @@
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -2574,47 +2582,40 @@
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -2633,47 +2634,40 @@
 						<options>
 							<option label="40082">0</option>
 							<option label="32670">1</option>
-							<option label="32671">2</option>
-							<option label="40283">3</option>
-							<option label="40284">4</option>
-							<option label="40285">5</option>
-							<option label="40286">6</option>
-							<option label="32595">7</option>
-							<option label="32591">8</option>
-							<option label="40287">9</option>
-							<option label="40288">10</option>
-							<option label="32590">11</option>
-							<option label="40289">12</option>
-							<option label="32592">13</option>
-							<option label="40290">14</option>
-							<option label="40291">15</option>
-							<option label="40292">16</option>
-							<option label="40293">17</option>
-							<option label="40294">18</option>
-							<option label="40295">19</option>
-							<option label="40296">20</option>
-							<option label="40297">21</option>
-							<option label="40298">22</option>
-							<option label="40299">23</option>
-							<option label="40300">24</option>
-							<option label="40301">25</option>
-							<option label="32669">26</option>
-							<option label="40302">27</option>
-							<option label="40303">28</option>
-							<option label="40304">29</option>
-							<option label="40305">30</option>
-							<option label="40306">31</option>
-							<option label="40307">32</option>
-							<option label="40308">33</option>
-							<option label="40309">34</option>
-							<option label="40310">35</option>
-							<option label="40311">36</option>
-							<option label="40312">37</option>
-							<option label="32668">38</option>
-							<option label="32597">39</option>
-							<option label="40313">40</option>
-							<option label="40314">41</option>
-							<option label="40315">42</option>
+							<option label="40283">2</option>
+							<option label="40284">3</option>
+							<option label="40285">4</option>
+							<option label="40286">5</option>
+							<option label="32595">6</option>
+							<option label="32591">7</option>
+							<option label="40287">8</option>
+							<option label="40288">9</option>
+							<option label="40289">10</option>
+							<option label="32592">11</option>
+							<option label="40290">12</option>
+							<option label="40291">13</option>
+							<option label="40292">14</option>
+							<option label="40293">15</option>
+							<option label="40294">16</option>
+							<option label="40295">17</option>
+							<option label="40296">18</option>
+							<option label="40297">19</option>
+							<option label="40298">20</option>
+							<option label="40299">21</option>
+							<option label="40300">22</option>
+							<option label="40301">23</option>
+							<option label="32669">24</option>
+							<option label="40302">25</option>
+							<option label="40303">26</option>
+							<option label="40304">27</option>
+							<option label="40305">28</option>
+							<option label="40306">29</option>
+							<option label="40307">30</option>
+							<option label="40308">31</option>
+							<option label="40309">32</option>
+							<option label="40310">33</option>
+							<option label="40311">34</option>
+							<option label="40312">35</option>
 						</options>
 					</constraints>
 					<dependencies>

@@ -252,10 +252,7 @@ class SourceResultsXML(BaseDialog):
 			self.setProperty('umbrella.clearlogo', self.meta.get('clearlogo', ''))
 			self.setProperty('umbrella.plot', self.meta.get('plot', ''))
 			if self.meta.get('premiered'):
-				try:
-					pdate = datetime.strptime(self.meta.get('premiered'), '%Y-%m-%d').year
-				except:
-					pdate = ''
+				pdate = str(self.meta.get('premiered'))[:4]
 				self.setProperty('umbrella.year', str(pdate))
 			new_date = tools.convert_time(stringTime=str(self.meta.get('premiered', '')), formatInput='%Y-%m-%d', formatOutput='%m-%d-%Y', zoneFrom='utc', zoneTo='utc')
 			self.setProperty('umbrella.premiered', new_date)
