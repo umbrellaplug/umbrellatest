@@ -3,7 +3,7 @@
 	Umbrella Add-on
 """
 
-from resources.lib.modules import control, log_utils, my_accounts
+from resources.lib.modules import control, log_utils
 from sys import version_info, platform as sys_platform
 from threading import Thread
 import xbmc

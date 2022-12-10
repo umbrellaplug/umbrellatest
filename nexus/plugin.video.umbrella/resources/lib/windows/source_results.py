@@ -203,6 +203,8 @@ class SourceResultsXML(BaseDialog):
 								providerHighlight = getProviderHighlightColor('easynews')
 							elif str(item.get('provider')).lower() == 'plexshare':
 								providerHighlight = getProviderHighlightColor('plexshare')
+							elif str(item.get('provider')).lower() == 'gdrive':
+								providerHighlight = getProviderHighlightColor('gdrive')
 							else:
 								providerHighlight = getSourceHighlightColor()
 					else:
@@ -271,6 +273,8 @@ class SourceResultsXML(BaseDialog):
 				self.setProperty('umbrella.premiumizecolor', getColor(getSetting('sources.premiumize.me.color')))
 				self.setProperty('umbrella.plexcolor', getColor(getSetting('sources.plexshare.color')))
 				self.setProperty('umbrella.easynewscolor', getColor(getSetting('sources.easynews.color')))
+				self.setProperty('umbrella.gdrivecolor', getColor(getSetting('sources.gdrive.color')))
+				
 				if getSetting('sources.usecoloricons') == 'true':
 					self.setProperty('umbrella.usecoloricons', '1')
 				else:

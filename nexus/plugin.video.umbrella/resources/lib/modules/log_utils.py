@@ -60,10 +60,10 @@ def log(msg, caller=None, level=LOGINFO):
 					f.seek(0, 0)
 					f.write(line.rstrip('\r\n') + '\n' + log_file)
 		else:
+			if level == 0:
+				level = 1
 			import xbmc
-			if level == LOGINFO:
-				mylevel = 2
-			xbmc.log('%s: %s' % (DEBUGPREFIX % debug_list[level], msg), mylevel)
+			xbmc.log('%s: %s' % (DEBUGPREFIX % debug_list[level], msg), level)
 	except Exception as e:
 		import traceback
 		traceback.print_exc()

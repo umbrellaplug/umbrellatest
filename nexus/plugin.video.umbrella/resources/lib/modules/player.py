@@ -52,6 +52,16 @@ class Player(xbmc.Player):
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
 		try:
+			log_utils.log('[ plugin.video.umbrella ] From player.play_source() Title: %s' % str(title), level=log_utils.LOGDEBUG)
+			log_utils.log('[ plugin.video.umbrella ] From player.play_source() Year: %s' % str(year), level=log_utils.LOGDEBUG)
+			log_utils.log('[ plugin.video.umbrella ] From player.play_source() Season: %s' % str(season), level=log_utils.LOGDEBUG)
+			log_utils.log('[ plugin.video.umbrella ] From player.play_source() Episode: %s' % str(episode), level=log_utils.LOGDEBUG)
+			log_utils.log('[ plugin.video.umbrella ] From player.play_source() IMDB: %s TMDB: %s TVDB: %s' % (str(imdb), str(tmdb), str(tvdb)), level=log_utils.LOGDEBUG)
+			log_utils.log('[ plugin.video.umbrella ] From player.play_source() URL: %s' % str(url), level=log_utils.LOGDEBUG)
+			log_utils.log('[ plugin.video.umbrella ] From player.play_source() Meta: %s' % str(meta), level=log_utils.LOGDEBUG)
+		except:
+			log_utils.error()
+		try:
 			from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 			if not url: raise Exception
 			self.media_type = 'movie' if season is None or episode is None else 'episode'
@@ -87,7 +97,6 @@ class Player(xbmc.Player):
 			self.meta = meta
 			poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta = self.getMeta(meta)
 			self.offset = Bookmarks().get(name=self.name, imdb=imdb, tmdb=tmdb, tvdb=tvdb, season=season, episode=episode, year=self.year, runtime=meta.get('duration') if meta else 0)
-			log_utils.log('[ plugin.video.umbrella ] Play_item Function Item URL: %s' % str(url), level=log_utils.LOGDEBUG)
 			if self.offset == '-1':
 				log_utils.log('User requested playback cancel', level=log_utils.LOGDEBUG)
 				control.notification(message=32328)
@@ -110,7 +119,7 @@ class Player(xbmc.Player):
 						control.playlist.add(url, item)
 						playerWindow.setProperty('umbrella.playlistStart_position', str(0))
 						control.player.play(control.playlist)
-						log_utils.log('[plugin.video.umbrella] Played file as playlist', level=log_utils.LOGDEBUG)
+						log_utils.log('[ plugin.video.umbrella ] Played file as playlist', level=log_utils.LOGDEBUG)
 					else:
 						if debridPackCall: control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
 						else: control.resolve(int(argv[1]), True, item)
@@ -119,10 +128,10 @@ class Player(xbmc.Player):
 					else: control.resolve(int(argv[1]), True, item)
 			elif debridPackCall or self.playeronly: 
 				control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-				log_utils.log('[plugin.video.umbrella] Played file as player.play', level=log_utils.LOGDEBUG)
+				log_utils.log('[ plugin.video.umbrella ] Played file as player.play', level=log_utils.LOGDEBUG)
 			else: 
 				control.resolve(int(argv[1]), True, item)
-				log_utils.log('[plugin.video.umbrella] Played file as resolve.', level=log_utils.LOGDEBUG)
+				log_utils.log('[ plugin.video.umbrella ] Played file as resolve.', level=log_utils.LOGDEBUG)
 			homeWindow.setProperty('script.trakt.ids', jsdumps(self.ids))
 			self.keepAlive()
 			homeWindow.clearProperty('script.trakt.ids')
@@ -219,7 +228,7 @@ class Player(xbmc.Player):
 			return (poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta)
 
 	def getWatchedPercent(self):
-		log_utils.log('[plugin.video.umbrella] GetWatchedPercent is checking.', level=log_utils.LOGDEBUG)
+		log_utils.log(' [ plugin.video.umbrella ] GetWatchedPercent is checking.', level=log_utils.LOGDEBUG)
 		if self.isPlayback():
 			try:
 				position = self.getTime()
@@ -247,7 +256,7 @@ class Player(xbmc.Player):
 		return remaining_time
 
 	def keepAlive(self):
-		log_utils.log('[ plugin.video.umbrella ] KeepAlive Started', level=log_utils.LOGDEBUG)
+		log_utils.log(' [ plugin.video.umbrella ] KeepAlive Started', level=log_utils.LOGDEBUG)
 		pname = '%s.player.overlay' % control.addonInfo('id')
 		homeWindow.clearProperty(pname)
 		for i in range(0, 500):
@@ -261,7 +270,7 @@ class Player(xbmc.Player):
 		self.onPlayBackEnded_ran = False
 		try: running_path = self.getPlayingFile() # original video that playlist playback started with
 		except: running_path = ''
-		log_utils.log('[ plugin.video.umbrella ] KeepAlive Running Path: %s' % running_path, level=log_utils.LOGDEBUG)
+		log_utils.log(' [ plugin.video.umbrella ] KeepAlive Running Path: %s' % running_path, level=log_utils.LOGDEBUG)
 		if playerWindow.getProperty('umbrella.playlistStart_position'): pass
 		else:
 			if control.playlist.size() > 1: playerWindow.setProperty('umbrella.playlistStart_position', str(control.playlist.getposition()))
@@ -282,7 +291,7 @@ class Player(xbmc.Player):
 				if self.media_type == 'movie':
 					try:
 						if watcher and property != '5':
-							log_utils.log('[plugin.video.umbrella] KeepAlive is going to mark during playback.', level=log_utils.LOGDEBUG)
+							log_utils.log(' [ plugin.video.umbrella ] KeepAlive is going to mark during playback.', level=log_utils.LOGDEBUG)
 							homeWindow.setProperty(pname, '5')
 							playcount.markMovieDuringPlayback(self.imdb, '5')
 					except: pass
@@ -306,11 +315,6 @@ class Player(xbmc.Player):
 									if self.getWatchedPercent() >= int(self.playnext_percentage) and remaining_time != 0:
 										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 										self.play_next_triggered = True
-								elif getSetting('playnext.method')=='2':
-									log_utils.log('[ plugin.video.umbrella ] Playnext is set to subtitle but this method is not ready. Stop pressing buttons. :) Diverting to 80 percent.', level=log_utils.LOGDEBUG)
-									if self.getWatchedPercent() >= int(self.playnext_percentage) and remaining_time != 0:
-										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
-										self.play_next_triggered = True
 								else:
 									log_utils.log('[ plugin.video.umbrella ] No match found for playnext method.', level=log_utils.LOGDEBUG)
 							if int(control.playlist.size()) == 1 and self.playlist_built == False:
@@ -323,7 +327,7 @@ class Player(xbmc.Player):
 				log_utils.error()
 				xbmc.sleep(1000)
 		homeWindow.clearProperty(pname)
-		log_utils.log('[ plugin.video.umbrella ] KeepAlive playlist_skip: %s' % playlist_skip, level=log_utils.LOGDEBUG)
+		log_utils.log(' [ plugin.video.umbrella ] KeepAlive playlist_skip: %s' % playlist_skip, level=log_utils.LOGDEBUG)
 		if playlist_skip: pass
 		else:
 			if (int(self.current_time) > 180 and (self.getWatchedPercent() < 85)): # kodi is unreliable issuing callback "onPlayBackStopped" and "onPlayBackEnded"
