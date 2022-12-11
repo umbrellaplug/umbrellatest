@@ -4164,7 +4164,7 @@ msgid "Backup # of Seconds Remaining"
 msgstr ""
 
 msgctxt "#40326"
-msgid "Playnext will attempt to use the time from the last subtitle to trigger popup. If no subtitles found, backup time is used."
+msgid "Playnext will attempt to use the time from the last subtitle to trigger popup. If no subtitles found, backup time or percentage is used."
 msgstr ""
 
 msgctxt "#40327"
@@ -4178,4 +4178,3 @@ msgstr ""
 msgctxt "#40329"
 msgid "# of Seconds Remaining"
 msgstr ""
-

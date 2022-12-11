@@ -1,5 +1,5 @@
 
-[B][COLOR black]Update - v6.5.959 - Dec 10th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.960 - Dec 10th, 2022[/COLOR][/B]
 --[ENHANCEMENT][I] 17 to 35 color selections! "Buddy the Elf, What's your favorite color?"[I]
 --[FIX][I] Added enable/ disable for EasyNews.[I]
 --[FIX][I] Changed logging when set to kodi log to use higher level so debug logs show without enabling Kodi debug.[I]
