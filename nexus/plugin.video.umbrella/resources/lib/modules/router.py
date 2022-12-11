@@ -730,19 +730,18 @@ def router(argv2):
 			play_next = PlayNext()
 			play_next.display_xml()
 			del play_next
-		elif action == "play_nextWindowXMLBackup":
-			from resources.lib.modules.player import PlayNext
-			play_next = PlayNext()
-			play_next.display_backup_xml(title, imdb, tmdb, tvdb, season, episode)
-			del play_next
 		elif action == 'play_All': # context menu works same as "Play from Here"
 			control.player2().play(control.playlist) 
 		elif action == 'play_URL':
 			caller = params.get('caller')
 			if caller == 'realdebrid':
 				from resources.lib.debrid import realdebrid
-				if params.get('type') == 'unrestrict': control.player.play(realdebrid.RealDebrid().unrestrict_link(url.replace(' ', '%20')))
-				else: control.player.play(url.replace(' ', '%20'))
+				if params.get('type') == 'unrestrict':
+					log_utils.log('Real-Debrid play_URL type: unrestrict with URL: %s' % str(url.replace(' ', '%20')), level=log_utils.LOGDEBUG)
+					control.player.play(realdebrid.RealDebrid().unrestrict_link(url.replace(' ', '%20')))
+				else: 
+					log_utils.log('Real-Debrid play_URL with URL: %s' % str(url.replace(' ', '%20')), level=log_utils.LOGDEBUG)
+					control.player.play(url.replace(' ', '%20'))
 			elif caller == 'alldebrid':
 				from resources.lib.debrid import alldebrid
 				if params.get('type') == 'unrestrict': control.player.play(alldebrid.AllDebrid().unrestrict_link(url.replace(' ', '%20')))

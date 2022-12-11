@@ -31,13 +31,8 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.960 - Dec 10th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.961 - Dec 11th, 2022[/COLOR][/B]
 --[ENHANCEMENT][I] 17 to 35 color selections! "Buddy the Elf, What's your favorite color?"[I]
---[FIX][I] Added enable/ disable for EasyNews.[I]
---[FIX][I] Changed logging when set to kodi log to use higher level so debug logs show without enabling Kodi debug.[I]
---[FIX][I] Even more logging added to trace red-coat crashes.[I]
---[FIX][I] Info logging changed to debug.[I]
---[FIX][I] Forcing CoCoScrapers update.[/I]
 --[ENHANCEMENT][I] Couple small playnext changes.[I]
 --[ENHANCEMENT][I] Playnext changed to allow for percentage or time.[I]
 --[ENHANCEMENT][I] Playnext changed to allow themes to be used without skins. It's currently broken af so leave that on default unless you're using that skin.[I]
@@ -46,6 +41,12 @@
 --[ENHANCEMENT][I] Added plain icons to go with colors for quality on sources, can be turned off in settings.[I]
 --[ENHANCEMENT][I] Changed source selection to use artwork for background.[I]
 --[ENHANCEMENT][I] Added developer option to use player instead of resolver.[I]
+--[FIX][I] Changed playnext subtitle check to check if already downloaded.[/I]
+--[FIX][I] Added enable/ disable for EasyNews.[I]
+--[FIX][I] Changed logging when set to kodi log to use higher level so debug logs show without enabling Kodi debug.[I]
+--[FIX][I] Even more logging added to trace red-coat crashes.[I]
+--[FIX][I] Info logging changed to debug.[I]
+--[FIX][I] Forcing CoCoScrapers update.[/I]
 		</news>
 	</extension>
 </addon>

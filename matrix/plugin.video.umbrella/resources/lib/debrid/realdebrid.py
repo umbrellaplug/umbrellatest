@@ -303,6 +303,7 @@ class RealDebrid:
 				label = '%02d | %.2f GB | %s  | [I]%s [/I]' % (count, size, datetime_object, name)
 				url_link = item['download']
 				url = '%s?action=play_URL&url=%s' % (sysaddon, url_link)
+				log_utils.log('Real-Debrid item added with URL: %s' % str(url), level=log_utils.LOGDEBUG)
 				cm.append((downloadMenu, 'RunPlugin(%s?action=download&name=%s&image=%s&url=%s&caller=realdebrid)' %
 								(sysaddon, quote_plus(name), quote_plus(rd_icon), url_link)))
 				cm.append((deleteMenu % 'File', 'RunPlugin(%s?action=rd_DeleteDownload&id=%s&name=%s)' %
