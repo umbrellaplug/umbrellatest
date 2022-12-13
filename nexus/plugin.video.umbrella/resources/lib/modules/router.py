@@ -77,6 +77,7 @@ def router(argv2):
 	elif action == 'movieSearchterm':
 		from resources.lib.menus import movies
 		movies.Movies().search_term(name)
+	#added for tmdb based searches for movies.
 	elif action == 'moviePerson':
 		from resources.lib.menus import movies
 		movies.Movies().person()

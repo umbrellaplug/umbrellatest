@@ -164,7 +164,7 @@
 	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.python.module" library="resources/lib/" />
 	<extension point="xbmc.addon.metadata">
-		<reuselanguageinvoker>true</reuselanguageinvoker>
+		<reuselanguageinvoker>false</reuselanguageinvoker>
 		<summary lang="en">[B]Umbrella[/B] - We do not host any of the contents streamed</summary>
 		<description lang="en">[B]Umbrella[/B][CR] This addon does not form part of the Kodi Media Centre. Please do not seek assistance with this addon from any of the Official Kodi Support Channels.[CR]The author does not host any of the content in this addon and takes no responsibility for content found. We do not know anything about a lab under Raccoon City.</description>
 		<platform>all</platform>
@@ -181,7 +181,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.96-97 - Dec 11th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.96-97 - Dec 13th, 2022[/COLOR][/B]
 --[ENHANCEMENT][I] 17 to 35 color selections! "Buddy the Elf, What's your favorite color?"[I]
 --[ENHANCEMENT][I] Couple small playnext changes.[I]
 --[ENHANCEMENT][I] Playnext changed to allow for percentage or time or last subtitle time.[I]
@@ -191,6 +191,7 @@
 --[ENHANCEMENT][I] Added plain icons to go with colors for quality on sources, can be turned off in settings.[I]
 --[ENHANCEMENT][I] Changed source selection to use artwork for background.[I]
 --[ENHANCEMENT][I] Added developer option to use player with url only for resolver.[I]
+--[ENHANCEMENT][I] Added trending from tmdb for day and week for both movies and tv.[I]
 --[FIX][I] Removed test version detection to stop accidentally deleting trakt and settings.[I]
 --[FIX][I] Changed playnext subtitle check to check if already downloaded.[/I]
 --[FIX][I] Added enable/ disable for EasyNews.[I]
@@ -199,6 +200,7 @@
 --[FIX][I] Info logging changed to debug.[I]
 --[FIX][I] Forcing CoCoScrapers update.[/I]
 --[FIX][I] Fixed error caused when checking settings for changes.[/I]
+--[FIX][I] Added setting for providers Trakt and TMDB for searches.[/I]
 		</news>
 	</extension>
 </addon><addon id="repository.umbrellatest" name="Umbrella Test Repository" version="1.0.0" provider-name="Umbrella">
