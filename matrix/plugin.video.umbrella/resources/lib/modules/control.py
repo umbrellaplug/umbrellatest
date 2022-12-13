@@ -481,8 +481,13 @@ def checkPlayNextEpisodes():
 			nextEpisodeSetting = nextEpisode.get('result')['value'][0]
 		except:
 			nextEpisodeSetting = 0
-		if nextEpisodeSetting != 2:
-			jsonrpc('{"jsonrpc":"2.0", "method":"Settings.SetSettingValue", "params":{"setting":"videoplayer.autoplaynextitem", "value":[2]}, "id":1}')
-		setSetting('play.mode.tv', '1')
+		try:
+			if nextEpisodeSetting != 2:
+				jsonrpc('{"jsonrpc":"2.0", "method":"Settings.SetSettingValue", "params":{"setting":"videoplayer.autoplaynextitem", "value":[2]}, "id":1}')
+			setSetting('play.mode.tv', '1')
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+
 	else:pass
 

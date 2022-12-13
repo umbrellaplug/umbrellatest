@@ -71,14 +71,6 @@
                             <orientation>horizontal</orientation>
                             <height>80</height>
                             <itemgap>10</itemgap>
-                            <control type="image">
-                                <texture flipy="true">diffuse/circle_v.png</texture>
-                                <aspectratio>keep</aspectratio>
-                                <width>8</width>
-                                <height>8</height>
-                                <centertop>52%</centertop>
-                                <visible>!String.IsEmpty(Window.Property(umbrella.title))</visible>
-                            </control>
                             <control type="button">
                                 <width>auto</width>
                                 <aligny>center</aligny>
@@ -89,14 +81,6 @@
                                 <textoffsetx>0</textoffsetx>
                                 <texturefocus />
                                 <texturenofocus />
-                            </control>
-                            <control type="image">
-                                <texture flipy="true">diffuse/circle_v.png</texture>
-                                <aspectratio>keep</aspectratio>
-                                <width>8</width>
-                                <height>8</height>
-                                <centertop>52%</centertop>
-                                <visible>!String.IsEmpty(Window.Property(umbrella.rating))</visible>
                             </control>
                             <control type="button">
                                 <width>auto</width>
@@ -111,7 +95,7 @@
                             </control>
 							<control type="image">
 								<description>rating icon</description>
-								<top>20</top>
+								<top>35</top>
 								<width>26</width>
 								<height>26</height>
 								<aspect>keep</aspect>
@@ -125,8 +109,8 @@
                 <control type="group">
                     <height>70</height>
                     <bottom>0</bottom>
+                    <itemgap>-60</itemgap>
                     <control type="grouplist">
-                        <itemgap>-60</itemgap>
                         <orientation>horizontal</orientation>
                         <height>256</height>
                         <centertop>50%</centertop>
@@ -138,20 +122,7 @@
                             <control type="group">
                                 <visible>Control.HasFocus(3013)</visible>
                                 <control type="image">
-                                    <texture colordiffuse="white" border="80,0,0,0">diffuse/menumain_h_x.png</texture>
-                                </control>
-                                <control type="image">
-                                    <left>48</left>
-                                    <centertop>50%</centertop>
-                                    <width>64</width>
-                                    <height>64</height>
-                                    <texture colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/eye2.png</texture>
-                                </control>
-                            </control>
-                            <control type="group">
-                                <visible>!Control.HasFocus(3013)</visible>
-                                <control type="image">
-                                    <texture colordiffuse="1fdedede" border="80,0,0,0">diffuse/menumain_h.png</texture>
+                                    <texture border="80,0,0,0">diffuse/menumain_h_x.png</texture>
                                 </control>
                                 <control type="image">
                                     <left>48</left>
@@ -159,6 +130,19 @@
                                     <width>64</width>
                                     <height>64</height>
                                     <texture colordiffuse="b3dedede">common/eye2.png</texture>
+                                </control>
+                            </control>
+                            <control type="group">
+                                <visible>!Control.HasFocus(3013)</visible>
+                                <control type="image">
+                                    <texture colordiffuse="1fdedede" border="80,0,0,0">diffuse/menumain_x.png</texture>
+                                </control>
+                                <control type="image">
+                                    <left>48</left>
+                                    <centertop>50%</centertop>
+                                    <width>64</width>
+                                    <height>64</height>
+                                    <texture colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/eye2.png</texture>
                                 </control>
                             </control>
                         </control>
@@ -173,8 +157,8 @@
                             <label>Hide</label>
                             <align>left</align>
                             <textoffsetx>0</textoffsetx>
-                            <textcolor>b3dedede</textcolor>
-                            <focusedcolor>$INFO[Window().Property(skin.selectColor)]</focusedcolor>
+                            <textcolor>$INFO[Window().Property(skin.selectColor)]</textcolor>
+                            <focusedcolor>b3dedede</focusedcolor>
                             <nested />
                         </control>
                         <control type="group" id="5112">
@@ -191,14 +175,6 @@
                                 <texture>diffuse/menumain_h_z.png</texture>
                             </control>
                         </control>
-                        <!-- <include content="Object_Info_Button">
-                            <param name="id" value="3011" />
-                            <param name="groupid" value="5013" />
-                            <param name="sliceid" value="5113" />
-                            <param name="label" value="Watch Now" />
-                            <param name="icon" value="special://skin/extras/icons/play3.png" />
-                            <param name="visible" value="true" />
-                        </include> -->
                         <control type="group" id="5013">
                             <left>0</left>
                             <width>120</width>
@@ -207,20 +183,7 @@
                             <control type="group">
                                 <visible>Control.HasFocus(3011)</visible>
                                 <control type="image">
-                                    <texture colordiffuse="white" border="80,0,0,0">diffuse/menumain_h_x.png</texture>
-                                </control>
-                                <control type="image">
-                                    <left>48</left>
-                                    <centertop>50%</centertop>
-                                    <width>64</width>
-                                    <height>64</height>
-                                    <texture colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/play3.png</texture>
-                                </control>
-                            </control>
-                            <control type="group">
-                                <visible>!Control.HasFocus(3011)</visible>
-                                <control type="image">
-                                    <texture colordiffuse="1fdedede" border="80,0,0,0">diffuse/menumain_h.png</texture>
+                                    <texture border="80,0,0,0">diffuse/menumain_h_x.png</texture>
                                 </control>
                                 <control type="image">
                                     <left>48</left>
@@ -228,6 +191,19 @@
                                     <width>64</width>
                                     <height>64</height>
                                     <texture colordiffuse="b3dedede">common/play3.png</texture>
+                                </control>
+                            </control>
+                            <control type="group">
+                                <visible>!Control.HasFocus(3011)</visible>
+                                <control type="image">
+                                    <texture colordiffuse="1fdedede" border="80,0,0,0">diffuse/menumain_x.png</texture>
+                                </control>
+                                <control type="image">
+                                    <left>48</left>
+                                    <centertop>50%</centertop>
+                                    <width>64</width>
+                                    <height>64</height>
+                                    <texture colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/play3.png</texture>
                                 </control>
                             </control>
                         </control>
@@ -242,13 +218,13 @@
                             <label>Watch Now</label>
                             <align>left</align>
                             <textoffsetx>0</textoffsetx>
-                            <textcolor>b3dedede</textcolor>
-                            <focusedcolor>$INFO[Window().Property(skin.selectColor)]</focusedcolor>
+                            <textcolor>$INFO[Window().Property(skin.selectColor)]</textcolor>
+                            <focusedcolor>b3dedede</focusedcolor>
                             <nested />
                         </control>
                         <control type="group" id="5113">
                             <left>60</left>
-                            <visible>String.IsEmpty(Window().Property(umbrella.hidebutton))</visible>
+                            <visible>true</visible>
                             <width>80</width>
                             <height>256</height>
                             <control type="image">
@@ -260,15 +236,6 @@
                                 <texture>diffuse/menumain_h_z.png</texture>
                             </control>
                         </control>
-                        <!-- <include content="Object_Info_Button">
-                            <param name="id" value="3012" />
-                            <param name="groupid" value="5014" />
-                            <param name="sliceid" value="5114" />
-                            <param name="label" value="Stop" />
-                            <param name="icon" value="special://skin/extras/icons/disabled.png" />
-                            <param name="visible" value="true" />
-                            
-                        </include> -->
                         <control type="group" id="5014">
                             <left>0</left>
                             <width>120</width>
@@ -277,20 +244,7 @@
                             <control type="group">
                                 <visible>Control.HasFocus(3012)</visible>
                                 <control type="image">
-                                    <texture colordiffuse="white" border="80,0,0,0">diffuse/menumain_h_x.png</texture>
-                                </control>
-                                <control type="image">
-                                    <left>48</left>
-                                    <centertop>50%</centertop>
-                                    <width>64</width>
-                                    <height>64</height>
-                                    <texture colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/disabled.png</texture>
-                                </control>
-                            </control>
-                            <control type="group">
-                                <visible>!Control.HasFocus(3012)</visible>
-                                <control type="image">
-                                    <texture colordiffuse="1fdedede" border="80,0,0,0">diffuse/menumain_h.png</texture>
+                                    <texture border="80,0,0,0">diffuse/menumain_h_x.png</texture>
                                 </control>
                                 <control type="image">
                                     <left>48</left>
@@ -298,6 +252,19 @@
                                     <width>64</width>
                                     <height>64</height>
                                     <texture colordiffuse="b3dedede">common/disabled.png</texture>
+                                </control>
+                            </control>
+                            <control type="group">
+                                <visible>!Control.HasFocus(3012)</visible>
+                                <control type="image">
+                                    <texture colordiffuse="1fdedede" border="80,0,0,0">diffuse/menumain_x.png</texture>
+                                </control>
+                                <control type="image">
+                                    <left>48</left>
+                                    <centertop>50%</centertop>
+                                    <width>64</width>
+                                    <height>64</height>
+                                    <texture colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/disabled.png</texture>
                                 </control>
                             </control>
                         </control>
@@ -312,13 +279,13 @@
                             <label>Stop</label>
                             <align>left</align>
                             <textoffsetx>0</textoffsetx>
-                            <textcolor>b3dedede</textcolor>
-                            <focusedcolor>$INFO[Window().Property(skin.selectColor)]</focusedcolor>
+                            <textcolor>$INFO[Window().Property(skin.selectColor)]</textcolor>
+                            <focusedcolor>b3dedede</focusedcolor>
                             <nested />
                         </control>
                         <control type="group" id="5114">
                             <left>60</left>
-                            <visible>String.IsEmpty(Window().Property(umbrella.hidebutton))</visible>
+                            <visible>true</visible>
                             <width>80</width>
                             <height>256</height>
                             <control type="image">
@@ -329,24 +296,21 @@
                                 <visible>Control.HasFocus(3012)</visible>
                                 <texture>diffuse/menumain_h_z.png</texture>
                             </control>
-                            <onclick>SetFocus(3013)</onclick>
-                            <onclick>Action(Select)</onclick>
                         </control>
                     </control>
                 </control>
             </control>
         </control>
         <control type="button" id="3013">
-                <nested />
-                <top>-1000</top>
-                <left>-1000</left>
-                <width>1</width>
-                <height>1</height>
-                <texturefocus />
-                <texturenofocus />
-                <font />
-                <visible allowhiddenfocus="true">False</visible>
-            </control>
+            <nested />
+            <top>-1000</top>
+            <left>-1000</left>
+            <width>1</width>
+            <height>1</height>
+            <texturefocus />
+            <texturenofocus />
+            <font />
+            <visible allowhiddenfocus="true">False</visible>
+        </control>
     </controls>
 </window>
-

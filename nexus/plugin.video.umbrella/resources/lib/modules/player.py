@@ -596,8 +596,10 @@ class PlayNext(xbmc.Player):
 			if not next_meta: raise Exception()
 			#some changes here for playnext and themes.
 			from resources.lib.windows.playnext import PlayNextXML
-			if getSetting('playnext.theme') == '2':
+			if getSetting('playnext.theme') == '2'and control.skin in ('skin.auramod'):
 				window = PlayNextXML('auraplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
+			if getSetting('playnext.theme') == '2'and control.skin not in ('skin.auramod'):
+				window = PlayNextXML('auraplaynext2.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.horizon.2'):
 				window = PlayNextXML('ahplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif getSetting('playnext.theme') == '1' and control.skin not in ('skin.arctic.horizon.2'):
@@ -616,7 +618,9 @@ class PlayNext(xbmc.Player):
 			next_meta = self.getNext_meta()
 			if not next_meta: raise Exception()
 			from resources.lib.windows.playnext_stillwatching import StillWatchingXML
-			if getSetting('playnext.theme') == '1':
+			if getSetting('playnext.theme') == '1'and control.skin not in ('skin.auramod'):
+				window = StillWatchingXML('auraplaynext_stillwatching2.xml', control.addonPath(control.addonId()), meta=next_meta)
+			if getSetting('playnext.theme') == '1'and control.skin in ('skin.auramod'):
 				window = StillWatchingXML('auraplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif getSetting('playnext.theme') == '2':
 				window = StillWatchingXML('ahplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
@@ -768,6 +772,7 @@ class Subtitles:
 					text = file.read()
 					times = re.findall(pattern, text)
 					times = times[len(times)-4][-1]
+					file.close()
 				if len(times) > 0:
 					total_time = Player().media_length
 					h, m, s = str(times).split(':')
@@ -836,10 +841,11 @@ class Subtitles:
 			log_utils.log('subtitle file for playnext = %s' % subtitle, level=log_utils.LOGDEBUG)
 			times = []
 			pattern = r'(\d{2}:\d{2}:\d{2},d{3}$)|(\d{2}:\d{2}:\d{2})'
-			with control.openFile(subtitle) as file: #with open(file, 'r', encoding='utf-8') as f:
+			with control.openFile(subtitle) as file:
 				text = file.read()
 				times = re.findall(pattern, text)
 				times = times[len(times)-4][-1]
+				file.close()
 			if len(times) > 0:
 				total_time = media_length
 				h, m, s = str(times).split(':')
