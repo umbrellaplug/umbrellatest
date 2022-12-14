@@ -136,7 +136,7 @@ class Movies:
 				return self.tmdb_trending_recentday()
 			if url == 'tmdbrecentweek':
 				return self.tmdb_trending_recentweek()
-			elif u in self.search_tmdb_link and not 'tmdbrecentday' and not 'tmdbrecentweek':
+			elif u in self.search_tmdb_link and url != 'tmdbrecentday' and url != 'tmdbrecentweek':
 				return self.getTMDb(url)
 			elif u in self.trakt_link and '/users/' in url:
 				try:
@@ -444,7 +444,7 @@ class Movies:
 		self.list = []
 		try:
 			url = self.tmdb_recentday
-			self.list = tmdb_indexer().tmdb_list(url)
+			self.list = cache.get(tmdb_indexer().tmdb_list, 6, url)
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
@@ -460,7 +460,8 @@ class Movies:
 		self.list = []
 		try:
 			url = self.tmdb_recentweek
-			self.list = tmdb_indexer().tmdb_list(url)
+			self.list = cache.get(tmdb_indexer().tmdb_list, 24, url)
+			#self.list = tmdb_indexer().tmdb_list(url)
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
