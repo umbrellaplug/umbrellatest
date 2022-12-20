@@ -476,8 +476,10 @@ class Sources:
 				progressDialog.create(header, '')
 			if getSetting('progress.dialog') == '2':
 				progressDialog = self.getProgressScraper(self.meta)
+				progressDialog.update(0, getLS(32600)) # preparing sources
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
+				progressDialog.update(0, getLS(32600)) # preparing sources
 			self.prepareSources()
 			sourceDict = self.sourceDict
 			

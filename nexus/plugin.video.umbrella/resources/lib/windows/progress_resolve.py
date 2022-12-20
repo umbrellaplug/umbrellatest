@@ -43,6 +43,7 @@ class ProgressResolve(BaseDialog):
 		self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
 		self.getControl(200).setImage(self.icon)
 		self.getControl(201).setImage(self.icon)
+		self.setProperty('percent', str(0))
 
 	def update(self, percent=0, content='', icon=None):
 		try:

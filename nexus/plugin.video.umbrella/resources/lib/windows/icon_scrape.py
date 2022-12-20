@@ -36,8 +36,11 @@ class IconScrape(BaseDialog):
 
 	def set_controls(self):
 		self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
+		self.setProperty('percent', str(0))
 
 	def update(self, percent=0, content='', icon=None):
 		try:
+			self.getControl(5000).setPercent(percent)
+			self.setProperty('percent', str(percent))
 			if icon: self.getControl(200).setImage(icon)
 		except: pass

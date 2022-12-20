@@ -43,9 +43,11 @@ class ProgressScrape(BaseDialog):
 		self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
 		self.getControl(200).setImage(self.icon)
 		self.getControl(201).setImage(self.icon)
+		self.setProperty('percent', str(0))
 
 	def update(self, percent=0, content='', icon=None):
 		try:
+			self.setProperty('percent', str(percent))
 			self.getControl(2001).setText(content)
 			self.getControl(5000).setPercent(percent)
 			if icon: self.getControl(200).setImage(icon)

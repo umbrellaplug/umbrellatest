@@ -24,19 +24,11 @@
                 <effect type="fade" start="0" end="100" time="200" tween="sine" easing="in" />
                 <effect type="slide" start="0,-360" end="0" time="200" center="auto" tween="cubic" easing="in" />
             </animation>
-            <control type="image" id="202">
-                <width>80</width>
-                <height>80</height>
-                <top>0</top>
-                <right>0</right>
-                <texture>common/icon.png</texture>
-                <animation effect="fade" start="100" end="50" time="0" tween="sine" easing="in">WindowOpen</animation>
-            </control>
             <control type="label" id="204">
                 <width>280</width>
                 <height>20</height>
                 <top>20</top>
-                <right>80</right>
+                <right>10</right>
                 <label>$ADDON[plugin.video.umbrella 40337]</label>
                 <animation effect="fade" start="100" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
             </control>
@@ -57,16 +49,328 @@
                 <align>center</align>
                 <textcolor>FFB7B4BB</textcolor>
             </control>
+            <control type="image" id="2021">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb1.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),01)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
+            </control>
+            <control type="image" id="2031">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb2.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),01)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
+            </control>
+            <control type="image" id="2041">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb3.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),02)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
+            </control>
+            <control type="image" id="2051">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb4.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),04)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
+            </control>
+            <control type="image" id="206">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb5.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),05)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
+            </control>
+            <control type="image" id="207">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb6.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),06)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
+            </control>
+            <control type="image" id="208">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb7.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),07)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
+            </control>
+            <control type="image" id="209">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb8.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),08)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
+            </control>
+            <control type="image" id="210">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb1.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
+            </control>
+            <control type="image" id="211">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb2.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),10)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
+            </control>
+            <control type="image" id="212">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb3.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),11)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
+            </control>
+            <control type="image" id="213">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb4.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),12)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
+            </control>
+            <control type="image" id="214">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb5.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),13)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
+            </control>
+            <control type="image" id="215">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb6.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),14)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
+            </control>
+            <control type="image" id="216">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb7.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),15)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
+            </control>
+            <control type="image" id="217">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb8.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),16)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
+            </control>
+            <control type="image" id="218">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb1.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
+            </control>
+            <control type="image" id="219">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb2.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),18)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
+            </control>
+            <control type="image" id="220">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb3.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),19)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
+            </control>
+            <control type="image" id="221">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb4.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),20)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
+            </control>
+            <control type="image" id="222">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb5.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),21)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
+            </control>
+            <control type="image" id="223">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb6.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),22)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
+            </control>
+            <control type="image" id="224">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb7.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),23)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
+            </control>
+            <control type="image" id="225">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb8.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),24)</visible>
+                <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
+            </control>
+            <control type="image" id="226">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb1.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
+            </control>
+            <control type="image" id="227">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb2.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),26)</visible>
+            </control>
+            <control type="image" id="228">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb3.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),27)</visible>
+            </control>
+            <control type="image" id="229">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb4.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),28)</visible>
+            </control>
+            <control type="image" id="230">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb6.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),29)</visible>
+            </control>
+            <control type="image" id="231">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb7.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),30)</visible>
+            </control>
+            <control type="image" id="232">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb8.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),31)</visible>
+            </control>
+            <control type="image" id="233">
+                <width>120</width>
+                <height>120</height>
+                <centertop>50%</centertop>
+                <centerleft>50%</centerleft>
+                <texture>common/umb8p.png</texture>
+                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <visible>Integer.IsEqual(Window().Property(percent),0)</visible>
+            </control>
             <control type="progress" id="5000">
                 <animation effect="fade" start="0" end="100" time="200">WindowOpen</animation>
                 <description>Progressbar</description>
-                <texturebg colordiffuse="$INFO[Window.Property(umbrella.highlight.color)]">common/gradient-diffuse-horizontal.png</texturebg>
                 <midtexture colordiffuse="$INFO[Window.Property(umbrella.highlight.color)]">common/gradient-underlayer-horizontal-flipped.png</midtexture>
                 <centertop>50%</centertop>
                 <centerleft>50%</centerleft>
                 <width>500</width>
                 <height>25</height>
                 <reveal>false</reveal>
+                <visible>false</visible>
             </control>
         </control>
     </controls>
