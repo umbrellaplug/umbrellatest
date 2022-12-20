@@ -12,7 +12,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb1.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),01)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
@@ -22,7 +22,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb2.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),01)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
@@ -32,7 +32,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb3.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),02)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
@@ -42,7 +42,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb4.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),04)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
@@ -52,7 +52,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb5.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),05)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
@@ -62,7 +62,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb6.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),06)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
@@ -72,7 +72,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb7.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),07)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
@@ -82,7 +82,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb8.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),08)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
@@ -92,7 +92,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb1.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
             </control>
@@ -102,7 +102,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb2.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),10)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
             </control>
@@ -112,7 +112,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb3.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),11)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
             </control>
@@ -122,7 +122,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb4.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),12)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
             </control>
@@ -132,7 +132,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb5.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),13)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
             </control>
@@ -142,7 +142,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb6.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),14)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
             </control>
@@ -152,7 +152,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb7.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),15)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
             </control>
@@ -162,7 +162,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb8.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),16)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
             </control>
@@ -172,7 +172,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb1.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),17)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
             </control>
@@ -182,7 +182,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb2.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),18)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
             </control>
@@ -192,7 +192,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb3.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),19)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
             </control>
@@ -202,7 +202,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb4.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),20)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
             </control>
@@ -212,7 +212,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb5.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),21)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
             </control>
@@ -222,7 +222,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb6.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),22)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
             </control>
@@ -232,7 +232,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb7.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),23)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
             </control>
@@ -242,7 +242,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb8.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),24)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
             </control>
@@ -252,7 +252,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb1.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),25)</visible>
             </control>
             <control type="image" id="227">
@@ -261,7 +261,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb2.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),26)</visible>
             </control>
             <control type="image" id="228">
@@ -270,7 +270,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb3.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),27)</visible>
             </control>
             <control type="image" id="229">
@@ -279,7 +279,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb4.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),28)</visible>
             </control>
             <control type="image" id="230">
@@ -288,7 +288,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb6.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),29)</visible>
             </control>
             <control type="image" id="231">
@@ -297,7 +297,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb7.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),30)</visible>
             </control>
             <control type="image" id="232">
@@ -306,7 +306,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb8.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsGreaterOrEqual(Window().Property(percent),31)</visible>
             </control>
             <control type="image" id="233">
@@ -315,7 +315,7 @@
                 <top>0</top>
                 <right>0</right>
                 <texture>common/umb8p.png</texture>
-                <animation effect="fade" start="0" end="100" time="0" tween="sine" easing="in">WindowOpen</animation>
+                <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
                 <visible>Integer.IsEqual(Window().Property(percent),0)</visible>
             </control>
             <control type="progress" id="5000">
