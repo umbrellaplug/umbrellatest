@@ -62,7 +62,7 @@ class checkAutoStart:
 		control.log('[ plugin.video.umbrella ]  Checking for AutoStart....', LOGINFO)
 		if control.setting('umbrella.autostart') == 'true': 
 			control.execute('RunAddon(plugin.video.umbrella)')
-		return control.log('[ plugin.video.umbrella ] Finished AutoStart Check', LOGINFO)
+		return control.log('[ plugin.video.umbrella ]  Finished AutoStart Check', LOGINFO)
 
 
 class ReuseLanguageInvokerCheck:
@@ -160,15 +160,15 @@ class VersionIsUpdateCheck:
 		except:
 			log_utils.error()
 
-# class SyncTraktCollection:
-# 	def run(self):
-# 		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Moved to Import Lists', LOGINFO)
-# 		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Starting...', LOGINFO)
-# 		#control.execute('RunPlugin(%s?action=library_tvshowsToLibrarySilent&url=traktcollection)' % plugin)
-# 		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync TV Shows Complete', LOGINFO)
-# 		#control.execute('RunPlugin(%s?action=library_moviesToLibrarySilent&url=traktcollection)' % plugin)
-# 		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Movies Complete', LOGINFO)
-# 		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Complete', LOGINFO)
+class SyncTraktCollection:
+	def run(self):
+		control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Import Disabled...', LOGINFO)
+		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Starting...', LOGINFO)
+		#control.execute('RunPlugin(%s?action=library_tvshowsToLibrarySilent&url=traktcollection)' % plugin)
+		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync TV Shows Complete', LOGINFO)
+		#control.execute('RunPlugin(%s?action=library_moviesToLibrarySilent&url=traktcollection)' % plugin)
+		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Movies Complete', LOGINFO)
+		#control.log('[ plugin.video.umbrella ]  Trakt Collection Sync Complete', LOGINFO)
 
 class LibraryService:
 	def run(self):

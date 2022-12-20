@@ -45,7 +45,7 @@
                 <bottom>-24</bottom>
                 <bordersize>24</bordersize>
                 <bordertexture border="32">common/shadow-24.png</bordertexture>
-                <texture>$INFO[Player.Art(fanart)]</texture>
+                <texture>$INFO[Player.Art(tvshow.fanart)]</texture>
             </control>
 
             <control type="image" description="blackline">
@@ -59,7 +59,7 @@
             <control type="image" description="blackline">
                 <height>92</height>
                 <width>92</width>
-                <centertop>51%</centertop>
+                <centertop>52%</centertop>
                 <centerleft>50%</centerleft>
                 <aspectratio scalediffuse="false">keep</aspectratio>
                 <texture colordiffuse="b3181818">common/circle.png</texture>
@@ -68,11 +68,11 @@
             <control type="image" description="blackline">
                 <height>66</height>
                 <width>66</width>
-                <centertop>51%</centertop>
+                <centertop>52%</centertop>
                 <centerleft>50%</centerleft>
                 <aspectratio scalediffuse="false">keep</aspectratio>
                 <texture colordiffuse="b3181818">common/circle.png</texture>
-                <visible>!Integer.IsGreater(Player.TimeRemaining,61)</visible>
+                <visible>!Integer.IsGreater(Player.TimeRemaining,59)</visible>
             </control>
             <control type="label">
                 <description>Remaining</description>
@@ -96,7 +96,7 @@
                 <align>center</align>
                 <textcolor>ffcccccc</textcolor>
                 <label>$INFO[Player.TimeRemaining(ss)]</label>
-                <visible>!Integer.IsGreater(Player.TimeRemaining,61)</visible>
+                <visible>!Integer.IsGreater(Player.TimeRemaining,59)</visible>
             </control>
             <control type="label" description="text">
                 <left>20</left>

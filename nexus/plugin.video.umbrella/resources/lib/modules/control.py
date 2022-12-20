@@ -11,6 +11,7 @@ import xbmcgui
 import xbmcplugin
 import xbmcvfs
 import xml.etree.ElementTree as ET
+from threading import Thread
 
 addon = xbmcaddon.Addon
 AddonID = xbmcaddon.Addon().getAddonInfo('id')
@@ -220,6 +221,9 @@ def addonNext():
 	art = artPath()
 	if not (art is None and theme in ('-', '')): return joinPath(art, 'next.png')
 	return 'DefaultVideo.png'
+
+def skin_location():
+	return transPath('special://home/addons/plugin.video.umbrella')
 
 ####################################################
 # --- Dialogs
@@ -469,25 +473,31 @@ def syncAccounts():
 
 
 def checkPlayNextEpisodes():
-	# 0 Music Videos
-	# 1 TV Shows
-	# 2 Episodes
-	# 3 Movies
-	# 4 Uncategorized
-	if setting('enable.playnext') == 'true': #we have to check for the episodes settings now
-		nextEpisode = jsloads(jsonrpc('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{"setting":"videoplayer.autoplaynextitem"}, "id":1}'))
-		selectAction = jsloads(jsonrpc('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{"setting":"myvideos.selectaction"}, "id":1}'))
-		try:
-			nextEpisodeSetting = nextEpisode.get('result')['value'][0]
-		except:
-			nextEpisodeSetting = 0
-		try:
+	try:
+		if setting('enable.playnext') == 'true': #we have to check for the episodes settings now
+			nextEpisode = jsloads(jsonrpc('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{"setting":"videoplayer.autoplaynextitem"}, "id":1}'))
+			#selectAction = jsloads(jsonrpc('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{"setting":"myvideos.selectaction"}, "id":1}'))
+			try:
+				nextEpisodeSetting = nextEpisode.get('result')['value'][0]
+			except:
+				nextEpisodeSetting = 0
 			if nextEpisodeSetting != 2:
 				jsonrpc('{"jsonrpc":"2.0", "method":"Settings.SetSettingValue", "params":{"setting":"videoplayer.autoplaynextitem", "value":[2]}, "id":1}')
-			setSetting('play.mode.tv', '1')
-		except:
-			from resources.lib.modules import log_utils
-			log_utils.error()
+			if not xbmc.getCondVisibility('Window.IsActive(settings)'):
+				if setting('play.mode.tv') != '1':
+					setSetting('play.mode.tv', '1')
+		else:pass
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()
 
-	else:pass
-
+def removeCorruptSettings():
+    #added 12-18 to attempt to correct corrupted settings.xml files.
+	try:
+		if yesnoDialog('Delete settings file to try to fix blank settings?', 'You will need to re-authenticate services.','' , '[B]Confirm Clear[/B]', 'Ok', 'Cancel') == 1: return
+		deleteFile(settingsFile)
+		current_profile = infoLabel('system.profilename')
+		execute('LoadProfile(%s)' % current_profile)
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()

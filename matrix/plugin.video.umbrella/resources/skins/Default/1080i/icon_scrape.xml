@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+    <controls>
+        <control type="group">
+            <animation type="WindowOpen" reversible="false">
+                <effect type="fade" start="0" end="80" time="200" tween="sine" easing="in" />
+                <effect type="slide" start="0,-360" end="0" time="200" center="auto" tween="cubic" easing="in" />
+            </animation>
+            <control type="image" id="202">
+                <width>80</width>
+                <height>80</height>
+                <top>0</top>
+                <right>0</right>
+                <texture>common/icon.png</texture>
+                <animation effect="fade" start="0" end="80" time="0" tween="sine" easing="in">WindowOpen</animation>
+            </control>
+        </control>
+    </controls>
+</window>

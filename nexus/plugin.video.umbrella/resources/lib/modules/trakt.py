@@ -163,7 +163,7 @@ def traktRevoke(fromSettings=0):
 					'public_lists': True, 'shows_collection': True, 'shows_watchlist': True, 'trending_lists': True, 'user_lists': True, 'watched': True}
 			cleared = traktsync.delete_tables(clr_traktSync)
 			if cleared:
-				log_utils.log('Trakt tables cleared after revoke.', level=log_utils.LOGDEBUG)
+				log_utils.log('Trakt tables cleared after revoke.', level=log_utils.LOGINFO)
 			if fromSettings == 1:
 				control.openSettings('6.0', 'plugin.video.umbrella')
 				control.dialog.ok(control.lang(32315), control.lang(40109))
@@ -1275,7 +1275,6 @@ def scrobbleEpisode(imdb, tmdb, tvdb, season, episode, watched_percent):
 	except: log_utils.error()
 
 def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh=True, widgetRefresh=False):
-	log_utils.log('[plugin.video.umbrella] scrobbleReset started.', level=log_utils.LOGDEBUG)
 	if not getTraktCredentialsInfo(): return
 	control.busy()
 	success = False
@@ -1285,7 +1284,6 @@ def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh
 		if resume_info == '0': return control.hide() # returns string "0" if no data in db 
 		headers['Authorization'] = 'Bearer %s' % getSetting('trakt.user.token')
 		success = session.delete('https://api.trakt.tv/sync/playback/%s' % resume_info[1], headers=headers).status_code == 204
-		log_utils.log('[plugin.video.umbrella] scrobbleReset in process.', level=log_utils.LOGDEBUG)
 		if content_type == 'movie':
 			items = [{'type': 'movie', 'movie': {'ids': {'imdb': imdb}}}]
 			label_string = resume_info[0]
@@ -1366,15 +1364,12 @@ def scrobbleResetItems(imdb_ids, tvdb_dicts=None, refresh=True, widgetRefresh=Fa
 
 #############    SERVICE SYNC    ######################
 def trakt_service_sync():
-	log_utils.log('[ plugin.video.umbrella ]  Trakt Service-Sync Checking.', log_utils.LOGDEBUG)
 	while not control.monitor.abortRequested():
 		control.sleep(5000) # wait 5sec in case of device wake from sleep
 		try:
 			internets = control.condVisibility('System.InternetState') #added for some systems have removed Internet State apparently.
-			log_utils.log('[ plugin.video.umbrella ] Trakt Service Sync InternetState: %s '% control.condVisibility('System.InternetState'), log_utils.LOGDEBUG)
 			if internets == False:
 				internets = control.condVisibility('System.HasNetwork')
-				log_utils.log('[ plugin.video.umbrella ] Trakt Service Sync HasNetwork: %s '% control.condVisibility('System.HasNetwork'), log_utils.LOGDEBUG)
 		except:
 			log_utils.error()
 		if internets and getTraktCredentialsInfo(): # run service in case user auth's trakt later
@@ -1391,7 +1386,6 @@ def trakt_service_sync():
 			sync_watch_list(activities)
 			sync_popular_lists()
 			sync_trending_lists()
-			log_utils.log('[ plugin.video.umbrella ] Trakt Service Sync Completed.', log_utils.LOGDEBUG)
 		if control.monitor.waitForAbort(60*service_syncInterval): break
 
 def force_traktSync():
@@ -1621,7 +1615,7 @@ def sync_watch_list(activities=None, forced=False):
 									(str(db_last_watchList), str(watchListActivity), (watchListActivity - db_last_watchList)), __name__, log_utils.LOGDEBUG)
 			if watchListActivity - db_last_watchList >= 60: # do not sync unless 1 min difference or more
 				log_utils.log('Trakt Watch List Sync Update...(local db latest "watchlist_at" = %s, trakt api latest "watchlisted_at" = %s)' % \
-									(str(db_last_watchList), str(watchListActivity)), __name__, log_utils.LOGDEBUG)
+									(str(db_last_watchList), str(watchListActivity)), __name__, log_utils.LOGINFO)
 				clr_traktSync = {'bookmarks': False, 'hiddenProgress': False, 'liked_lists': False, 'movies_collection': False, 'movies_watchlist': True,
 							'public_lists': False, 'shows_collection': False, 'shows_watchlist': True, 'user_lists': False, 'watched': False}
 				traktsync.delete_tables(clr_traktSync)

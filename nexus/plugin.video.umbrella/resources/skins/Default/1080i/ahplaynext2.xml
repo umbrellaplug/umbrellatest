@@ -30,6 +30,8 @@
                 <control type="progress" id="3014">
                     <bottom>0</bottom>
                     <height>8</height>
+                    <!-- <texturebg colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/white.png</texturebg> -->
+                    <!-- <midtexture colordiffuse="white">colors/white.png</midtexture> -->
                 </control>
             </control>
             <control type="group">
@@ -47,7 +49,7 @@
                     <left>40</left>
                     <aligny>center</aligny>
                     <height>40</height>
-                    <label>Next Episode in [COLOR $INFO[Window().Property(skin.selectColor)]][B]$INFO[Player.TimeRemaining(m:ss)][/B][/COLOR]</label>
+                    <label>[B]Next Episode in [COLOR $INFO[Window().Property(skin.selectColor)]]$INFO[Player.TimeRemaining(m:ss)][/B][/COLOR]</label>
                     <textcolor>ffededed</textcolor>
                     <!-- <font>font_mainlabel</font> -->
 					<visible>Integer.IsGreater(Player.TimeRemaining,60)</visible>
@@ -94,6 +96,7 @@
                                 <texturenofocus />
                             </control>
 							<control type="image">
+                                <bottom>0</bottom>
 								<description>rating icon</description>
 								<top>35</top>
 								<width>26</width>

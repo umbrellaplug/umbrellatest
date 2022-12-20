@@ -4194,3 +4194,19 @@ msgstr ""
 msgctxt "#40333"
 msgid "TV Show Search Provider"
 msgstr ""
+
+msgctxt "#40334"
+msgid "Fix Blank Settings: [B]UMBRELLA[/B]"
+msgstr ""
+
+msgctxt "#40335"
+msgid "Full-Screen"
+msgstr ""
+
+msgctxt "#40336"
+msgid "Icon Only"
+msgstr ""
+
+msgctxt "#40337"
+msgid "Press back to cancel"
+msgstr ""

@@ -241,7 +241,6 @@ class SourceResultsXML(BaseDialog):
 	def set_properties(self):
 		if self.meta is None: return
 		try:
-			#import web_pdb; web_pdb.set_trace()
 			if 'tvshowtitle' in self.meta and 'season' in self.meta and 'episode' in self.meta: 
 				self.setProperty('umbrella.seas_ep', 'S%02dE%02d' % (int(self.meta['season']), int(self.meta['episode'])))
 				self.setProperty('umbrella.season', str(self.meta.get('season', '')))
