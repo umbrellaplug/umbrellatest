@@ -20,9 +20,6 @@
             <height>160</height>
             <control type="group">
                 <width>284</width>
-                <!-- <include content="Object_PosterBack">
-                    <param name="pad" value="-20" />
-                </include> -->
                 <control type="image">
                     <texture diffuse="diffuse/landscape_w284_h160.png">$INFO[Window().Property(umbrella.thumb)]</texture>
                     <aspectratio scalediffuse="false">scale</aspectratio>
@@ -30,8 +27,8 @@
                 <control type="progress" id="3014">
                     <bottom>0</bottom>
                     <height>8</height>
-                    <!-- <texturebg colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/white.png</texturebg> -->
-                    <!-- <midtexture colordiffuse="white">colors/white.png</midtexture> -->
+                    <texturebg colordiffuse="FF00000">common/progresswhitesmall.png</texturebg>
+                    <midtexture colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/progresswhitesmall.png</midtexture>
                 </control>
             </control>
             <control type="group">
@@ -43,7 +40,7 @@
                     <label>Next Episode in [COLOR $INFO[Window().Property(skin.selectColor)]][B]$INFO[Player.TimeRemaining(ss)][/B][/COLOR] seconds...</label>
                     <textcolor>ffededed</textcolor>
                     <!-- <font>font_mainlabel</font> -->
-					<visible>!Integer.IsGreater(Player.TimeRemaining,60)</visible>
+					<visible>Integer.IsLess(Player.TimeRemaining,60)</visible>
                 </control>
 				<control type="label">
                     <left>40</left>
@@ -52,7 +49,7 @@
                     <label>[B]Next Episode in [COLOR $INFO[Window().Property(skin.selectColor)]]$INFO[Player.TimeRemaining(m:ss)][/B][/COLOR]</label>
                     <textcolor>ffededed</textcolor>
                     <!-- <font>font_mainlabel</font> -->
-					<visible>Integer.IsGreater(Player.TimeRemaining,60)</visible>
+					<visible>Integer.IsGreaterOrEqual(Player.TimeRemaining,60)</visible>
                 </control>
                 <control type="group">
                     <left>44</left>
@@ -95,17 +92,18 @@
                                 <texturefocus />
                                 <texturenofocus />
                             </control>
-							<control type="image">
-                                <bottom>0</bottom>
-								<description>rating icon</description>
-								<top>35</top>
-								<width>26</width>
-								<height>26</height>
-								<aspect>keep</aspect>
-								<texture colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/star.png</texture>
-								<animation effect="slide" end="0,8" time="0" condition="true">Conditional</animation>
-								<visible>!String.IsEmpty(Window().Property(umbrella.rating))</visible>
-							</control>
+                            <control type="group">
+                                <control type="image">
+                                    <description>rating icon</description>
+                                    <top>18</top>
+                                    <width>26</width>
+                                    <height>26</height>
+                                    <aspect>keep</aspect>
+                                    <texture colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/star.png</texture>
+                                    <animation effect="slide" end="0,8" time="0" condition="true">Conditional</animation>
+                                    <visible>!String.IsEmpty(Window().Property(umbrella.rating))</visible>
+						        </control>
+                            </control>
                         </control>
                     </control>
                 </control>

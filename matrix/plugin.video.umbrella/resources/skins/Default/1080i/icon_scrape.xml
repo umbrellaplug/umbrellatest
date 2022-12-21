@@ -23,7 +23,7 @@
                 <right>0</right>
                 <texture>common/umb2.png</texture>
                 <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
-                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),01)</visible>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),02)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
             <control type="image" id="204">
@@ -33,7 +33,7 @@
                 <right>0</right>
                 <texture>common/umb3.png</texture>
                 <animation effect="fade" start="0" end="70" time="0" tween="sine" easing="in">WindowOpen</animation>
-                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),02)</visible>
+                <visible>Integer.IsGreaterOrEqual(Window().Property(percent),03)</visible>
                 <visible>!Integer.IsGreaterOrEqual(Window().Property(percent),09)</visible>
             </control>
             <control type="image" id="205">

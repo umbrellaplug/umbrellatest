@@ -110,13 +110,13 @@
 				<align>left</align>
 				<aligny>bottom</aligny>
 				<autoscroll>false</autoscroll>
-				<label>[COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.total_results)] Total Sources[/COLOR]</label>
+				<label>$INFO[Window().Property(umbrella.total_results)] Total Sources</label>
 			</control>
 			<control type="image">
 				<description>clearlogo</description>
 				<aspectratio align="center" aligny="center">keep</aspectratio>
 				<left>400</left>
-				<top>0</top>
+				<top>-15</top>
 				<width>600</width>
 				<height>175%</height>
 				<texture background="true">$INFO[Window().Property(umbrella.clearlogo)]</texture>
@@ -158,6 +158,8 @@
 						<width>100</width>
 						<height>100</height>
 						<align>left</align>
+						<aligny>center</aligny>
+						<aspectratio>keep</aspectratio>
 						<texture>$INFO[ListItem.Property(umbrella.quality_icon)]</texture>
 						<visible>!String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
 					</control>

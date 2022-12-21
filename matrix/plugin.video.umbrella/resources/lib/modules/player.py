@@ -618,12 +618,14 @@ class PlayNext(xbmc.Player):
 			next_meta = self.getNext_meta()
 			if not next_meta: raise Exception()
 			from resources.lib.windows.playnext_stillwatching import StillWatchingXML
-			if getSetting('playnext.theme') == '1'and control.skin not in ('skin.auramod'):
+			if getSetting('playnext.theme') == '2'and control.skin not in ('skin.auramod'):
 				window = StillWatchingXML('auraplaynext_stillwatching2.xml', control.addonPath(control.addonId()), meta=next_meta)
-			if getSetting('playnext.theme') == '1'and control.skin in ('skin.auramod'):
+			if getSetting('playnext.theme') == '2'and control.skin in ('skin.auramod'):
 				window = StillWatchingXML('auraplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '2':
+			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.horizon.2'):
 				window = StillWatchingXML('ahplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
+			elif getSetting('playnext.theme') == '1' and control.skin not in ('skin.arctic.horizon.2'):
+				window = StillWatchingXML('ahplaynext_stillwatching2.xml', control.addonPath(control.addonId()), meta=next_meta)
 			else:
 				window = StillWatchingXML('playnext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
 			window.run()

@@ -469,20 +469,16 @@ class Sources:
 			if getSetting('progress.dialog') == '0':
 				progressDialog = control.progressDialog
 				progressDialog.create(header, '')
-				progressDialog.update(0, getLS(32600)) # preparing sources
 			if getSetting('progress.dialog') == '1':
 				progressDialog = control.progressDialogBG
-				progressDialog.update(0, getLS(32600)) # preparing sources
 				progressDialog.create(header, '')
 			if getSetting('progress.dialog') == '2':
 				progressDialog = self.getProgressScraper(self.meta)
-				progressDialog.update(0, getLS(32600)) # preparing sources
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
-				progressDialog.update(0, getLS(32600)) # preparing sources
 			self.prepareSources()
 			sourceDict = self.sourceDict
-			
+			progressDialog.update(0, getLS(32600)) # preparing sources
 			if content == 'movie': sourceDict = [(i[0], i[1]) for i in sourceDict if i[1].hasMovies]
 			else: sourceDict = [(i[0], i[1]) for i in sourceDict if i[1].hasEpisodes]
 			if getSetting('cf.disable') == 'true': sourceDict = [(i[0], i[1]) for i in sourceDict if not any(x in i[0] for x in self.sourcecfDict)]

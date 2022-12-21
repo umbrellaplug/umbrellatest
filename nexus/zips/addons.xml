@@ -194,6 +194,7 @@
 --[ENHANCEMENT][I] Full-Screen Scrape and Resolve[I]
 --[ENHANCEMENT][I] Icon-Only Scrape and Resolve[I]
 --[ENHANCEMENT][I] Changed progress to Umbrella Icon.[I]
+--[ENHANCEMENT][I] Adjusted Uncached Sources view and AH2 Playnext[I]
 --[FIX][I] Removed test version detection to stop accidentally deleting trakt and settings.[I]
 --[FIX][I] Changed playnext subtitle check to check if already downloaded.[/I]
 --[FIX][I] Added enable/ disable for EasyNews.[I]
