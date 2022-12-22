@@ -156,16 +156,16 @@ class Sources:
 			if url == 'close://' or url is None:
 				self.url = url
 				return self.errorForSources()
-			try:
-				log_utils.log('[ plugin.video.umbrella ] From sources.play() Title: %s' % str(title), level=log_utils.LOGDEBUG)
-				log_utils.log('[ plugin.video.umbrella ] From sources.play() Year: %s' % str(year), level=log_utils.LOGDEBUG)
-				log_utils.log('[ plugin.video.umbrella ] From sources.play() Season: %s' % str(season), level=log_utils.LOGDEBUG)
-				log_utils.log('[ plugin.video.umbrella ] From sources.play() Episode: %s' % str(episode), level=log_utils.LOGDEBUG)
-				log_utils.log('[ plugin.video.umbrella ] From sources.play() IMDB: %s TMDB: %s TVDB: %s' % (str(imdb), str(tmdb), str(tvdb)), level=log_utils.LOGDEBUG)
-				log_utils.log('[ plugin.video.umbrella ] From sources.play() URL: %s' % str(url), level=log_utils.LOGDEBUG)
-				log_utils.log('[ plugin.video.umbrella ] From sources.play() Meta: %s' % str(self.meta), level=log_utils.LOGDEBUG)
-			except:
-				log_utils.error()
+			#try:
+			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Title: %s' % str(title), level=log_utils.LOGDEBUG)
+			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Year: %s' % str(year), level=log_utils.LOGDEBUG)
+			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Season: %s' % str(season), level=log_utils.LOGDEBUG)
+			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Episode: %s' % str(episode), level=log_utils.LOGDEBUG)
+			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() IMDB: %s TMDB: %s TVDB: %s' % (str(imdb), str(tmdb), str(tvdb)), level=log_utils.LOGDEBUG)
+			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() URL: %s' % str(url), level=log_utils.LOGDEBUG)
+			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Meta: %s' % str(self.meta), level=log_utils.LOGDEBUG)
+			#except:
+			#	log_utils.error()
 			log_utils.log(' [ plugin.video.umbrella ] From sources.play() Sending to player.Player().play_source()', level=log_utils.LOGDEBUG)
 			from resources.lib.modules import player
 			player.Player().play_source(title, year, season, episode, imdb, tmdb, tvdb, url, self.meta)
@@ -301,7 +301,10 @@ class Sources:
 				next_end = min(source_len, source_index+41)
 				sources_next = items[source_index+1:next_end]
 				sources_prev = [] if next_end < source_len else items[0:41-(source_len-source_index)]
-				resolve_items = [i for i in chosen_source + sources_next + sources_prev]
+				if getSetting('sources.useonlyone')== 'true':
+					resolve_items = [i for i in chosen_source + sources_next + sources_prev]
+				else:
+					resolve_items = chosen_source
 			except: log_utils.error()
 			header = homeWindow.getProperty(self.labelProperty) + ': Resolving...'
 			if getSetting('progress.dialog') == '0':

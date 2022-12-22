@@ -265,6 +265,10 @@ class SourceResultsXML(BaseDialog):
 			else: self.setProperty('umbrella.duration', 'NA ')
 			self.setProperty('umbrella.total_results', self.total_results)
 			self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
+			if getSetting('sources.select.fanartBG') == 'true':
+				self.setProperty('umbrella.fanartBG', '1')
+			else:
+				self.setProperty('umbrella.fanartBG', '0')
 			if getSetting('sources.highlightmethod') == '1':
 				self.setProperty('umbrella.useprovidercolors', '1')
 				self.setProperty('umbrella.realdebridcolor', getColor(getSetting('sources.real-debrid.color')))

@@ -7,7 +7,6 @@ from hashlib import md5
 from json import dumps as jsdumps, loads as jsloads
 from sys import argv, exit as sysexit
 from sqlite3 import dbapi2 as database
-from unicodedata import name
 from urllib.parse import quote_plus
 import xbmc
 from resources.lib.database.cache import clear_local_bookmarks
@@ -43,6 +42,7 @@ class Player(xbmc.Player):
 		self.enable_playnext = getSetting('enable.playnext') == 'true'
 		self.playnext_time = int(getSetting('playnext.time')) or 60
 		self.playnext_percentage = int(getSetting('playnext.percent')) or 80
+		self.markwatched_percentage = int(getSetting('markwatched.percent')) or 85
 		self.traktCredentials = trakt.getTraktCredentialsInfo()
 		self.onPlayBackEnded_ran = False
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
@@ -51,16 +51,16 @@ class Player(xbmc.Player):
 		
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
-		try:
-			log_utils.log('From player.play_source() Title: %s' % str(title), level=log_utils.LOGDEBUG)
-			log_utils.log('From player.play_source() Year: %s' % str(year), level=log_utils.LOGDEBUG)
-			log_utils.log('From player.play_source() Season: %s' % str(season), level=log_utils.LOGDEBUG)
-			log_utils.log('From player.play_source() Episode: %s' % str(episode), level=log_utils.LOGDEBUG)
-			log_utils.log('From player.play_source() IMDB: %s TMDB: %s TVDB: %s' % (str(imdb), str(tmdb), str(tvdb)), level=log_utils.LOGDEBUG)
-			log_utils.log('From player.play_source() URL: %s' % str(url), level=log_utils.LOGDEBUG)
-			log_utils.log('From player.play_source() Meta: %s' % str(meta), level=log_utils.LOGDEBUG)
-		except:
-			log_utils.error()
+		#try:
+			#log_utils.log('From player.play_source() Title: %s' % str(title), level=log_utils.LOGDEBUG)
+			#log_utils.log('From player.play_source() Year: %s' % str(year), level=log_utils.LOGDEBUG)
+			#log_utils.log('From player.play_source() Season: %s' % str(season), level=log_utils.LOGDEBUG)
+			#log_utils.log('From player.play_source() Episode: %s' % str(episode), level=log_utils.LOGDEBUG)
+			#log_utils.log('From player.play_source() IMDB: %s TMDB: %s TVDB: %s' % (str(imdb), str(tmdb), str(tvdb)), level=log_utils.LOGDEBUG)
+			#log_utils.log('From player.play_source() URL: %s' % str(url), level=log_utils.LOGDEBUG)
+			#log_utils.log('From player.play_source() Meta: %s' % str(meta), level=log_utils.LOGDEBUG)
+		#except:
+			#log_utils.error()
 		try:
 			from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 			if not url: raise Exception
@@ -269,7 +269,7 @@ class Player(xbmc.Player):
 		return remaining_time
 
 	def keepAlive(self):
-		log_utils.log('KeepAlive Started', level=log_utils.LOGDEBUG)
+		#log_utils.log('KeepAlive Started', level=log_utils.LOGDEBUG)
 		pname = '%s.player.overlay' % control.addonInfo('id')
 		homeWindow.clearProperty(pname)
 		for i in range(0, 500):
@@ -283,7 +283,7 @@ class Player(xbmc.Player):
 		self.onPlayBackEnded_ran = False
 		try: running_path = self.getPlayingFile() # original video that playlist playback started with
 		except: running_path = ''
-		log_utils.log('KeepAlive Running Path: %s' % running_path, level=log_utils.LOGDEBUG)
+		#log_utils.log('KeepAlive Running Path: %s' % running_path, level=log_utils.LOGDEBUG)
 		if playerWindow.getProperty('umbrella.playlistStart_position'): pass
 		else:
 			if control.playlist.size() > 1: playerWindow.setProperty('umbrella.playlistStart_position', str(control.playlist.getposition()))
@@ -298,13 +298,13 @@ class Player(xbmc.Player):
 					self.current_time = self.getTime()
 					self.media_length = self.getTotalTime()
 				except: pass
-				watcher = (self.getWatchedPercent() >= 85)
+				watcher = (self.getWatchedPercent() >= int(self.markwatched_percentage))
 				property = homeWindow.getProperty(pname)
 
 				if self.media_type == 'movie':
 					try:
 						if watcher and property != '5':
-							log_utils.log('KeepAlive is going to mark during playback.', level=log_utils.LOGDEBUG)
+							#log_utils.log('KeepAlive is going to mark during playback.', level=log_utils.LOGDEBUG)
 							homeWindow.setProperty(pname, '5')
 							playcount.markMovieDuringPlayback(self.imdb, '5')
 					except: pass
@@ -364,13 +364,13 @@ class Player(xbmc.Player):
 				log_utils.error()
 				xbmc.sleep(1000)
 		homeWindow.clearProperty(pname)
-		log_utils.log('KeepAlive playlist_skip: %s' % playlist_skip, level=log_utils.LOGDEBUG)
+		#log_utils.log('KeepAlive playlist_skip: %s' % playlist_skip, level=log_utils.LOGDEBUG)
 		if playlist_skip: pass
 		else:
-			if (int(self.current_time) > 180 and (self.getWatchedPercent() < 85)): # kodi is unreliable issuing callback "onPlayBackStopped" and "onPlayBackEnded"
+			if (int(self.current_time) > 180 and (self.getWatchedPercent() < int(self.markwatched_percentage))): # kodi is unreliable issuing callback "onPlayBackStopped" and "onPlayBackEnded"
 				self.playbackStopped_triggered = True
 				self.onPlayBackStopped()
-			elif self.getWatchedPercent() >= 85: self._end_playback()
+			elif self.getWatchedPercent() >= int(self.markwatched_percentage): self._end_playback()
 
 	def buildPlaylist(self):
 		seasonPlaynext = False
@@ -495,8 +495,8 @@ class Player(xbmc.Player):
 				if self.traktCredentials and (getSetting('trakt.scrobble') == 'true'):
 					Bookmarks().set_scrobble(self.current_time, self.media_length, self.media_type, self.imdb, self.tmdb, self.tvdb, self.season, self.episode)
 				watcher = self.getWatchedPercent()
-				seekable = (int(self.current_time) > 180 and (watcher < 85))
-				if watcher >= 85: self.libForPlayback() # only write playcount to local lib
+				seekable = (int(self.current_time) > 180 and (watcher < int(self.markwatched_percentage)))
+				if watcher >= int(self.markwatched_percentage): self.libForPlayback() # only write playcount to local lib
 				if getSetting('crefresh') == 'true' and seekable:
 					log_utils.log('container.refresh issued', level=log_utils.LOGDEBUG)
 					control.refresh() #not all skins refresh after playback stopped
@@ -532,6 +532,7 @@ class PlayNext(xbmc.Player):
 		self.enable_playnext = getSetting('enable.playnext') == 'true'
 		self.stillwatching_count = int(getSetting('stillwatching.count'))
 		self.playing_file = None
+		
 
 	def display_xml(self):
 		try:
@@ -864,6 +865,7 @@ class Subtitles:
 
 class Bookmarks:
 	def get(self, name, imdb=None, tmdb=None, tvdb=None, season=None, episode=None, year='0', runtime=None, ck=False):
+		markwatched_percentage = int(getSetting('markwatched.percent')) or 85
 		offset = '0'
 		scrobbble = 'Local Bookmark'
 		if getSetting('bookmarks') != 'true': return offset
@@ -873,7 +875,7 @@ class Bookmarks:
 				if not runtime or runtime == 'None': return offset # TMDB sometimes return None as string. duration pulled from kodi library if missing from meta
 				progress = float(fetch_bookmarks(imdb, tmdb, tvdb, season, episode))
 				offset = (progress / 100) * runtime # runtime vs. media_length can differ resulting in 10-30sec difference using Trakt scrobble, meta providers report runtime in full minutes
-				seekable = (2 <= progress <= 85)
+				seekable = (2 <= progress <= int(markwatched_percentage))
 				if not seekable: return '0'
 			except:
 				log_utils.error()
@@ -908,10 +910,11 @@ class Bookmarks:
 
 	def reset(self, current_time, media_length, name, year='0'):
 		try:
+			markwatched_percentage = int(getSetting('markwatched.percent')) or 85
 			clear_local_bookmarks() # clear all umbrella bookmarks from kodi database
 			if getSetting('bookmarks') != 'true' or media_length == 0 or current_time == 0: return
 			timeInSeconds = str(current_time)
-			seekable = (int(current_time) > 180 and (current_time / media_length) < .85)
+			seekable = (int(current_time) > 180 and (current_time / media_length) < (abs(float(markwatched_percentage) / 100)))
 			idFile = md5()
 			try: [idFile.update(str(i)) for i in name]
 			except: [idFile.update(str(i).encode('utf-8')) for i in name]
@@ -939,10 +942,11 @@ class Bookmarks:
 
 	def set_scrobble(self, current_time, media_length, media_type, imdb='', tmdb='', tvdb='', season='', episode=''):
 		try:
+			markwatched_percentage = int(getSetting('markwatched.percent')) or 85
 			if media_length == 0: return
 			percent = float((current_time / media_length)) * 100
-			seekable = (int(current_time) > 180 and (percent < 85))
+			seekable = (int(current_time) > 180 and (percent < int(markwatched_percentage)))
 			if seekable: trakt.scrobbleMovie(imdb, tmdb, percent) if media_type == 'movie' else trakt.scrobbleEpisode(imdb, tmdb, tvdb, season, episode, percent)
-			if percent >= 85: trakt.scrobbleReset(imdb, tmdb, tvdb, season, episode, refresh=False)
+			if percent >= int(markwatched_percentage): trakt.scrobbleReset(imdb, tmdb, tvdb, season, episode, refresh=False)
 		except:
 			log_utils.error()

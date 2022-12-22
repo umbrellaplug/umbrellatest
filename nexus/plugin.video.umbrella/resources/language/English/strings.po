@@ -4210,3 +4210,19 @@ msgstr ""
 msgctxt "#40337"
 msgid "Press back to cancel"
 msgstr ""
+
+msgctxt "#40338"
+msgid "Use artwork for background"
+msgstr ""
+
+msgctxt "#40339"
+msgid "Mark watched"
+msgstr ""
+
+msgctxt "#40340"
+msgid "Percentage to use to mark items watched"
+msgstr ""
+
+msgctxt "#40341"
+msgid "Do not try more than one source on fail"
+msgstr ""

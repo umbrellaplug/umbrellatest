@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.98">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.5.99">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -31,11 +31,11 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.96-98 - Dec 20th, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.96-99 - Dec 21th, 2022[/COLOR][/B]
 --[ENHANCEMENT][I] 17 to 35 color selections! "Buddy the Elf, What's your favorite color?"[I]
 --[ENHANCEMENT][I] Playnext changed to allow for percentage or time or last subtitle time.[I]
 --[ENHANCEMENT][I] Playnext changed to allow themes to be used without skins.[I]
---[ENHANCEMENT][I] Added color options for providers in source selection. More work to be done there. Uncached Needs a lot.[I]
+--[ENHANCEMENT][I] Added color options for providers in source selection.[I]
 --[ENHANCEMENT][I] Adjusted Quality Icons[I]
 --[ENHANCEMENT][I] Added plain icons to go with colors for quality on sources, can be turned off in settings.[I]
 --[ENHANCEMENT][I] Changed source selection to use artwork for background.[I]
@@ -45,13 +45,19 @@
 --[ENHANCEMENT][I] Icon-Only Scrape and Resolve[I]
 --[ENHANCEMENT][I] Changed progress to Umbrella Icon.[I]
 --[ENHANCEMENT][I] Adjusted Uncached Sources view and AH2 Playnext[I]
+--[ENHANCEMENT][I] Added Watched Percentage Marking Option in setting Playback.[I]
+--[ENHANCEMENT][I] Added ability to hide or show fanart as background on source select and scraping screens.[I]
+--[ENHANCEMENT][I] Added ability to only try 1 link on source selection.[I]
 --[FIX][I] Removed test version detection to stop accidentally deleting trakt and settings.[I]
 --[FIX][I] Changed playnext subtitle check to check if already downloaded.[/I]
 --[FIX][I] Added enable/ disable for EasyNews.[I]
 --[FIX][I] Changed logging when set to kodi log to use higher level so debug logs show without enabling Kodi debug.[I]
 --[FIX][I] Info logging changed to debug.[I]
---[FIX][I] Fixed error caused when checking settings for changes.[/I]
+--[FIX][I] Fixed error (blank settings) caused when checking settings for changes.[/I]
 --[FIX][I] Added setting for providers Trakt and TMDB for searches.[/I]
+--[FIX][I] Added widget refreshes to Trakt Scrobbles.[/I]
+--[FIX][I] Fixed a typo in TV Show Collection import from Trakt.[/I]
+--[INFORMATION][I] Next push after testing this version should be release.[I]
 		</news>
 	</extension>
 </addon>

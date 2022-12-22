@@ -10,7 +10,7 @@ from resources.lib.windows.base import BaseDialog
 class ProgressResolve(BaseDialog):
 	def __init__(self, *args, **kwargs):
 		BaseDialog.__init__(self, args)
-		self.window_id = 2085
+		self.window_id = 2086
 		self.closed = False
 		self.meta = kwargs.get('meta')
 		self.icon = addonIcon()
@@ -41,13 +41,9 @@ class ProgressResolve(BaseDialog):
 		if 'tvshowtitle' in self.meta: self.setProperty('umbrella.tvtitle', self.meta.get('tvshowtitle'))
 		if self.meta.get('plot'): self.setProperty('umbrella.plot', self.meta.get('plot', ''))
 		self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
-		self.getControl(200).setImage(self.icon)
-		self.getControl(201).setImage(self.icon)
 		self.setProperty('percent', str(0))
 
 	def update(self, percent=0, content='', icon=None):
 		try:
 			self.getControl(2001).setText(content)
-			self.getControl(5000).setPercent(percent)
-			if icon: self.getControl(200).setImage(icon)
 		except: pass

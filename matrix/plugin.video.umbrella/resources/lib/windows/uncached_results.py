@@ -147,6 +147,10 @@ class UncachedResultsXML(BaseDialog):
 					#from resources.lib.modules import log_utils
 					#log_utils.log('Umbrella Sources Make Items: %s' % str(item.get('debrid')), log_utils.LOGINFO)
 					providerHighlight = getSourceHighlightColor()
+					if getSetting('sources.select.fanartBG'):
+						self.setProperty('umbrella.fanartBG', '1')
+					else:
+						self.setProperty('umbrella.fanartBG', '0')
 					if getSetting('sources.highlightmethod') == '1':
 						if item.get('debrid') is not None and item.get('debrid') !='':
 							providerHighlight = getProviderHighlightColor(str(item.get('debrid')))
