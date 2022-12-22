@@ -14,13 +14,12 @@ class ProgressScrape(BaseDialog):
 		self.closed = False
 		self.meta = kwargs.get('meta')
 		self.icon = addonIcon()
+		self.set_controls()
 
 	def run(self):
 		self.doModal()
 		self.clearProperties()
 
-	def onInit(self):
-		self.set_controls()
 
 	def onAction(self, action):
 		if action in self.closing_actions or action in self.selection_actions:
@@ -30,7 +29,7 @@ class ProgressScrape(BaseDialog):
 		self.closed = True
 		self.close()
 		del self
-  
+
 	def iscanceled(self):
 		return self.closed
 
