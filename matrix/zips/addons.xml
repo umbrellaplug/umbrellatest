@@ -200,6 +200,7 @@
 --[ENHANCEMENT][I] Added ability to only try 1 link on source selection.[I]
 --[ENHANCEMENT][I] Adjusted transparency on background art not being correct. Thanks Peter![I]
 --[FIX][I] Removed test version detection to stop accidentally deleting trakt and settings.[I]
+--[FIX][I] Adding missing still watching file in for ah2 style playnext.[/I]
 --[FIX][I] Changed playnext subtitle check to check if already downloaded.[/I]
 --[FIX][I] Added enable/ disable for EasyNews.[I]
 --[FIX][I] Changed logging when set to kodi log to use higher level so debug logs show without enabling Kodi debug.[I]
