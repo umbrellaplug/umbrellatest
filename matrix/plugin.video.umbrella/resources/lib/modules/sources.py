@@ -476,7 +476,7 @@ class Sources:
 				progressDialog = control.progressDialogBG
 				progressDialog.create(header, '')
 			if getSetting('progress.dialog') == '2':
-				progressDialog = self.getProgressScraper(self.meta)
+				progressDialog = self.getProgressScraper(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, self.meta)
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
 			self.prepareSources()
@@ -1551,9 +1551,9 @@ class Sources:
 		filter += [i for i in source_list if i['quality'] == 'CAM']
 		return filter
 
-	def getProgressScraper(self, meta):
+	def getProgressScraper(self, title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, meta):
 		from resources.lib.windows.progress_scrape import ProgressScrape
-		window = ProgressScrape('progress_scrape.xml', control.addonPath(control.addonId()), meta=meta)
+		window = ProgressScrape('progress_scrape.xml', control.addonPath(control.addonId()), title=title, year=year, imdb=imdb, tvdb=tvdb, season=season, episode=episode, tvshowtitle=tvshowtitle, premiered=premiered, meta=meta)
 		Thread(target=window.run).start()
 		return window
 

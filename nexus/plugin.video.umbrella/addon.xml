@@ -31,7 +31,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.5.96-99 - Dec 22nd, 2022[/COLOR][/B]
+[B][COLOR black]Update - v6.5.96-99 - Dec 23rd, 2022[/COLOR][/B]
 --[ENHANCEMENT][I] 17 to 35 color selections! "Buddy the Elf, What's your favorite color?"[I]
 --[ENHANCEMENT][I] Playnext changed to allow for percentage or time or last subtitle time.[I]
 --[ENHANCEMENT][I] Playnext changed to allow themes to be used without skins.[I]
@@ -59,7 +59,7 @@
 --[FIX][I] Added setting for providers Trakt and TMDB for searches.[/I]
 --[FIX][I] Added widget refreshes to Trakt Scrobbles.[/I]
 --[FIX][I] Fixed a typo in TV Show Collection import from Trakt.[/I]
---[INFORMATION][I] Next push after testing this version should be release.[I]
+--[FIX][I] Adjusted for issue with full-screen scrape and using library files.[/I]
 		</news>
 	</extension>
 </addon>

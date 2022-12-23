@@ -5,7 +5,7 @@
 
 from json import dumps as jsdumps
 from urllib.parse import quote_plus
-from resources.lib.modules.control import joinPath, transPath, dialog, getColor, getProviderHighlightColor, getSourceHighlightColor, notification, setting as getSetting
+from resources.lib.modules.control import joinPath, transPath, dialog, getColor, getProviderHighlightColor, getSourceHighlightColor, notification, addonFanart, setting as getSetting
 from resources.lib.modules.source_utils import getFileType
 from resources.lib.modules import tools
 from resources.lib.windows.base import BaseDialog
@@ -20,6 +20,7 @@ class SourceResultsXML(BaseDialog):
 		self.uncached = kwargs.get('uncached')
 		self.total_results = str(len(self.results))
 		self.meta = kwargs.get('meta')
+		self.defaultbg = addonFanart()
 		self.make_items()
 		self.set_properties()
 		self.dnlds_enabled = True if getSetting('downloads') == 'true' and (getSetting('movie.download.path') != '' or getSetting('tv.download.path') != '') else False
@@ -269,6 +270,7 @@ class SourceResultsXML(BaseDialog):
 				self.setProperty('umbrella.fanartBG', '1')
 			else:
 				self.setProperty('umbrella.fanartBG', '0')
+				self.setProperty('umbrella.fanartdefault', str(self.defaultbg))
 			if getSetting('sources.highlightmethod') == '1':
 				self.setProperty('umbrella.useprovidercolors', '1')
 				self.setProperty('umbrella.realdebridcolor', getColor(getSetting('sources.real-debrid.color')))
