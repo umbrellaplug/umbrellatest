@@ -5,7 +5,7 @@
 
 from json import dumps as jsdumps
 from urllib.parse import quote_plus
-from resources.lib.modules.control import joinPath, transPath, dialog, getColor, getProviderHighlightColor, getSourceHighlightColor, notification, setting as getSetting
+from resources.lib.modules.control import joinPath, transPath, dialog, getColor, getProviderHighlightColor, getSourceHighlightColor, addonFanart, notification, setting as getSetting
 from resources.lib.modules.source_utils import getFileType
 from resources.lib.modules import tools
 from resources.lib.windows.base import BaseDialog
@@ -18,6 +18,7 @@ class UncachedResultsXML(BaseDialog):
 		self.uncached = kwargs.get('uncached')
 		self.total_results = str(len(self.uncached))
 		self.meta = kwargs.get('meta')
+		self.defaultbg = addonFanart()
 		self.make_items()
 		self.set_properties()
 
@@ -220,6 +221,11 @@ class UncachedResultsXML(BaseDialog):
 			else: self.setProperty('umbrella.duration', 'NA ')
 			self.setProperty('umbrella.total_results', self.total_results)
 			self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
+			if getSetting('sources.select.fanartBG') == 'true':
+				self.setProperty('umbrella.fanartBG', '1')
+			else:
+				self.setProperty('umbrella.fanartBG', '0')
+				self.setProperty('umbrella.fanartdefault', str(self.defaultbg))
 			if getSetting('sources.highlightmethod') == '1':
 				self.setProperty('umbrella.useprovidercolors', '1')
 				self.setProperty('umbrella.realdebridcolor', getColor(getSetting('sources.real-debrid.color')))

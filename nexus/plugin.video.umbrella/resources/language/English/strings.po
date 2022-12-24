@@ -4224,5 +4224,29 @@ msgid "Percentage to use to mark items watched"
 msgstr ""
 
 msgctxt "#40341"
-msgid "Do not try more than one source on fail"
+msgid "Only try one source."
+msgstr ""
+
+msgctxt "#40342"
+msgid "Simkl"
+msgstr ""
+
+msgctxt "#40343"
+msgid "Simkl"
+msgstr ""
+
+msgctxt "#40344"
+msgid "Simkl settings category for Simkl authorization and settings exclusive to Simkl. Currently only setup for authentication for adding as a search provider. More features will be added later."
+msgstr ""
+
+msgctxt "#40345"
+msgid "simkl token"
+msgstr ""
+
+msgctxt "#40346"
+msgid "Simkl Auth"
+msgstr ""
+
+msgctxt "#40347"
+msgid "Authentication with Simkl has failed, please try again"
 msgstr ""
