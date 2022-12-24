@@ -70,7 +70,7 @@
                     <align>center</align>
                     <aligny>center</aligny>
                     <visible>!String.IsEmpty(Window().Property(umbrella.season))</visible>
-                    <label>$INFO[Window().Property(umbrella.mpaa)] | Year: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.year)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]
+                    <label>[COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.mpaa)][/COLOR] | Year: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.year)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]
                     <scroll>true</scroll>
 					</label>
                 </control>
