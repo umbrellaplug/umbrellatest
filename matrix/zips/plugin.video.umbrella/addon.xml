@@ -48,6 +48,7 @@
 --[ENHANCEMENT][I] Added Watched Percentage Marking Option in setting Playback.[I]
 --[ENHANCEMENT][I] Added ability to hide or show fanart as background on source select and scraping screens.[I]
 --[ENHANCEMENT][I] Added ability to only try 1 link on source selection.[I]
+--[ENHANCEMENT][I] Simkl Authentication added. More Coming.[I]
 --[ENHANCEMENT][I] Adjusted transparency on background art not being correct. Thanks Peter![I]
 --[FIX][I] Removed test version detection to stop accidentally deleting trakt and settings.[I]
 --[FIX][I] Adding missing still watching file in for ah2 style playnext.[/I]

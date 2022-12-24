@@ -32,7 +32,7 @@
 <!-- Side Info -->
         <control type="group">
             <top>120</top>
-            <left>1400</left>
+            <left>1450</left>
             <control type="label">
                 <top>-900</top>
                 <width>400</width>
@@ -71,7 +71,8 @@
                     <aligny>center</aligny>
                     <visible>!String.IsEmpty(Window().Property(umbrella.season))</visible>
                     <label>$INFO[Window().Property(umbrella.mpaa)] | Year: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.year)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]
-                    </label>
+                    <scroll>true</scroll>
+					</label>
                 </control>
                 <control type="label">
                     <top>120</top>
@@ -81,20 +82,20 @@
                     <align>center</align>
                     <aligny>center</aligny>
                     <visible>String.IsEmpty(Window().Property(umbrella.season))</visible>
-                    <label>$INFO[Window().Property(umbrella.mpaa)] | Premiered: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.premiered)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]</label>
-                </control>
-
+                    <label>[COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.mpaa)] [/COLOR]| [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.premiered)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]</label>
+					<scroll>true</scroll>
+				</control>
                 <control type="textbox">
                     <wrapmultiline>true</wrapmultiline>
                     <top>360</top>
                     <left>0</left>
-                    <height min="20" max="130">auto</height>
+                    <height min="20" max="150">auto</height>
                     <width>400</width>
                     <font>font12</font>
                     <textcolor>AAFFFFFF</textcolor>
                     <align>center</align>
                     <label>$INFO[Window().Property(umbrella.plot)]</label>
-					<scroll>true</scroll>
+					<autoscroll delay="3000" time="1000" repeat="10000">!Control.HasFocus(13)</autoscroll>
                 </control>
             </control>
 
@@ -516,24 +517,25 @@
 				</focusedlayout>
 			</control>
 			<control type="group">
-				<left>1432</left>
+				<left>1462</left>
 				<top>10</top>
 					<control type="button" id="2001">
 						<description>View Uncached Torrents button</description>
 						<onright>2000</onright>
 						<onleft>2000</onleft>
-						<width>305</width>
+						<width>350</width>
 						<height>100</height>
 						<textoffsetx>0</textoffsetx>
 						<texturefocus colordiffuse="$INFO[Window().Property(umbrella.highlight.color)]">common/button5.png</texturefocus>
 						<!-- <texturenofocus colordiffuse="gainsboro">common/button2.png</texturenofocus> -->
-						<texturenofocus>common/button5.png</texturenofocus>
+						<texturenofocus colordiffuse="gainsboro">common/button5.png</texturenofocus>
 						<label>$ADDON[plugin.video.umbrella 32639]</label>
 						<font>font12</font>
 						<align>center</align>
 						<textcolor>white</textcolor>
 						<focusedcolor>white</focusedcolor>
 						<visible>true</visible>
+						<animation effect="fade" start="100" end="80" time="0" tween="sine" easing="in">WindowOpen</animation>
 					</control>
 			</control>
 			<control type="grouplist" id="2002">
