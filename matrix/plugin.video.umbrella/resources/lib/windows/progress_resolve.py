@@ -4,7 +4,7 @@
 """
 
 from json import dumps as jsdumps
-from resources.lib.modules.control import dialog, getSourceHighlightColor, addonIcon, setting as getSetting, addonFanart
+from resources.lib.modules.control import dialog, getSourceHighlightColor, addonIcon, setting as getSetting, addonFanart, getColor
 from resources.lib.windows.base import BaseDialog
 
 class ProgressResolve(BaseDialog):
@@ -41,6 +41,7 @@ class ProgressResolve(BaseDialog):
 			if 'tvshowtitle' in self.meta: self.setProperty('umbrella.tvtitle', self.meta.get('tvshowtitle'))
 			if self.meta.get('plot'): self.setProperty('umbrella.plot', self.meta.get('plot', ''))
 		self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
+		self.setProperty('umbrella.dialog.color', str(getColor(getSetting('scraper.dialog.color'))))
 		self.setProperty('percent', str(0))
 		if getSetting('sources.dialog.fanartBG') == 'true':
 			self.setProperty('umbrella.fanartBG', '1')

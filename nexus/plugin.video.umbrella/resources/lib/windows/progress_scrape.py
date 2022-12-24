@@ -5,7 +5,7 @@
 
 from json import dumps as jsdumps, loads as jsloads
 from urllib.parse import unquote
-from resources.lib.modules.control import dialog, getSourceHighlightColor, addonFanart, joinPath, jsonrpc, setting as getSetting
+from resources.lib.modules.control import dialog, getSourceHighlightColor, addonFanart, joinPath, jsonrpc, setting as getSetting, getColor
 from resources.lib.windows.base import BaseDialog
 from resources.lib.modules import log_utils
 
@@ -57,6 +57,7 @@ class ProgressScrape(BaseDialog):
 		else:
 			self.setProperty('umbrella.fanart', addonFanart())
 		self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
+		self.setProperty('umbrella.dialog.color', str(getColor(getSetting('scraper.dialog.color'))))
 		self.setProperty('percent', str(0))
 		if getSetting('sources.dialog.fanartBG') == 'true':
 			self.setProperty('umbrella.fanartBG', '1')

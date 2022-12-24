@@ -221,6 +221,7 @@ class UncachedResultsXML(BaseDialog):
 			else: self.setProperty('umbrella.duration', 'NA ')
 			self.setProperty('umbrella.total_results', self.total_results)
 			self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
+			self.setProperty('umbrella.dialog.color', str(getColor(getSetting('scraper.dialog.color'))))
 			if getSetting('sources.select.fanartBG') == 'true':
 				self.setProperty('umbrella.fanartBG', '1')
 			else:

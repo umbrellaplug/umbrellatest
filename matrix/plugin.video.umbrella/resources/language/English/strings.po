@@ -4250,3 +4250,7 @@ msgstr ""
 msgctxt "#40347"
 msgid "Authentication with Simkl has failed, please try again"
 msgstr ""
+
+msgctxt "#40348"
+msgid "Sources Highlight Color"
+msgstr ""

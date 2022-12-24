@@ -43,7 +43,7 @@
                 <align>center</align>
                 <aligny>center</aligny>
                 <visible>!String.IsEmpty(Window().Property(umbrella.season))</visible>
-                <label>Season: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.season)][/COLOR] Episode: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.episode)][/COLOR]</label>
+                <label>Season: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.season)][/COLOR] Episode: [COLOR $INFO[Window().Property(umbrella.dialog.color)]]$INFO[Window().Property(umbrella.episode)][/COLOR]</label>
             </control>
             <control type="image">
                 <width>400</width>
@@ -72,7 +72,7 @@
                     <align>center</align>
                     <aligny>center</aligny>
                     <visible>!String.IsEmpty(Window().Property(umbrella.season))</visible>
-                    <label>$INFO[Window().Property(umbrella.mpaa)] | Year: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.year)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]
+                    <label>$INFO[Window().Property(umbrella.mpaa)] | Year: [COLOR $INFO[Window().Property(umbrella.dialog.color)]]$INFO[Window().Property(umbrella.year)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.dialog.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]
                     </label>
                 </control>
                 <control type="label">
@@ -83,7 +83,7 @@
                     <align>center</align>
                     <aligny>center</aligny>
                     <visible>String.IsEmpty(Window().Property(umbrella.season))</visible>
-                    <label>$INFO[Window().Property(umbrella.mpaa)] | Premiered: [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.premiered)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.highlight.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]</label>
+                    <label>$INFO[Window().Property(umbrella.mpaa)] | Premiered: [COLOR $INFO[Window().Property(umbrella.dialog.color)]]$INFO[Window().Property(umbrella.premiered)] [/COLOR] | [COLOR $INFO[Window().Property(umbrella.dialog.color)]]$INFO[Window().Property(umbrella.duration)]min[/COLOR]</label>
                 </control>
 
                 <control type="textbox">
