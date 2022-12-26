@@ -314,7 +314,7 @@ class Sources:
 				progressDialog = control.progressDialogBG
 				progressDialog.create(header, '')
 			if getSetting('progress.dialog') == '2':
-				progressDialog = self.getProcessResolver(meta)
+				progressDialog = self.getProcessResolver(title, self.year, self.imdb, self.tvdb, self.season, self.episode, self.tvshowtitle, self.premiered, self.meta)
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
 			for i in range(len(resolve_items)):
@@ -1058,7 +1058,7 @@ class Sources:
 				progressDialog = control.progressDialogBG
 				progressDialog.create(header, '')
 			if getSetting('progress.dialog') == '2':
-				progressDialog = self.getProcessResolver(self.meta)
+				progressDialog = self.getProcessResolver(self.title, self.year, self.imdb, self.tvdb, self.season, self.episode, self.tvshowtitle, self.meta)
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
 		except: pass
@@ -1557,9 +1557,9 @@ class Sources:
 		Thread(target=window.run).start()
 		return window
 
-	def getProcessResolver(self, meta):
+	def getProcessResolver(self, title, year, imdb, tvdb, season, episode, tvshowtitle, meta):
 		from resources.lib.windows.progress_resolve import ProgressResolve
-		window = ProgressResolve('progress_resolve.xml', control.addonPath(control.addonId()), meta=meta)
+		window = ProgressResolve('progress_resolve.xml', control.addonPath(control.addonId()), title=title, year=year, imdb=imdb, tvdb=tvdb, season=season, episode=episode, tvshowtitle=tvshowtitle, meta=meta)
 		Thread(target=window.run).start()
 		return window
 
