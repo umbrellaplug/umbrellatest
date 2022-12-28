@@ -314,7 +314,7 @@ class Sources:
 				progressDialog = control.progressDialogBG
 				progressDialog.create(header, '')
 			if getSetting('progress.dialog') == '2':
-				progressDialog = self.getProcessResolver(title, self.year, self.imdb, self.tvdb, self.season, self.episode, self.tvshowtitle, self.premiered, self.meta)
+				progressDialog = self.getProcessResolver(title, self.year, self.imdb, self.tvdb, self.season, self.episode, self.tvshowtitle, self.meta)
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
 			for i in range(len(resolve_items)):
