@@ -62,7 +62,7 @@ class ProgressResolve(BaseDialog):
 			self.setProperty('umbrella.fanartBG', '1')
 		else:
 			self.setProperty('umbrella.fanartBG', '0')
-			self.setProperty('umbrella.fanartdefault', str(self.defaultBg))
+			self.setProperty('umbrella.fanartdefault', str(self.defaultbg))
 
 	def update(self, percent=0, content='', icon=None):
 		try:

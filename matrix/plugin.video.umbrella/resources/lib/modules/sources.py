@@ -476,7 +476,11 @@ class Sources:
 				progressDialog = control.progressDialogBG
 				progressDialog.create(header, '')
 			if getSetting('progress.dialog') == '2':
-				progressDialog = self.getProgressScraper(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, self.meta)
+				try:
+					prometa = self.meta
+				except:
+					prometa = None
+				progressDialog = self.getProgressScraper(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, prometa)
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
 			self.prepareSources()
@@ -1563,8 +1567,11 @@ class Sources:
 
 	def getProcessResolver(self, title, meta):
 		year, imdb, tvdb, season, episode = self.year, self.imdb, self.tvdb, self.season, self.episode
-		if self.tvshowtitle: tvshowtitle = self.tvshowtitle 
-		else: tvshowtitle = None
+		try:
+			if self.tvshowtitle: tvshowtitle = self.tvshowtitle 
+			else: tvshowtitle = None
+		except:
+			tvshowtitle = None
 		if meta: meta = meta
 		else: meta = None
 		from resources.lib.windows.progress_resolve import ProgressResolve
