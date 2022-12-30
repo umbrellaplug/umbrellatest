@@ -314,7 +314,7 @@ class Sources:
 				progressDialog = control.progressDialogBG
 				progressDialog.create(header, '')
 			if getSetting('progress.dialog') == '2':
-				progressDialog = self.getProcessResolver(title, self.year, self.imdb, self.tvdb, self.season, self.episode, self.tvshowtitle, self.meta)
+				progressDialog = self.getProcessResolver(title, meta)
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
 			for i in range(len(resolve_items)):
@@ -1058,12 +1058,13 @@ class Sources:
 				progressDialog = control.progressDialogBG
 				progressDialog.create(header, '')
 			if getSetting('progress.dialog') == '2':
-				progressDialog = self.getProcessResolver(self.title, self.year, self.imdb, self.tvdb, self.season, self.episode, self.tvshowtitle, self.meta)
+				progressDialog = self.getProcessResolver(self.title, self.meta)
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
 		except: pass
 		for i in range(len(items)):
 			try:
+				
 				src_provider = items[i]['debrid'] if items[i].get('debrid') else ('%s - %s' % (items[i]['source'], items[i]['provider']))
 				if progressDialog != control.progressDialog and progressDialog != control.progressDialogBG:
 					sdc = control.getColor(getSetting('scraper.dialog.color'))
@@ -1266,14 +1267,17 @@ class Sources:
 
 	def subTitle(self, tvshowtitle):
 		#need to make a table and check for substitutions.
-		try:
-			from resources.lib.database import titlesubs
-			subtvshowtitle = titlesubs.substitute_get(tvshowtitle)
-			if subtvshowtitle:
-				tvshowtitle = subtvshowtitle
-		except:
-			tvshowtitle = tvshowtitle
-		return tvshowtitle
+		if tvshowtitle:
+			try:
+				from resources.lib.database import titlesubs
+				subtvshowtitle = titlesubs.substitute_get(tvshowtitle)
+				if subtvshowtitle:
+					tvshowtitle = subtvshowtitle
+			except:
+				tvshowtitle = tvshowtitle
+			return tvshowtitle
+		else:
+			return None
 
 	def getSubsList(self):
 		try:
@@ -1557,7 +1561,12 @@ class Sources:
 		Thread(target=window.run).start()
 		return window
 
-	def getProcessResolver(self, title, year, imdb, tvdb, season, episode, tvshowtitle, meta):
+	def getProcessResolver(self, title, meta):
+		year, imdb, tvdb, season, episode = self.year, self.imdb, self.tvdb, self.season, self.episode
+		if self.tvshowtitle: tvshowtitle = self.tvshowtitle 
+		else: tvshowtitle = None
+		if meta: meta = meta
+		else: meta = None
 		from resources.lib.windows.progress_resolve import ProgressResolve
 		window = ProgressResolve('progress_resolve.xml', control.addonPath(control.addonId()), title=title, year=year, imdb=imdb, tvdb=tvdb, season=season, episode=episode, tvshowtitle=tvshowtitle, meta=meta)
 		Thread(target=window.run).start()

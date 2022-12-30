@@ -1,4 +1,8 @@
 
+[B][COLOR black]Update - v6.6.02 - Dec 30th, 2022[/COLOR][/B]
+--[FIX][I] Fixed durations to show correctly in progress for ah2.[/I]
+--[FIX][I] Full-Screen Resolve changes made for blank tvshowtitle or none[/I]
+
 [B][COLOR black]Update - v6.6.01 - Dec 28th, 2022[/COLOR][/B]
 --[SPECIAL THANKS][I] Special Thanks to TikiPeter(Fen) and u/Mammoth-Bullfrog-274. Both have contributed and helped a ton and without their help, Umbrella would not exist. It is appreciated.[I]
 --[INFORMATION][I] There are a lot of changes on this update. Testing has been done, but bugs always happen. Please report any issues.[I]
