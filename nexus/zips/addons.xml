@@ -148,7 +148,7 @@
 [COLOR yellow]--[/COLOR][I] Changed to new settings format.[/I]
 		</news>
 	</extension>
-</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.01">
+</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.02">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -184,6 +184,8 @@
 [B][COLOR black]Update - v6.6.02 - Dec 30th, 2022[/COLOR][/B]
 --[FIX][I] Fixed durations to show correctly in progress for ah2.[/I]
 --[FIX][I] Full-Screen Resolve changes made for blank tvshowtitle or none[/I]
+--[FIX][I] Scrape and Resolve changes made for blank meta.[/I]
+--[ENHANCEMENT][I] Made new windows use highlight color and scraper dialog colors like previous windows.[/I]
 		</news>
 	</extension>
 </addon><addon id="repository.umbrellatest" name="Umbrella Test Repository" version="1.0.0" provider-name="Umbrella">
