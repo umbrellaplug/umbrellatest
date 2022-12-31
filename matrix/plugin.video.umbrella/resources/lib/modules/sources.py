@@ -473,7 +473,7 @@ class Sources:
 					prometa = self.meta
 				except:
 					prometa = None
-				progressDialog = self.getProgressScraper(title, year, imdb, tvdb, season, episode, tvshowtitle, premiered, prometa)
+				progressDialog = self.getProgressScraper(title, year, imdb, tvdb, season, episode, prometa)
 			if getSetting('progress.dialog') == '3':
 				progressDialog = self.getIconProgress()
 			self.prepareSources()
