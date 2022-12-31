@@ -3,6 +3,7 @@
 --[FIX][I] Fixed durations to show correctly in progress for ah2.[/I]
 --[FIX][I] Full-Screen Resolve changes made for blank tvshowtitle or none[/I]
 --[FIX][I] Scrape and Resolve changes made for blank meta.[/I]
+--[FIX][I] Real Debrid cloud scrape log fix.[/I]
 --[ENHANCEMENT][I] Made new windows use highlight color and scraper dialog colors like previous windows.[/I]
 
 [B][COLOR black]Update - v6.6.01 - Dec 28th, 2022[/COLOR][/B]
