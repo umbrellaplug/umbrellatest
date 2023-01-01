@@ -92,6 +92,10 @@ def setContainerName(value):
 	import sys
 	xbmcplugin.setPluginCategory(int(sys.argv[1]), value)
 
+def setHomeWindowProperty(propertyname, property):
+	win = xbmcgui.Window(10000)
+	win.setProperty(str(propertyname), property)
+
 def setting(id, fallback=None):
 	try: settings_dict = jsloads(homeWindow.getProperty('umbrella_settings'))
 	except: settings_dict = make_settings_dict()

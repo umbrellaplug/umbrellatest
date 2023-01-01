@@ -64,7 +64,7 @@ class Sources:
 		self.plexHighlightColor = control.getProviderHighlightColor('plexshare')
 		self.gdriveHighlightColor = control.getProviderHighlightColor('gdrive')
 		self.useProviders = True if getSetting('sources.highlightmethod') == '1' else False
-		self.providerColors = {"useproviders": self.useProviders, "defaultcolor": self.sourceHighlightColor, "realdebrid": self.realdebridHighlightColor, "alldebrid": self.alldebridHighlightColor, "premiumize": self.premiumizeHighlightColor, "easynews": self.easynewsHighlightColor, "plexshare": self.plexHighlightColor, "gdrive": "gdriveHighlightColor"}
+		self.providerColors = {"useproviders": self.useProviders, "defaultcolor": self.sourceHighlightColor, "realdebrid": self.realdebridHighlightColor, "alldebrid": self.alldebridHighlightColor, "premiumize": self.premiumizeHighlightColor, "easynews": self.easynewsHighlightColor, "plexshare": self.plexHighlightColor, "gdrive": self.gdriveHighlightColor}
 
 	def play(self, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta, select, rescrape=None):
 		if not self.prem_providers:

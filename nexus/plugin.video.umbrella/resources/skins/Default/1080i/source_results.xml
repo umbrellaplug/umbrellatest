@@ -141,7 +141,7 @@
 				<!-- <textcolor>$INFO[Window().Property(umbrella.highlight.color)]</textcolor> -->
 				<!-- <align>center</align> -->
 				<!-- <aligny>bottom</aligny> -->
-				<!-- <label>$INFO[Window().Property(umbrella.title)]</label> -->
+				<!-- <label>$INFO[Window().Property(umbrella.title)]</label> -->_icon
 				<!-- <visible>String.IsEmpty(Window().Property(umbrella.clearlogo))</visible> -->
 			<!-- </control> -->
 
@@ -360,6 +360,7 @@
 						<width>100</width>
 						<height>100</height>
 						<align>left</align>
+						<aspectratio>keep</aspectratio>
 						<texture>$INFO[ListItem.Property(umbrella.quality_icon)]</texture>
 						<visible>!String.IsEqual(Window().Property(umbrella.usecoloricons),1)</visible>
 					</control>

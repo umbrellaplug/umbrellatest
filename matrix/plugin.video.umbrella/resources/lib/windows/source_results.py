@@ -22,7 +22,7 @@ class SourceResultsXML(BaseDialog):
 		self.meta = kwargs.get('meta')
 		self.defaultbg = addonFanart()
 		self.dnlds_enabled = True if getSetting('downloads') == 'true' and (getSetting('movie.download.path') != '' or getSetting('tv.download.path') != '') else False
-		self.useProviderColors = True if kwargs.get('colors')['useproviders'] == "True" else False
+		self.useProviderColors = True if kwargs.get('colors')['useproviders'] == True else False
 		self.colors = kwargs.get('colors')
 		self.sourceHighlightColor = self.colors['defaultcolor']
 		self.realdebridHighlightColor = self.colors['realdebrid']
@@ -206,11 +206,11 @@ class SourceResultsXML(BaseDialog):
 					#log_utils.log('Umbrella Sources Make Items: %s' % str(item.get('debrid')), log_utils.LOGINFO)
 					if self.useProviderColors == True:
 						if item.get('debrid') is not None and item.get('debrid') !='':
-							if str(item.get('debrid')).lower == 'real-debrid':
+							if str(item.get('debrid')).lower() == 'real-debrid':
 								providerHighlight = self.realdebridHighlightColor
-							elif str(item.get('debrid')).lower == 'alldebrid':
+							elif str(item.get('debrid')).lower() == 'alldebrid':
 								providerHighlight = self.alldebridHighlightColor
-							elif str(item.get('debrid')).lower == 'premiumize.me':
+							elif str(item.get('debrid')).lower()== 'premiumize.me':
 								providerHighlight = self.premiumizeHighlightColor
 						else:
 							if item.get('provider') == 'easynews':
