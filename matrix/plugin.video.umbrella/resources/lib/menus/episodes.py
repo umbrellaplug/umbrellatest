@@ -401,8 +401,6 @@ class Episodes:
 					try:duration = (int(item['show']['runtime']) * 60)
 					except: duration = ''
 				values['duration'] = duration
-				from resources.lib.modules import log_utils
-				log_utils.log('[ plugin.video.umbrella ] Trakt_progress_list Duration: %s' % duration, log_utils.LOGDEBUG)
 				try: values['trailer'] = control.trailer % item['show']['trailer'].split('v=')[1]
 				except: values['trailer'] = ''
 				try:
