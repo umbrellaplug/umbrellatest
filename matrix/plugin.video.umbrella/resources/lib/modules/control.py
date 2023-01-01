@@ -458,18 +458,22 @@ def jsondate_to_datetime(jsondate_object, resformat, remove_time=False):
 	return datetime_object
 
 def syncAccounts():
-	setSetting('easynews.user', addon('script.module.cocoscrapers').getSetting('easynews.user'))
-	setSetting('easynews.password', addon('script.module.cocoscrapers').getSetting('easynews.password'))
-	setSetting('furk.user_name', addon('script.module.cocoscrapers').getSetting('furk.user_name'))
-	setSetting('furk.user_pass', addon('script.module.cocoscrapers').getSetting('furk.user_pass'))
-	setSetting('filepursuit.api', addon('script.module.cocoscrapers').getSetting('filepursuit.api'))
-	setSetting('plex.token', addon('script.module.cocoscrapers').getSetting('plex.token'))
-	setSetting('plex.client_id', addon('script.module.cocoscrapers').getSetting('plex.client_id'))
-	setSetting('plex.device_id', addon('script.module.cocoscrapers').getSetting('plex.device_id'))
-	setSetting('plexshare.sourceTitle', addon('script.module.cocoscrapers').getSetting('plexshare.sourceTitle'))
-	setSetting('plexshare.accessToken', addon('script.module.cocoscrapers').getSetting('plexshare.accessToken'))
-	setSetting('plexshare.url', addon('script.module.cocoscrapers').getSetting('plexshare.url'))
-	setSetting('gdrive.cloudflare_url', addon('script.module.cocoscrapers').getSetting('gdrive.cloudflare_url'))
+	try:
+		setSetting('easynews.user', addon('script.module.cocoscrapers').getSetting('easynews.user'))
+		setSetting('easynews.password', addon('script.module.cocoscrapers').getSetting('easynews.password'))
+		setSetting('furk.user_name', addon('script.module.cocoscrapers').getSetting('furk.user_name'))
+		setSetting('furk.user_pass', addon('script.module.cocoscrapers').getSetting('furk.user_pass'))
+		setSetting('filepursuit.api', addon('script.module.cocoscrapers').getSetting('filepursuit.api'))
+		setSetting('plex.token', addon('script.module.cocoscrapers').getSetting('plex.token'))
+		setSetting('plex.client_id', addon('script.module.cocoscrapers').getSetting('plex.client_id'))
+		setSetting('plex.device_id', addon('script.module.cocoscrapers').getSetting('plex.device_id'))
+		setSetting('plexshare.sourceTitle', addon('script.module.cocoscrapers').getSetting('plexshare.sourceTitle'))
+		setSetting('plexshare.accessToken', addon('script.module.cocoscrapers').getSetting('plexshare.accessToken'))
+		setSetting('plexshare.url', addon('script.module.cocoscrapers').getSetting('plexshare.url'))
+		setSetting('gdrive.cloudflare_url', addon('script.module.cocoscrapers').getSetting('gdrive.cloudflare_url'))
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()
 
 
 def checkPlayNextEpisodes():

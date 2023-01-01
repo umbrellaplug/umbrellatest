@@ -76,8 +76,12 @@ class Navigator:
 		if getMenuEnabled('navi.movie.trakt.trending'):
 			self.addDirectoryItem(32443 if self.indexLabels else 32442, 'movies&url=trakttrending', 'trakt.png' if self.iconLogos else 'trending.png', 'trending.png')
 		if self.simkltoken:
-			if getMenuEnabled('navi.movie.simkl.trending'):
-				self.addDirectoryItem(40354 if self.indexLabels else 40355, 'simklMovies&url=simkltrendingtoday', 'simkl.png' if self.iconLogos else 'trending.png', 'trending.png')
+			if getMenuEnabled('navi.movie.simkl.trendingtoday'):
+				self.addDirectoryItem(40350 if self.indexLabels else 40351, 'simklMovies&url=simkltrendingtoday', 'simkl.png' if self.iconLogos else 'trending.png', 'trending.png')
+			if getMenuEnabled('navi.movie.simkl.trendingweek'):
+				self.addDirectoryItem(40352 if self.indexLabels else 40353, 'simklMovies&url=simkltrendingweek', 'simkl.png' if self.iconLogos else 'trending.png', 'trending.png')
+			if getMenuEnabled('navi.movie.simkl.trendingmonth'):
+				self.addDirectoryItem(40354 if self.indexLabels else 40355, 'simklMovies&url=simkltrendingmonth', 'simkl.png' if self.iconLogos else 'trending.png', 'trending.png')
 		if getMenuEnabled('navi.movie.tmdb.trendingday'):
 			self.addDirectoryItem(40330 if self.indexLabels else 32442, 'movies&url=tmdbrecentday', 'tmdb.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
 		if getMenuEnabled('navi.movie.tmdb.trendingweek'):
@@ -161,9 +165,12 @@ class Navigator:
 		if getMenuEnabled('navi.tv.trakt.trending'):
 			self.addDirectoryItem(32443 if self.indexLabels else 32442, 'tvshows&url=trakttrending', 'trakt.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
 		if self.simkltoken:
-			if getMenuEnabled('navi.tv.simkl.trending'):
-				self.addDirectoryItem(40354 if self.indexLabels else 40355, 'simklTvshows&url=simkltrendingtoday', 'simkl.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
-		#self.addDirectoryItem(40352 if self.indexLabels else 40353, 'simklTvshows&url=simkltrendingmonth', 'simkl.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
+			if getMenuEnabled('navi.tv.simkl.trendingtoday'):
+				self.addDirectoryItem(40350 if self.indexLabels else 40351, 'simklTvshows&url=simkltrendingtoday', 'simkl.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
+			if getMenuEnabled('navi.tv.simkl.trendingweek'):
+				self.addDirectoryItem(40352 if self.indexLabels else 40353, 'simklTvshows&url=simkltrendingweek', 'simkl.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
+			if getMenuEnabled('navi.tv.simkl.trendingweek'):	
+				self.addDirectoryItem(40354 if self.indexLabels else 40355, 'simklTvshows&url=simkltrendingmonth', 'simkl.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
 		if getMenuEnabled('navi.tv.tmdb.trendingday'):
 			self.addDirectoryItem(40330 if self.indexLabels else 32442, 'tvshows&url=tmdbrecentday', 'tmdb.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
 		if getMenuEnabled('navi.tv.tmdb.trendingweek'):

@@ -1,3 +1,9 @@
+[B][COLOR black]Update - v6.6.04 - Jan 1st, 2023[/COLOR][/B]
+--[FIX][I] Change source selection screen to build all colors properties before constructing the window.[/I]
+--[FIX][I] Adding cache in for MDBList and SimKL Lists. All cache for 6 hours.[/I]
+--[FIX][I] Removed some logging that was not needed.[/I]
+--[ENHANCEMENT][I] Added trending weekly and monthly in for Simkl, hidden by default.[/I]
+
 [B][COLOR black]Update - v6.6.03 - Dec 31st, 2022[/COLOR][/B]
 --[FIX][I] Fixed setting that was backwards for try only 1 source on source select.[/I]
 --[FIX][I] Corrected library items importing with a "." as first character making them hidden files.[/I]

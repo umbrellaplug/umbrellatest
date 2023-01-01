@@ -774,9 +774,19 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="navi.movie.simkl.trending" type="boolean" label="40354" help="">
+				<setting id="navi.movie.simkl.trendingtoday" type="boolean" label="40350" help="">
 					<level>0</level>
 					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="navi.movie.simkl.trendingweek" type="boolean" label="40352" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="navi.movie.simkl.trendingmonth" type="boolean" label="40354" help="">
+					<level>0</level>
+					<default>false</default>
 					<control type="toggle"/>
 				</setting>
 				<setting id="navi.movie.tmdb.trendingday" type="boolean" label="40330" help="">
@@ -936,9 +946,19 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="navi.tv.simkl.trending" type="boolean" label="40354" help="">
+				<setting id="navi.tv.simkl.trendingtoday" type="boolean" label="40350" help="">
 					<level>0</level>
 					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="navi.tv.simkl.trendingweek" type="boolean" label="40352" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="navi.tv.simkl.trendingmonth" type="boolean" label="40354" help="">
+					<level>0</level>
+					<default>false</default>
 					<control type="toggle"/>
 				</setting>
 				<setting id="navi.tv.tmdb.trendingday" type="boolean" label="40330" help="">

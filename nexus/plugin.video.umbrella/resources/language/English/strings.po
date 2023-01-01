@@ -4260,25 +4260,25 @@ msgid "Error Connecting to Simkl"
 msgstr ""
 
 msgctxt "#40350"
-msgid "Simkl (Trending this Week)"
+msgid "Trending Today (Simkl)"
 msgstr ""
 
 msgctxt "#40351"
-msgid "(Trending this Month)"
+msgid "Trending Today"
 msgstr ""
 
 msgctxt "#40352"
-msgid "Simkl (Trending this Month)"
+msgid "Trending this Week (Simkl)"
 msgstr ""
 
 msgctxt "#40353"
-msgid "(Trending this Month)"
+msgid "Trending this Week"
 msgstr ""
 
 msgctxt "#40354"
-msgid "Trending (Simkl)"
+msgid "Trending this Month (Simkl)"
 msgstr ""
 
 msgctxt "#40355"
-msgid "Trending"
+msgid "Trending this Month"
 msgstr ""

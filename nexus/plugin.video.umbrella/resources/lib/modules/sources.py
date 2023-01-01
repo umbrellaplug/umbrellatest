@@ -56,6 +56,15 @@ class Sources:
 		self.dev_disable_show_filter = getSetting('dev.disable.show.filter') == 'true'
 		self.uncached_nopopup = getSetting('sources.nocachepopup') == 'true'
 		self.highlight_color = control.getHighlightColor()
+		self.sourceHighlightColor = control.getSourceHighlightColor()
+		self.realdebridHighlightColor = control.getProviderHighlightColor('real-debrid')
+		self.alldebridHighlightColor = control.getProviderHighlightColor('alldebrid')
+		self.premiumizeHighlightColor = control.getProviderHighlightColor('premiumize.me')
+		self.easynewsHighlightColor = control.getProviderHighlightColor('easynews')
+		self.plexHighlightColor = control.getProviderHighlightColor('plexshare')
+		self.gdriveHighlightColor = control.getProviderHighlightColor('gdrive')
+		self.useProviders = True if getSetting('sources.highlightmethod') == '1' else False
+		self.providerColors = {"useproviders": self.useProviders, "defaultcolor": self.sourceHighlightColor, "realdebrid": self.realdebridHighlightColor, "alldebrid": self.alldebridHighlightColor, "premiumize": self.premiumizeHighlightColor, "easynews": self.easynewsHighlightColor, "plexshare": self.plexHighlightColor, "gdrive": "gdriveHighlightColor"}
 
 	def play(self, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta, select, rescrape=None):
 		if not self.prem_providers:
@@ -276,8 +285,8 @@ class Sources:
 				uncached_items = self.sort_byQuality(source_list=uncached_items)
 			if items == uncached_items:
 				from resources.lib.windows.uncached_results import UncachedResultsXML
-				window = UncachedResultsXML('uncached_results.xml', control.addonPath(control.addonId()), uncached=uncached_items, meta=self.meta)
-			else: window = SourceResultsXML('source_results.xml', control.addonPath(control.addonId()), results=items, uncached=uncached_items, meta=self.meta)
+				window = UncachedResultsXML('uncached_results.xml', control.addonPath(control.addonId()), uncached=uncached_items, meta=self.meta, colors=self.providerColors)
+			else: window = SourceResultsXML('source_results.xml', control.addonPath(control.addonId()), results=items, uncached=uncached_items, meta=self.meta, colors=self.providerColors)
 			action, chosen_source = window.run()
 			del window
 			if action == 'play_Item' and self.uncached_chosen != True:

@@ -229,8 +229,8 @@ class Movies:
 	def getMBDTopLists(self, create_directory=True): 
 		self.list = []
 		try:
-			#self.list = cache.get(self.mbd_top_lists, 0)
-			self.list = self.mbd_top_lists()
+			self.list = cache.get(self.mbd_top_lists, 6)
+			#self.list = self.mbd_top_lists()
 			if self.list is None: self.list = []
 			if create_directory: self.addDirectory(self.list)
 			return self.list
@@ -261,8 +261,8 @@ class Movies:
 	def getMDBUserList(self, create_directory=True): 
 		self.list = []
 		try:
-			#self.list = cache.get(self.mbd_top_lists, 0)
-			self.list = self.mbd_user_lists()
+			self.list = cache.get(self.mbd_user_lists, 6)
+			#self.list = self.mbd_user_lists()
 			if self.list is None: self.list = []
 			if create_directory: self.addDirectory(self.list)
 			return self.list
@@ -487,7 +487,7 @@ class Movies:
 			try: u = urlparse(url).netloc.lower()
 			except: pass
 			if u in self.simkltrendingweek_link or u in self.simkltrendingmonth_link or u in self.simkltrendingtoday_link:
-				self.list = cache.get(simkl().simkl_list, 24, url)
+				self.list = cache.get(simkl().simkl_list, 6, url)
 			if self.list is None: self.list = []
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next

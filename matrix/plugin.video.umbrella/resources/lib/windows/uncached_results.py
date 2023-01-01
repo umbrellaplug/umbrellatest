@@ -19,6 +19,15 @@ class UncachedResultsXML(BaseDialog):
 		self.total_results = str(len(self.uncached))
 		self.meta = kwargs.get('meta')
 		self.defaultbg = addonFanart()
+		self.useProviderColors = True if kwargs.get('colors')['useproviders'] == "True" else False
+		self.colors = kwargs.get('colors')
+		self.sourceHighlightColor = self.colors['defaultcolor']
+		self.realdebridHighlightColor = self.colors['realdebrid']
+		self.alldebridHighlightColor = self.colors['alldebrid']
+		self.premiumizeHighlightColor = self.colors['premiumize']
+		self.easynewsHighlightColor = self.colors['easynews']
+		self.plexHighlightColor = self.colors['plexshare']
+		self.gdriveHighlightColor = self.colors['gdrive']
 		self.make_items()
 		self.set_properties()
 
@@ -145,27 +154,25 @@ class UncachedResultsXML(BaseDialog):
 					quality_icon = self.get_quality_iconPath(quality)
 					quality1_icon = self.get_quality1_iconPath(quality)
 					extra_info = item.get('info')
-					#from resources.lib.modules import log_utils
-					#log_utils.log('Umbrella Sources Make Items: %s' % str(item.get('debrid')), log_utils.LOGINFO)
-					providerHighlight = getSourceHighlightColor()
-					if getSetting('sources.select.fanartBG'):
-						self.setProperty('umbrella.fanartBG', '1')
-					else:
-						self.setProperty('umbrella.fanartBG', '0')
-					if getSetting('sources.highlightmethod') == '1':
+					if self.useProviderColors == True:
 						if item.get('debrid') is not None and item.get('debrid') !='':
-							providerHighlight = getProviderHighlightColor(str(item.get('debrid')))
+							if str(item.get('debrid')).lower == 'real-debrid':
+								providerHighlight = self.realdebridHighlightColor
+							elif str(item.get('debrid')).lower == 'alldebrid':
+								providerHighlight = self.alldebridHighlightColor
+							elif str(item.get('debrid')).lower == 'premiumize.me':
+								providerHighlight = self.premiumizeHighlightColor
 						else:
 							if item.get('provider') == 'easynews':
-								providerHighlight = getProviderHighlightColor('easynews')
+								providerHighlight = self.easynewsHighlightColor
 							elif str(item.get('provider')).lower() == 'plexshare':
-								providerHighlight = getProviderHighlightColor('plexshare')
+								providerHighlight = self.plexHighlightColor
 							elif str(item.get('provider')).lower() == 'gdrive':
-								providerHighlight = getProviderHighlightColor('gdrive')
+								providerHighlight = self.gdriveHighlightColor
 							else:
-								providerHighlight = getSourceHighlightColor()
+								providerHighlight = self.sourceHighlightColor
 					else:
-						providerHighlight = getSourceHighlightColor()
+						providerHighlight = self.sourceHighlightColor
 					size_label = str(round(item.get('size', ''), 2)) + ' GB' if item.get('size') else 'NA'
 					listitem.setProperty('umbrella.source_dict', jsdumps([item]))
 					listitem.setProperty('umbrella.debrid', self.debrid_name(item.get('debrid')))

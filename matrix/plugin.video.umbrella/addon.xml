@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.03">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.04">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -31,14 +31,11 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.03 - Dec 31st, 2022[/COLOR][/B]
---[FIX][I] Fixed setting that was backwards for try only 1 source on source select.[/I]
---[FIX][I] Corrected library items importing with a "." as first character making them hidden files.[/I]
---[FIX][I] Adjusted all debrid to return on 503[/I]
---[FIX][I] Added try and catch to startup settings check for Apple TV.[/I]
---[ENHANCEMENT][I] Added new Simkl Trending List for TV Shows.[/I]
---[ENHANCEMENT][I] Added new Simkl Trending List for Movies.[/I]
---[ENHANCEMENT][I] Simkl Must be authenticated for new trending lists to show. More Simkl features and lists coming soon.[/I]
+[B][COLOR black]Update - v6.6.04 - Jan 1st, 2023[/COLOR][/B]
+--[FIX][I] Change source selection screen to build all colors properties before constructing the window.[/I]
+--[FIX][I] Adding cache in for MDBList and SimKL Lists. All cache for 6 hours.[/I]
+--[FIX][I] Removed some logging that was not needed.[/I]
+--[ENHANCEMENT][I] Added trending weekly and monthly in for Simkl, hidden by default.[/I]
 		</news>
 	</extension>
 </addon>
