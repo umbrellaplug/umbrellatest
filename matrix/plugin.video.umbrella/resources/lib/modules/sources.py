@@ -901,6 +901,8 @@ class Sources:
 			self.sources = [i for i in self.sources if ' DTS-X ' not in i.get('info', '')]
 		if getSetting('remove.audio.ddtruehd') == 'true': 
 			self.sources = [i for i in self.sources if ' DOLBY-TRUEHD ' not in i.get('info', '')]
+		if getSetting('remove.audio.aac') == 'true': 
+			self.sources = [i for i in self.sources if ' AAC ' not in i.get('info', '')]
 		if getSetting('remove.audio.mp3') == 'true': 
 			self.sources = [i for i in self.sources if ' MP3 ' not in i.get('info', '')]
 		if getSetting('remove.channel.2ch') == 'true':  # start of audio channel filters

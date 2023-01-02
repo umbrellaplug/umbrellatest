@@ -2125,6 +2125,11 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="remove.audio.aac" type="boolean" label="40356" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="remove.audio.mp3" type="boolean" label="40154" help="">
 					<level>0</level>
 					<default>false</default>
