@@ -10,8 +10,9 @@ import xbmcaddon
 import xbmcgui
 import xbmcplugin
 import xbmcvfs
-import xml.etree.ElementTree as ET
+#import xml.etree.ElementTree as ET
 from threading import Thread
+from xml.dom.minidom import parse as mdParse
 
 addon = xbmcaddon.Addon
 AddonID = xbmcaddon.Addon().getAddonInfo('id')
@@ -113,12 +114,18 @@ def setSetting(id, value):
 
 def make_settings_dict(): # service runs upon a setting change
 	try:
-		root = ET.parse(settingsFile).getroot()
+		#root = ET.parse(settingsFile).getroot()
+		root = mdParse(settingsFile) #minidom instead of element tree
+		curSettings = root.getElementsByTagName("setting") #minidom instead of element tree
 		settings_dict = {}
-		for item in root:
+		for item in curSettings:
 			dict_item = {}
-			setting_id = item.get('id')
-			setting_value = item.text
+			#setting_id = item.get('id')
+			setting_id = item.getAttribute('id') #minidom instead of element tree
+			try:
+				setting_value = item.firstChild.data #minidom instead of element tree
+			except:
+				setting_value = None
 			if setting_value is None: setting_value = ''
 			dict_item = {setting_id: setting_value}
 			settings_dict.update(dict_item)

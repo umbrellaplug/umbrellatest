@@ -181,12 +181,13 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.04 - Jan 1st, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.04 - Jan 3rd, 2023[/COLOR][/B]
 --[FIX][I] Cloud Scrapers Fixed.[/I]
 --[FIX][I] Change source selection screen to build all colors properties before constructing the window.[/I]
 --[FIX][I] Adding cache in for MDBList and Simkl Lists. All cache for 6 hours.[/I]
 --[FIX][I] Fixed issue with error on source select colors.[/I]
---[FIX][I] Removed some logging that was not needed.[/I]
+--[FIX][I] Removed some logging.[/I]
+--[NEXUS][I] Removed all instances of Element Tree from code to help with crashes.[/I]
 --[ENHANCEMENT][I] Add new audio filter for aac.[/I]
 --[ENHANCEMENT][I] Added trending weekly and monthly in for Simkl, hidden by default.[/I]
 		</news>
@@ -219,4 +220,31 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
+</addon><addon id="script.module.cocoscrapers" name="CocoScrapers Module" version="1.0.7" provider-name="CocoJoe">
+	<requires>
+		<import addon="xbmc.python" version="3.0.0" />
+		<import addon="script.module.requests" />
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="lib/default.py">
+		<provides>executable</provides>
+	</extension> 
+	<extension point="xbmc.service" library="lib/service.py" start="startup" />
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<reuselanguageinvoker>false</reuselanguageinvoker>
+		<summary lang="en">CocoScrapers Module</summary>
+		<description>A module that can be used to provide site scrapers.</description>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+		<forum />
+		<website />
+		<source />
+		<disclaimer lang="en">The author is not responsible for the use of this addon. The author is not responsible for the content found using this addon. The author does not host or own any content found within this addon.[CR]The author is in no way affiliated with Kodi, Team Kodi, or the XBMC Foundation.[CR]This is a Non-profit resource, organized solely for educational purposes which is protected under the Fair-Use doctrine of the Copyright Act, Specifically section 107, which does promote freedom of expression, by permitting the unlicensed use of copyright-protected works.</disclaimer>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.png</fanart>
+			<screenshot />
+		</assets>
+		<news />
+	</extension>
 </addon></addons>
