@@ -257,8 +257,8 @@
 					<default>0</default>
 					<constraints>
 						<options>
-							<option label="32366">0</option>
-							<option label="32368">1</option>
+							<option label="40166">0</option>
+							<option label="32315">1</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -273,8 +273,8 @@
 					<default>0</default>
 					<constraints>
 						<options>
-							<option label="32366">0</option>
-							<option label="32368">1</option>
+							<option label="40166">0</option>
+							<option label="32315">1</option>
 						</options>
 					</constraints>
 					<dependencies>
@@ -602,6 +602,56 @@
 						</dependency>
 					</dependencies>
 					<control type="spinner" format="string"/>
+				</setting>
+			</group>
+			<group id="3" label="40357" help="">
+				<setting id="reuse.languageinvoker" type="boolean" label="32139" help="">
+					<level>0</level>
+					<default>true</default>
+					<enable>false</enable>
+					<control type="toggle"/>
+				</setting>
+				<setting id="reuselanguageInvoker.Off" type="action" label="40179" help="40182">
+					<level>0</level>
+					<default/>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="reuse.languageinvoker">true</condition>
+						</dependency>
+					</dependencies>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action">
+						<heading>40179</heading>
+						<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_LanguageInvoker&amp;name=True)</data>
+						<close>true</close>
+					</control>
+				</setting>
+				<setting id="reuselanguageInvoker.On" type="action" label="40180" help="40181">
+					<level>0</level>
+					<default/>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="reuse.languageinvoker">false</condition>
+						</dependency>
+					</dependencies>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action">
+						<heading>40180</heading>
+						<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_LanguageInvoker&amp;name=True)</data>
+						<close>true</close>
+					</control>
+				</setting>
+				<setting id="showHelpLangInvoker" type="action" label="32140" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_ShowHelp&amp;name=langinvoker)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action"/>
 				</setting>
 			</group>
 		</category>
@@ -5303,66 +5353,6 @@
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
-					<control type="button" format="action"/>
-				</setting>
-				<setting id="reuse.languageinvoker" type="boolean" label="32139" help="">
-					<level>0</level>
-					<default>true</default>
-					<enable>false</enable>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="dev.mode.enable">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
-				</setting>
-				<setting id="reuselanguageInvoker.Off" type="action" label="40179" help="40182">
-					<level>0</level>
-					<default/>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="reuse.languageinvoker">true</condition>
-							<condition operator="is" setting="dev.mode.enable">true</condition>
-						</dependency>
-					</dependencies>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control type="button" format="action">
-						<heading>40179</heading>
-						<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_LanguageInvoker)</data>
-						<close>true</close>
-					</control>
-				</setting>
-				<setting id="reuselanguageInvoker.On" type="action" label="40180" help="40181">
-					<level>0</level>
-					<default/>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="reuse.languageinvoker">false</condition>
-							<condition operator="is" setting="dev.mode.enable">true</condition>
-						</dependency>
-					</dependencies>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<control type="button" format="action">
-						<heading>40180</heading>
-						<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_LanguageInvoker)</data>
-						<close>true</close>
-					</control>
-				</setting>
-				<setting id="showHelpLangInvoker" type="action" label="32140" help="">
-					<level>0</level>
-					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_ShowHelp&amp;name=langinvoker)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="is" setting="dev.mode.enable">true</condition>
-						</dependency>
-					</dependencies>
 					<control type="button" format="action"/>
 				</setting>
 				<setting id="use.playeronly" type="boolean" label="40275" help="">

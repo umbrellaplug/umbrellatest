@@ -23,6 +23,7 @@ class Navigator:
 		self.imdbCredentials = getSetting('imdbuser') != ''
 		self.simkltoken = getSetting('simkltoken') != ''
 		self.tmdbSessionID = getSetting('tmdb.sessionid') != ''
+		self.reuselanguageinv = getSetting('reuse.languageinvoker') == 'true'
 		self.highlight_color = control.getHighlightColor()
 
 	def root(self):
@@ -292,6 +293,11 @@ class Navigator:
 		self.addDirectoryItem(32556, 'library_Navigator', 'tools.png', 'DefaultAddonService.png', isFolder=True)
 		self.addDirectoryItem(32049, 'tools_viewsNavigator', 'settings.png', 'DefaultAddonService.png', isFolder=True)
 		self.addDirectoryItem(32361, 'tools_resetViewTypes', 'settings.png', 'DefaultAddonService.png', isFolder=False)
+		#reuselanguage
+		if self.reuselanguageinv: 
+			self.addDirectoryItem(40179, 'tools_LanguageInvoker&name=False', 'settings.png', 'DefaultAddonProgram.png', isFolder=False)
+		else:
+			self.addDirectoryItem(40180, 'tools_LanguageInvoker&name=False', 'settings.png', 'DefaultAddonProgram.png', isFolder=False)
 		self.addDirectoryItem(32083, 'tools_cleanSettings', 'settings.png', 'DefaultAddonProgram.png', isFolder=False)
 		self.addDirectoryItem(40334, 'tools_deleteSettings', 'settings.png', 'DefaultAddonProgram.png', isFolder=False)
 		self.addDirectoryItem(32523, 'tools_loggingNavigator', 'tools.png', 'DefaultAddonService.png')
