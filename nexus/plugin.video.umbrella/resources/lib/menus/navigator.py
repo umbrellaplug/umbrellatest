@@ -289,10 +289,10 @@ class Navigator:
 		#-- Downloads - 10
 		self.addDirectoryItem(32048, 'tools_openSettings&query=11.0', 'downloads.png', 'DefaultAddonService.png', isFolder=False)
 		#-- Subtitles - 11
-		self.addDirectoryItem(32046, 'tools_openSettings&query=12.0', 'subtitles.png', 'DefaultAddonService.png', isFolder=False)
-		self.addDirectoryItem(32556, 'library_Navigator', 'library.png', 'DefaultAddonService.png', isFolder=True)
-		self.addDirectoryItem(32049, 'tools_viewsNavigator', 'viewtypes.png', 'DefaultAddonService.png', isFolder=True)
-		self.addDirectoryItem(32361, 'tools_resetViewTypes', 'reset-view-types.png', 'DefaultAddonService.png', isFolder=False)
+		self.addDirectoryItem(32046, 'tools_openSettings&query=12.0', 'tools.png', 'DefaultAddonService.png', isFolder=False)
+		self.addDirectoryItem(32556, 'library_Navigator', 'tools.png', 'DefaultAddonService.png', isFolder=True)
+		self.addDirectoryItem(32049, 'tools_viewsNavigator', 'settings.png', 'DefaultAddonService.png', isFolder=True)
+		self.addDirectoryItem(32361, 'tools_resetViewTypes', 'settings.png', 'DefaultAddonService.png', isFolder=False)
 		#reuselanguage
 		if self.reuselanguageinv: 
 			self.addDirectoryItem(40179, 'tools_LanguageInvoker&name=False', 'settings.png', 'DefaultAddonProgram.png', isFolder=False)
