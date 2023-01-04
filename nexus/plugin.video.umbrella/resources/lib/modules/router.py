@@ -590,7 +590,7 @@ def router(argv2):
 			help.get(name)
 		elif action == 'tools_LanguageInvoker':
 			from resources.lib.modules import language_invoker
-			language_invoker.set_reuselanguageinvoker()
+			language_invoker.set_reuselanguageinvoker(fromSettings=name)
 		elif action == 'tools_toolNavigator':
 			from resources.lib.menus import navigator
 			navigator.Navigator().tools()

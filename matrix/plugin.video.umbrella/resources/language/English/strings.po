@@ -4286,3 +4286,7 @@ msgstr ""
 msgctxt "#40356"
 msgid "Remove AAC"
 msgstr ""
+
+msgctxt "#40357"
+msgid "Reuselanguageinvoker Setting"
+msgstr ""
