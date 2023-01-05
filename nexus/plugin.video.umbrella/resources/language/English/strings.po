@@ -4000,7 +4000,7 @@ msgid "[COLOR gray]█ [B]Gray[/B][/COLOR]"
 msgstr ""
 
 msgctxt "#40285"
-msgid "[COLOR beige]█ [B]Beige[/B][/COLOR]"
+msgid "[COLOR FFFFF0DB]█ [B]Beige[/B][/COLOR]"
 msgstr ""
 
 msgctxt "#40286"
@@ -4028,11 +4028,11 @@ msgid "[COLOR lightcoral]█ [B]Light Coral[/B][/COLOR]"
 msgstr ""
 
 msgctxt "#40292"
-msgid "[COLOR darkred]█ [B]Dark Red[/B][/COLOR]"
+msgid "[COLOR FFD10000]█ [B]Dark Red[/B][/COLOR]"
 msgstr ""
 
 msgctxt "#40293"
-msgid "[COLOR maroon]█ [B]Maroon[/B][/COLOR]"
+msgid "[COLOR FF750000]█ [B]Maroon[/B][/COLOR]"
 msgstr ""
 
 msgctxt "#40294"
@@ -4297,4 +4297,12 @@ msgstr ""
 
 msgctxt "#40359"
 msgid "FilePursuit Highlight Color"
+msgstr ""
+
+msgctxt "#40360"
+msgid "Get Furk API"
+msgstr ""
+
+msgctxt "#40361"
+msgid "Clear Furk API"
 msgstr ""

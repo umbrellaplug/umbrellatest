@@ -96,7 +96,7 @@
                     <textcolor>AAFFFFFF</textcolor>
                     <align>center</align>
                     <label>$INFO[Window().Property(umbrella.plot)]</label>
-		    <scroll>true</scroll>
+					<scroll>true</scroll>
                 </control>
             </control>
 

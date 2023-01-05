@@ -395,6 +395,12 @@ def router(argv2):
 		elif action == "furk_UserFiles":
 			from resources.lib.debrid import furk
 			furk.Furk().user_files()
+		elif action == "furk_getApi":
+			from resources.lib.debrid import furk
+			furk.Furk().get_api()
+		elif action == "furk_clearApi":
+			from resources.lib.debrid import furk
+			furk.Furk().clear_api()
 
 	elif action and action.startswith('pm_'):
 		if action == 'pm_ServiceNavigator':

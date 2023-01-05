@@ -2676,7 +2676,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="sources.highlightmethod">1</condition>
+							<and>
+								<condition operator="is" setting="sources.highlightmethod">1</condition>
+								<condition operator="!is" setting="realdebridtoken"/>
+							</and>
 						</dependency>
 					</dependencies>
 					<control type="list" format="string">
@@ -2729,7 +2732,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="sources.highlightmethod">1</condition>
+							<and>
+								<condition operator="is" setting="sources.highlightmethod">1</condition>
+								<condition operator="!is" setting="alldebridtoken"/>
+							</and>
 						</dependency>
 					</dependencies>
 					<control type="list" format="string">
@@ -2782,7 +2788,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="sources.highlightmethod">1</condition>
+							<and>
+								<condition operator="is" setting="sources.highlightmethod">1</condition>
+								<condition operator="!is" setting="premiumizetoken"/>
+							</and>
 						</dependency>
 					</dependencies>
 					<control type="list" format="string">
@@ -2835,7 +2844,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="sources.highlightmethod">1</condition>
+							<and>
+								<condition operator="is" setting="sources.highlightmethod">1</condition>
+								<condition operator="!is" setting="easynews.password"/>
+							</and>
 						</dependency>
 					</dependencies>
 					<control type="list" format="string">
@@ -2888,7 +2900,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="sources.highlightmethod">1</condition>
+							<and>
+								<condition operator="is" setting="sources.highlightmethod">1</condition>
+								<condition operator="!is" setting="plex.token"/>
+							</and>
 						</dependency>
 					</dependencies>
 					<control type="list" format="string">
@@ -2941,7 +2956,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="sources.highlightmethod">1</condition>
+							<and>
+								<condition operator="is" setting="sources.highlightmethod">1</condition>
+								<condition operator="!is" setting="gdrive.cloudflare_url"/>
+							</and>
 						</dependency>
 					</dependencies>
 					<control type="list" format="string">
@@ -2994,7 +3012,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="sources.highlightmethod">1</condition>
+							<and>
+								<condition operator="is" setting="sources.highlightmethod">1</condition>
+								<condition operator="!is" setting="furk.user_name"/>
+							</and>
 						</dependency>
 					</dependencies>
 					<control type="list" format="string">
@@ -3047,7 +3068,10 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="sources.highlightmethod">1</condition>
+							<and>
+								<condition operator="is" setting="sources.highlightmethod">1</condition>
+								<condition operator="!is" setting="filepursuit.api"/>
+							</and>
 						</dependency>
 					</dependencies>
 					<control type="list" format="string">
@@ -4427,6 +4451,7 @@
 					<dependencies>
 						<dependency type="enable">
 							<condition on="property" name="InfoBool">false</condition>
+							<condition operator="!is" setting="easynews.password"/>
 						</dependency>
 					</dependencies>
 					<control type="edit" format="string">
@@ -4593,6 +4618,40 @@
 					</dependencies>
 					<control type="slider" format="integer">
 						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="furkgetApi" type="action" label="40360" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=furk_getApi)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">true</condition>
+							<condition operator="!is" setting="furk.user_name"/>
+							<condition operator="is" setting="furk.api"/>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+				<setting id="furkclearApi" type="action" label="40361" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=furk_clearApi)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">true</condition>
+							<condition operator="!is" setting="furk.user_name"/>
+							<condition operator="!is" setting="furk.api"/>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<close>true</close>
 					</control>
 				</setting>
 				<setting id="cocoScraperSettingsFurk" type="action" label="40134" help="">

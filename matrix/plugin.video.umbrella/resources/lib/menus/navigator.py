@@ -394,7 +394,7 @@ class Navigator:
 		self.endDirectory()
 
 	def furk_service(self):
-		if getSetting('furk.api'):
+		if getSetting('furk.user_name'):
 			self.addDirectoryItem('Furk: Search', 'furk_Search', 'search.png', 'DefaultAddonsSearch.png')
 			self.addDirectoryItem('Furk: User Files', 'furk_UserFiles', 'furk.png', 'DefaultAddonService.png')
 			self.addDirectoryItem('Furk: Account Info', 'furk_AccountInfo', 'furk.png', 'DefaultAddonService.png', isFolder=False)

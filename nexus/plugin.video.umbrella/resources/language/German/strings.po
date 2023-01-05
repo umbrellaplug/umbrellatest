@@ -5379,3 +5379,23 @@ msgstr ""
 msgctxt "#40356"
 msgid "Remove AAC"
 msgstr ""
+
+msgctxt "#40357"
+msgid "Reuselanguageinvoker Setting"
+msgstr ""
+
+msgctxt "#40358"
+msgid "Furk Highlight Color"
+msgstr ""
+
+msgctxt "#40359"
+msgid "FilePursuit Highlight Color"
+msgstr ""
+
+msgctxt "#40360"
+msgid "Get Furk API"
+msgstr ""
+
+msgctxt "#40361"
+msgid "Clear Furk API"
+msgstr ""
