@@ -10,6 +10,7 @@
 --[ENHANCEMENT][I] Moved reuselanguageInvoker setting to Settings: General.[/I]
 --[ENHANCEMENT][I] Added option to turn languageinvoker on and off directly from tools list.[/I]
 --[ENHANCEMENT][I] Added trending weekly and monthly in for Simkl, hidden by default.[/I]
+--[ENHANCEMENT][I] Added color support for Furk and FilePursuit[/I]
 
 [B][COLOR black]Update - v6.6.03 - Dec 31st, 2022[/COLOR][/B]
 --[FIX][I] Fixed setting that was backwards for try only 1 source on source select.[/I]

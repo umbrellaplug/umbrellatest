@@ -4290,3 +4290,11 @@ msgstr ""
 msgctxt "#40357"
 msgid "Reuselanguageinvoker Setting"
 msgstr ""
+
+msgctxt "#40358"
+msgid "Furk Highlight Color"
+msgstr ""
+
+msgctxt "#40359"
+msgid "FilePursuit Highlight Color"
+msgstr ""

@@ -28,6 +28,8 @@ class UncachedResultsXML(BaseDialog):
 		self.easynewsHighlightColor = self.colors['easynews']
 		self.plexHighlightColor = self.colors['plexshare']
 		self.gdriveHighlightColor = self.colors['gdrive']
+		self.furkHighlightColor = self.colors['furk']
+		self.filePursuitHighlightColor = self.colors['filepursuit']
 		self.make_items()
 		self.set_properties()
 
@@ -156,11 +158,11 @@ class UncachedResultsXML(BaseDialog):
 					extra_info = item.get('info')
 					if self.useProviderColors == True:
 						if item.get('debrid') is not None and item.get('debrid') !='':
-							if str(item.get('debrid')).lower == 'real-debrid':
+							if str(item.get('debrid')).lower() == 'real-debrid':
 								providerHighlight = self.realdebridHighlightColor
-							elif str(item.get('debrid')).lower == 'alldebrid':
+							elif str(item.get('debrid')).lower() == 'alldebrid':
 								providerHighlight = self.alldebridHighlightColor
-							elif str(item.get('debrid')).lower == 'premiumize.me':
+							elif str(item.get('debrid')).lower()== 'premiumize.me':
 								providerHighlight = self.premiumizeHighlightColor
 						else:
 							if item.get('provider') == 'easynews':
@@ -169,6 +171,10 @@ class UncachedResultsXML(BaseDialog):
 								providerHighlight = self.plexHighlightColor
 							elif str(item.get('provider')).lower() == 'gdrive':
 								providerHighlight = self.gdriveHighlightColor
+							elif str(item.get('provider')).lower() == 'furk':
+								providerHighlight = self.furkHighlightColor
+							elif str(item.get('provider')).lower() == 'filepursuit':
+								providerHighlight = self.filePursuitHighlightColor
 							else:
 								providerHighlight = self.sourceHighlightColor
 					else:
@@ -236,12 +242,14 @@ class UncachedResultsXML(BaseDialog):
 				self.setProperty('umbrella.fanartdefault', str(self.defaultbg))
 			if getSetting('sources.highlightmethod') == '1':
 				self.setProperty('umbrella.useprovidercolors', '1')
-				self.setProperty('umbrella.realdebridcolor', getColor(getSetting('sources.real-debrid.color')))
-				self.setProperty('umbrella.alldebridcolor', getColor(getSetting('sources.alldebrid.color')))
-				self.setProperty('umbrella.premiumizecolor', getColor(getSetting('sources.premiumize.me.color')))
-				self.setProperty('umbrella.plexcolor', getColor(getSetting('sources.plexshare.color')))
-				self.setProperty('umbrella.easynewscolor', getColor(getSetting('sources.easynews.color')))
-				self.setProperty('umbrella.gdrivecolor', getColor(getSetting('sources.gdrive.color')))
+				self.setProperty('umbrella.realdebridcolor', self.realdebridHighlightColor)
+				self.setProperty('umbrella.alldebridcolor', self.alldebridHighlightColor)
+				self.setProperty('umbrella.premiumizecolor', self.premiumizeHighlightColor)
+				self.setProperty('umbrella.plexcolor', self.plexHighlightColor)
+				self.setProperty('umbrella.easynewscolor', self.easynewsHighlightColor)
+				self.setProperty('umbrella.gdrivecolor', self.gdriveHighlightColor)
+				self.setProperty('umbrella.furkcolor', self.furkHighlightColor)
+				self.setProperty('umbrella.filepursuitcolor', self.filePursuitHighlightColor)
 				
 				if getSetting('sources.usecoloricons') == 'true':
 					self.setProperty('umbrella.usecoloricons', '1')

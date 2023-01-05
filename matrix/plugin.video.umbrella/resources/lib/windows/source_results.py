@@ -31,6 +31,8 @@ class SourceResultsXML(BaseDialog):
 		self.easynewsHighlightColor = self.colors['easynews']
 		self.plexHighlightColor = self.colors['plexshare']
 		self.gdriveHighlightColor = self.colors['gdrive']
+		self.furkHighlightColor = self.colors['furk']
+		self.filePursuitHighlightColor = self.colors['filepursuit']
 		self.make_items()
 		self.set_properties()
 
@@ -219,6 +221,10 @@ class SourceResultsXML(BaseDialog):
 								providerHighlight = self.plexHighlightColor
 							elif str(item.get('provider')).lower() == 'gdrive':
 								providerHighlight = self.gdriveHighlightColor
+							elif str(item.get('provider')).lower() == 'furk':
+								providerHighlight = self.furkHighlightColor
+							elif str(item.get('provider')).lower() == 'filepursuit':
+								providerHighlight = self.filePursuitHighlightColor
 							else:
 								providerHighlight = self.sourceHighlightColor
 					else:
@@ -287,12 +293,14 @@ class SourceResultsXML(BaseDialog):
 				self.setProperty('umbrella.fanartBG', '0')
 			if getSetting('sources.highlightmethod') == '1':
 				self.setProperty('umbrella.useprovidercolors', '1')
-				self.setProperty('umbrella.realdebridcolor', getColor(getSetting('sources.real-debrid.color')))
-				self.setProperty('umbrella.alldebridcolor', getColor(getSetting('sources.alldebrid.color')))
-				self.setProperty('umbrella.premiumizecolor', getColor(getSetting('sources.premiumize.me.color')))
-				self.setProperty('umbrella.plexcolor', getColor(getSetting('sources.plexshare.color')))
-				self.setProperty('umbrella.easynewscolor', getColor(getSetting('sources.easynews.color')))
-				self.setProperty('umbrella.gdrivecolor', getColor(getSetting('sources.gdrive.color')))
+				self.setProperty('umbrella.realdebridcolor', self.realdebridHighlightColor)
+				self.setProperty('umbrella.alldebridcolor', self.alldebridHighlightColor)
+				self.setProperty('umbrella.premiumizecolor', self.premiumizeHighlightColor)
+				self.setProperty('umbrella.plexcolor', self.plexHighlightColor)
+				self.setProperty('umbrella.easynewscolor', self.easynewsHighlightColor)
+				self.setProperty('umbrella.gdrivecolor', self.gdriveHighlightColor)
+				self.setProperty('umbrella.furkcolor', self.furkHighlightColor)
+				self.setProperty('umbrella.filepursuitcolor', self.filePursuitHighlightColor)
 				
 				if getSetting('sources.usecoloricons') == 'true':
 					self.setProperty('umbrella.usecoloricons', '1')
