@@ -597,6 +597,9 @@ def router(argv2):
 		elif action == 'tools_LanguageInvoker':
 			from resources.lib.modules import language_invoker
 			language_invoker.set_reuselanguageinvoker(fromSettings=name)
+		elif action == 'tools_iconPack':
+			from resources.lib.modules import skin_packs
+			skin_packs.iconPackHandler().show_skin_packs()
 		elif action == 'tools_toolNavigator':
 			from resources.lib.menus import navigator
 			navigator.Navigator().tools()
@@ -640,7 +643,7 @@ def router(argv2):
 				control.sleep(100)
 				control.syncAccounts()
 				control.sleep(100)
-				control.openSettings('8.3', 'plugin.video.umbrella')
+				control.openSettings('11.3', 'plugin.video.umbrella')
 			elif query == 'Furk':
 				control.openSettings('1.2', 'script.module.cocoscrapers')
 				control.sleep(500)
@@ -649,7 +652,7 @@ def router(argv2):
 				control.sleep(100)
 				control.syncAccounts()
 				control.sleep(100)
-				control.openSettings('8.5', 'plugin.video.umbrella')
+				control.openSettings('11.5', 'plugin.video.umbrella')
 			elif query == 'FilePursuit':
 				control.openSettings('1.3', 'script.module.cocoscrapers')
 				control.sleep(500)
@@ -658,7 +661,7 @@ def router(argv2):
 				control.sleep(100)
 				control.syncAccounts()
 				control.sleep(100)
-				control.openSettings('8.4', 'plugin.video.umbrella')
+				control.openSettings('11.4', 'plugin.video.umbrella')
 			elif query == 'Plex':
 				control.openSettings('1.1', 'script.module.cocoscrapers')
 				control.sleep(500)
@@ -667,7 +670,7 @@ def router(argv2):
 				control.sleep(100)
 				control.syncAccounts()
 				control.sleep(100)
-				control.openSettings('8.7', 'plugin.video.umbrella')
+				control.openSettings('11.7', 'plugin.video.umbrella')
 			else:
 				control.openSettings('0.0','script.module.cocoscrapers')
 		elif action == 'tools_traktManager':

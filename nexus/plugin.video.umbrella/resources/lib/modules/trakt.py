@@ -139,10 +139,10 @@ def traktAuth(fromSettings=0):
 			except: pass
 			control.notification(message=40107, icon=trakt_icon)
 			if fromSettings == 1:
-				control.openSettings('6.0', 'plugin.video.umbrella')
+				control.openSettings('8.0', 'plugin.video.umbrella')
 			return True
 		if fromSettings == 1:
-				control.openSettings('6.0', 'plugin.video.umbrella')
+				control.openSettings('8.0', 'plugin.video.umbrella')
 		control.notification(message=40108, icon=trakt_icon)
 		return False
 	except:
@@ -165,7 +165,7 @@ def traktRevoke(fromSettings=0):
 			if cleared:
 				log_utils.log('Trakt tables cleared after revoke.', level=log_utils.LOGINFO)
 			if fromSettings == 1:
-				control.openSettings('6.0', 'plugin.video.umbrella')
+				control.openSettings('8.0', 'plugin.video.umbrella')
 				control.dialog.ok(control.lang(32315), control.lang(40109))
 		except:
 			log_utils.error()

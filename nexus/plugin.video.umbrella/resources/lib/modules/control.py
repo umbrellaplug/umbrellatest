@@ -187,14 +187,19 @@ def artPath():
 	return joinPath(xbmcaddon.Addon('plugin.video.umbrella').getAddonInfo('path'), 'resources', 'artwork', theme)
 
 def genreIconPath():
-	return joinPath(xbmcaddon.Addon('plugin.video.umbrella').getAddonInfo('path'), 'resources', 'artwork', 'genre_media', 'icons')
+	theme = appearance()
+	return joinPath(xbmcaddon.Addon('plugin.video.umbrella').getAddonInfo('path'), 'resources', 'artwork', theme, 'genre_media', 'icons')
 
 def genrePosterPath():
-	return joinPath(xbmcaddon.Addon('plugin.video.umbrella').getAddonInfo('path'), 'resources', 'artwork', 'genre_media', 'posters')
+	theme = appearance()
+	return joinPath(xbmcaddon.Addon('plugin.video.umbrella').getAddonInfo('path'), 'resources', 'artwork', theme, 'genre_media', 'posters')
 
 def appearance():
 	theme = setting('appearance.1').lower()
 	return theme
+
+def iconFolders():
+	return joinPath(xbmcaddon.Addon('plugin.video.umbrella').getAddonInfo('path'), 'resources', 'artwork')
 
 def addonIcon():
 	theme = appearance()
@@ -482,6 +487,7 @@ def syncAccounts():
 		setSetting('plexshare.accessToken', addon('script.module.cocoscrapers').getSetting('plexshare.accessToken'))
 		setSetting('plexshare.url', addon('script.module.cocoscrapers').getSetting('plexshare.url'))
 		setSetting('gdrive.cloudflare_url', addon('script.module.cocoscrapers').getSetting('gdrive.cloudflare_url'))
+		homeWindow.setProperty('context.umbrella.highlightcolor', getColor(setting('highlight.color')))
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()
@@ -513,6 +519,14 @@ def removeCorruptSettings():
 		deleteFile(settingsFile)
 		current_profile = infoLabel('system.profilename')
 		execute('LoadProfile(%s)' % current_profile)
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()
+
+def setContextColors():
+	#tell me i cannot do some shit again.
+	try:
+		homeWindow.setProperty('context.umbrella.highlightcolor', getColor(setting('highlight.color')))
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()

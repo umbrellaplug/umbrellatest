@@ -288,7 +288,7 @@ class lib_tools:
 				selected = len(selected_items)
 				control.setSetting('library.autoimportlists.number', str(selected))
 			if fromSettings == True:
-				control.openSettings('10.2', 'plugin.video.umbrella')
+				control.openSettings('13.2', 'plugin.video.umbrella')
 			self.updateLists(selected_items, allTraktItems)
 				
 		except:
@@ -306,7 +306,7 @@ class lib_tools:
 			window.run()
 			del window
 			if fromSettings == True:
-				control.openSettings('10.2', 'plugin.video.umbrella')
+				control.openSettings('13.2', 'plugin.video.umbrella')
 				
 		except:
 			from resources.lib.modules import log_utils

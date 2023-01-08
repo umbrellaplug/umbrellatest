@@ -67,6 +67,7 @@ class Sources:
 		self.filePursuitHighlightColor = control.getProviderHighlightColor('filepursuit')
 		self.useProviders = True if getSetting('sources.highlightmethod') == '1' else False
 		self.providerColors = {"useproviders": self.useProviders, "defaultcolor": self.sourceHighlightColor, "realdebrid": self.realdebridHighlightColor, "alldebrid": self.alldebridHighlightColor, "premiumize": self.premiumizeHighlightColor, "easynews": self.easynewsHighlightColor, "plexshare": self.plexHighlightColor, "gdrive": self.gdriveHighlightColor, "furk": self.furkHighlightColor,"filepursuit": self.filePursuitHighlightColor}
+		self.providercache_hours = int(getSetting('cache.providers'))
 
 	def play(self, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta, select, rescrape=None):
 		if not self.prem_providers:
@@ -129,7 +130,7 @@ class Sources:
 						homeWindow.setProperty(self.metaProperty, jsdumps(self.meta))
 				self.total_seasons, self.season_isAiring = self.get_season_info(imdb, tmdb, tvdb, meta, season)
 			if rescrape: self.clr_item_providers(title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered)
-			items = providerscache.get(self.getSources, 48, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered)
+			items = providerscache.get(self.getSources, self.providercache_hours, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered)
 			if not items:
 				self.url = url
 				return self.errorForSources()
@@ -555,6 +556,7 @@ class Sources:
 			#new settings for tv and movie isolated.
 			source_4k = source_1080 = source_720 = source_sd = total = 0
 			total_format = '[COLOR %s][B]%s[/B][/COLOR]'
+			total_format2 = '[B]%s[/B]'
 			pdiag_format = '[COLOR %s]4K:[/COLOR]  %s  |  [COLOR %s]1080p:[/COLOR]  %s  |  [COLOR %s]720p:[/COLOR]  %s  |  [COLOR %s]SD:[/COLOR]  %s' % (
 				self.highlight_color, '%s', self.highlight_color, '%s', self.highlight_color, '%s', self.highlight_color, '%s')
 			#pdiagfull_format = '[COLOR %s]4K:[/COLOR]  %s  |  [COLOR %s]1080p:[/COLOR]  %s  |  [COLOR %s]720p:[/COLOR]  %s  |  [COLOR %s]SD:[/COLOR]  %s' % (
@@ -604,11 +606,11 @@ class Sources:
 					source_sd = len([e for e in self.scraper_sources if e['quality'] in ('SD', 'SCR', 'CAM')])
 				total = source_4k + source_1080 + source_720 + source_sd
 
-				source_4k_label = total_format % ('red', source_4k) if source_4k == 0 else total_format % (sdc, source_4k)
-				source_1080_label = total_format % ('red', source_1080) if source_1080 == 0 else total_format % (sdc, source_1080)
-				source_720_label = total_format % ('red', source_720) if source_720 == 0 else total_format % (sdc, source_720)
-				source_sd_label = total_format % ('red', source_sd) if source_sd == 0 else total_format % (sdc, source_sd)
-				source_total_label = total_format % ('red', total) if total == 0 else total_format % (sdc, total)
+				source_4k_label = total_format2 % (source_4k) if source_4k == 0 else total_format % (sdc, source_4k)
+				source_1080_label = total_format2 % (source_1080) if source_1080 == 0 else total_format % (sdc, source_1080)
+				source_720_label = total_format2 % (source_720) if source_720 == 0 else total_format % (sdc, source_720)
+				source_sd_label = total_format2 % (source_sd) if source_sd == 0 else total_format % (sdc, source_sd)
+				source_total_label = total_format2 % (total) if total == 0 else total_format % (sdc, total)
 				try:
 					info = [x.getName() for x in threads if x.is_alive() is True]
 					line1 = pdiag_format % (source_4k_label, source_1080_label, source_720_label, source_sd_label)
@@ -919,11 +921,25 @@ class Sources:
 		local = [i for i in self.sources if 'local' in i and i['local'] is True] # for library and videoscraper (skips cache check)
 		self.sources = [i for i in self.sources if not i in local]
 		direct = [i for i in self.sources if i['direct'] == True] # acct scrapers (skips cache check)
+		directstart = [] # blank start for enabled only
 		if getSetting('easynews.enable') == 'true':
-			direct = direct
-		else:
-			direct = [i for i in direct if i['provider'] != 'easynews']
-		self.sources = [i for i in self.sources if not i in direct]
+			easynewsList = [i for i in direct if i['provider'] == 'easynews']
+			directstart.extend(easynewsList)
+		if getSetting('furk.enable') == 'true':
+			furkList = [i for i in direct if i['provider'] == 'furk']
+			directstart.extend(furkList)
+		if getSetting('plex.enable') == 'true':
+			plexList = [i for i in direct if i['provider'] == 'plexshare']
+			directstart.extend(plexList)
+		if getSetting('gdrive.enable') == 'true':
+			gDriveList = [i for i in direct if i['provider'] == 'gdrive']
+			directstart.extend(gDriveList)
+		if getSetting('filepursuit.enable') == 'true':
+			fPursuitList = [i for i in direct if i['provider'] == 'filepursuit']
+			directstart.extend(fPursuitList)
+
+		#direct = directstart
+		self.sources = [i for i in self.sources if not i in directstart]
 		from copy import deepcopy
 		deepcopy_sources = deepcopy(self.sources)
 		deepcopy_sources = [i for i in deepcopy_sources if 'magnet:' in i['url']]
@@ -957,7 +973,8 @@ class Sources:
 		if threads:
 			[i.start() for i in threads]
 			[i.join() for i in threads]
-		self.filter += direct # add direct links in to be considered in priority sorting
+		#self.filter += direct # add direct links in to be considered in priority sorting
+		self.filter += directstart
 		
 		try:
 			if len(self.prem_providers) > 1: # resort for debrid/direct priorty, when more than 1 account, because of order cache check threads finish

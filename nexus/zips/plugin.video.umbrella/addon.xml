@@ -14,7 +14,7 @@
 	<extension point="xbmc.service" library="service.py" start="startup"/>
 	<extension point="xbmc.python.module" library="resources/lib/"/>
 	<extension point="xbmc.addon.metadata">
-		<reuselanguageinvoker>true</reuselanguageinvoker>
+		<reuselanguageinvoker>false</reuselanguageinvoker>
 		<summary lang="en">[B]Umbrella[/B] - We do not host any of the contents streamed</summary>
 		<description lang="en">[B]Umbrella[/B][CR] This addon does not form part of the Kodi Media Centre. Please do not seek assistance with this addon from any of the Official Kodi Support Channels.[CR]The author does not host any of the content in this addon and takes no responsibility for content found. We do not know anything about a lab under Raccoon City.</description>
 		<platform>all</platform>
@@ -31,22 +31,10 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.05 - Jan 5th, 2023[/COLOR][/B]
---[FIX][I] Changed reuselanguageInvoker back to True by default due to complaints. Can be turned off in Tools or Settings: General[/I]
---[FIX][I] Cloud Scrapers Fixed.[/I]
---[FIX][I] Change source selection screen to build all colors properties before constructing the window.[/I]
---[FIX][I] Adding cache in for MDBList and Simkl Lists. All cache for 6 hours.[/I]
---[FIX][I] Fixed issue with error on source select colors.[/I]
---[FIX][I] Removed some logging.[/I]
---[FIX][I] When creating source library folders they are created with the content set correctly now.[/I]
---[FIX][I] Furk api pull from settings added.[/I]
---[NEXUS][I] Removed all instances of Element Tree from code to help with crashes.[/I]
---[ENHANCEMENT][I] Add new audio filter for aac.[/I]
---[ENHANCEMENT][I] Moved reuselanguageInvoker setting to Settings: General.[/I]
---[ENHANCEMENT][I] Added option to turn languageinvoker on and off directly from tools list.[/I]
---[ENHANCEMENT][I] Added trending weekly and monthly in for Simkl, hidden by default.[/I]
---[ENHANCEMENT][I] Added color support for Furk and FilePursuit[/I]
---[ENHANCEMENT][I] Changed provider colors to only show for added providers in sources.[/I]
+[B][COLOR black]Update - v6.6.05 - Jan 7th, 2023[/COLOR][/B]
+--[FIX][I] Enable Disable Toggle Added for Plex, Furk, FilePursuit, and GDrive[/I]
+--[ENHANCEMENT][I] Settings changes due to exceeding max amount of settings allowed in a category.[/I]
+--[ENHANCEMENT][I] Added sliders to control number of hours things are cached.[/I]
 		</news>
 	</extension>
 </addon>

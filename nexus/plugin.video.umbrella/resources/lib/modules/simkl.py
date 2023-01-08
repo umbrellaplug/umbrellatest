@@ -50,7 +50,7 @@ class SIMKL:
 					log_utils.error()
 					control.okDialog(title='default', message=40347)
 					if fromSettings == 1:
-						control.openSettings('7.0', 'plugin.video.umbrella')
+						control.openSettings('9.0', 'plugin.video.umbrella')
 				return
 		else:
 			log_utils.error()
@@ -85,13 +85,13 @@ class SIMKL:
 			control.sleep(500)
 			control.setSetting('simkltoken', self.token)
 			if fromSettings == 1:
-				control.openSettings('7.0', 'plugin.video.umbrella')
+				control.openSettings('9.0', 'plugin.video.umbrella')
 				control.notification(message="Simkl Authorized", icon=simkl_icon)
 			return True, None
 		except:
 			log_utils.error('Simkl Authorization Failed : ')
 			if fromSettings == 1:
-				control.openSettings('7.0', 'plugin.video.umbrella')
+				control.openSettings('9.0', 'plugin.video.umbrella')
 			return False, None
 
 	def reset_authorization(self, fromSettings=0):
@@ -99,7 +99,7 @@ class SIMKL:
 			control.setSetting('simkltoken', '')
 			control.setSetting('simklusername', '')
 			if fromSettings == 1:
-				control.openSettings('7.0', 'plugin.video.umbrella')
+				control.openSettings('9.0', 'plugin.video.umbrella')
 			control.dialog.ok(getLS(40343), getLS(32320))
 
 		except: log_utils.error()

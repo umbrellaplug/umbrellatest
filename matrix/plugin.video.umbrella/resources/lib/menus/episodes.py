@@ -53,6 +53,9 @@ class Episodes:
 		self.tvmaze_link = 'https://api.tvmaze.com'
 		self.added_link = 'https://api.tvmaze.com/schedule'
 		self.calendar_link = 'https://api.tvmaze.com/schedule?date=%s'
+		self.trakt_unfinished_hours = int(getSetting('cache.traktunfinished'))
+		self.trakt_progress_hours = int(getSetting('cache.traktprogress'))
+		self.simkl_hours = int(getSetting('cache.simkl'))
 
 	def get(self, tvshowtitle, year, imdb, tmdb, tvdb, meta, season=None, episode=None, create_directory=True):
 		self.list = []
@@ -133,7 +136,7 @@ class Episodes:
 			items = traktsync.fetch_bookmarks(imdb='', ret_all=True, ret_type='episodes')
 			if trakt.getPausedActivity() > cache.timeout(self.trakt_episodes_list, url, self.trakt_user, self.lang, items):
 				self.list = cache.get(self.trakt_episodes_list, 0, url, self.trakt_user, self.lang, items)
-			else: self.list = cache.get(self.trakt_episodes_list, 720, url, self.trakt_user, self.lang, items)
+			else: self.list = cache.get(self.trakt_episodes_list, self.trakt_unfinished_hours, url, self.trakt_user, self.lang, items)
 			if self.list is None: self.list = []
 			self.list = sorted(self.list, key=lambda k: k['paused_at'], reverse=True)
 			if create_directory: self.episodeDirectory(self.list, unfinished=True, next=False)
@@ -167,7 +170,7 @@ class Episodes:
 			if self.trakt_link in url and url == self.progress_link:
 				if trakt.getProgressActivity() > cache.timeout(self.trakt_progress_list, url, self.trakt_user, self.lang, self.trakt_directProgressScrape, True):
 					self.list = cache.get(self.trakt_progress_list, 0, url, self.trakt_user, self.lang, self.trakt_directProgressScrape, True)
-				else: self.list = cache.get(self.trakt_progress_list, 12, url, self.trakt_user, self.lang, self.trakt_directProgressScrape, True)
+				else: self.list = cache.get(self.trakt_progress_list, self.trakt_progress_hours, url, self.trakt_user, self.lang, self.trakt_directProgressScrape, True)
 				try:
 					if not self.list: raise Exception()
 					for i in range(len(self.list)):
@@ -201,7 +204,7 @@ class Episodes:
 			if self.trakt_link in url and url == self.progress_link:
 				if trakt.getProgressActivity() > cache.timeout(self.trakt_progress_list, url, self.trakt_user, self.lang, self.trakt_directProgressScrape):
 					self.list = cache.get(self.trakt_progress_list, 0, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
-				else: self.list = cache.get(self.trakt_progress_list, 12, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
+				else: self.list = cache.get(self.trakt_progress_list, self.trakt_progress_hours, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
 				self.sort(type='progress')
 				if self.list is None: self.list = []
 				# place new season ep1's at top of list for 1 week
@@ -228,7 +231,7 @@ class Episodes:
 			elif isTraktHistory:
 				if trakt.getActivity() > cache.timeout(self.trakt_episodes_list, url, self.trakt_user, self.lang):
 					self.list = cache.get(self.trakt_episodes_list, 0, url, self.trakt_user, self.lang)
-				else: self.list = cache.get(self.trakt_episodes_list, 24, url, self.trakt_user, self.lang)
+				else: self.list = cache.get(self.trakt_episodes_list, self.trakt_history_hours, url, self.trakt_user, self.lang)
 				if self.list:
 					for i in range(len(self.list)): self.list[i]['traktHistory'] = True
 					self.list = sorted(self.list, key=lambda k: k['lastplayed'], reverse=True)

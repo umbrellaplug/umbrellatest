@@ -43,6 +43,7 @@ class Collections:
 		self.tmdbCollection_link = 'https://api.themoviedb.org/3/collection/%s?api_key=%s&page=1' % ('%s', self.tmdb_key) # does not support request sorting
 		self.imdb_link = 'https://www.imdb.com/search/title?title=%s&title_type=%s&num_votes=1000,&countries=us&languages=en&sort=%s' % ('%s', '%s', self.imdb_sort())
 		self.tmdbCollectionsSearch_link = 'https://api.themoviedb.org/3/search/collection?api_key=%s&language=en-US&query=%s&page=1' % (self.tmdb_key, '%s')
+		self.imdblist_hours = int(getSetting('cache.imdblist'))
 
 	def collections_Navigator(self, lite=False):
 		self.addDirectoryItem('Movies', 'collections_Boxset', 'boxsets.png', 'DefaultVideoPlaylists.png')
@@ -397,7 +398,7 @@ class Collections:
 				return self.list
 
 			elif u in self.imdb_link:
-				self.list = cache.get(self.imdb_list, 168, url)
+				self.list = cache.get(self.imdb_list, self.imdblist_hours, url)
 				self.worker()
 			if self.list is None: self.list = []
 			self.movieDirectory(self.list)
