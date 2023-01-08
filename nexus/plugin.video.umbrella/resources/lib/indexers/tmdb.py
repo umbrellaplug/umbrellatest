@@ -28,6 +28,7 @@ class TMDb:
 		self.lang = apiLanguage()['tmdb']
 		self.mpa_country = mpaCountry()
 		self.enable_fanarttv = getSetting('enable.fanarttv') == 'true'
+		self.tmdbcollection_hours = getSetting('cache.tmdbcollection') == 'true'
 
 	def get_request(self, url):
 		try:
@@ -125,10 +126,11 @@ class Movies(TMDb):
 		self.external_ids = base_link + 'movie/%s/external_ids?api_key=%s' % ('%s', self.API_key)
 		# self.user = str(self.imdb_user) + str(self.API_key)
 		self.user = str(self.API_key)
+		self.tmdblist_hours = int(getSetting('cache.tmdblist'))
 
 	def tmdb_list(self, url):
 		try:
-			result = cache.get(self.get_request, 96, url % self.API_key)
+			result = cache.get(self.get_request, self.tmdblist_hours, url % self.API_key)
 			if result is None: return
 			if '404:NOT FOUND' in result: return result
 			items = result['results']
@@ -192,7 +194,7 @@ class Movies(TMDb):
 
 	def tmdb_collections_list(self, url):
 		try:
-			result = cache.get(self.get_request, 168, url)
+			result = cache.get(self.get_request, self.tmdbcollection_hours, url)
 			if result is None: return
 			if '404:NOT FOUND' in result: return result
 			if '/collection/' in url: items = result['parts']
@@ -256,7 +258,7 @@ class Movies(TMDb):
 
 	def tmdb_collections_search(self, url):
 		try:
-			result = cache.get(self.get_request, 168, url)
+			result = cache.get(self.get_request, self.tmdbcollection_hours, url)
 			if result is None: return
 			if '404:NOT FOUND' in result: return result
 			items = result['results']
@@ -477,11 +479,12 @@ class TVshows(TMDb):
 		self.user = str(self.imdb_user) + str(self.tvdb_key)
 		self.date_time = datetime.now()
 		self.today_date = (self.date_time).strftime('%Y-%m-%d')
+		self.tmdblist_hours = int(getSetting('cache.tmdblist'))
 
 	def tmdb_list(self, url):
 		if not url: return
 		try:
-			result = cache.get(self.get_request, 96, url % self.API_key)
+			result = cache.get(self.get_request, self.tmdblist_hours, url % self.API_key)
 			if result is None: return
 			if '404:NOT FOUND' in result: return result
 			items = result['results']

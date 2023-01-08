@@ -34,6 +34,7 @@ class Seasons:
 		self.showunaired = getSetting('showunaired') == 'true'
 		self.unairedcolor = control.getColor(getSetting('unaired.identify'))
 		self.showspecials = getSetting('tv.specials') == 'true'
+		self.tmdblist_hours = int(getSetting('cache.tmdblist'))
 
 	def get(self, tvshowtitle, year, imdb, tmdb, tvdb, art, idx=True, create_directory=True): # may need to add a cache duration over-ride param to pass
 		self.list = []
@@ -41,7 +42,7 @@ class Seasons:
 			self.list = cache.get(self.tmdb_list, 720, tvshowtitle, imdb, tmdb, tvdb, art)
 			if self.list:
 				if not self.list[0]['status'].lower() in ('ended', 'canceled'):
-					self.list = cache.get(self.tmdb_list, 96, tvshowtitle, imdb, tmdb, tvdb, art)
+					self.list = cache.get(self.tmdb_list, self.tmdblist_hours, tvshowtitle, imdb, tmdb, tvdb, art)
 			if self.list is None: self.list = []
 			if create_directory: self.seasonDirectory(self.list)
 			return self.list

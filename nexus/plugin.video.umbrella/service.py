@@ -53,6 +53,7 @@ class SettingsMonitor(control.monitor_class):
 		control.refresh_libPath()
 		control.checkPlayNextEpisodes()
 		control.refresh_debugReversed()
+		control.setContextColors()
 
 class SyncMyAccounts:
 	def run(self):

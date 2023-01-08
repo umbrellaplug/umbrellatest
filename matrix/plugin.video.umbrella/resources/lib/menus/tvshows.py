@@ -104,6 +104,15 @@ class TVshows:
 		self.simkltrendingtoday_link = 'https://api.simkl.com/tv/trending/today?client_id=%s&extended=tmdb' % '%s'
 		self.simkltrendingweek_link = 'https://api.simkl.com/tv/trending/week?client_id=%s&extended=tmdb' % '%s'
 		self.simkltrendingmonth_link = 'https://api.simkl.com/tv/trending/month?client_id=%s&extended=tmdb'% '%s'
+		self.imdblist_hours = int(getSetting('cache.imdblist'))
+		self.trakt_hours = int(getSetting('cache.traktother'))
+		self.traktpopular_hours = int(getSetting('cache.traktpopular'))
+		self.trakttrending_hours = int(getSetting('cache.trakttrending'))
+		self.traktuserlist_hours = int(getSetting('cache.traktuserlist'))
+		self.tmdbrecentday_hours = int(getSetting('cache.tmdbrecentday'))
+		self.tmdbrecentweek_hours = int(getSetting('cache.tmdbrecentweek'))
+		self.simkl_hours = int(getSetting('cache.simkl'))
+		self.mdblist_hours = int(getSetting('cache.mdblist'))
 		# Ticket is in to add this feature but currently not available
 		# self.tmdb_certification_link = 'https://api.themoviedb.org/3/discover/tv?api_key=%s&language=en-US&certification_country=US&certification=%s&sort_by=%s&page=1' % ('%s', '%s', self.tmdb_DiscoverSort())
 
@@ -141,7 +150,7 @@ class TVshows:
 				self.list = cache.get(self.trakt_list, 0, url, self.trakt_user)
 				if idx: self.worker()
 			elif u in self.trakt_link:
-				self.list = cache.get(self.trakt_list, 24, url, self.trakt_user)
+				self.list = cache.get(self.trakt_list, self.trakt_hours, url, self.trakt_user) #trakt other
 				if idx: self.worker()
 			elif u in self.imdb_link and ('/user/' in url or '/list/' in url):
 				isRatinglink=True if self.imdbratings_link in url else False
@@ -149,7 +158,7 @@ class TVshows:
 				if idx: self.worker()
 				# self.sort() # switched to request sorting for imdb
 			elif u in self.imdb_link:
-				self.list = cache.get(self.imdb_list, 96, url)
+				self.list = cache.get(self.imdb_list, self.imdblist_hours, url)
 				if idx: self.worker()
 			elif u in self.mbdlist_list_items:
 				self.list = self.mdb_list_items(url)
@@ -203,7 +212,7 @@ class TVshows:
 			try: u = urlparse(url).netloc.lower()
 			except: pass
 			if u in self.simkltrendingweek_link or u in self.simkltrendingmonth_link or u in self.simkltrendingtoday_link:
-				self.list = cache.get(simkl().simkl_list, 6, url)
+				self.list = cache.get(simkl().simkl_list, self.simkl_hours, url)
 			if self.list is None: self.list = []
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
@@ -241,11 +250,11 @@ class TVshows:
 			try: url = getattr(self, url + '_link')
 			except: pass
 			if '/popular' in url:
-				self.list = cache.get(self.trakt_public_list, 168, url)
+				self.list = cache.get(self.trakt_public_list, self.traktpopular_hours, url)
 			elif '/trending' in url:
-				self.list = cache.get(self.trakt_public_list, 48, url)
+				self.list = cache.get(self.trakt_public_list, self.trakttrending_hours, url)
 			else:
-				self.list = cache.get(self.trakt_public_list, 24, url)
+				self.list = cache.get(self.trakt_public_list, self.trakt_hours, url) #trakt other
 			if self.list is None: self.list = []
 			if create_directory: self.addDirectory(self.list)
 			return self.list
@@ -310,7 +319,7 @@ class TVshows:
 		try:
 			url = self.tmdb_recentday
 			#self.list = tmdb_indexer().tmdb_list(url)
-			self.list = cache.get(tmdb_indexer().tmdb_list,6, url)
+			self.list = cache.get(tmdb_indexer().tmdb_list,self.tmdbrecentday_hours, url)
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
@@ -327,7 +336,7 @@ class TVshows:
 		try:
 			url = self.tmdb_recentweek
 			#self.list = tmdb_indexer().tmdb_list(url)
-			self.list = cache.get(tmdb_indexer().tmdb_list,24, url)
+			self.list = cache.get(tmdb_indexer().tmdb_list,self.tmdbrecentweek_hours, url)
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
@@ -847,7 +856,7 @@ class TVshows:
 					from resources.lib.modules import log_utils
 					log_utils.error()
 			return self.list
-		self.list = cache.get(userList_totalItems, 48, url.split('limit')[0] + 'extended=full')
+		self.list = cache.get(userList_totalItems, self.traktuserlist_hours, url.split('limit')[0] + 'extended=full')
 		if not self.list: return
 		self.sort() # sort before local pagination
 		total_pages = 1
@@ -1003,7 +1012,7 @@ class TVshows:
 		self.list = []
 		try:
 			#self.list = cache.get(self.mbd_top_lists, 0)
-			self.list = cache.get(self.mbd_user_lists, 6)
+			self.list = cache.get(self.mbd_user_lists, self.mdblist_hours)
 			#self.list = self.mbd_user_lists()
 			if self.list is None: self.list = []
 			if create_directory: self.addDirectory(self.list)
@@ -1404,7 +1413,7 @@ class TVshows:
 				except: pass
 				cm.append(('[COLOR red]Umbrella Settings[/COLOR]', 'RunPlugin(%s?action=tools_openSettings)' % sysaddon))
 				item = control.item(label=name, offscreen=True)
-				item.setArt({'icon': icon, 'poster': poster, 'thumb': poster, 'fanart': control.addonFanart(), 'banner': poster})
+				item.setArt({'icon': icon, 'poster': poster, 'thumb': icon, 'fanart': control.addonFanart(), 'banner': poster})
 				item.setInfo(type='video', infoLabels={'plot': name})
 				item.addContextMenuItems(cm)
 				control.addItem(handle=syshandle, url=url, listitem=item, isFolder=True)

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<!-- <defaultcontrol>2050</defaultcontrol> -->
+	<controls>
+		<control type="image">
+			<description>background</description>
+			<left>0</left>
+			<top>0</top>
+			<width>1920</width>
+			<height>1080</height>
+			<texture>common/black.png</texture>
+		</control>
+		<control type="group" id="1">
+			<description>List Header</description>
+			<left>25</left>
+			<top>0</top>
+			<height>80</height>
+			<width min="0" max="1920">auto</width>
+
+			<control type="list" id="2050">
+				<description>Icon Packs</description>
+				<visible>!Player.HasVideo</visible>
+				<viewtype>list</viewtype>
+				<left>0</left>
+				<top>150</top>
+				<width>1350</width>
+				<height>800</height>
+				<onright>2050</onright>
+				<onleft>2050</onleft>
+				<onup>2050</onup>
+				<ondown>2050</ondown>
+				<scrolltime tween="sine">400</scrolltime>
+				<orientation>Vertical</orientation>
+				<itemlayout height="100" width="1325">
+					<control type="image">
+						<left>10</left>
+						<top>0</top>
+						<width>75</width>
+						<align>left</align>
+						<aligny>center</aligny>
+						<aspectratio>keep</aspectratio>
+						<texture>common/box2.png</texture>
+					</control>
+					<control type="image">
+						<left>25</left>
+						<top>0</top>
+						<width>50</width>
+						<align>left</align>
+						<aligny>center</aligny>
+						<aspectratio>keep</aspectratio>
+						<texture>common/selected2.png</texture>
+						<visible>!String.isEmpty(ListItem.Property(umbrella.isSelected))</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout height="100" width="1325">
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>1350</width>
+						<height>100</height>
+						<texture colordiffuse="$INFO[Window().Property(umbrella.highlight.color)]">common/white.png</texture>
+					</control>
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>1350</width>
+						<height>100</height>
+						<texture colordiffuse="gainsboro">common/white.png</texture>
+						<visible>!Control.HasFocus(2050)</visible>
+					</control>
+					<control type="image">
+						<left>10</left>
+						<top>0</top>
+						<width>75</width>
+						<align>left</align>
+						<aligny>center</aligny>
+						<aspectratio>keep</aspectratio>
+						<texture>common/box2.png</texture>
+					</control>
+					<control type="image">
+						<left>25</left>
+						<top>0</top>
+						<width>50</width>
+						<align>left</align>
+						<aligny>center</aligny>
+						<aspectratio>keep</aspectratio>
+						<texture>common/selected2.png</texture>
+						<visible>!String.isEmpty(ListItem.Property(umbrella.isSelected))</visible>
+					</control>
+				</focusedlayout>
+			</control>
+
+			<control type="group">
+				<description>OK, Cancel, and Select All Buttons</description>
+				<visible>!Player.HasVideo</visible>
+				<left>1390</left>
+				<top>50</top>
+					<control type="button" id="2051">
+						<description>OK Button</description>
+						<onright>2052</onright>
+						<onleft>2050</onleft>
+						<width>120</width>
+						<height>70</height>
+						<textoffsetx>0</textoffsetx>
+						<texturefocus colordiffuse="$INFO[Window().Property(umbrella.highlight.color)]">common/button5.png</texturefocus>
+						<texturenofocus>common/button5.png</texturenofocus>
+						<label>$ADDON[plugin.video.umbrella 32179]</label>
+						<font>font12</font>
+						<align>center</align>
+						<textcolor>white</textcolor>
+						<focusedcolor>white</focusedcolor>
+						<visible>true</visible>
+					</control>
+					<control type="button" id="2052">
+						<description>Cancel Button</description>
+						<left>140</left>
+						<onright>2053</onright>
+						<onleft>2051</onleft>
+						<width>120</width>
+						<height>70</height>
+						<textoffsetx>0</textoffsetx>
+						<texturefocus colordiffuse="$INFO[Window().Property(umbrella.highlight.color)]">common/button5.png</texturefocus>
+						<texturenofocus>common/button5.png</texturenofocus>
+						<label>$ADDON[plugin.video.umbrella 32180]</label>
+						<font>font12</font>
+						<align>center</align>
+						<textcolor>white</textcolor>
+						<focusedcolor>white</focusedcolor>
+						<visible>true</visible>
+					</control>
+			</control>
+		</control>
+	</controls>
+</window>

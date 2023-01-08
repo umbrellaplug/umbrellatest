@@ -532,7 +532,7 @@ class PlayNext(xbmc.Player):
 		self.enable_playnext = getSetting('enable.playnext') == 'true'
 		self.stillwatching_count = int(getSetting('stillwatching.count'))
 		self.playing_file = None
-		
+		self.providercache_hours = int(getSetting('cache.providers'))
 
 	def display_xml(self):
 		try:
@@ -652,7 +652,7 @@ class PlayNext(xbmc.Player):
 				episode = next_meta.get('episode')
 				tvshowtitle = next_meta.get('tvshowtitle')
 				premiered = next_meta.get('premiered')
-				next_sources = providerscache.get(sources.Sources().getSources, 48, title, year, imdb, tmdb, tvdb, str(season), str(episode), tvshowtitle, premiered, next_meta, True)
+				next_sources = providerscache.get(sources.Sources().getSources, self.providercache_hours, title, year, imdb, tmdb, tvdb, str(season), str(episode), tvshowtitle, premiered, next_meta, True)
 				if not self.isPlayingVideo():
 					return playerWindow.clearProperty('umbrella.preResolved_nextUrl')
 				sources.Sources().preResolve(next_sources, next_meta)
