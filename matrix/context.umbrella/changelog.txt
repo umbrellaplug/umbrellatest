@@ -1,3 +1,7 @@
+
+[B][COLOR red]Update - v1.2.8 - Jan 9th, 2022[/COLOR][/B]
+[COLOR yellow]--[/COLOR][I] Changed to allow highlight color to be used for context.[/I]
+
 [B][COLOR red]Update - v1.2.7 - Sept 1st, 2022[/COLOR][/B]
 [COLOR yellow]--[/COLOR][I] Changed to new settings format.[/I]
 
