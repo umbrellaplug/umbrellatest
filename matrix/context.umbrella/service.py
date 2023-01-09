@@ -16,7 +16,7 @@ properties = [
 	'context.umbrella.sourceSelect',
 	'context.umbrella.findSimilar',
 	'context.umbrella.browseSeries',
-	'context.umbrella.browseEpisodes',]
+	'context.umbrella.browseEpisodes']
 
 def getKodiVersion():
 	return int(xbmc.getInfoLabel("System.BuildVersion")[:2])
