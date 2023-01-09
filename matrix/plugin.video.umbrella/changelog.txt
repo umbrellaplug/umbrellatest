@@ -1,3 +1,9 @@
+[B][COLOR black]Update - v6.6.06 - Jan 9th, 2023[/COLOR][/B]
+--[FIX][I] Enable Disable Toggle Added for Plex, Furk, FilePursuit, and GDrive[/I]
+--[ENHANCEMENT][I] Settings changes due to exceeding max amount of settings allowed in a category.[/I]
+--[ENHANCEMENT][I] Addon has too many settings. A change in settings is overdue.[/I]
+--[ENHANCEMENT][I] Added sliders to control number of hours things are cached. (lol more settings)[/I]
+--[ENHANCEMENT][I] Added icon packs and ability to load from web.[/I]
 
 [B][COLOR black]Update - v6.6.05 - Jan 5th, 2023[/COLOR][/B]
 --[FIX][I] Changed reuselanguageInvoker back to True by default due to complaints. Can be turned off in Tools or Settings: General[/I]

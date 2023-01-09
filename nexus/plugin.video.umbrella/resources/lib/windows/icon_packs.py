@@ -6,8 +6,9 @@
 from json import dumps as jsdumps
 from urllib.parse import quote_plus
 import xbmc
-from resources.lib.modules.control import dialog, getHighlightColor
+from resources.lib.modules.control import dialog, getHighlightColor, setting as getSetting, addonFanart
 from resources.lib.windows.base import BaseDialog
+
 
 
 class IconPacksView(BaseDialog):
@@ -15,8 +16,9 @@ class IconPacksView(BaseDialog):
 		BaseDialog.__init__(self, args)
 		self.window_id = 2050
 		self.results = kwargs.get('results')
-		self.total_results = str(len(self.results))
 		self.selected_items = []
+		self.activePack = getSetting('skinpackicons').lower()
+		self.fanart = addonFanart()
 		self.make_items()
 		self.set_properties()
 
@@ -35,6 +37,8 @@ class IconPacksView(BaseDialog):
 		# log_utils.log('controlID=%s' % controlID)
 
 	def onAction(self, action):
+		from resources.lib.modules import log_utils
+		log_utils.log('action: %s' % str(action.getId()))
 		try:
 			if action in self.selection_actions:
 				focus_id = self.getFocusId()
@@ -50,9 +54,44 @@ class IconPacksView(BaseDialog):
 				elif focus_id == 2052: # Cancel Button
 					self.selected_items = None
 					self.close()
+			elif action in self.context_actions:
+				cm = []
+				chosen_listitem = self.item_list[self.get_position(self.window_id)]
+				packname = chosen_listitem.getProperty('umbrella.title')
+				downloaded = chosen_listitem.getProperty('umbrella.downloaded')
+				url = chosen_listitem.getProperty('umbrella.downloadurl')
+				active = chosen_listitem.getProperty('umbrella.active')
+				poster = chosen_listitem.getProperty('umbrella.imageurl')
+				if downloaded == '1' and active == '0' and str(packname).lower() != 'umbrella':
+					cm += [('[B]Set as Active Pack[/B]', 'activepack')]
+					cm += [('[B]Delete Pack[/B]', 'deletepack')]
+				elif downloaded == '1' and active == '0':
+					cm += [('[B]Set as Active Pack[/B]', 'activepack')]
+				elif downloaded == '0':
+					cm += [('[B]Download Pack[/B]', 'downloadpack')]
+				else:
+					return
+				chosen_cm_item = dialog.contextmenu([i[0] for i in cm])
+				if chosen_cm_item == -1: return
+				cm_action = cm[chosen_cm_item][1]
+				if cm_action == 'activepack':
+					from resources.lib.modules import skin_packs
+					skin_packs.iconPackHandler().set_active_skin_pack(packname)
+					self.close()
+				elif cm_action == 'downloadpack':
+					from resources.lib.modules import skin_packs
+					skin_packs.iconPackHandler().download_skin_pack(packname, url, poster)
+					self.close()
+				elif cm_action == 'deletepack':
+					self.close()
+					from resources.lib.modules import skin_packs
+					skin_packs.iconPackHandler().delete_skin_pack(packname, poster)
+					
 			elif action in self.closing_actions:
 				self.selected_items = None
 				self.close()
+
+
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
@@ -63,10 +102,16 @@ class IconPacksView(BaseDialog):
 			for count, item in enumerate(self.results, 1):
 				try:
 					listitem = self.make_listitem()
-					listitem.setProperty('umbrella.title', item.get('title'))
+					listitem.setProperty('umbrella.title', item.get('name'))
 					listitem.setProperty('umbrella.isSelected', '')
-					poster = item.get('packimage', '')
+					poster = item.get('imageurl', '')
 					listitem.setProperty('umbrella.poster', poster)
+					listitem.setProperty('umbrella.downloadurl', item.get('url'))
+					listitem.setProperty('umbrella.downloaded', item.get('downloaded'))
+					if str(item.get('name')).lower() == self.activePack:
+						listitem.setProperty('umbrella.active', '1')
+					else:
+						listitem.setProperty('umbrella.active', '0')
 					yield listitem
 				except:
 					from resources.lib.modules import log_utils
@@ -81,6 +126,7 @@ class IconPacksView(BaseDialog):
 	def set_properties(self):
 		try:
 			self.setProperty('umbrella.highlight.color', getHighlightColor())
+			self.setProperty('umbrella.fanart', self.fanart)
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()

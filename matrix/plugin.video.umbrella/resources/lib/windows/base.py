@@ -10,8 +10,9 @@ from xbmcgui import WindowXMLDialog, ListItem, ControlProgress
 class BaseDialog(WindowXMLDialog):
 	def __init__(self, *args):
 		WindowXMLDialog.__init__(self, args)
-		self.closing_actions = [9, 10, 13, 92]
+		self.closing_actions = [9, 10, 13, 92, 511]
 		self.selection_actions = [7, 100]
+		#self.ok_actions = [107,]
 		self.context_actions = [101, 117]
 		self.info_actions = [11,]
 		# self.updn_actions = [5, 6]
