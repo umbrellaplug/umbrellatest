@@ -17,11 +17,22 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition on="property" name="InfoBool">true</condition>
+							<condition on="property" name="InfoBool">false</condition>
 						</dependency>
 					</dependencies>
 					<control type="list" format="string">
 						<heading>32311</heading>
+					</control>
+				</setting>
+				<setting id="skinpackicons" type="string" label="32311" help="">
+					<level>0</level>
+					<default>Umbrella</default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action">
+						<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_iconPack)</data>
+						<close>true</close>
 					</control>
 				</setting>
 				<setting id="skin.pack" type="string" label="32311" help="">
@@ -30,8 +41,14 @@
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
 					<control type="button" format="action">
 						<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_iconPack)</data>
+						<close>true</close>
 					</control>
 				</setting>
 				<setting id="icon.logos" type="string" label="40033" help="">
@@ -83,7 +100,7 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="!is" setting="trakt.isauthed"/>
+							<condition operator="is" setting="trakt.isauthed"/>
 						</dependency>
 					</dependencies>
 					<control type="spinner" format="string"/>
@@ -98,7 +115,7 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="is" setting="trakt.isauthed"/>
+							<condition operator="!is" setting="trakt.isauthed"/>
 						</dependency>
 					</dependencies>
 					<control type="spinner" format="string"/>

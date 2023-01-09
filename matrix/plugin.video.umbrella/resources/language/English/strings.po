@@ -4402,3 +4402,7 @@ msgstr ""
 msgctxt "#40385"
 msgid "Others"
 msgstr ""
+
+msgctxt "#40386"
+msgid "New icon package downloaded successfully. [CR]Would you like to apply it now?"
+msgstr ""

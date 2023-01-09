@@ -148,7 +148,7 @@
 [COLOR yellow]--[/COLOR][I] Changed to new settings format.[/I]
 		</news>
 	</extension>
-</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.05">
+</addon><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.06">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="context.umbrella" version="1.2.7" />
@@ -164,7 +164,7 @@
 	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.python.module" library="resources/lib/" />
 	<extension point="xbmc.addon.metadata">
-		<reuselanguageinvoker>false</reuselanguageinvoker>
+		<reuselanguageinvoker>true</reuselanguageinvoker>
 		<summary lang="en">[B]Umbrella[/B] - We do not host any of the contents streamed</summary>
 		<description lang="en">[B]Umbrella[/B][CR] This addon does not form part of the Kodi Media Centre. Please do not seek assistance with this addon from any of the Official Kodi Support Channels.[CR]The author does not host any of the content in this addon and takes no responsibility for content found. We do not know anything about a lab under Raccoon City.</description>
 		<platform>all</platform>
@@ -181,10 +181,12 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.05 - Jan 7th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.06 - Jan 9th, 2023[/COLOR][/B]
 --[FIX][I] Enable Disable Toggle Added for Plex, Furk, FilePursuit, and GDrive[/I]
 --[ENHANCEMENT][I] Settings changes due to exceeding max amount of settings allowed in a category.[/I]
---[ENHANCEMENT][I] Added sliders to control number of hours things are cached.[/I]
+--[ENHANCEMENT][I] Addon has too many settings. A change in settings is overdue.[/I]
+--[ENHANCEMENT][I] Added sliders to control number of hours things are cached. (lol more settings)[/I]
+--[ENHANCEMENT][I] Added icon packs and ability to load from web.[/I]
 		</news>
 	</extension>
 </addon><addon id="repository.umbrellatest" name="Umbrella Test Repository" version="1.0.0" provider-name="Umbrella">

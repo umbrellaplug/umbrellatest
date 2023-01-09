@@ -195,7 +195,7 @@ def genrePosterPath():
 	return joinPath(xbmcaddon.Addon('plugin.video.umbrella').getAddonInfo('path'), 'resources', 'artwork', theme, 'genre_media', 'posters')
 
 def appearance():
-	theme = setting('appearance.1').lower()
+	theme = setting('skinpackicons').lower()
 	return theme
 
 def iconFolders():
