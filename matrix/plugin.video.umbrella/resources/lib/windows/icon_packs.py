@@ -49,44 +49,40 @@ class IconPacksView(BaseDialog):
 						chosen_listitem.setProperty('umbrella.isSelected', '')
 					else:
 						chosen_listitem.setProperty('umbrella.isSelected', 'true')
+					cm = []
+					chosen_listitem = self.item_list[self.get_position(self.window_id)]
+					packname = chosen_listitem.getProperty('umbrella.title')
+					downloaded = chosen_listitem.getProperty('umbrella.downloaded')
+					url = chosen_listitem.getProperty('umbrella.downloadurl')
+					active = chosen_listitem.getProperty('umbrella.active')
+					poster = chosen_listitem.getProperty('umbrella.imageurl')
+					if downloaded == '1' and active == '0' and str(packname).lower() != 'umbrella':
+						cm += [('[B]Set as Active Pack[/B]', 'activepack')]
+						cm += [('[B]Delete Pack[/B]', 'deletepack')]
+					elif downloaded == '1' and active == '0':
+						cm += [('[B]Set as Active Pack[/B]', 'activepack')]
+					elif downloaded == '0':
+						cm += [('[B]Download Pack[/B]', 'downloadpack')]
+					else:
+						return
+					chosen_cm_item = dialog.contextmenu([i[0] for i in cm])
+					if chosen_cm_item == -1: return
+					cm_action = cm[chosen_cm_item][1]
+					if cm_action == 'activepack':
+						from resources.lib.modules import skin_packs
+						skin_packs.iconPackHandler().set_active_skin_pack(packname)
+						self.close()
+					elif cm_action == 'downloadpack':
+						from resources.lib.modules import skin_packs
+						skin_packs.iconPackHandler().download_skin_pack(packname, url, poster)
+						self.close()
+					elif cm_action == 'deletepack':
+						self.close()
+						from resources.lib.modules import skin_packs
+						skin_packs.iconPackHandler().delete_skin_pack(packname, poster)
 				elif focus_id == 2051: # OK Button
 					self.close()
-				elif focus_id == 2052: # Cancel Button
 					self.selected_items = None
-					self.close()
-			elif action in self.context_actions:
-				cm = []
-				chosen_listitem = self.item_list[self.get_position(self.window_id)]
-				packname = chosen_listitem.getProperty('umbrella.title')
-				downloaded = chosen_listitem.getProperty('umbrella.downloaded')
-				url = chosen_listitem.getProperty('umbrella.downloadurl')
-				active = chosen_listitem.getProperty('umbrella.active')
-				poster = chosen_listitem.getProperty('umbrella.imageurl')
-				if downloaded == '1' and active == '0' and str(packname).lower() != 'umbrella':
-					cm += [('[B]Set as Active Pack[/B]', 'activepack')]
-					cm += [('[B]Delete Pack[/B]', 'deletepack')]
-				elif downloaded == '1' and active == '0':
-					cm += [('[B]Set as Active Pack[/B]', 'activepack')]
-				elif downloaded == '0':
-					cm += [('[B]Download Pack[/B]', 'downloadpack')]
-				else:
-					return
-				chosen_cm_item = dialog.contextmenu([i[0] for i in cm])
-				if chosen_cm_item == -1: return
-				cm_action = cm[chosen_cm_item][1]
-				if cm_action == 'activepack':
-					from resources.lib.modules import skin_packs
-					skin_packs.iconPackHandler().set_active_skin_pack(packname)
-					self.close()
-				elif cm_action == 'downloadpack':
-					from resources.lib.modules import skin_packs
-					skin_packs.iconPackHandler().download_skin_pack(packname, url, poster)
-					self.close()
-				elif cm_action == 'deletepack':
-					self.close()
-					from resources.lib.modules import skin_packs
-					skin_packs.iconPackHandler().delete_skin_pack(packname, poster)
-					
 			elif action in self.closing_actions:
 				self.selected_items = None
 				self.close()

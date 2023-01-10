@@ -853,6 +853,11 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="navi.movie.trakt.trendingrecent" type="boolean" label="32443" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="navi.movie.simkl.trendingtoday" type="boolean" label="40350" help="">
 					<level>0</level>
 					<default>true</default>
@@ -1023,6 +1028,11 @@
 					<control type="toggle"/>
 				</setting>
 				<setting id="navi.tv.trakt.trending" type="boolean" label="32443" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="navi.tv.trakt.trendingrecent" type="boolean" label="40388" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
@@ -3167,6 +3177,12 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="sources.backbutton" type="boolean" label="40387" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				
 			</group>
 		</category>
 		<category id="trakt" label="32315" help="40189">

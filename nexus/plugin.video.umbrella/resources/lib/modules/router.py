@@ -944,8 +944,9 @@ def router(argv2):
 			from resources.lib.modules import library
 			library.libtvshows().add(tvshowtitle, year, imdb, tmdb, tvdb)
 		elif action == 'library_tvshowsToLibrary':
-			from resources.lib.modules import library
-			library.libtvshows().range(url, name)
+			#from resources.lib.modules import library
+			#library.libtvshows().range(url, name)
+			control.notification(message=40228)
 		elif action == 'library_tvshowsListToLibrary':
 			# from resources.lib.menus import tvshows
 			# tvshows.TVshows().tvshowsListToLibrary(url)

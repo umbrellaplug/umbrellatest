@@ -114,6 +114,7 @@ class Movies:
 		self.traktunfinished_link = 'https://api.trakt.tv/sync/playback/movies?limit=40'
 		self.traktanticipated_link = 'https://api.trakt.tv/movies/anticipated?limit=%s&page=1' % self.page_limit 
 		self.trakttrending_link = 'https://api.trakt.tv/movies/trending?limit=%s&page=1' % self.page_limit
+		self.trakttrending_recent_link = 'https://api.trakt.tv/movies/trending?limit=%s&page=1&years=2022-2023' % self.page_limit
 		self.traktboxoffice_link = 'https://api.trakt.tv/movies/boxoffice' # Returns the top 10 grossing movies in the U.S. box office last weekend
 		self.traktpopular_link = 'https://api.trakt.tv/movies/popular?limit=%s&page=1' % self.page_limit
 		self.traktrecommendations_link = 'https://api.trakt.tv/recommendations/movies?limit=40'

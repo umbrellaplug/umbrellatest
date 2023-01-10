@@ -22,17 +22,39 @@
 			<description>List Header</description>
 			<left>25</left>
 			<top>0</top>
-			<height>80</height>
+			<height>70</height>
 			<width min="0" max="1920">auto</width>
-
+			<control type="group">
+				<description>OK, Cancel, and Select All Buttons</description>
+				<visible>!Player.HasVideo</visible>
+				<left>1750</left>
+				<top>0</top>
+					<control type="button" id="2051">
+						<description>OK Button</description>
+						<ondown>2050</ondown>
+						<onright>2050</onright>
+						<onleft>2051</onleft>
+						<width>120</width>
+						<height>70</height>
+						<textoffsetx>0</textoffsetx>
+						<texturefocus colordiffuse="$INFO[Window().Property(umbrella.highlight.color)]">common/button5.png</texturefocus>
+						<texturenofocus>common/button5.png</texturenofocus>
+						<label>Back</label>
+						<font>font12</font>
+						<align>center</align>
+						<textcolor>white</textcolor>
+						<focusedcolor>white</focusedcolor>
+						<visible>true</visible>
+					</control>
+			</control>
 			<control type="list" id="2050">
 				<description>Icon Packs</description>
 				<visible>!Player.HasVideo</visible>
 				<viewtype>list</viewtype>
 				<left>0</left>
-				<top>150</top>
+				<top>80</top>
 				<width>1920</width>
-				<height>800</height>
+				<height>1000</height>
 				<onright>2051</onright>
 				<onleft>2051</onleft>
 				<onup>2051</onup>
@@ -178,29 +200,6 @@
 						<visible>String.IsEqual(ListItem.Property(umbrella.active),1)</visible>
 					</control>
 				</focusedlayout>
-			</control>
-			<control type="group">
-				<description>OK, Cancel, and Select All Buttons</description>
-				<visible>!Player.HasVideo</visible>
-				<left>1750</left>
-				<top>50</top>
-					<control type="button" id="2051">
-						<description>OK Button</description>
-						<ondown>2050</ondown>
-						<onright>2050</onright>
-						<onleft>2051</onleft>
-						<width>120</width>
-						<height>70</height>
-						<textoffsetx>0</textoffsetx>
-						<texturefocus colordiffuse="$INFO[Window().Property(umbrella.highlight.color)]">common/button5.png</texturefocus>
-						<texturenofocus>common/button5.png</texturenofocus>
-						<label>Back</label>
-						<font>font12</font>
-						<align>center</align>
-						<textcolor>white</textcolor>
-						<focusedcolor>white</focusedcolor>
-						<visible>true</visible>
-					</control>
 			</control>
 		</control>
 	</controls>

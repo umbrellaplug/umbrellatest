@@ -63,6 +63,9 @@ class SourceResultsXML(BaseDialog):
 					self.getControl(self.window_id).selectItem(position)
 					self.selected = (None, '')
 					return
+				if focus_id == 2051:
+					self.selected = (None, '')
+					return self.close()
 				chosen_source = self.item_list[self.get_position(self.window_id)]
 				source = chosen_source.getProperty('umbrella.source')
 				if 'UNCACHED' in source:
@@ -291,6 +294,10 @@ class SourceResultsXML(BaseDialog):
 				self.setProperty('umbrella.fanartBG', '1')
 			else:
 				self.setProperty('umbrella.fanartBG', '0')
+			if getSetting('sources.backbutton') == 'true':
+				self.setProperty('umbrella.sourcebackbutton', '1')
+			else:
+				self.setProperty('umbrella.sourcebackbutton', '0')
 			if getSetting('sources.highlightmethod') == '1':
 				self.setProperty('umbrella.useprovidercolors', '1')
 				self.setProperty('umbrella.realdebridcolor', self.realdebridHighlightColor)

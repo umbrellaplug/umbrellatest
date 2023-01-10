@@ -1021,6 +1021,9 @@ class libtvshows:
 		for i in items:
 			if control.monitor.abortRequested(): return sysexit()
 			try:
+				if i.get('title','') == '':
+					myTitle = {'title': i.get('tvshowtitle')}
+					i.update(myTitle)
 				files_added = self.add(i['title'], i['year'], i['imdb'], i['tmdb'], i['tvdb'], range=True)
 				if general_notification and files_added > 0: control.notification(title=i['title'], message=32554)
 				if files_added:

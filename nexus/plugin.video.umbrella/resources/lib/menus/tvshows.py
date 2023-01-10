@@ -76,6 +76,7 @@ class TVshows:
 		self.traktlist_link = 'https://api.trakt.tv/users/%s/lists/%s/items/shows?limit=%s&page=1' % ('%s', '%s', self.page_limit) # local pagination, limit and page used to advance, pulled from request
 		self.progress_link = 'https://api.trakt.tv/sync/watched/shows?extended=noseasons'
 		self.trakttrending_link = 'https://api.trakt.tv/shows/trending?page=1&limit=%s' % self.page_limit
+		self.trakttrending_recent_link = 'https://api.trakt.tv/shows/trending?page=1&limit=%s&years=2022-2023' % self.page_limit
 		self.traktpopular_link = 'https://api.trakt.tv/shows/popular?page=1&limit=%s' % self.page_limit
 		self.traktrecommendations_link = 'https://api.trakt.tv/recommendations/shows?limit=40'
 		self.trakt_popularLists_link = 'https://api.trakt.tv/lists/popular?limit=40&page=1' # use limit=40 due to filtering out Movie only lists

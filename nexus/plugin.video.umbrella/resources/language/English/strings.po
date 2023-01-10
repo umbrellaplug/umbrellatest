@@ -4406,3 +4406,15 @@ msgstr ""
 msgctxt "#40386"
 msgid "New icon package downloaded successfully. [CR]Would you like to apply it now?"
 msgstr ""
+
+msgctxt "#40387"
+msgid "Add Back button for touchscreens"
+msgstr ""
+
+msgctxt "#40388"
+msgid "Trending Recently Released (Trakt)"
+msgstr ""
+
+msgctxt "#40389"
+msgid "Trending Recently Released"
+msgstr ""
