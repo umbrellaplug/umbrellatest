@@ -191,8 +191,7 @@
 --[ENHANCEMENT][I] Added swipe left to cancel/ back gesture for touchscreens.[/I]
 --[ENHANCEMENT][I] Added option to show back button on source select for touchscreens.[/I]
 --[ENHANCEMENT][I] New Trakt Trending (Recently Released) list added.[/I]
---[ICONPACKS][I] Multiple Icon Packs added from Goldenfreddy0703.[/I]
---[ICONPACKS][I] If you want to the new icon packs they can be added in settings.[/I]s
+--[ICONPACKS][I] Some Packs removed due to issues.[/I]
 		</news>
 	</extension>
 </addon><addon id="repository.umbrellatest" name="Umbrella Test Repository" version="1.0.0" provider-name="Umbrella">

@@ -8,8 +8,7 @@
 --[ENHANCEMENT][I] Added swipe left to cancel/ back gesture for touchscreens.[/I]
 --[ENHANCEMENT][I] Added option to show back button on source select for touchscreens.[/I]
 --[ENHANCEMENT][I] New Trakt Trending (Recently Released) list added.[/I]
---[ICONPACKS][I] Multiple Icon Packs added from Goldenfreddy0703.[/I]
---[ICONPACKS][I] If you want to the new icon packs they can be added in settings.[/I]
+--[ICONPACKS][I] Some Packs removed due to issues.[/I]
 
 [B][COLOR black]Update - v6.6.05 - Jan 5th, 2023[/COLOR][/B]
 --[FIX][I] Changed reuselanguageInvoker back to True by default due to complaints. Can be turned off in Tools or Settings: General[/I]
