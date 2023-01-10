@@ -34,7 +34,10 @@ class Episodes:
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
 		self.progress_showunaired = getSetting('trakt.progress.showunaired') == 'true'
 		self.showunaired = getSetting('showunaired') == 'true'
-		self.unairedcolor = control.getColor(getSetting('unaired.identify'))
+		if control.getKodiVersion() == 20:
+			self.unairedcolor = getSetting('unaired.identify')
+		else:
+			self.unairedcolor = control.getColor(getSetting('unaired.identify'))
 		self.showspecials = getSetting('tv.specials') == 'true'
 		self.highlight_color = control.getHighlightColor()
 		self.date_time = datetime.now()

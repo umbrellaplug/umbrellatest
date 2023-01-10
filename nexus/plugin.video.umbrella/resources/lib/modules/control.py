@@ -395,20 +395,32 @@ def getColor(n):
 	return color
 
 def getHighlightColor():
-	return getColor(setting('highlight.color'))
+	if getKodiVersion() == 20:
+		return setting('highlight.color')
+	else:
+		return getColor(setting('highlight.color'))
 
 def getSourceHighlightColor():
-	return getColor(setting('sources.highlight.color'))
+	if getKodiVersion() == 20:
+		return setting('sources.highlight.color')
+	else:
+		return getColor(setting('sources.highlight.color'))
 
 def getProviderHighlightColor(sourcename):
     #Real-Debrid
     #Premiumize.me
 	sourcename = str(sourcename).lower()
 	source = 'sources.'+sourcename+'.color'
-	return getColor(setting(source))
+	if getKodiVersion() == 20:
+		return setting(source)
+	else:
+		return getColor(setting(source))
 
 def getPlayNextBackgroundColor():
-	return getBackgroundColor(setting('playnext.background.color'))
+	if getKodiVersion() == 20:
+		return setting('playnext.background.color')
+	else:
+		return getBackgroundColor(setting('playnext.background.color'))
 
 def getMenuEnabled(menu_title):
 	is_enabled = setting(menu_title).strip()
@@ -487,7 +499,7 @@ def syncAccounts():
 		setSetting('plexshare.accessToken', addon('script.module.cocoscrapers').getSetting('plexshare.accessToken'))
 		setSetting('plexshare.url', addon('script.module.cocoscrapers').getSetting('plexshare.url'))
 		setSetting('gdrive.cloudflare_url', addon('script.module.cocoscrapers').getSetting('gdrive.cloudflare_url'))
-		homeWindow.setProperty('context.umbrella.highlightcolor', getColor(setting('highlight.color')))
+		homeWindow.setProperty('context.umbrella.highlightcolor', getHighlightColor())
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()
@@ -526,7 +538,10 @@ def removeCorruptSettings():
 def setContextColors():
 	#tell me i cannot do some shit again.
 	try:
-		homeWindow.setProperty('context.umbrella.highlightcolor', getColor(setting('highlight.color')))
+		if getKodiVersion() == 20:
+			homeWindow.setProperty('context.umbrella.highlightcolor', setting('highlight.color'))
+		else: 
+			homeWindow.setProperty('context.umbrella.highlightcolor', getColor(setting('highlight.color')))
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()
