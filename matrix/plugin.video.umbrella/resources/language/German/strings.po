@@ -5399,3 +5399,115 @@ msgstr ""
 msgctxt "#40361"
 msgid "Clear Furk API"
 msgstr ""
+
+msgctxt "#40362"
+msgid "Accounts(Non-Debrid)"
+msgstr ""
+
+msgctxt "#40363"
+msgid "Cache"
+msgstr ""
+
+msgctxt "#40364"
+msgid "Navigation (Movies)"
+msgstr ""
+
+msgctxt "#40365"
+msgid "Navigation (TV Shows)"
+msgstr ""
+
+msgctxt "#40366"
+msgid "Navigation settings category for turning on and off different lists or features within the Movies section."
+msgstr ""
+
+msgctxt "#40367"
+msgid "Navigation settings category for turning on and off different lists or features within the TV Show section."
+msgstr ""
+
+msgctxt "#40368"
+msgid "Cache settings for customizing the amount of time lists and other information are kept in memory before a fresh copy is pulled from online sources."
+msgstr ""
+
+msgctxt "#40369"
+msgid "IMDB Lists (Default 168 Hours)"
+msgstr ""
+
+msgctxt "#40370"
+msgid "TMDb Lists (Default 96 Hours)"
+msgstr ""
+
+msgctxt "#40371"
+msgid "TMDb Collections (Default 96 Hours)"
+msgstr ""
+
+msgctxt "#40372"
+msgid "TMDb Recent Day (Default 12 Hours)"
+msgstr ""
+
+msgctxt "#40373"
+msgid "TMDB Recent Week (Default 24 Hours)"
+msgstr ""
+
+msgctxt "#40374"
+msgid "Cache Hours"
+msgstr ""
+
+msgctxt "#40375"
+msgid "Trakt General Lists (Default Hours 720)"
+msgstr ""
+
+msgctxt "#40376"
+msgid "Trakt Progress (Default Hours 12)"
+msgstr ""
+
+msgctxt "#40377"
+msgid "Trakt History (Default Hours 24)"
+msgstr ""
+
+msgctxt "#40378"
+msgid "Trakt Popular (Default Hours 168)"
+msgstr ""
+
+msgctxt "#40379"
+msgid "Trakt Trending (Default Hours 48)"
+msgstr ""
+
+msgctxt "#40380"
+msgid "Trakt Other (Default Hours 24)"
+msgstr ""
+
+msgctxt "#40381"
+msgid "Trakt User Lists (Default Hours 48)"
+msgstr ""
+
+msgctxt "#40382"
+msgid "MDBList (Default Hours 24)"
+msgstr ""
+
+msgctxt "#40383"
+msgid "Simkl (Default Hours 24)"
+msgstr ""
+
+msgctxt "#40384"
+msgid "Provider Cache (Default Hours 48)"
+msgstr ""
+
+msgctxt "#40385"
+msgid "Others"
+msgstr ""
+
+msgctxt "#40386"
+msgid "New icon package downloaded successfully. [CR]Would you like to apply it now?"
+msgstr ""
+
+msgctxt "#40387"
+msgid "Add Back button for touchscreens"
+msgstr ""
+
+msgctxt "#40388"
+msgid "Trending Recently Released (Trakt)"
+msgstr ""
+
+msgctxt "#40389"
+msgid "Trending Recently Released"
+msgstr ""
