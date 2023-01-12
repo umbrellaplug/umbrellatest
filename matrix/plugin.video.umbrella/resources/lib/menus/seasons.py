@@ -32,7 +32,10 @@ class Seasons:
 		self.trakt_user = getSetting('trakt.user.name').strip()
 		self.traktCredentials = trakt.getTraktCredentialsInfo()
 		self.showunaired = getSetting('showunaired') == 'true'
-		self.unairedcolor = control.getColor(getSetting('unaired.identify'))
+		if control.getKodiVersion() == 20:
+			self.unairedcolor = getSetting('unaired.identify')
+		else:
+			self.unairedcolor = control.getColor(getSetting('unaired.identify'))
 		self.showspecials = getSetting('tv.specials') == 'true'
 		self.tmdblist_hours = int(getSetting('cache.tmdblist'))
 

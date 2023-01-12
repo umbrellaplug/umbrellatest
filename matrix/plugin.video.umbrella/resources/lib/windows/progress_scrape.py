@@ -5,7 +5,7 @@
 
 from json import dumps as jsdumps, loads as jsloads
 from urllib.parse import unquote
-from resources.lib.modules.control import dialog, getSourceHighlightColor, getHighlightColor, addonFanart, joinPath, jsonrpc, setting as getSetting, getColor
+from resources.lib.modules.control import dialog, getSourceHighlightColor, getHighlightColor, addonFanart, joinPath, jsonrpc, setting as getSetting, getColor, getKodiVersion
 from resources.lib.windows.base import BaseDialog
 from resources.lib.modules import log_utils
 
@@ -18,6 +18,7 @@ class ProgressScrape(BaseDialog):
 			self.meta = kwargs.get('meta')
 		except:
 			self.meta = None
+		self.kodiV = getKodiVersion()
 		self.imdb = kwargs.get('imdb')
 		self.tvdb = kwargs.get('tvdb')
 		self.year = kwargs.get('year')
@@ -55,7 +56,10 @@ class ProgressScrape(BaseDialog):
 		else:
 			self.setProperty('umbrella.fanart', addonFanart())
 		self.setProperty('umbrella.highlight.color', getHighlightColor())
-		self.setProperty('umbrella.dialog.color', str(getColor(getSetting('scraper.dialog.color'))))
+		if self.kodiV == 20:
+			self.setProperty('umbrella.dialog.color', getSetting('scraper.dialog.color'))
+		else:
+			self.setProperty('umbrella.dialog.color', str(getColor(getSetting('scraper.dialog.color'))))
 		self.setProperty('umbrella.sourceshighlight.color', getSourceHighlightColor())
 		self.setProperty('percent', str(0))
 		if getSetting('sources.dialog.fanartBG') == 'true':

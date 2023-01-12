@@ -4386,65 +4386,6 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
-				<setting id="plexshare.sourceTitle" type="string" label="40200" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<and>
-								<condition operator="!is" setting="plex.token"/>
-								<condition operator="is" setting="plex.enable">true</condition>
-							</and>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>40200</heading>
-					</control>
-				</setting>
-				<setting id="plexshare.accessToken" type="string" label="40201" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>40201</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
-				<setting id="plexshare.url" type="string" label="40202" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>40202</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
 				<setting id="plexshare.priority" type="integer" label="40005" help="">
 					<level>0</level>
 					<default>10</default>

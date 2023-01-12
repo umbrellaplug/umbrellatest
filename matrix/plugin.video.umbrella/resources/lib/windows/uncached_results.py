@@ -5,7 +5,7 @@
 
 from json import dumps as jsdumps
 from urllib.parse import quote_plus
-from resources.lib.modules.control import joinPath, transPath, dialog, getColor, getProviderHighlightColor, getSourceHighlightColor, addonFanart, notification, setting as getSetting
+from resources.lib.modules.control import joinPath, transPath, dialog, getColor, getProviderHighlightColor, getSourceHighlightColor, addonFanart, notification, setting as getSetting, getKodiVersion
 from resources.lib.modules.source_utils import getFileType
 from resources.lib.modules import tools
 from resources.lib.windows.base import BaseDialog
@@ -19,6 +19,7 @@ class UncachedResultsXML(BaseDialog):
 		self.total_results = str(len(self.uncached))
 		self.meta = kwargs.get('meta')
 		self.defaultbg = addonFanart()
+		self.kodiV = getKodiVersion()
 		self.useProviderColors = True if kwargs.get('colors')['useproviders'] == "True" else False
 		self.colors = kwargs.get('colors')
 		self.sourceHighlightColor = self.colors['defaultcolor']
@@ -234,7 +235,10 @@ class UncachedResultsXML(BaseDialog):
 			else: self.setProperty('umbrella.duration', 'NA ')
 			self.setProperty('umbrella.total_results', self.total_results)
 			self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
-			self.setProperty('umbrella.dialog.color', str(getColor(getSetting('scraper.dialog.color'))))
+			if self.kodiV == 20:
+				self.setProperty('umbrella.dialog.color', getSetting('scraper.dialog.color'))
+			else:
+				self.setProperty('umbrella.dialog.color', str(getColor(getSetting('scraper.dialog.color'))))
 			if getSetting('sources.select.fanartBG') == 'true':
 				self.setProperty('umbrella.fanartBG', '1')
 			else:
