@@ -1727,12 +1727,12 @@ msgid "Do you want to reset?"
 msgstr "Wilt u een reset uitvoeren?"
 
 msgctxt "#32513"
-msgid "1) Visit : [COLOR skyblue]%s[/COLOR]"
-msgstr "1) Bezoek : [COLOR skyblue]%s[/COLOR]"
+msgid "1) Visit : [COLOR %s]%s[/COLOR]"
+msgstr "1) Bezoek : [COLOR %s]%s[/COLOR]"
 
 msgctxt "#32514"
-msgid "2) When prompted enter : [COLOR skyblue]%s[/COLOR]"
-msgstr "2) Wanneer gevraagd, vul in : [COLOR skyblue]%s[/COLOR]"
+msgid "2) When prompted enter : [COLOR %s]%s[/COLOR]"
+msgstr "2) Wanneer gevraagd, vul in : [COLOR %s]%s[/COLOR]"
 
 msgctxt "#32515"
 msgid "Trakt Manager"
@@ -4612,4 +4612,12 @@ msgstr ""
 
 msgctxt "#40389"
 msgid "Trending Recently Released"
+msgstr ""
+
+msgctxt "#40390"
+msgid "[CR]Code has been copied to clipboard."
+msgstr ""
+
+msgctxt "#40391"
+msgid "Enable library (Marked Watched) sync"
 msgstr ""

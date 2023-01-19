@@ -1727,8 +1727,8 @@ msgid "Do you want to reset?"
 msgstr "Alaphelyzetbe kívánja állítani?"
 
 msgctxt "#32513"
-msgid "1) Open this link in a browser : [COLOR skyblue]%s[/COLOR]"
-msgstr "1) Nyissa meg ezt a linket a böngészőben : [COLOR skyblue]%s[/COLOR]"
+msgid "1) Open this link in a browser : [COLOR %s]%s[/COLOR]"
+msgstr "1) Nyissa meg ezt a linket a böngészőben : [COLOR %s]%s[/COLOR]"
 
 msgctxt "#32514"
 msgid "2) When prompted enter : [COLOR skyblue]%s[/COLOR]"
@@ -4608,4 +4608,12 @@ msgstr ""
 
 msgctxt "#40389"
 msgid "Trending Recently Released"
+msgstr ""
+
+msgctxt "#40390"
+msgid "[CR]Code has been copied to clipboard."
+msgstr ""
+
+msgctxt "#40391"
+msgid "Enable library (Marked Watched) sync"
 msgstr ""

@@ -114,7 +114,11 @@ class Movies:
 		self.traktunfinished_link = 'https://api.trakt.tv/sync/playback/movies?limit=40'
 		self.traktanticipated_link = 'https://api.trakt.tv/movies/anticipated?limit=%s&page=1' % self.page_limit 
 		self.trakttrending_link = 'https://api.trakt.tv/movies/trending?limit=%s&page=1' % self.page_limit
-		self.trakttrending_recent_link = 'https://api.trakt.tv/movies/trending?limit=%s&page=1&years=2022-2023' % self.page_limit
+		if datetime.today().month > 6:
+			traktyears='years='+str(datetime.today().year)
+		else:
+			traktyears='years='+str(int(datetime.today().year-1))+'-'+str(datetime.today().year)
+		self.trakttrending_recent_link = 'https://api.trakt.tv/movies/trending?limit=%s&page=1&%s' % (self.page_limit, traktyears)
 		self.traktboxoffice_link = 'https://api.trakt.tv/movies/boxoffice' # Returns the top 10 grossing movies in the U.S. box office last weekend
 		self.traktpopular_link = 'https://api.trakt.tv/movies/popular?limit=%s&page=1' % self.page_limit
 		self.traktrecommendations_link = 'https://api.trakt.tv/recommendations/movies?limit=40'
@@ -1312,6 +1316,15 @@ class Movies:
 		list = sorted(list, key=lambda k: re.sub(r'(^the |^a |^an )', '', k['name'].lower()))
 		return list
 
+	def reccomendedFromLibrary(self):
+		from resources.lib.modules import log_utils
+		log_utils.log('Rec List From Library', 1)
+
+	def similarFromLibrary(self):
+		from resources.lib.modules import log_utils
+		log_utils.log('Similiar List From Library', 1)
+
+
 	def worker(self):
 		try:
 			if not self.list: return
@@ -1418,7 +1431,10 @@ class Movies:
 				except: labelProgress = label
 				try:
 					if int(re.sub(r'[^0-9]', '', str(i['premiered']))) > int(re.sub(r'[^0-9]', '', str(self.today_date))): 
-						labelProgress = '[COLOR %s][I]%s[/I][/COLOR]' % (self.unairedcolor, labelProgress)
+						if self.hidecinema:
+							continue
+						else:
+							labelProgress = '[COLOR %s][I]%s[/I][/COLOR]' % (self.unairedcolor, labelProgress)
 				except: pass
 				if i.get('traktHistory') is True: # uses Trakt lastplayed
 					try:

@@ -1,3 +1,22 @@
+
+[B][COLOR black]Update - v6.6.10 - Jan 18th, 2023[/COLOR][/B]
+--[ENHANCEMENT][I] Set trakt recently released trending to use current year only after 6th month of year.[/I]
+--[ENHANCEMENT][I] Made codes from authorization auto-copy to clipboard.[/I]
+--[ENHANCEMENT][I] Two way library mark watched sync with Trakt. Enable in Trakt settings.[/I]
+--[FIX][I] Added busy spinner when gathering trakt lists for import management window.[/I]
+--[FIX][I] Added NoneType condition for playnext issue.[/I]
+--[FIX][I] Made Hide Movies in Cinema also hide unreleased movies in all lists.[/I]
+--[FIX][I] Sort by date watched fixed for trakt lists.[/I]
+--[FIX][I] DirectProgress Scraping combined with Playnext causing skip episode fixed.[/I]
+--[FIX][I] Highlight Color instead of hard coded blue now used on codes in prompts for account authorizations.[/I]
+--[FIX][I] Added metadatahandler 5.0.1a to repo with fixes for local indicators.[/I]
+--[FIX][I] Using local for indicator for watched status now requires a newer version of metahandler due to fixing an issue with metadatahandler exception on cast.[/I]
+--[INFORMATION][I] Yep Yep... Sitting on my hands all week.[/I]
+
+[B][COLOR black]Update - v6.6.09 - Jan 13th, 2023[/COLOR][/B]
+--[FIX][I] Added fix for searching shows with apostrophe in name with TMDb as provider.[/I]
+--[FIX][I] Quick patch for plexshares not being detected as a valid provider account[/I]
+
 [B][COLOR black]Update - v6.6.08 - Jan 12th, 2023[/COLOR][/B]
 --[PATCH][I] One more fix for colors on Nexus. Sorry.[/I]
 --[PATCH][I] Pushed update to force Nexus users back to Matrix version.[/I]

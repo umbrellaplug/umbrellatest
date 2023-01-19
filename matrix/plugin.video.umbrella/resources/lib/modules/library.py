@@ -373,6 +373,7 @@ class lib_tools:
 	def getAllTraktLists(self):
 		full_list = []
 		try:
+			control.busy()
 			from resources.lib.menus import tvshows
 			wltv_items = tvshows.TVshows().traktWatchlist('https://api.trakt.tv/users/me/watchlist/shows', create_directory=None)
 			wltv_items_count = len(wltv_items)
@@ -409,8 +410,10 @@ class lib_tools:
 				full_list.append(x)
 			#myfull_list = [i for n, i in enumerate(full_list) if i not in full_list[:n]]
 			full_list = [i for n, i in enumerate(full_list) if i.get('list_id') not in [y.get('list_id') for y in full_list[n + 1:]]]
+			control.hide()
 		except:
 			full_list = []
+			control.hide()
 		return full_list
 
 	def updateLists(self, items, allItems):
@@ -928,10 +931,10 @@ class libtvshows:
 						premiered = i.get('premiered', '')
 						if not premiered and self.include_unknown == 'false': continue
 						if not include_unaired:
-							if not premiered:
+							if premiered == None or premiered =='':
 								continue
 							try:
-								if datetime.strptime(premiered, '%Y-%m-%d').date() > datetime.now().date() : 
+								if datetime.strptime(premiered, '%Y-%m-%d').date() > datetime.now().date():
 									continue
 							except:
 								log_utils.error()
@@ -1190,7 +1193,7 @@ class libepisodes:
 				try:
 					if str(i.get('season')) == '0' and self.include_special == 'false': continue
 					premiered = i.get('premiered', '') if i.get('premiered') else ''
-					if not premiered:
+					if premiered == None or premiered == '':
 						if self.include_unknown == 'false': continue
 					elif int(re.sub('[^0-9]', '', str(premiered))) > int(re.sub(r'[^0-9]', '', str(self.date))): continue
 					libtvshows().strmFile(i)

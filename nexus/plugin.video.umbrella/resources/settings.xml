@@ -2471,7 +2471,7 @@
 				</setting>
 				<setting id="scraper.dialog.color" type="integer" label="32164" help="">
 					<level>0</level>
-					<default>0</default>
+					<default>32</default>
 					<constraints>
 						<options>
 							<option label="40082">0</option>
@@ -3424,6 +3424,16 @@
 						</dependency>
 					</dependencies>
 					<control type="button" format="action"/>
+				</setting>
+				<setting id="sync.watched.library" type="boolean" label="40391" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="trakt.user.token"/>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
 				</setting>
 				<setting id="trakt.rating" type="integer" label="35187" help="">
 					<level>0</level>

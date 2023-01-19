@@ -83,6 +83,7 @@ cacheFile = joinPath(dataPath, 'cache.db')
 traktSyncFile = joinPath(dataPath, 'traktSync.db')
 subsFile = joinPath(dataPath, 'substitute.db')
 fanarttvCacheFile = joinPath(dataPath, 'fanarttv.db')
+metaInternalCacheFile = joinPath(dataPath, 'video_cache.db')
 trailer = 'plugin://plugin.video.youtube/play/?video_id=%s'
 
 def getKodiVersion(full=False):

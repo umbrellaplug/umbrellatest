@@ -42,7 +42,10 @@ class TVshows:
 		self.tvdb_key = getSetting('tvdb.apikey')
 		self.user = str(self.imdb_user) + str(self.tvdb_key)
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
-
+		if datetime.today().month > 6:
+			traktyears='years='+str(datetime.today().year)
+		else:
+			traktyears='years='+str(int(datetime.today().year-1))+'-'+str(datetime.today().year)
 		self.imdb_link = 'https://www.imdb.com'
 		self.persons_link = 'https://www.imdb.com/search/name/?count=100&name='
 		self.personlist_link = 'https://www.imdb.com/search/name/?count=100&gender=male,female'
@@ -76,7 +79,8 @@ class TVshows:
 		self.traktlist_link = 'https://api.trakt.tv/users/%s/lists/%s/items/shows?limit=%s&page=1' % ('%s', '%s', self.page_limit) # local pagination, limit and page used to advance, pulled from request
 		self.progress_link = 'https://api.trakt.tv/sync/watched/shows?extended=noseasons'
 		self.trakttrending_link = 'https://api.trakt.tv/shows/trending?page=1&limit=%s' % self.page_limit
-		self.trakttrending_recent_link = 'https://api.trakt.tv/shows/trending?page=1&limit=%s&years=2022-2023' % self.page_limit
+		
+		self.trakttrending_recent_link = 'https://api.trakt.tv/shows/trending?page=1&limit=%s&%s' % (self.page_limit, traktyears)
 		self.traktpopular_link = 'https://api.trakt.tv/shows/popular?page=1&limit=%s' % self.page_limit
 		self.traktrecommendations_link = 'https://api.trakt.tv/recommendations/shows?limit=40'
 		self.trakt_popularLists_link = 'https://api.trakt.tv/lists/popular?limit=40&page=1' # use limit=40 due to filtering out Movie only lists
@@ -827,6 +831,8 @@ class TVshows:
 		def userList_totalItems(url):
 			items = trakt.getTraktAsJson(url)
 			if not items: return
+			control.log('[ plugin.video.umbrella ] trakt list items: %s' % str(items))
+			watchedItems = trakt.watchedShows()
 			for item in items:
 				try:
 					values = {}
@@ -852,6 +858,13 @@ class TVshows:
 					values['airtime'] = airs['time']
 					values['airzone'] = airs['timezone']
 					values['mediatype'] = 'tvshows'
+					try:
+						item_list = [item for item in watchedItems if item.get('show').get('title') == show.get('title')]
+					except:
+						item_list = None
+					if item_list:
+						try: values['lastplayed'] = item_list[0].get('last_watched_at') # for by date sorting
+						except: values['lastplayed'] = ''
 					self.list.append(values)
 				except:
 					from resources.lib.modules import log_utils
@@ -1242,7 +1255,12 @@ class TVshows:
 
 	def tvshowDirectory(self, items, next=True):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
-		control.playlist.clear()
+		
+		if getSetting('trakt.directProgress.scrape') == 'true' and getSetting('enable.playnext') == 'true':
+			control.log('addtvdirectory playlist do not clear',1)
+		else:
+			control.log('addtvdirectory playlist clear',1)
+			control.playlist.clear()
 		if not items: # with reuselanguageinvoker on an empty directory must be loaded, do not use sys.exit()
 			control.hide() ; control.notification(title=32002, message=33049)
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])

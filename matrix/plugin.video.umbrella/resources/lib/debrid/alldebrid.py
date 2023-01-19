@@ -122,10 +122,12 @@ class AllDebrid:
 		url = base_url + 'pin/get?agent=%s' % user_agent
 		response = session.get(url, timeout=self.timeout).json()
 		response = response['data']
-		line = '%s\n%s'
+		line = '%s\n%s\n%s'
 		progressDialog = control.progressDialog
 		progressDialog.create(getLS(40056))
-		progressDialog.update(-1, line % (getLS(32513) % 'https://alldebrid.com/pin/', getLS(32514) % response['pin']))
+		progressDialog.update(-1, line % (getLS(32513) % (control.getHighlightColor(),'https://alldebrid.com/pin/'), getLS(32514) % (control.getHighlightColor(),response['pin']),getLS(40390)))
+		from resources.lib.modules.source_utils import copy2clip
+		copy2clip(response['pin'])
 		self.check_url = response.get('check_url')
 		control.sleep(2000)
 		while not self.token:

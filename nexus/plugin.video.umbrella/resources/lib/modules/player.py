@@ -373,6 +373,7 @@ class Player(xbmc.Player):
 			elif self.getWatchedPercent() >= int(self.markwatched_percentage): self._end_playback()
 
 	def buildPlaylist(self):
+		log_utils.log('[ plugin.video.umbrella ] Build Playlist Called.', level=log_utils.LOGDEBUG)
 		seasonPlaynext = False
 		currentEpisode = self.episode
 		currentSeason = self.season
@@ -511,6 +512,7 @@ class Player(xbmc.Player):
 		Bookmarks().reset(self.current_time, self.media_length, self.name, self.year)
 		self.libForPlayback()
 		if control.playlist.getposition() == control.playlist.size() or control.playlist.size() == 1:
+			log_utils.log('onPlayBackEnded cleared playlist', level=log_utils.LOGDEBUG)
 			control.playlist.clear()
 		log_utils.log('onPlayBackEnded callback', level=log_utils.LOGDEBUG)
 		#control.checkforSkin(action='off')

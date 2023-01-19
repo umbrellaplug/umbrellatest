@@ -4,8 +4,7 @@
 """
 
 from datetime import datetime
-from dis import code_info
-from json import dumps as jsdumps
+from json import dumps as jsdumps, loads as jsloads
 from logging import exception
 import re
 import requests
@@ -38,8 +37,10 @@ def getTrakt(url, post=None, extended=False, silent=False):
 		if headers['trakt-api-key'] == '': headers['trakt-api-key']=traktClientID()
 		if post: post = jsdumps(post)
 		if getTraktCredentialsInfo(): headers['Authorization'] = 'Bearer %s' % getSetting('trakt.user.token')
-		if post: response = session.post(url, data=post, headers=headers, timeout=20)
-		else: response = session.get(url, headers=headers, timeout=20)
+		if post:
+			response = session.post(url, data=post, headers=headers, timeout=20)
+		else:
+			response = session.get(url, headers=headers, timeout=20)
 		status_code = str(response.status_code)
 
 		error_handler(url, response, status_code, silent=silent)
@@ -189,9 +190,11 @@ def getTraktDeviceToken(traktDeviceCode):
 				"client_secret": traktClientSecret()}
 		start = time.time()
 		expires_in = traktDeviceCode['expires_in']
-		verification_url = control.lang(32513) % str(traktDeviceCode['verification_url'])
-		user_code = control.lang(32514) % str(traktDeviceCode['user_code'])
-		control.progressDialog.create(control.lang(32073), control.progress_line % (verification_url, user_code, ''))
+		verification_url = control.lang(32513) % (control.getHighlightColor(), str(traktDeviceCode['verification_url']))
+		user_code = control.lang(32514) % (control.getHighlightColor(), str(traktDeviceCode['user_code']))
+		from resources.lib.modules.source_utils import copy2clip
+		copy2clip(traktDeviceCode['user_code'])
+		control.progressDialog.create(control.lang(32073), control.progress_line % (verification_url, user_code, getLS(40390)))
 		try:
 			time_passed = 0
 			while not control.progressDialog.iscanceled() and time_passed < expires_in:
@@ -844,6 +847,8 @@ def getProgressActivity(activities=None):
 
 def cachesyncMovies(timeout=0):
 	indicators = traktsync.get(syncMovies, timeout)
+	if getSetting('sync.watched.library') == 'true':
+		syncMoviesLibrary(indicators)
 	return indicators
 
 def syncMovies():
@@ -859,6 +864,32 @@ def syncMovies():
 def timeoutsyncMovies():
 	timeout = traktsync.timeout(syncMovies)
 	return timeout
+
+def syncMoviesLibrary(indicators):
+	if indicators:
+		try:
+			libMovies = control.jsonrpc('{"jsonrpc": "2.0","method":"VideoLibrary.GetMovies","params":{"properties": ["title", "year", "lastplayed", "playcount", "uniqueid"],"sort": {"order": "ascending", "method": "title"}},"id":1}')
+			libMovies = jsloads(libMovies).get('result').get('movies')
+		except:
+			libMovies = []
+		moviebatch = []
+		removeBatch = []
+		for movie in libMovies:
+			if str(movie.get('uniqueid').get('imdb')) not in indicators:
+				if movie.get('playcount')== 1:
+					removeBatch.append(jsloads('{"jsonrpc":"2.0","method":"VideoLibrary.SetMovieDetails","params":{"movieid":%s, "playcount":0}, "id":3}' % movie.get('movieid')))
+					control.log('Movie Marked for Playcount Removal. Movie: %s' % movie.get('label'),1)
+			for indicator in indicators:
+				if str(movie.get('uniqueid').get('imdb')) == str(indicator): #compare imdb ids in library with imdb ids in indicators
+
+						if str(movie.get('playcount')) == '1':
+							control.log('Movie Already Marked. Movie: %s' % movie.get('label'),1)
+						else:
+							moviebatch.append(jsloads('{"jsonrpc":"2.0","method":"VideoLibrary.SetMovieDetails","params":{"movieid":%s, "playcount":1}, "id":2}' % movie.get('movieid')))
+							control.log('Marked Movie: %s' % movie.get('label'),1)
+		if len(moviebatch) > 0 or len(removeBatch) > 0:
+			moviebatch.extend(removeBatch)
+			control.jsonrpc(jsdumps(moviebatch))
 
 def watchedMovies():
 	try:
@@ -907,6 +938,8 @@ def cachesyncTV(imdb, tvdb): # sync full watched shows then sync imdb_id "season
 
 def cachesyncTVShows(timeout=0):
 	indicators = traktsync.get(syncTVShows, timeout)
+	if getSetting('sync.watched.library') == 'true':
+		syncTVShowsLibrary(indicators)
 	return indicators
 
 def syncTVShows(): # sync all watched shows ex. [({'imdb': 'tt12571834', 'tvdb': '384435', 'tmdb': '105161', 'trakt': '163639'}, 16, [(1, 16)]), ({'imdb': 'tt11761194', 'tvdb': '377593', 'tmdb': '119845', 'trakt': '158621'}, 2, [(1, 1), (1, 2)])]
@@ -920,6 +953,43 @@ def syncTVShows(): # sync all watched shows ex. [({'imdb': 'tt12571834', 'tvdb':
 		indicators = [(i[0], int(i[1]), i[2]) for i in indicators]
 		return indicators
 	except: log_utils.error()
+
+def syncTVShowsLibrary(indicators):
+	if indicators:
+		try:
+			libShows = control.jsonrpc('{"jsonrpc": "2.0","method":"VideoLibrary.GetTVShows","params":{"properties": ["title", "year", "lastplayed", "playcount", "uniqueid"],"sort": {"order": "ascending", "method": "title"}},"id":1}')
+			libShows = jsloads(libShows).get('result').get('tvshows')
+		except:
+			libShows = []
+		episodesMarked = []
+		removeBatch2 = []
+		for show in libShows:
+			if str(show.get('uniqueid').get('imdb')) not in str(indicators):
+				eps = control.jsonrpc('{"jsonrpc":"2.0","id":1,"method":"VideoLibrary.GetEpisodes","params":{"tvshowid":%s, "properties": ["season", "episode", "playcount"]}}' % show.get('tvshowid'))
+				eps = jsloads(eps).get('result').get('episodes')
+				for episodes in eps:
+				
+					if episodes.get('playcount') == 1:
+						removeBatch2.append(jsloads(('{"jsonrpc":"2.0","method":"VideoLibrary.SetEpisodeDetails","params":{"episodeid":%s, "playcount":0}, "id":3}' % episodes.get('episodeid'))))
+						control.log('Show Marked for Playcount Removal. Show: %s' % show.get('label'),1)
+			for indicator in indicators:
+				if str(show.get('uniqueid').get('imdb')) == str(indicator[0]['imdb']): #compare imdb ids in library with imdb ids in indicators
+					epsWatched = indicator[2]
+					eps = control.jsonrpc('{"jsonrpc":"2.0","id":1,"method":"VideoLibrary.GetEpisodes","params":{"tvshowid":%s, "properties": ["season", "episode", "playcount"]}}' % show.get('tvshowid'))
+					eps = jsloads(eps).get('result').get('episodes')
+					for epis in eps:
+						if (epis.get('season'), epis.get('episode')) not in epsWatched:
+							if epis.get('playcount') == 1:
+								removeBatch2.append(jsloads(('{"jsonrpc":"2.0","method":"VideoLibrary.SetEpisodeDetails","params":{"episodeid":%s, "playcount":0}, "id":3}' % epis.get('episodeid'))))
+								control.log('Marked for playcount removal show: %s season: %s episode: %s' % (show.get('label'), epis.get('season'),epis.get('episode')),1)
+						for ep in epsWatched:
+							if ep[0] == epis.get('season') and ep[1] == epis.get('episode'):
+								if epis.get('playcount') == 0:
+									episodesMarked.append(jsloads(('{"jsonrpc":"2.0","method":"VideoLibrary.SetEpisodeDetails","params":{"episodeid":%s, "playcount":1}, "id":2}' % epis.get('episodeid'))))
+									control.log('Marked show: %s season: %s episode: %s' % (show.get('label'), epis.get('season'),epis.get('episode')),1)
+		if len(episodesMarked) > 0 or len(removeBatch2) > 0:
+			episodesMarked.extend(removeBatch2)
+			control.jsonrpc(jsdumps(episodesMarked))
 
 def cachesyncSeasons(imdb, tvdb, trakt=None, timeout=0):
 	try:
