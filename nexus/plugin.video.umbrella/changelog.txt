@@ -6,6 +6,7 @@
 --[ENHANCEMENT][I] Two way library mark watched sync with Trakt. Enable in Trakt settings.[/I]
 --[ENHANCEMENT][I] Ability to use custom subtitle download path for downloads added by roieeedouek.[/I]
 --[ENHANCEMENT][I] Will be used automatically if custom subtitle download folder enabled in Kodi.[/I]
+--[NEXUS][I] Added new MyVideos121 into cache detection.[/I]
 --[FIX][I] Added busy spinner when gathering trakt lists for import management window.[/I]
 --[FIX][I] Added NoneType condition for playnext issue.[/I]
 --[FIX][I] Made Hide Movies in Cinema also hide unreleased movies in all lists.[/I]

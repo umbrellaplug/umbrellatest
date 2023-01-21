@@ -73,7 +73,6 @@ class ProgressScrape(BaseDialog):
 
 	def checkLocalMeta(self):
 		try:
-			log_utils.log('Checking Local Meta for Library Item', log_utils.LOGDEBUG)
 			def cleanLibArt(art):
 				if not art: return ''
 				art = unquote(art.replace('image://', ''))

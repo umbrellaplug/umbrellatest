@@ -1651,7 +1651,6 @@ def sync_collection(activities=None, forced=False):
 			traktsync.insert_collection(items, 'shows_collection')
 			log_utils.log('Forced - Trakt Collection Sync Complete', __name__, log_utils.LOGDEBUG)
 		else:
-			log_utils.log('Trakt Collection Sync Not Forced', __name__, log_utils.LOGDEBUG)
 			db_last_collected = traktsync.last_sync('last_collected_at')
 			collectedActivity = getCollectedActivity(activities)
 			if collectedActivity > db_last_collected:
@@ -1680,8 +1679,6 @@ def sync_watch_list(activities=None, forced=False):
 		else:
 			db_last_watchList = traktsync.last_sync('last_watchlisted_at')
 			watchListActivity = getWatchListedActivity(activities)
-			log_utils.log('Trakt Watchlist Sync Check...(db time= %s, activity time= %s) will update if over 60: %s' % \
-									(str(db_last_watchList), str(watchListActivity), (watchListActivity - db_last_watchList)), __name__, log_utils.LOGDEBUG)
 			if watchListActivity - db_last_watchList >= 60: # do not sync unless 1 min difference or more
 				log_utils.log('Trakt Watch List Sync Update...(local db latest "watchlist_at" = %s, trakt api latest "watchlisted_at" = %s)' % \
 									(str(db_last_watchList), str(watchListActivity)), __name__, log_utils.LOGINFO)

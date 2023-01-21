@@ -979,7 +979,7 @@ class Sources:
 			if len(self.prem_providers) > 1: # resort for debrid/direct priorty, when more than 1 account, because of order cache check threads finish
 				self.prem_providers.sort(key=lambda k: k[1])
 				self.prem_providers = [i[0] for i in self.prem_providers]
-				log_utils.log('self.prem_providers sort order=%s' % self.prem_providers, level=log_utils.LOGDEBUG)
+				#log_utils.log('self.prem_providers sort order=%s' % self.prem_providers, level=log_utils.LOGDEBUG)
 				self.filter.sort(key=lambda k: self.prem_providers.index(k['debrid'] if k.get('debrid', '') else k['provider']))
 		except: log_utils.error()
 

@@ -37,8 +37,6 @@ class IconPacksView(BaseDialog):
 		# log_utils.log('controlID=%s' % controlID)
 
 	def onAction(self, action):
-		from resources.lib.modules import log_utils
-		log_utils.log('action: %s' % str(action.getId()))
 		try:
 			if action in self.selection_actions:
 				focus_id = self.getFocusId()

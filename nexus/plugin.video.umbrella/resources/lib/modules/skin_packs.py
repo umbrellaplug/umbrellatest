@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-	Umbrella Add-on (added by Umbrella Dev 01/07/23)
+	Umbrella Add-on (added by Umbrella Dev 01/07/23 Updated 1/21/23)
 """
 
 from resources.lib.modules import control
-from resources.lib.modules import log_utils
 from xml.dom.minidom import parseString as mdStringParse
 import os
 from io import BytesIO
@@ -22,8 +21,6 @@ class iconPackHandler:
 		self.hosters = None
 
 	def show_skin_packs(self):
-		from resources.lib.modules import log_utils
-		log_utils.log('Show window for icons packs here.', 1)
 		try:
 			control.busy()
 			self.list = self.get_skin_packs()
@@ -42,15 +39,9 @@ class iconPackHandler:
 
 	def get_skin_packs(self):
 		self.list1 = []
-		from resources.lib.modules import log_utils
-		log_utils.log('Get local skin packs.', 1)
 		directory = control.iconFolders()
 		subfolders = [ f.name for f in os.scandir(directory) if f.is_dir() ]
 		#we need to walk the directory now and get all the pre-installed skin packs
-		length = len(subfolders)
-		from resources.lib.modules import log_utils
-		log_utils.log('directory has %s folders' % length, 1)
-		log_utils.log('Get skin packs from github.', 1)
 		try:
 			import requests
 			repo_xml = requests.get('https://raw.githubusercontent.com/umbrellaplug/umbrellaplug.github.io/master/matrix/xml/skinpack/Skins.xml')
@@ -72,8 +63,6 @@ class iconPackHandler:
 				except:
 					from resources.lib.modules import log_utils
 					log_utils.error()
-
-		#minidom will need to be used here to parse the list from xml.
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.log('Error getting skin packs from github.', 1)
@@ -86,8 +75,6 @@ class iconPackHandler:
 		control.openSettings('0.0', 'plugin.video.umbrella')
 
 	def download_skin_pack(self, skinpack, url, imageurl):
-		from resources.lib.modules import log_utils
-		log_utils.log('Download Skin Pack!. Pack: %s URL: %s' % (skinpack, url), 1)
 		def download_and_unzip(url):
 			try:
 				http_response = urlopen(url)
@@ -105,8 +92,6 @@ class iconPackHandler:
 		
 
 	def delete_skin_pack(self, skinpack, imageurl):
-		from resources.lib.modules import log_utils
-		log_utils.log('Delete Skin Pack! Pack: %s' % (skinpack), 1)
 		control.busy()
 		try:
 			def delete_folder(path=None):
