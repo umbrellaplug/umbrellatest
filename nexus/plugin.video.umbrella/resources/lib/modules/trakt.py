@@ -847,8 +847,8 @@ def getProgressActivity(activities=None):
 
 def cachesyncMovies(timeout=0):
 	indicators = traktsync.get(syncMovies, timeout)
-	if getSetting('sync.watched.library') == 'true':
-		syncMoviesLibrary(indicators)
+	#if getSetting('sync.watched.library') == 'true':
+		#syncMoviesLibrary(indicators)
 	return indicators
 
 def syncMovies():
@@ -938,8 +938,8 @@ def cachesyncTV(imdb, tvdb): # sync full watched shows then sync imdb_id "season
 
 def cachesyncTVShows(timeout=0):
 	indicators = traktsync.get(syncTVShows, timeout)
-	if getSetting('sync.watched.library') == 'true':
-		syncTVShowsLibrary(indicators)
+	#if getSetting('sync.watched.library') == 'true':
+		#syncTVShowsLibrary(indicators)
 	return indicators
 
 def syncTVShows(): # sync all watched shows ex. [({'imdb': 'tt12571834', 'tvdb': '384435', 'tmdb': '105161', 'trakt': '163639'}, 16, [(1, 16)]), ({'imdb': 'tt11761194', 'tvdb': '377593', 'tmdb': '119845', 'trakt': '158621'}, 2, [(1, 1), (1, 2)])]

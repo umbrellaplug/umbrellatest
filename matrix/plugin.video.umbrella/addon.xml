@@ -31,14 +31,14 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.10 - Jan 20th, 2023[/COLOR][/B]
---[HOTFIX][I] Potential fix for reuselanguageInvoker crashes. Please turn it back on and try to crash with widgets.[/I]
+[B][COLOR black]Update - v6.6.10 - Jan 21st, 2023[/COLOR][/B]
+--[HOTFIX][I] Potential fix for reuselanguageInvoker causing crashes. All credit to TikiPeter![/I]
 --[ENHANCEMENT][I] Set trakt recently released trending to use current year only after 6th month of year.[/I]
 --[ENHANCEMENT][I] Made codes from authorization auto-copy to clipboard.[/I]
---[ENHANCEMENT][I] Two way library mark watched sync with Trakt. Enable in Trakt settings.[/I]
 --[ENHANCEMENT][I] Ability to use custom subtitle download path for downloads added by roieeedouek.[/I]
 --[ENHANCEMENT][I] Will be used automatically if custom subtitle download folder enabled in Kodi.[/I]
 --[NEXUS][I] Added new MyVideos121 into cache detection.[/I]
+--[NEXUS][I] Nexus now has a repo.[/I]
 --[FIX][I] Added busy spinner when gathering trakt lists for import management window.[/I]
 --[FIX][I] Added NoneType condition for playnext issue.[/I]
 --[FIX][I] Made Hide Movies in Cinema also hide unreleased movies in all lists.[/I]

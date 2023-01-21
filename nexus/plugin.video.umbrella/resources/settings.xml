@@ -853,7 +853,7 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="navi.movie.trakt.trendingrecent" type="boolean" label="32443" help="">
+				<setting id="navi.movie.trakt.trendingrecent" type="boolean" label="40388" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
@@ -3424,16 +3424,6 @@
 						</dependency>
 					</dependencies>
 					<control type="button" format="action"/>
-				</setting>
-				<setting id="sync.watched.library" type="boolean" label="40391" help="">
-					<level>0</level>
-					<default>false</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="!is" setting="trakt.user.token"/>
-						</dependency>
-					</dependencies>
-					<control type="toggle"/>
 				</setting>
 				<setting id="trakt.rating" type="integer" label="35187" help="">
 					<level>0</level>
