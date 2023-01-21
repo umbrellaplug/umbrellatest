@@ -51,16 +51,6 @@ class Player(xbmc.Player):
 		
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
-		#try:
-			#log_utils.log('From player.play_source() Title: %s' % str(title), level=log_utils.LOGDEBUG)
-			#log_utils.log('From player.play_source() Year: %s' % str(year), level=log_utils.LOGDEBUG)
-			#log_utils.log('From player.play_source() Season: %s' % str(season), level=log_utils.LOGDEBUG)
-			#log_utils.log('From player.play_source() Episode: %s' % str(episode), level=log_utils.LOGDEBUG)
-			#log_utils.log('From player.play_source() IMDB: %s TMDB: %s TVDB: %s' % (str(imdb), str(tmdb), str(tvdb)), level=log_utils.LOGDEBUG)
-			#log_utils.log('From player.play_source() URL: %s' % str(url), level=log_utils.LOGDEBUG)
-			#log_utils.log('From player.play_source() Meta: %s' % str(meta), level=log_utils.LOGDEBUG)
-		#except:
-			#log_utils.error()
 		try:
 			from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 			if not url: raise Exception
@@ -241,7 +231,6 @@ class Player(xbmc.Player):
 			return (poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta)
 
 	def getWatchedPercent(self):
-		#log_utils.log(' [ plugin.video.umbrella ] GetWatchedPercent is checking.', level=log_utils.LOGDEBUG)
 		if self.isPlayback():
 			try:
 				position = self.getTime()
@@ -269,7 +258,6 @@ class Player(xbmc.Player):
 		return remaining_time
 
 	def keepAlive(self):
-		#log_utils.log('KeepAlive Started', level=log_utils.LOGDEBUG)
 		pname = '%s.player.overlay' % control.addonInfo('id')
 		homeWindow.clearProperty(pname)
 		for i in range(0, 500):
@@ -283,7 +271,6 @@ class Player(xbmc.Player):
 		self.onPlayBackEnded_ran = False
 		try: running_path = self.getPlayingFile() # original video that playlist playback started with
 		except: running_path = ''
-		#log_utils.log('KeepAlive Running Path: %s' % running_path, level=log_utils.LOGDEBUG)
 		if playerWindow.getProperty('umbrella.playlistStart_position'): pass
 		else:
 			if control.playlist.size() > 1: playerWindow.setProperty('umbrella.playlistStart_position', str(control.playlist.getposition()))
@@ -304,7 +291,6 @@ class Player(xbmc.Player):
 				if self.media_type == 'movie':
 					try:
 						if watcher and property != '5':
-							#log_utils.log('KeepAlive is going to mark during playback.', level=log_utils.LOGDEBUG)
 							homeWindow.setProperty(pname, '5')
 							playcount.markMovieDuringPlayback(self.imdb, '5')
 					except: pass
@@ -331,23 +317,19 @@ class Player(xbmc.Player):
 								elif getSetting('playnext.method')== '2':
 									if self.subtitletime is None:
 										self.subtitletime = Subtitles().downloadForPlayNext(self.name, self.imdb, self.season, self.episode, self.media_length)
-									log_utils.log('KeepAlive playnext subtitletime: %s' % str(self.subtitletime), level=log_utils.LOGDEBUG)
 									if str(self.subtitletime) == 'default':
 										if getSetting('playnext.sub.backupmethod')== '0': #subtitle failed use seconds as backup
 											subtitletimeumb = int(getSetting('playnext.sub.seconds'))
 											if remaining_time < (subtitletimeumb + 1) and remaining_time != 0:
-												log_utils.log('KeepAlive subtitle playnext failed using backup seconds: %s' % str(subtitletimeumb), level=log_utils.LOGDEBUG)
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
 										elif getSetting('playnext.sub.backupmethod') == '1': #subtitle failed use percentage as backup
 											subtitletimeumb = int(getSetting('playnext.sub.percent'))
 											if self.getWatchedPercent() >= int(subtitletimeumb) and remaining_time != 0:
-												log_utils.log('KeepAlive subtitle playnext failed using backup percent: %s' % str(subtitletimeumb), level=log_utils.LOGDEBUG)
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
 									elif self.subtitletime != None and str(self.subtitletime) != 'default':
 										if remaining_time < (int(self.subtitletime) + 1) and remaining_time != 0:
-											log_utils.log('KeepAlive subtitle playnext success using time: %s' % str(self.subtitletime), level=log_utils.LOGDEBUG)
 											xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 											self.play_next_triggered = True
 									else:
@@ -364,7 +346,6 @@ class Player(xbmc.Player):
 				log_utils.error()
 				xbmc.sleep(1000)
 		homeWindow.clearProperty(pname)
-		#log_utils.log('KeepAlive playlist_skip: %s' % playlist_skip, level=log_utils.LOGDEBUG)
 		if playlist_skip: pass
 		else:
 			if (int(self.current_time) > 180 and (self.getWatchedPercent() < int(self.markwatched_percentage))): # kodi is unreliable issuing callback "onPlayBackStopped" and "onPlayBackEnded"
@@ -373,7 +354,6 @@ class Player(xbmc.Player):
 			elif self.getWatchedPercent() >= int(self.markwatched_percentage): self._end_playback()
 
 	def buildPlaylist(self):
-		log_utils.log('[ plugin.video.umbrella ] Build Playlist Called.', level=log_utils.LOGDEBUG)
 		seasonPlaynext = False
 		currentEpisode = self.episode
 		currentSeason = self.season
@@ -512,7 +492,6 @@ class Player(xbmc.Player):
 		Bookmarks().reset(self.current_time, self.media_length, self.name, self.year)
 		self.libForPlayback()
 		if control.playlist.getposition() == control.playlist.size() or control.playlist.size() == 1:
-			log_utils.log('onPlayBackEnded cleared playlist', level=log_utils.LOGDEBUG)
 			control.playlist.clear()
 		log_utils.log('onPlayBackEnded callback', level=log_utils.LOGDEBUG)
 		#control.checkforSkin(action='off')
@@ -750,9 +729,9 @@ class Subtitles:
 			content = server.DownloadSubtitles(token, content)
 			content = base64.b64decode(content['data'][0]['data'])
 			content = gzip.GzipFile(fileobj=BytesIO(content)).read()
-			subtitle = control.transPath('special://temp/')
+			download_path = 'special://temp/'
+			subtitle = control.transPath(download_path)
 			subtitle = control.joinPath(subtitle, 'TemporarySubs.%s.srt' % lang)
-			log_utils.log('subtitle file = %s' % subtitle, level=log_utils.LOGDEBUG)
 
 			if getSetting('subtitles.utf') == 'true':
 				codepage = codePageDict.get(lang, '')
@@ -783,7 +762,6 @@ class Subtitles:
 					h, m, s = str(times).split(':')
 					totalSeconds =  int(h) * 3600 + int(m) * 60 + int(s)
 					Player().subtitletime = int(total_time) - int(totalSeconds)
-					log_utils.log('downloaded subtitle has entries for time! holy shit! last time entry is: %s and will be %s seconds. Playnext will popup with %s seconds remaining.' % (str(times), str(totalSeconds), str(int(total_time) - int(totalSeconds))), level=log_utils.LOGDEBUG)
 				else:
 					Player().subtitletime = 'default'
 		except: log_utils.error()
@@ -832,18 +810,17 @@ class Subtitles:
 			try: lang = xbmc.convertLanguage(filter[0]['SubLanguageID'], xbmc.ISO_639_1)
 			except: lang = filter[0]['SubLanguageID']
 			filename = filter[0]['SubFileName']
-			log_utils.log('downloaded subtitle=%s' % filename, level=log_utils.LOGDEBUG)
 			content = [filter[0]['IDSubtitleFile'],]
 			content = server.DownloadSubtitles(token, content)
 			content = base64.b64decode(content['data'][0]['data'])
 			content = gzip.GzipFile(fileobj=BytesIO(content)).read()
-			subtitle = control.transPath('special://temp/')
-			subtitle = control.joinPath(subtitle, 'TemporarySubs.%s.srt' % lang)
+			download_path = jsloads(control.jsonrpc('{"jsonrpc":"2.0", "method":"Settings.GetSettingValue", "params":{"setting":"subtitles.custompath"}, "id":1}')).get('result').get('value')
+			download_path = 'special://subtitles/' if download_path != '' else 'special://temp/'
+			subtitle = control.joinPath(download_path, 'TemporarySubs.%s.srt' % lang)
 			file = control.openFile(subtitle, 'w')
 			file.write(content)
 			file.close()
 			xbmc.sleep(1000)
-			log_utils.log('subtitle file for playnext = %s' % subtitle, level=log_utils.LOGDEBUG)
 			times = []
 			pattern = r'(\d{2}:\d{2}:\d{2},d{3}$)|(\d{2}:\d{2}:\d{2})'
 			with control.openFile(subtitle) as file:
@@ -856,7 +833,6 @@ class Subtitles:
 				h, m, s = str(times).split(':')
 				totalSeconds =  int(h) * 3600 + int(m) * 60 + int(s)
 				playnextTime = int(total_time) - int(totalSeconds)
-				log_utils.log('downloaded subtitle has entries for time! holy shit! last time entry is: %s and will be %s seconds. Playnext will popup with %s seconds remaining.' % (str(times), str(totalSeconds), str(playnextTime)), level=log_utils.LOGDEBUG)
 			else:
 				playnextTime = 'default'
 			return playnextTime

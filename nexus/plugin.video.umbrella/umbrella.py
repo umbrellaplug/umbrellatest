@@ -3,8 +3,9 @@
 	Umbrella Add-on
 """
 
-from sys import argv
+import sys
 from resources.lib.modules import router
-
+from xbmc import getInfoLabel
 if __name__ == '__main__':
-	router.router(argv[2])
+	router.router(sys.argv[2])
+	if 'umbrella' not in getInfoLabel('Container.PluginName'): sys.exit(1) #TikiPeter RLI-Fix Test
