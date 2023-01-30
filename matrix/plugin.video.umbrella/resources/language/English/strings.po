@@ -4426,3 +4426,11 @@ msgstr ""
 msgctxt "#40391"
 msgid "Enable library (Marked Watched) sync"
 msgstr ""
+
+msgctxt "#40392"
+msgid "Similar to Random Recently Watched (Library)"
+msgstr ""
+
+msgctxt "#40393"
+msgid "Recommended (Library)"
+msgstr ""

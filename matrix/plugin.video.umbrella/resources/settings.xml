@@ -858,6 +858,16 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="navi.movie.lib.recommended" type="boolean" label="40393" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="navi.movie.lib.similar" type="boolean" label="40392" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="navi.movie.simkl.trendingtoday" type="boolean" label="40350" help="">
 					<level>0</level>
 					<default>true</default>

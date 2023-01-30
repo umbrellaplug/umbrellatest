@@ -7,6 +7,7 @@ from sys import exit as sysexit
 from urllib.parse import quote_plus
 from resources.lib.modules import control
 from resources.lib.modules.trakt import getTraktCredentialsInfo, getTraktIndicatorsInfo
+from json import loads as jsloads
 
 getLS = control.lang
 getSetting = control.setting
@@ -25,6 +26,7 @@ class Navigator:
 		self.tmdbSessionID = getSetting('tmdb.sessionid') != ''
 		self.reuselanguageinv = getSetting('reuse.languageinvoker') == 'true'
 		self.highlight_color = control.getHighlightColor()
+		self.hasLibMovies = len(jsloads(control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "limits": { "start" : 0, "end": 1 }, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'))['result']['movies']) > 0
 
 	def root(self):
 		if getMenuEnabled('navi.searchMovies'):self.addDirectoryItem(33042, 'movieSearch', 'trakt.png' if self.iconLogos else 'searchmovies.png', 'DefaultAddonsSearch.png')
@@ -91,6 +93,11 @@ class Navigator:
 			self.addDirectoryItem(40331 if self.indexLabels else 32442, 'movies&url=tmdbrecentweek', 'tmdb.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
 		if getMenuEnabled('navi.movie.trakt.recommended'):
 			self.addDirectoryItem(32445 if self.indexLabels else 32444, 'movies&url=traktrecommendations', 'trakt.png' if self.iconLogos else 'highly-rated.png', 'DefaultMovies.png')
+		#will need some sort of check here
+		if self.hasLibMovies and getMenuEnabled('navi.movie.lib.similar'):
+			self.addDirectoryItem(40392 if self.indexLabels else 40392, 'moviesimilarFromLibrary', 'most-popular.png' if self.iconLogos else 'most-popular.png', 'DefaultMovies.png')
+		if self.hasLibMovies and getMenuEnabled('navi.movie.lib.recommended'):	
+			self.addDirectoryItem(40393 if self.indexLabels else 40393, 'movierecommendedFromLibrary', 'featured.png' if self.iconLogos else 'featured.png', 'DefaultMovies.png')
 		if getMenuEnabled('navi.movie.trakt.recentlywatched'):
 			self.addDirectoryItem(40255 if self.indexLabels else 40256, 'movies&url=traktbasedonrecent', 'trakt.png' if self.iconLogos else 'years.png', 'DefaultMovies.png')
 		if getMenuEnabled('navi.movie.trakt.traktsimilar'):

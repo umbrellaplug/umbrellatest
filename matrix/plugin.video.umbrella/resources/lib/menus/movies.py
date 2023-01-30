@@ -22,6 +22,8 @@ from resources.lib.modules import trakt
 from resources.lib.modules import views
 from resources.lib.modules import mdblist
 from sqlite3 import dbapi2 as database
+from json import loads as jsloads
+from operator import itemgetter
 
 getLS = control.lang
 getSetting = control.setting
@@ -435,7 +437,7 @@ class Movies:
 			if self.useContainerTitles:
 				try: 
 					control.setContainerName(getLS(40259)+' '+item.get('title'))
-					control.setHomeWindowProperty('umbrella.moviesimilar', str(getLS(40257)+' '+item.get('title')))
+					control.setHomeWindowProperty('umbrella.moviesimilar', str(getLS(40259)+' '+item.get('title')))
 				except: pass
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
@@ -1319,13 +1321,96 @@ class Movies:
 	def reccomendedFromLibrary(self):
 		from resources.lib.modules import log_utils
 		log_utils.log('Rec List From Library', 1)
+		try:
+			self.list = []
+			''' get recommended movies - library movies with score higher than 7 '''
+			hasLibMovies = len(jsloads(control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "limits": { "start" : 0, "end": 1 }, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'))['result']['movies']) > 0
+			if not hasLibMovies:
+				control.notification('No Movies', 'No movies found in library to use.')
+				return self.list
+			else:
+				self.list = jsloads(control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"sort": {"method": "rating", "order": "descending"}, "filter": {"and":[{"operator": "greaterthan", "field": "rating", "value": "7"}, {"operator": "lessthan", "field": "playcount", "value": "1"}]}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'))['result']['movies']
+				self.list = [({"tmdb": x.get('uniqueid').get('tmdb')}) for x in self.list]
+				self.list = [({"imdb": x.get('uniqueid').get('imdb')}) for x in self.list]
+				self.worker()
+		except:
+			self.list  = []
+		self.movieDirectory(self.list)
+		return self.list
 
-	def similarFromLibrary(self):
+
+	def similarFromLibrary(self, tmdb=None, create_directory=True):
 		from resources.lib.modules import log_utils
 		log_utils.log('Similiar List From Library', 1)
+		try:
+			historyurl = 'https://api.trakt.tv/users/me/history/movies?limit=20&page=1'
+			if tmdb == None:
+				randomItems = self.trakt_list(historyurl, self.trakt_user)
+			else:
+				randomItems = {"tmdb": tmdb}
+			if not randomItems:
+				#no random item found from trakt history check library history
+				randomMovies = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "filter": {"operator": "is", "field": "playcount", "operator": "greaterthan", "value": "0"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}')
+				randomMovies = jsloads(randomMovies)['result']['movies']
+				randomItems = [({"tmdb": x.get('uniqueid').get('tmdb')}) for x in randomMovies]
+			import random
+			if not randomItems:
+				originalMovie = None
+				control.notification('No History', 'No watch history found to use.')
+			else:
+				item = randomItems[random.randint(0, len(randomItems) - 1)]
+				originalMovie = tmdb_indexer().get_movie_meta(item.get('tmdb'))
+			self.list = []
+			all_titles = list()
 
+			if originalMovie:
+				# get all movies for the genres in the movie
+				neOriginal = originalMovie['genre'].split('/')
+				genres = [x.strip() for x in neOriginal]
+				similar_title = originalMovie["title"]
+				for genre in genres:
+					control.log('Genre is: %s'%str(genre), 1)
+					genre_movies = self.getGenreMovies(genre)
+					for item in genre_movies:
+						# prevent duplicates so skip reference movie and titles already in the list
+						if not item["title"] in all_titles and not item["title"] == similar_title:
+							item["extraproperties"] = {"similartitle": similar_title}
+							item["num_match"] = len(set(genres).intersection(item["genre"]))
+							item['tmdb'] = item.get('uniqueid').get('tmdb')
+							item['imdb'] = item.get('uniqueid').get('imdb')
+							self.list.append(item)
+							all_titles.append(item["title"])
+			# return the list sorted by number of matching genres then rating
+			self.list = sorted(self.list, key=itemgetter("num_match"), reverse=True)[:50]
+			self.list = sorted(self.list, key=itemgetter("rating"), reverse=True)
+			next = ''
+			for i in range(len(self.list)): self.list[i]['next'] = next
+			self.worker()
+			if self.useContainerTitles and originalMovie:
+				try: 
+					control.setContainerName(getLS(40257)+' '+originalMovie["title"])
+					control.setHomeWindowProperty('umbrella.moviesimilarlibrary', str(getLS(40257)+' '+originalMovie["title"]))
+				except: pass
+			if self.list is None: self.list = []
+			
+			if create_directory: self.movieDirectory(self.list)
+			return self.list
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+			return
+
+	def getGenreMovies(self, genre):
+		sameGenreMovies = []
+		try:
+			genreResults = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "filter": {"operator": "is", "field": "genre", "value": "%s"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'% genre)
+			sameGenreMovies = jsloads(genreResults)['result']['movies']
+		except:
+			log_utils.error()
+		return sameGenreMovies
 
 	def worker(self):
+		
 		try:
 			if not self.list: return
 			self.meta = []
