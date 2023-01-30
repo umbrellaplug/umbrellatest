@@ -1329,9 +1329,11 @@ class Movies:
 				control.notification('No Movies', 'No movies found in library to use.')
 				return self.list
 			else:
-				self.list = jsloads(control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"sort": {"method": "rating", "order": "descending"}, "filter": {"and":[{"operator": "greaterthan", "field": "rating", "value": "7"}, {"operator": "lessthan", "field": "playcount", "value": "1"}]}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'))['result']['movies']
-				self.list = [({"tmdb": x.get('uniqueid').get('tmdb')}) for x in self.list]
-				self.list = [({"imdb": x.get('uniqueid').get('imdb')}) for x in self.list]
+				self.list = jsloads(control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"limits": { "start" : 0, "end": 50 },"sort": {"method": "rating", "order": "descending"}, "filter": {"and":[{"operator": "greaterthan", "field": "rating", "value": "7"}, {"operator": "lessthan", "field": "playcount", "value": "1"}]}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'))['result']['movies']
+				for x in self.list:
+					x['tmdb'] = x.get('uniqueid').get('tmdb')
+					x['imdb'] = x.get('uniqueid').get('imdb')
+					x['next'] = ''
 				self.worker()
 		except:
 			self.list  = []
@@ -1350,7 +1352,7 @@ class Movies:
 				randomItems = {"tmdb": tmdb}
 			if not randomItems:
 				#no random item found from trakt history check library history
-				randomMovies = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "filter": {"operator": "is", "field": "playcount", "operator": "greaterthan", "value": "0"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}')
+				randomMovies = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "limits": { "start" : 0, "end": 20 }, "filter": {"operator": "is", "field": "playcount", "operator": "greaterthan", "value": "0"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}')
 				randomMovies = jsloads(randomMovies)['result']['movies']
 				randomItems = [({"tmdb": x.get('uniqueid').get('tmdb')}) for x in randomMovies]
 			import random
@@ -1368,18 +1370,29 @@ class Movies:
 				neOriginal = originalMovie['genre'].split('/')
 				genres = [x.strip() for x in neOriginal]
 				similar_title = originalMovie["title"]
-				for genre in genres:
-					control.log('Genre is: %s'%str(genre), 1)
-					genre_movies = self.getGenreMovies(genre)
-					for item in genre_movies:
-						# prevent duplicates so skip reference movie and titles already in the list
-						if not item["title"] in all_titles and not item["title"] == similar_title:
-							item["extraproperties"] = {"similartitle": similar_title}
-							item["num_match"] = len(set(genres).intersection(item["genre"]))
-							item['tmdb'] = item.get('uniqueid').get('tmdb')
-							item['imdb'] = item.get('uniqueid').get('imdb')
-							self.list.append(item)
-							all_titles.append(item["title"])
+				if len(genres) > 1:
+					#contruct a batch for jsonrpc instead of a bunch of calls.
+					orFilterGenre = ''
+					for genre in genres:
+						if genre == genres[-1]:
+							orFilterGenre += '{"operator": "is", "field": "genre", "value": "%s"}' % genre
+						else:
+							orFilterGenre += '{"operator": "is", "field": "genre", "value": "%s"},' % genre
+					genreResults = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "limits": { "start" : 0, "end": 200 }, "filter": {"or":[%s]}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'% orFilterGenre)
+					sameGenreMovies = jsloads(genreResults)['result']['movies']
+					
+				else:
+					genreResults = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "limits": { "start" : 0, "end": 50 }, "filter": {"operator": "is", "field": "genre", "value": "%s"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'% genre)
+					sameGenreMovies = jsloads(genreResults)['result']['movies']
+				for item in sameGenreMovies:
+					# prevent duplicates so skip reference movie and titles already in the list
+					if not item["title"] in all_titles and not item["title"] == similar_title:
+						item["extraproperties"] = {"similartitle": similar_title}
+						item["num_match"] = len(set(genres).intersection(item["genre"]))
+						item['tmdb'] = item.get('uniqueid').get('tmdb')
+						item['imdb'] = item.get('uniqueid').get('imdb')
+						self.list.append(item)
+						all_titles.append(item["title"])
 			# return the list sorted by number of matching genres then rating
 			self.list = sorted(self.list, key=itemgetter("num_match"), reverse=True)[:50]
 			self.list = sorted(self.list, key=itemgetter("rating"), reverse=True)
@@ -1403,7 +1416,7 @@ class Movies:
 	def getGenreMovies(self, genre):
 		sameGenreMovies = []
 		try:
-			genreResults = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "filter": {"operator": "is", "field": "genre", "value": "%s"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'% genre)
+			genreResults = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "limits": { "start" : 0, "end": 50 }, "filter": {"operator": "is", "field": "genre", "value": "%s"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'% genre)
 			sameGenreMovies = jsloads(genreResults)['result']['movies']
 		except:
 			log_utils.error()
