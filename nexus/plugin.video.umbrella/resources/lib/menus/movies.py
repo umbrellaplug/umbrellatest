@@ -1329,12 +1329,12 @@ class Movies:
 				return self.list
 			else:
 				self.list = jsloads(control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"sort": {"method": "rating", "order": "descending"}, "filter": {"and":[{"operator": "greaterthan", "field": "rating", "value": "7"}, {"operator": "lessthan", "field": "playcount", "value": "1"}]}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'))['result']['movies']
+				random.shuffle(self.list)
+				self.list[:50]
 				for x in self.list:
 					x['tmdb'] = x.get('uniqueid').get('tmdb')
 					x['imdb'] = x.get('uniqueid').get('imdb')
 					x['next'] = ''
-				random.shuffle(self.list)
-				self.list[:50]
 				self.worker()
 		except:
 			self.list  = []
@@ -1346,14 +1346,14 @@ class Movies:
 		from resources.lib.modules import log_utils
 		log_utils.log('Similiar List From Library', 1)
 		try:
-			historyurl = 'https://api.trakt.tv/users/me/history/movies?limit=20&page=1'
+			historyurl = 'https://api.trakt.tv/users/me/history/movies?limit=50&page=1'
 			if tmdb == None:
 				randomItems = self.trakt_list(historyurl, self.trakt_user)
 			else:
 				randomItems = {"tmdb": tmdb}
 			if not randomItems:
 				#no random item found from trakt history check library history
-				randomMovies = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "filter": {"operator": "is", "field": "playcount", "operator": "greaterthan", "value": "0"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}')
+				randomMovies = control.jsonrpc('{"jsonrpc": "2.0","method": "VideoLibrary.GetMovies","params": {"filter":{"and": {{"operator": "is", "field": "playcount", "operator": "lessthan", "value": "1"},"or":[%s]}},"properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file","director", "writer", "year", "mpaa"]}, "id": "1"}'% orFilterGenre)
 				randomMovies = jsloads(randomMovies)['result']['movies']
 				randomItems = [({"tmdb": x.get('uniqueid').get('tmdb')}) for x in randomMovies]
 			if not randomItems:
@@ -1364,7 +1364,6 @@ class Movies:
 				originalMovie = tmdb_indexer().get_movie_meta(item.get('tmdb'))
 			self.list = []
 			all_titles = list()
-
 			if originalMovie:
 				# get all movies for the genres in the movie
 				neOriginal = originalMovie['genre'].split('/')
@@ -1378,11 +1377,14 @@ class Movies:
 							orFilterGenre += '{"operator": "is", "field": "genre", "value": "%s"}' % genre
 						else:
 							orFilterGenre += '{"operator": "is", "field": "genre", "value": "%s"},' % genre
-					genreResults = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"filter": {"or":[%s]}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'% orFilterGenre)
+					genreResults = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"filter": {"or":[%s]}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file", "director", "writer", "year", "mpaa"] }, "id": "1"}'% orFilterGenre)
 					sameGenreMovies = jsloads(genreResults)['result']['movies']
 				else:
-					genreResults = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "filter": {"operator": "is", "field": "genre", "value": "%s"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'% genres[0])
+					genreResults = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"filter": {"operator": "is", "field": "genre", "value": "%s"}, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file", "director", "writer", "year", "mpaa"] }, "id": "1"}'% genres[0])
 					sameGenreMovies = jsloads(genreResults)['result']['movies']
+				set_genres = set(genres)
+				set_directors = set([originalMovie["director"]])
+				set_writers = set([originalMovie["writer"]])
 				for item in sameGenreMovies:
 					# prevent duplicates so skip reference movie and titles already in the list
 					if not item["title"] in all_titles and not item["title"] == similar_title:
@@ -1390,14 +1392,33 @@ class Movies:
 						item["num_match"] = len(set(genres).intersection(item["genre"]))
 						item['tmdb'] = item.get('uniqueid').get('tmdb')
 						item['imdb'] = item.get('uniqueid').get('imdb')
-						self.list.append(item)
+						genre_score = 0 if not set_genres else float(len(set_genres.intersection(item["genre"])) // len(set_genres.union(item["genre"])))
+						director_score = 0 if not set_directors else float(len(set_directors.intersection(item["director"]))) // len(set_directors.union(item["director"]))
+						writer_score = 0 if not set_writers else float(len(set_writers.intersection(item["writer"]))) / len(set_writers.union(item["writer"]))
+						if originalMovie["rating"] and item["rating"] and abs(float(originalMovie["rating"])-item["rating"]) < 3:
+							rating_score = 1 - abs(float(originalMovie["rating"])-item["rating"])//3
+						else:
+							rating_score = 0
+						# year_score is "closeness" in release year, scaled to 1 (0 if not from same decade)
+						if int(originalMovie["year"]) and int(item["year"]) and abs(float(originalMovie["rating"])-item["year"]) < 10:
+							year_score = 1 - abs(originalMovie["year"]-item["year"])//10
+						else:
+							year_score = 0
+						# mpaa_score gets 1 if same mpaa rating, otherwise 0
+						mpaa_score = 1 if originalMovie["mpaa"] and ('Rated '+str(originalMovie["mpaa"])) == item["mpaa"] else 0
+						# calculate overall score using weighted average
+						similarscore = .5*genre_score + .15*director_score + .1*writer_score + .05*rating_score + .075*year_score + .025*mpaa_score
+						item["similarscore"] = similarscore
+						self.list.append(item) 
 						all_titles.append(item["title"])
 			# return the list sorted by number of matching genres then rating
-			#self.list = sorted(self.list, key=itemgetter("num_match"), reverse=True)[:50]
+			self.list = sorted(self.list, key=itemgetter("similarscore"), reverse=True)[:100]
 			random.shuffle(self.list)
 			self.list = self.list[:50]
 			next = ''
-			for i in range(len(self.list)): self.list[i]['next'] = next
+			for i in range(len(self.list)):
+				self.list[i]['next'] = next
+			#self.list = [x for x in self.list if x.get('playcount') == 0]
 			self.worker()
 			if self.useContainerTitles and originalMovie:
 				try: 
