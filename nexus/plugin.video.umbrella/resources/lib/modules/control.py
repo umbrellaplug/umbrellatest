@@ -448,6 +448,70 @@ def metadataClean(metadata):
 					'album', 'artist', 'votes', 'path', 'trailer', 'dateadded', 'mediatype', 'dbid')
 	return {k: v for k, v in iter(metadata.items()) if k in allowed}
 
+def set_info(item, meta, setUniqueIDs=None, resumetime=''):
+	if getKodiVersion() >= 20:
+		try:
+			meta_get = meta.get
+			info_tag = item.getVideoInfoTag()
+			info_tag.setMediaType(meta_get('mediatype'))
+			if setUniqueIDs:
+				info_tag.setUniqueIDs(setUniqueIDs)
+			info_tag.setPath(meta_get('path'))
+			info_tag.setFilenameAndPath(meta_get('filenameandpath'))
+			info_tag.setTitle(item.getLabel() or meta_get('title'))
+			info_tag.setSortTitle(meta_get('sorttitle'))
+			info_tag.setOriginalTitle(meta_get('originaltitle'))
+			info_tag.setPlot(meta_get('plot'))
+			info_tag.setPlotOutline(meta_get('plotoutline'))
+			info_tag.setDateAdded(meta_get('dateadded'))
+			info_tag.setPremiered(meta_get('premiered'))
+			info_tag.setYear(convert_type(int, meta_get('year', 0)))
+			info_tag.setRating(convert_type(float, meta_get('rating', 0.0)))
+			info_tag.setMpaa(meta_get('mpaa'))
+			info_tag.setDuration(meta_get('duration', 0))
+			info_tag.setPlaycount(convert_type(int , meta_get('playcount', 0)))
+			info_tag.setVotes(convert_type(int, meta_get('votes', 0)))
+			info_tag.setLastPlayed(meta_get('lastplayed'))
+			info_tag.setAlbum(meta_get('album'))
+			info_tag.setGenres(convert_type(list, meta_get('genre', [])))
+			info_tag.setCountries(convert_type(list, meta_get('country', [])))
+			info_tag.setTags(meta_get('tag', []))
+			info_tag.setTrailer(meta_get('trailer'))
+			info_tag.setTagLine(meta_get('tagline'))
+			info_tag.setStudios(convert_type(list, meta_get('studio', [])))
+			info_tag.setWriters(convert_type(list, meta_get('writer', [])))
+			info_tag.setDirectors(convert_type(list, meta_get('director', [])))
+			info_tag.setIMDBNumber(meta_get('imdb_id'))
+			if resumetime: info_tag.setResumePoint(convert_type(float, resumetime), meta_get('duration', 0))
+			if meta_get('mediatype') in ['tvshow', 'season']:
+				info_tag.setTvShowTitle(meta_get('tvshowtitle'))
+				info_tag.setTvShowStatus(meta_get('status'))
+			if meta_get('mediatype') in ['episodes', 'episode']:
+				info_tag.setTvShowTitle(meta_get('tvshowtitle'))
+				info_tag.setEpisode(convert_type(int, meta_get('episode')))
+				info_tag.setSeason(convert_type(int, meta_get('season')))
+			info_tag.setCast([xbmc_actor(name=item['name'], role=item['role'], thumbnail=item['thumbnail']) for item in meta_get('cast', [])])
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+	else:
+		if setUniqueIDs:
+			item.setUniqueIDs(setUniqueIDs)
+		item.setCast(meta.get('cast', []) + meta.get('guest_stars', []))
+		meta = metadataClean(meta)
+		try: meta.pop('cast')
+		except: pass
+		item.setInfo('video', meta)
+		item.setProperties({'resumetime': resumetime, 'TotalTime': str(meta.get('duration', 1800))})
+	return item
+
+def convert_type(_type, _value):
+	try:
+		return _type(_value)
+	except Exception as Err:
+		from resources.lib.modules import log_utils
+		log_utils.log("conversion error: %s"% Err, 1)
+
 def reload_addon():
     disable_enable_addon()
     update_local_addon()

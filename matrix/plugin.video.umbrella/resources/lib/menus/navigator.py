@@ -621,7 +621,9 @@ class Navigator:
 			item.addContextMenuItems(cm)
 			if isPlayable: item.setProperty('IsPlayable', 'true')
 			item.setArt({'icon': icon, 'poster': poster, 'thumb': poster, 'fanart': control.addonFanart(), 'banner': poster})
-			item.setInfo(type='video', infoLabels={'plot': name})
+			#item.setInfo(type='video', infoLabels={'plot': name}) #k20setinfo
+			meta = dict({'plot': name})#k20setinfo
+			control.set_info(item, meta)#k20setinfo
 			control.addItem(handle=int(argv[1]), url=url, listitem=item, isFolder= isFolder)
 		except:
 			from resources.lib.modules import log_utils
