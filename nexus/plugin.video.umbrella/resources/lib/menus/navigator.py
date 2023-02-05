@@ -457,7 +457,9 @@ class Navigator:
 			url = 'plugin://plugin.video.umbrella/?action=tools_addView&content=%s' % content
 			poster, banner, fanart = control.addonPoster(), control.addonBanner(), control.addonFanart()
 			item = control.item(label=title, offscreen=True)
-			item.setInfo(type='video', infoLabels = {'title': title})
+			#item.setInfo(type='video', infoLabels = {'title': title})
+			meta = {'title': title}
+			control.set_info(item, meta)
 			item.setArt({'icon': poster, 'thumb': poster, 'poster': poster, 'fanart': fanart, 'banner': banner})
 			control.addItem(handle=syshandle, url=url, listitem=item, isFolder=False)
 			control.content(syshandle, content)

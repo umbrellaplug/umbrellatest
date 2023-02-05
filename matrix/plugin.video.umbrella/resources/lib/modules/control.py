@@ -451,6 +451,8 @@ def metadataClean(metadata):
 def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 	if getKodiVersion() >= 20:
 		try:
+			#from resources.lib.modules import log_utils
+			#log_utils.log(str(type(meta)),1)
 			meta_get = meta.get
 			info_tag = item.getVideoInfoTag()
 			info_tag.setMediaType(meta_get('mediatype'))
@@ -470,7 +472,12 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 			info_tag.setMpaa(meta_get('mpaa'))
 			info_tag.setDuration(meta_get('duration', 0))
 			info_tag.setPlaycount(convert_type(int , meta_get('playcount', 0)))
-			info_tag.setVotes(convert_type(int, meta_get('votes', 0)))
+			if isinstance(meta_get('votes'), str): 
+				meta_votes = str(meta_get('votes')).replace(",","")
+			else:
+				meta_votes = meta_get('votes')
+			if meta_votes:
+				info_tag.setVotes(convert_type(int, meta_votes))
 			info_tag.setLastPlayed(meta_get('lastplayed'))
 			info_tag.setAlbum(meta_get('album'))
 			info_tag.setGenres(convert_type(list, meta_get('genre', [])))
@@ -490,19 +497,21 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 				info_tag.setTvShowTitle(meta_get('tvshowtitle'))
 				info_tag.setEpisode(convert_type(int, meta_get('episode')))
 				info_tag.setSeason(convert_type(int, meta_get('season')))
-			info_tag.setCast([xbmc_actor(name=item['name'], role=item['role'], thumbnail=item['thumbnail']) for item in meta_get('cast', [])])
+			info_tag.setCast([xbmc.Actor(name=item['name'], role=item['role'], thumbnail=item['thumbnail']) for item in meta_get('castandart', [])])
+			#info_tag.setCast([xbmc_actor(name=item['name'], role=item['role'], thumbnail=item['thumbnail']) for item in meta_get('castandart', [])])
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 	else:
 		if setUniqueIDs:
 			item.setUniqueIDs(setUniqueIDs)
-		item.setCast(meta.get('cast', []) + meta.get('guest_stars', []))
+		item.setCast(meta.get('castandart', []) + meta.get('guest_stars', []))
 		meta = metadataClean(meta)
 		try: meta.pop('cast')
 		except: pass
 		item.setInfo('video', meta)
-		item.setProperties({'resumetime': resumetime, 'TotalTime': str(meta.get('duration', 1800))})
+		if resumetime:
+			item.setProperties({'ResumeTime': resumetime, 'TotalTime': str(meta.get('duration', 2700))})
 	return item
 
 def convert_type(_type, _value):

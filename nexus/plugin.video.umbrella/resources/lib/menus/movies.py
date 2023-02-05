@@ -1319,8 +1319,8 @@ class Movies:
 		return list
 
 	def reccomendedFromLibrary(self):
-		from resources.lib.modules import log_utils
-		log_utils.log('Rec List From Library', 1)
+		#from resources.lib.modules import log_utils
+		#log_utils.log('Rec List From Library', 1)
 		try:
 			self.list = []
 			#get recommended movies - library movies with score higher than 7
@@ -1344,8 +1344,8 @@ class Movies:
 
 
 	def similarFromLibrary(self, tmdb=None, create_directory=True):
-		from resources.lib.modules import log_utils
-		log_utils.log('Similiar List From Library', 1)
+		#from resources.lib.modules import log_utils
+		#log_utils.log('Similiar List From Library', 1)
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/history/movies?limit=50&page=1'
 			if tmdb == None:
@@ -1366,7 +1366,7 @@ class Movies:
 			self.list = []
 			all_titles = list()
 			if originalMovie:
-				log_utils.log('[plugin.video.umbrella] Original Movie properties %s.'% str(originalMovie),1)
+				#log_utils.log('[plugin.video.umbrella] Original Movie properties %s.'% str(originalMovie),1)
 				# get all movies for the genres in the movie
 				neOriginal = originalMovie['genre'].split('/')
 				genres = [x.strip() for x in neOriginal]
@@ -1662,18 +1662,21 @@ class Movies:
 				if trailer: meta.update({'trailer': trailer}) # removed temp so it's not passed to CM items, only infoLabels for skin
 				else: meta.update({'trailer': '%s?action=play_Trailer&type=%s&name=%s&year=%s&imdb=%s' % (sysaddon, 'movie', sysname, year, imdb)})
 				item = control.item(label=labelProgress, offscreen=True)
-				if 'castandart' in i: item.setCast(i['castandart'])
+				#if 'castandart' in i: item.setCast(i['castandart'])#changed for kodi20 setinfo method
+				if 'castandart' in i: meta.update({'castandart':i['castandart']})
 				item.setArt(art)
-				item.setUniqueIDs({'imdb': imdb, 'tmdb': tmdb})
+				#item.setUniqueIDs({'imdb': imdb, 'tmdb': tmdb})#changed for kodi20 setinfo method
+				setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb}
 				item.setProperty('IsPlayable', 'true')
 				if is_widget: item.setProperty('isUmbrella_widget', 'true')
 				if self.unairedcolor not in labelProgress:
 					resumetime = Bookmarks().get(name=label, imdb=imdb, tmdb=tmdb, year=str(year), runtime=runtime, ck=True)
 					# item.setProperty('TotalTime', str(meta['duration'])) # Adding this property causes the Kodi bookmark CM items to be added
-					item.setProperty('ResumeTime', str(resumetime))
+					#item.setProperty('ResumeTime', str(resumetime))
 					try: item.setProperty('WatchedProgress', str(int(float(resumetime) / float(runtime) * 100)))
 					except: pass
-				item.setInfo(type='video', infoLabels=control.metadataClean(meta))
+				#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
+				control.set_info(item, meta, setUniqueIDs=setUniqueIDs, resumetime=resumetime)
 				item.addContextMenuItems(cm)
 				control.addItem(handle=syshandle, url=url, listitem=item, isFolder=False)
 			except:
@@ -1750,7 +1753,9 @@ class Movies:
 				cm.append(('[COLOR red]Umbrella Settings[/COLOR]', 'RunPlugin(%s?action=tools_openSettings)' % sysaddon))
 				item = control.item(label=name, offscreen=True)
 				item.setArt({'icon': icon, 'poster': poster, 'thumb': icon, 'fanart': control.addonFanart(), 'banner': poster})
-				item.setInfo(type='video', infoLabels={'plot': name})
+				#item.setInfo(type='video', infoLabels={'plot': name})#changed for kodi20 setinfo method
+				meta = dict({'plot': name})
+				control.set_info(item, meta)
 				item.addContextMenuItems(cm)
 				control.addItem(handle=syshandle, url=url, listitem=item, isFolder=True)
 			except:
