@@ -460,7 +460,11 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 				info_tag.setUniqueIDs(setUniqueIDs)
 			info_tag.setPath(meta_get('path'))
 			info_tag.setFilenameAndPath(meta_get('filenameandpath'))
-			info_tag.setTitle(item.getLabel() or meta_get('title'))
+			if meta_get('title') == '':
+				info_title = item.getLabel()
+			else:
+				info_title = meta_get('title')
+			info_tag.setTitle(info_title)
 			info_tag.setSortTitle(meta_get('sorttitle'))
 			info_tag.setOriginalTitle(meta_get('originaltitle'))
 			info_tag.setPlot(meta_get('plot'))
@@ -480,14 +484,14 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 				info_tag.setVotes(convert_type(int, meta_votes))
 			info_tag.setLastPlayed(meta_get('lastplayed'))
 			info_tag.setAlbum(meta_get('album'))
-			info_tag.setGenres(convert_type(list, meta_get('genre', [])))
-			info_tag.setCountries(convert_type(list, meta_get('country', [])))
+			info_tag.setGenres(to_list(meta_get('genre', [])))
+			info_tag.setCountries(to_list(meta_get('country', [])))
 			info_tag.setTags(meta_get('tag', []))
 			info_tag.setTrailer(meta_get('trailer'))
 			info_tag.setTagLine(meta_get('tagline'))
-			info_tag.setStudios(convert_type(list, meta_get('studio', [])))
-			info_tag.setWriters(convert_type(list, meta_get('writer', [])))
-			info_tag.setDirectors(convert_type(list, meta_get('director', [])))
+			info_tag.setStudios(to_list(meta_get('studio', [])))
+			info_tag.setWriters(to_list(meta_get('writer', [])))
+			info_tag.setDirectors(to_list(meta_get('director', [])))
 			info_tag.setIMDBNumber(meta_get('imdb_id'))
 			if resumetime: info_tag.setResumePoint(convert_type(float, resumetime), meta_get('duration', 0))
 			if meta_get('mediatype') in ['tvshow', 'season']:
@@ -520,6 +524,11 @@ def convert_type(_type, _value):
 	except Exception as Err:
 		from resources.lib.modules import log_utils
 		log_utils.log("conversion error: %s"% Err, 1)
+
+def to_list(item_str):
+	if not isinstance(item_str, list): 
+		item_str = [item_str]
+	return item_str
 
 def reload_addon():
     disable_enable_addon()

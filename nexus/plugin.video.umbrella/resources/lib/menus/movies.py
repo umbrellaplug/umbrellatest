@@ -1393,7 +1393,6 @@ class Movies:
 				set_genres = set(genres)
 				set_directors = set([originalMovie["director"]])
 				set_writers = set([originalMovie["writer"]])
-				#import web_pdb; web_pdb.set_trace()
 				castList = [x["name"] for x in originalMovie["castandart"]]
 				set_cast = set(castList)
 				for item in sameGenreMovies:
@@ -1418,7 +1417,6 @@ class Movies:
 							#log_utils.log('[ plugin.video.umbrella ] EXCEPTION: item similar scores item:%s studio score: %s original studio: %s compare studio: %s'% (item["title"], studio_score,originalMovie["studio"], item.get("studio")))
 						
 						#cast score
-						#import web_pdb; web_pdb.set_trace()
 						try:
 							cast_score = 0 if not set_cast else (float(len(set_cast.intersection(set(itemcastList)))) / len(set_cast.union(set(itemcastList)))) *1
 						except:
