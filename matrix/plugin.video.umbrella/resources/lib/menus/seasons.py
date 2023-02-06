@@ -35,6 +35,7 @@ class Seasons:
 		self.unairedcolor = control.getColor(getSetting('unaired.identify'))
 		self.showspecials = getSetting('tv.specials') == 'true'
 		self.tmdblist_hours = int(getSetting('cache.tmdblist'))
+		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 
 	def get(self, tvshowtitle, year, imdb, tmdb, tvdb, art, idx=True, create_directory=True): # may need to add a cache duration over-ride param to pass
 		self.list = []
@@ -200,7 +201,8 @@ class Seasons:
 				cm.append(('[COLOR red]Umbrella Settings[/COLOR]', 'RunPlugin(%s?action=tools_openSettings)' % sysaddon))
 ####################################
 				item = control.item(label=label, offscreen=True)
-				if 'castandart' in i: item.setCast(i['castandart'])
+				#if 'castandart' in i: item.setCast(i['castandart'])
+				if 'castandart' in i: meta.update({"cast": ['castandart']}) #changed for kodi20 setinfo method
 				item.setArt(art)
 				try:
 					count = getSeasonCount(imdb, tvdb, season)
@@ -221,13 +223,18 @@ class Seasons:
 								item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': '0'})
 				except: pass
 
-				if is_widget: item.setProperty('isUmbrella_widget', 'true')
+				if is_widget: 
+					item.setProperty('isUmbrella_widget', 'true')
+					if self.hide_watched_in_widget:
+						if str(meta.get('playcount', 0)) == '1':
+							continue
 				try: # Year is the shows year, not the seasons year. Extract year from premier date for InfoLabels to have "season_year".
 					season_year = re.findall(r'(\d{4})', i.get('premiered', ''))[0]
 					meta.update({'year': season_year})
 				except: pass
-				item.setUniqueIDs({'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb})
-				item.setInfo(type='video', infoLabels=control.metadataClean(meta))
+				setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb}
+				control.set_info(item, meta, setUniqueIDs=setUniqueIDs)
+				#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
 				item.addContextMenuItems(cm)
 				control.addItem(handle=syshandle, url=url, listitem=item, isFolder=True)
 			except:

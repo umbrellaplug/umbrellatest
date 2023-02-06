@@ -243,7 +243,7 @@ class Sources:
 				return meta
 			except:
 				log_utils.error()
-				meta = ''
+				meta = {}
 			try:
 				if self.mediatype != 'episode': raise Exception()
 				# do not add IMDBNUMBER as tmdb scraper puts their id in the key value
@@ -274,7 +274,7 @@ class Sources:
 				return meta
 			except:
 				log_utils.error()
-				meta = ''
+				meta = {}
 		if self.meta is None or 'videodb' in control.infoLabel('ListItem.FolderPath'):
 			self.meta = checkLibMeta()
 		try:
