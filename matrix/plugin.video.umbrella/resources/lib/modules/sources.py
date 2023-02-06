@@ -1597,7 +1597,10 @@ class Sources:
 		return window
 
 	def getIconProgress(self):
+		blindmode = 'icon_scrape.xml'
+		if getSetting('progress.dialog') == '4':
+			blindmode = 'blind_scrape.xml'
 		from resources.lib.windows.icon_scrape import IconScrape
-		window = IconScrape('icon_scrape.xml', control.addonPath(control.addonId()))
+		window = IconScrape(blindmode, control.addonPath(control.addonId()))
 		Thread(target=window.run).start()
 		return window

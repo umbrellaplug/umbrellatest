@@ -4442,3 +4442,7 @@ msgstr ""
 msgctxt "#40395"
 msgid "Hide Watched in Widgets"
 msgstr ""
+
+msgctxt "#40396"
+msgid "Hidden"
+msgstr ""

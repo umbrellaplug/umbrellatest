@@ -1,8 +1,10 @@
-[B][COLOR black]Update - v6.6.13 - Feb 5th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.13 - Feb 6th, 2023[/COLOR][/B]
 --[FIX][I] Multiple bug fixes under the hood related to Nexus and Kodi 20.[/I]
 --[FIX][I] Corrected add to cloud errors.[/I]
 --[ENHANCEMENT][I] Added similar to and recommended from Library.[/I]
 --[ENHANCEMENT][I] Adjusted recommended lists from TMDB to remove some (adult) results.[/I]
+--[ENHANCEMENT][I] Hidden scrape added. Not recommended.[/I]
+--[ENHANCEMENT][I] Added "Hide Watched in Widgets". Settings > General[/I]
 --[NEXUS][I] Adjusted infotag assignment for Nexus.[/I]
 
 [B][COLOR black]Update - v6.6.11 - Jan 23rd, 2023[/COLOR][/B]
