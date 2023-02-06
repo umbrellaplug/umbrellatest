@@ -56,6 +56,7 @@ class Episodes:
 		self.trakt_unfinished_hours = int(getSetting('cache.traktunfinished'))
 		self.trakt_progress_hours = int(getSetting('cache.traktprogress'))
 		self.simkl_hours = int(getSetting('cache.simkl'))
+		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 
 	def get(self, tvshowtitle, year, imdb, tmdb, tvdb, meta, season=None, episode=None, create_directory=True):
 		self.list = []
@@ -956,7 +957,11 @@ class Episodes:
 							log_utils.error()
 				item.setProperty('IsPlayable', 'true')
 				item.setProperty('tvshow.tmdb_id', tmdb)
-				if is_widget: item.setProperty('isUmbrella_widget', 'true')
+				if is_widget: 
+					item.setProperty('isUmbrella_widget', 'true')
+					if self.hide_watched_in_widget:
+						if str(meta.get('playcount', 0)) == '1':
+							continue
 				blabel = tvshowtitle + ' S%02dE%02d' % (int(season), int(episode))
 				if not i.get('unaired') == 'true':
 					if not runtime: runtime = 2700
@@ -982,7 +987,7 @@ class Episodes:
 						meta.update({'title': new_title})
 					except: pass
 				#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
-				control.set_info(item, meta, setUniqueIDs=setUniqueIDs, resumetime=float(resumetime))
+				control.set_info(item, meta, setUniqueIDs=setUniqueIDs, resumetime=resumetime)
 				item.addContextMenuItems(cm)
 				control.addItem(handle=syshandle, url=url, listitem=item, isFolder=isFolder)
 			except:

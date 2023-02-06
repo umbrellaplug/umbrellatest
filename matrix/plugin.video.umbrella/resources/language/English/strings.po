@@ -4438,3 +4438,7 @@ msgstr ""
 msgctxt "#40394"
 msgid "Show Watched in Lists (Library)"
 msgstr ""
+
+msgctxt "#40395"
+msgid "Hide Watched in Widgets"
+msgstr ""

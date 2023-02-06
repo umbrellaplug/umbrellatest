@@ -142,6 +142,7 @@ class Movies:
 		self.simkl_hours = int(getSetting('cache.simkl'))
 		self.mdblist_hours = int(getSetting('cache.mdblist'))
 		self.showwatchedlib = getSetting('showwatchedlib')
+		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 
 	def get(self, url, idx=True, create_directory=True):
 		self.list = []
@@ -1666,7 +1667,11 @@ class Movies:
 				#item.setUniqueIDs({'imdb': imdb, 'tmdb': tmdb})#changed for kodi20 setinfo method
 				setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb}
 				item.setProperty('IsPlayable', 'true')
-				if is_widget: item.setProperty('isUmbrella_widget', 'true')
+				if is_widget: 
+					item.setProperty('isUmbrella_widget', 'true')
+					if self.hide_watched_in_widget:
+						if str(meta.get('playcount', 0)) == '1':
+							continue
 				if self.unairedcolor not in labelProgress:
 					resumetime = Bookmarks().get(name=label, imdb=imdb, tmdb=tmdb, year=str(year), runtime=runtime, ck=True)
 					# item.setProperty('TotalTime', str(meta['duration'])) # Adding this property causes the Kodi bookmark CM items to be added

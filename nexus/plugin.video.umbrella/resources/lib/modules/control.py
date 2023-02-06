@@ -449,6 +449,7 @@ def metadataClean(metadata):
 	return {k: v for k, v in iter(metadata.items()) if k in allowed}
 
 def set_info(item, meta, setUniqueIDs=None, resumetime=''):
+	if resumetime: resumetime = float(resumetime)
 	if getKodiVersion() >= 20:
 		try:
 			#from resources.lib.modules import log_utils
@@ -493,7 +494,7 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 			info_tag.setWriters(to_list(meta_get('writer', [])))
 			info_tag.setDirectors(to_list(meta_get('director', [])))
 			info_tag.setIMDBNumber(meta_get('imdb_id'))
-			if resumetime: info_tag.setResumePoint(convert_type(float, resumetime), meta_get('duration', 0))
+			if resumetime: info_tag.setResumePoint(resumetime)
 			if meta_get('mediatype') in ['tvshow', 'season']:
 				info_tag.setTvShowTitle(meta_get('tvshowtitle'))
 				info_tag.setTvShowStatus(meta_get('status'))
