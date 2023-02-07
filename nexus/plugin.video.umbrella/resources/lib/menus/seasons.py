@@ -207,19 +207,34 @@ class Seasons:
 				try:
 					count = getSeasonCount(imdb, tvdb, season)
 					if count:
-						item.setProperties({'WatchedEpisodes': str(count['watched']), 'UnWatchedEpisodes': str(count['unwatched'])})
+						if control.getKodiVersion() >= 20:
+							if int(count['watched']) > 0:
+								item.setProperties({'WatchedEpisodes': str(count['watched']), 'UnWatchedEpisodes': str(count['unwatched'])})
+							else:
+								item.setProperties({'UnWatchedEpisodes': str(count['unwatched'])})
+						else:
+							item.setProperties({'WatchedEpisodes': str(count['watched']), 'UnWatchedEpisodes': str(count['unwatched'])})
 						item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': str(count['total'])})
 						item.setProperty('WatchedProgress', str(int(float(count['watched']) / float(count['total']) * 100)))
 					else:
 						if meta.get('status') != 'Returning Series' or (meta.get('status') == 'Returning Series' and meta.get('last_episode_to_air', {}).get('season_number') > int(season)):
-							item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': str(meta.get('counts', {}).get(str(season), ''))})
+							if control.getKodiVersion() >= 20:
+								item.setProperties({'UnWatchedEpisodes': str(meta.get('counts', {}).get(str(season), ''))})
+							else:
+								item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': str(meta.get('counts', {}).get(str(season), ''))})
 							item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': str(meta.get('total_episodes', ''))})
 						else:
 							if meta.get('last_episode_to_air', {}).get('season_number') == int(season):
-								item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': str(meta.get('last_episode_to_air', {}).get('episode_number'))})
+								if control.getKodiVersion() >= 20:
+									item.setProperties({'UnWatchedEpisodes': str(meta.get('last_episode_to_air', {}).get('episode_number'))})
+								else:
+									item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': str(meta.get('last_episode_to_air', {}).get('episode_number'))})
 								item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': str(meta.get('last_episode_to_air', {}).get('episode_number'))})
 							else:
-								item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': '0'})
+								if control.getKodiVersion() >= 20:
+									item.setProperties({'UnWatchedEpisodes': '0'})
+								else:
+									item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': '0'})
 								item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': '0'})
 				except: pass
 
