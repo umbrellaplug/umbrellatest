@@ -1258,9 +1258,8 @@ class TVshows:
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 		
 		if getSetting('trakt.directProgress.scrape') == 'true' and getSetting('enable.playnext') == 'true':
-			control.log('addtvdirectory playlist do not clear',1)
+			pass
 		else:
-			control.log('addtvdirectory playlist clear',1)
 			control.playlist.clear()
 		if not items: # with reuselanguageinvoker on an empty directory must be loaded, do not use sys.exit()
 			control.hide() ; control.notification(title=32002, message=33049)
