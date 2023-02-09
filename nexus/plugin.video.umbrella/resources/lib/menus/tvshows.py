@@ -1365,7 +1365,10 @@ class TVshows:
 				setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb} #k20setinfo
 				#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
 				control.set_info(item, meta, setUniqueIDs)
-				item.addContextMenuItems(cm)
+				if is_widget and control.getKodiVersion() > 19.5:
+					pass
+				else:
+					item.addContextMenuItems(cm)
 				control.addItem(handle=syshandle, url=url, listitem=item, isFolder=True)
 			except:
 				from resources.lib.modules import log_utils
@@ -1448,7 +1451,11 @@ class TVshows:
 				#item.setInfo(type='video', infoLabels={'plot': name}) #k20setinfo
 				meta = dict({'plot': name})
 				control.set_info(item, meta)
-				item.addContextMenuItems(cm)
+				is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
+				if is_widget and control.getKodiVersion() > 19.5:
+					pass
+				else:
+					item.addContextMenuItems(cm)
 				control.addItem(handle=syshandle, url=url, listitem=item, isFolder=True)
 			except:
 				from resources.lib.modules import log_utils

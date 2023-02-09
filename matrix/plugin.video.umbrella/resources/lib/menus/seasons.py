@@ -250,7 +250,10 @@ class Seasons:
 				setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb}
 				control.set_info(item, meta, setUniqueIDs=setUniqueIDs)
 				#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
-				item.addContextMenuItems(cm)
+				if is_widget and control.getKodiVersion() > 19.5:
+					pass
+				else:
+					item.addContextMenuItems(cm)
 				control.addItem(handle=syshandle, url=url, listitem=item, isFolder=True)
 			except:
 				from resources.lib.modules import log_utils

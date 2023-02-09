@@ -720,7 +720,10 @@ class Collections:
 				except:
 					resumetime = ''
 				control.set_info(item, meta, setUniqueIDs=setUniqueIDs, resumetime=resumetime)
-				item.addContextMenuItems(cm)
+				if is_widget and control.getKodiVersion() > 19.5:
+					pass
+				else:
+					item.addContextMenuItems(cm)
 				control.addItem(handle=syshandle, url=url, listitem=item, isFolder=False)
 			except:
 				from resources.lib.modules import log_utils
@@ -770,7 +773,11 @@ class Collections:
 			#item.setInfo(type='video', infoLabels={'plot': name})
 			meta = {'plot': name}
 			control.set_info(item, meta)
-			item.addContextMenuItems(cm)
+			is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
+			if is_widget and control.getKodiVersion() > 19.5:
+				pass
+			else:
+				item.addContextMenuItems(cm)
 			control.addItem(handle=int(argv[1]), url=url, listitem=item, isFolder=True)
 		except:
 			from resources.lib.modules import log_utils
