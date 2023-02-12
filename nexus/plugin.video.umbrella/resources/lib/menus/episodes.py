@@ -57,6 +57,7 @@ class Episodes:
 		self.trakt_progress_hours = int(getSetting('cache.traktprogress'))
 		self.simkl_hours = int(getSetting('cache.simkl'))
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
+		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
 
 	def get(self, tvshowtitle, year, imdb, tmdb, tvdb, meta, season=None, episode=None, create_directory=True):
 		self.list = []
@@ -1003,7 +1004,7 @@ class Episodes:
 				except:
 					resumetime = ''
 				control.set_info(item, meta, setUniqueIDs=setUniqueIDs, resumetime=resumetime)
-				if is_widget and control.getKodiVersion() > 19.5:
+				if is_widget and control.getKodiVersion() > 19.5 and self.useFullContext != True:
 					pass
 				else:
 					item.addContextMenuItems(cm)
@@ -1069,7 +1070,7 @@ class Episodes:
 				meta = dict({'plot': name})
 				control.set_info(item, meta)
 				is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
-				if is_widget and control.getKodiVersion() > 19.5:
+				if is_widget and control.getKodiVersion() > 19.5 and self.useFullContext != True:
 					pass
 				else:
 					item.addContextMenuItems(cm)

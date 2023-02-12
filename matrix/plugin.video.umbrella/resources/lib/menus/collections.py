@@ -36,7 +36,7 @@ class Collections:
 		self.traktCredentials = trakt.getTraktCredentialsInfo()
 		self.imdb_user = getSetting('imdbuser').replace('ur', '')
 		self.tmdb_key = getSetting('tmdb.apikey')
-		if self.tmdb_key == '' or self.tmdb_key is None: self.tmdb_key = 'bc96b19479c7db6c8ae805744d0bdfe2'
+		if self.tmdb_key == '' or self.tmdb_key is None: self.tmdb_key = 'edde6b5e41246ab79a2697cd125e1781'
 		# self.user = str(self.imdb_user) + str(self.tmdb_key)
 		self.user = str(self.tmdb_key)
 		self.tmdb_link = 'https://api.themoviedb.org/4/list/%s?api_key=%s&sort_by=%s&page=1' % ('%s', self.tmdb_key, self.tmdb_sort())
@@ -45,6 +45,7 @@ class Collections:
 		self.tmdbCollectionsSearch_link = 'https://api.themoviedb.org/3/search/collection?api_key=%s&language=en-US&query=%s&page=1' % (self.tmdb_key, '%s')
 		self.imdblist_hours = int(getSetting('cache.imdblist'))
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
+		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
 
 	def collections_Navigator(self, lite=False):
 		self.addDirectoryItem('Movies', 'collections_Boxset', 'boxsets.png', 'DefaultVideoPlaylists.png')
@@ -720,7 +721,7 @@ class Collections:
 				except:
 					resumetime = ''
 				control.set_info(item, meta, setUniqueIDs=setUniqueIDs, resumetime=resumetime)
-				if is_widget and control.getKodiVersion() > 19.5:
+				if is_widget and control.getKodiVersion() > 19.5 and self.useFullContext != True:
 					pass
 				else:
 					item.addContextMenuItems(cm)
@@ -774,7 +775,7 @@ class Collections:
 			meta = {'plot': name}
 			control.set_info(item, meta)
 			is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
-			if is_widget and control.getKodiVersion() > 19.5:
+			if is_widget and control.getKodiVersion() > 19.5 and self.useFullContext != True:
 				pass
 			else:
 				item.addContextMenuItems(cm)

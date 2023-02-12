@@ -1,5 +1,7 @@
-[B][COLOR black]Update - v6.6.142 - Feb 9th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.143 - Feb 9th, 2023[/COLOR][/B]
 --[FIX][I] Context items removed on seasons, episodes, tvshows, and movies on Kodi 20.[/I]
+--[FIX][I] Added option for full context menu from widgets in Kodi 20.[/I]
+--[FIX][I] Moved context addon into plugin.[/I]
 
 [B][COLOR black]Update - v6.6.14 - Feb 8th, 2023[/COLOR][/B]
 --[FIX][I] Change to copy methods.[/I]
