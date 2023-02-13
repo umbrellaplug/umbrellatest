@@ -1,4 +1,4 @@
-[B][COLOR black]Update - v6.6.144 - Feb 13th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.145 - Feb 13th, 2023[/COLOR][/B]
 --[FIX][I] Context items removed on seasons, episodes, tvshows, and movies on Kodi 20.[/I]
 --[FIX][I] Added option for full context menu from widgets in Kodi 20.[/I]
 --[FIX][I] Made rescrape context item work for library items.[/I]
