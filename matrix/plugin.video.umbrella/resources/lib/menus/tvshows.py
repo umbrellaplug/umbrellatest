@@ -6,6 +6,7 @@
 from datetime import datetime, timedelta
 from json import dumps as jsdumps
 import re
+import xbmc
 from threading import Thread
 from urllib.parse import quote_plus, urlencode, parse_qsl, urlparse, urlsplit
 from resources.lib.database import cache, metacache, fanarttv_cache, traktsync
@@ -1360,7 +1361,7 @@ class TVshows:
 				item.setProperty('tmdb_id', str(tmdb))
 				if is_widget: 
 					item.setProperty('isUmbrella_widget', 'true')
-					if self.hide_watched_in_widget:
+					if self.hide_watched_in_widget and str(xbmc.getInfoLabel("Window.Property(xmlfile)")) != 'Custom_1114_Search.xml':
 						if str(meta.get('playcount')) == '1':
 							continue
 				setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb} #k20setinfo

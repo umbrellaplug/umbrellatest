@@ -6,6 +6,7 @@
 from datetime import datetime, timedelta
 from json import dumps as jsdumps
 import re
+import xbmc
 from threading import Thread
 from urllib.parse import quote_plus, urlencode, parse_qsl, urlparse, urlsplit
 from resources.lib.database import cache, metacache, fanarttv_cache, traktsync
@@ -1670,7 +1671,7 @@ class Movies:
 				item.setProperty('IsPlayable', 'true')
 				if is_widget: 
 					item.setProperty('isUmbrella_widget', 'true')
-					if self.hide_watched_in_widget:
+					if self.hide_watched_in_widget and str(xbmc.getInfoLabel("Window.Property(xmlfile)")) != 'Custom_1114_Search.xml':
 						if str(meta.get('playcount', 0)) == '1':
 							continue
 				if self.unairedcolor not in labelProgress:
@@ -1685,6 +1686,7 @@ class Movies:
 				except:
 					resumetime = ''
 				control.set_info(item, meta, setUniqueIDs=setUniqueIDs, resumetime=resumetime)
+
 				if is_widget and control.getKodiVersion() > 19.5 and self.useFullContext != True:
 					pass
 				else:
