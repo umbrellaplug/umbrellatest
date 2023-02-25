@@ -233,6 +233,7 @@ class Player(xbmc.Player):
 			return (poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta)
 
 	def getWatchedPercent(self):
+		control.log('Playback Getting Watched Percent.', 1)
 		if self.isPlayback():
 			try:
 				position = self.getTime()
