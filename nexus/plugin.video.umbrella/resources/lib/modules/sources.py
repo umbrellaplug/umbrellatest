@@ -1036,6 +1036,12 @@ class Sources:
 		filter += [i for i in self.sources if i not in filter]
 		self.sources = filter
 
+		if getSetting('source.prioritize.direct') == 'true': # filter to place plex sources first
+			filter = [] # filter to place cloud files first
+			filter += [i for i in self.sources if i['source'] == 'direct']
+			filter += [i for i in self.sources if i not in filter]
+			self.sources = filter
+
 		self.sources = self.sources[:4000]
 		control.hide()
 		return self.sources

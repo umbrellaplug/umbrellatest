@@ -1892,6 +1892,11 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="source.prioritize.direct" type="boolean" label="40400" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="2" label="40144">
 				<setting id="hosts.quality" type="integer" label="32339" help="">

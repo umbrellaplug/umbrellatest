@@ -4542,3 +4542,7 @@ msgstr ""
 msgctxt "#40399"
 msgid "Cache movies for similar list"
 msgstr ""
+
+msgctxt "#40400"
+msgid "Prioritize Direct to top"
+msgstr ""

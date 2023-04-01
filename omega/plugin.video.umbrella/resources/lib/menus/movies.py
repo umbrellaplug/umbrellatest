@@ -1407,7 +1407,9 @@ class Movies:
 							dbcur = dbcon.cursor()
 							dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
 							dbcur.connection.commit()
-						except: log_utils.error()
+						except: 
+							from resources.lib.modules import log_utils
+							log_utils.error()
 						try:
 							sameGenreMoviesSelect = dbcur.execute('''SELECT * FROM movies WHERE %s;'''% localCache).fetchall()
 							if not sameGenreMoviesSelect: 
@@ -1465,7 +1467,9 @@ class Movies:
 							dbcur = dbcon.cursor()
 							dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
 							dbcur.connection.commit()
-						except: log_utils.error()
+						except: 
+							from resources.lib.modules import log_utils
+							log_utils.error()
 						try:
 							localGenre = 'genre like "%' + genres[0] + '%"'
 							sameGenreMoviesSelect = dbcur.execute('''SELECT * FROM movies WHERE %s;'''% localGenre).fetchall()
@@ -1576,6 +1580,7 @@ class Movies:
 						similar_list.append(z)
 				self.list = similar_list
 			else:
+				from resources.lib.modules import log_utils
 				log_utils.log('[plugin.video.umbrella] Only one similar score found.',1)
 
 			random.shuffle(self.list)
