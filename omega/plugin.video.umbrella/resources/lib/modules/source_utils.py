@@ -21,7 +21,8 @@ CODEC_H264 = ('avc', 'h264', 'h.264', 'x264', 'x.264')
 CODEC_H265 = ('h265', 'h.265', 'hevc', 'x265', 'x.265')
 CODEC_XVID = ('xvid', '.x.vid')
 CODEC_DIVX = ('divx', 'div2', 'div3', 'div4')
-CODEC_MPEG = ('.mpg', '.mp2', '.mpeg', '.mpe', '.mpv', '.mp4', '.m4p', '.m4v', 'msmpeg', 'mpegurl')
+CODEC_MPEG = ('.mpg', '.mp2', '.mpeg', '.mpe', '.mpv', '.m4p', '.m4v', 'msmpeg', 'mpegurl')
+CODEC_MP4 = ('.mp4','.mp4.')
 CODEC_MKV = ('.mkv', 'matroska')
 REMUX = ('remux', 'bdremux')
 
@@ -137,7 +138,7 @@ def getFileType(name_info=None, url=None):
 
 		if '.wmv' in fmt: file_type += ' WMV /'
 		elif any(value in fmt for value in CODEC_MPEG): file_type += ' MPEG /'
-		elif '.mp4' in fmt: file_type += ' MP4 /'
+		elif any(value in fmt for value in CODEC_MP4): file_type += ' MP4 /'
 		elif '.avi' in fmt: file_type += ' AVI /'
 		elif any(value in fmt for value in CODEC_MKV): file_type += ' MKV /'
 

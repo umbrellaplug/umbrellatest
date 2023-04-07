@@ -171,7 +171,7 @@ msgid "History"
 msgstr ""
 
 msgctxt "#32037"
-msgid "Progress"
+msgid "Progress Episodes"
 msgstr ""
 
 msgctxt "#32038"
@@ -4545,4 +4545,8 @@ msgstr ""
 
 msgctxt "#40400"
 msgid "Prioritize Direct to top"
+msgstr ""
+
+msgctxt "#40401"
+msgid "Progress Shows"
 msgstr ""

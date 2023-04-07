@@ -282,6 +282,9 @@ def router(argv2):
 	elif action == 'mdbUserListTV':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().getMDBUserList()
+	elif action == 'shows_progress':
+		from resources.lib.menus import tvshows
+		tvshows.TVshows().tvshow_progress(url)
 
 	####################################################
 	#---SEASONS
