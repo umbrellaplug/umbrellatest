@@ -1,7 +1,8 @@
-[B][COLOR black]Update - v6.6.192 - Apr 7th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.194 - Apr 7th, 2023[/COLOR][/B]
 --[FIX][I] Added option for prioritize direct to top of results.[/I]
 --[FIX][I] Fixed MP4 filtering.[/I]
---[FIX][I] Added Progress byTV Shows and removed all caching for progress from trakt.[/I]
+--[FIX][I] Added Progress by TV Shows and removed all caching for progress from trakt.[/I]
+--[FIX][I] Adjusted icon to match format name for case sensitive systems.[/I]
 
 [B][COLOR black]Update - v6.6.19 - Mar 31st, 2023[/COLOR][/B]
 --[FIX][I] Fixed issue with playlist creation for playnext from widgets.[/I]

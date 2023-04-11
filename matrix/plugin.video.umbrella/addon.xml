@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.193">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.194">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.cocoscrapers" version="1.0.10"/>
@@ -147,11 +147,11 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.193 - Apr 7th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.194 - Apr 7th, 2023[/COLOR][/B]
 --[FIX][I] Added option for prioritize direct to top of results.[/I]
 --[FIX][I] Fixed MP4 filtering.[/I]
 --[FIX][I] Added Progress by TV Shows and removed all caching for progress from trakt.[/I]
---[Logging][I] Added some logging for apple tv.[/I]
+--[FIX][I] Adjusted icon to match format name for case sensitive systems.[/I]
 		</news>
 	</extension>
 
