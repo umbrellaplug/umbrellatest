@@ -161,6 +161,8 @@ class SourceResultsXML(BaseDialog):
 			log_utils.error()
 
 	def get_quality_iconPath(self, quality):
+		from resources.lib.modules import log_utils
+		log_utils.log(' [ plugin.video.umbrella ] quality passed: %s' % str(quality),1)
 		try:
 			return joinPath(transPath('special://home/addons/plugin.video.umbrella/resources/skins/Default/media/resolution'), '%s.png' % quality)
 		except:

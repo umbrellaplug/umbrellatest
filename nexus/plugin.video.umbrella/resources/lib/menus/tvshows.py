@@ -1180,15 +1180,7 @@ class TVshows:
 			try: url = getattr(self, url + '_link')
 			except: pass
 			cache.get(self.trakt_progress_list, 0, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
-			self.sort(type='progress')
-			if self.list is None: self.list = []
-			# place new season ep1's at top of list for 1 week
-			prior_week = int(re.sub(r'[^0-9]', '', (self.date_time - timedelta(days=7)).strftime('%Y-%m-%d')))
-			sorted_list = []
-			top_items = [i for i in self.list if i['episode'] == 1 and i['premiered'] and (int(re.sub(r'[^0-9]', '', str(i['premiered']))) >= prior_week)]
-			sorted_list.extend(top_items)
-			sorted_list.extend([i for i in self.list if i not in top_items])
-			self.list = sorted_list
+			#self.sort(type='progress')
 			if self.list is None: self.list = []
 			hasNext = False
 			self.tvshowDirectory(self.list, next=hasNext)
