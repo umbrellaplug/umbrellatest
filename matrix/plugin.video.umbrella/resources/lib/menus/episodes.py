@@ -205,9 +205,10 @@ class Episodes:
 			except: pass
 			isTraktHistory = (url.split('&page=')[0] in self.trakthistory_link)
 			if self.trakt_link in url and url == self.progress_link:
-				if trakt.getProgressActivity() > cache.timeout(self.trakt_progress_list, url, self.trakt_user, self.lang, self.trakt_directProgressScrape):
-					self.list = cache.get(self.trakt_progress_list, 0, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
-				else: self.list = cache.get(self.trakt_progress_list, self.trakt_progress_hours, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
+				# if trakt.getProgressActivity() > cache.timeout(self.trakt_progress_list, url, self.trakt_user, self.lang, self.trakt_directProgressScrape):
+				# 	self.list = cache.get(self.trakt_progress_list, 0, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
+				# else: self.list = cache.get(self.trakt_progress_list, self.trakt_progress_hours, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
+				self.list = cache.get(self.trakt_progress_list, self.trakt_progress_hours, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
 				self.sort(type='progress')
 				if self.list is None: self.list = []
 				# place new season ep1's at top of list for 1 week

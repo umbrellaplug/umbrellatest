@@ -443,7 +443,12 @@ class TVshows:
 			if not self.list: return
 			attribute = int(getSetting('sort.%s.type' % type))
 			reverse = int(getSetting('sort.%s.order' % type)) == 1
-			if attribute == 0: reverse = False # Sorting Order is not enabled when sort method is "Default"
+			if attribute == 0: 
+				if type == 'progress':
+					reverse = True
+					attribute = 6
+				else:
+					reverse = False # Sorting Order is not enabled when sort method is "Default"
 			if attribute > 0:
 				if attribute == 1:
 					try: self.list = sorted(self.list, key=lambda k: re.sub(r'(^the |^a |^an )', '', k['tvshowtitle'].lower()), reverse=reverse)
@@ -461,7 +466,8 @@ class TVshows:
 				elif attribute == 6:
 					for i in range(len(self.list)):
 						if 'lastplayed' not in self.list[i]: self.list[i]['lastplayed'] = ''
-					self.list = sorted(self.list, key=lambda k: k['lastplayed'], reverse=reverse)
+					#self.list = sorted(self.list, key=lambda k: k['lastplayed'], reverse=reverse)
+					self.list = sorted(self.list, key=lambda k: datetime.strptime(k['lastplayed'], "%Y-%m-%dT%H:%M:%S.%fZ"), reverse=reverse)
 			elif reverse:
 				self.list = list(reversed(self.list))
 		except:
@@ -1180,10 +1186,10 @@ class TVshows:
 			try: url = getattr(self, url + '_link')
 			except: pass
 			cache.get(self.trakt_progress_list, 0, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
-			#self.sort(type='progress')
+			self.sort(type='progress')
 			if self.list is None: self.list = []
 			hasNext = False
-			self.tvshowDirectory(self.list, next=hasNext)
+			self.tvshowDirectory(self.list, next=hasNext, isProgress=True)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -1239,13 +1245,13 @@ class TVshows:
 				items.append(values)
 				
 			except: pass
-		try:
-			hidden = traktsync.fetch_hidden_progress()
-			hidden = [str(i['tvdb']) for i in hidden]
-			items = [i for i in items if i['tvdb'] not in hidden] # removes hidden progress items
-		except:
-			from resources.lib.modules import log_utils
-			log_utils.error()
+		# try:
+		# 	hidden = traktsync.fetch_hidden_progress()
+		# 	hidden = [str(i['tvdb']) for i in hidden]
+		# 	items = [i for i in items if i['tvdb'] not in hidden] # removes hidden progress items
+		# except:
+		# 	from resources.lib.modules import log_utils
+		# 	log_utils.error()
 
 		def items_list(i):
 			values = i
@@ -1426,9 +1432,8 @@ class TVshows:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def tvshowDirectory(self, items, next=True):
+	def tvshowDirectory(self, items, next=True, isProgress=False):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
-		
 		if getSetting('trakt.directProgress.scrape') == 'true' and getSetting('enable.playnext') == 'true':
 			pass
 		else:
@@ -1451,12 +1456,15 @@ class TVshows:
 				imdb, tmdb, tvdb, year, trailer = i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', ''), i.get('year', ''), i.get('trailer', '')
 				title = label = i.get('tvshowtitle') or i.get('title')
 				systitle = quote_plus(title)
-				try:
-					premiered = i['premiered']
-					if (not premiered and i['status'] in ('Rumored', 'Planned', 'In Production', 'Post Production', 'Upcoming')) or (int(re.sub('[^0-9]', '', premiered)) > int(re.sub('[^0-9]', '', str(self.today_date)))):
-						if self.showunaired: label = '[COLOR %s]%s [I][Coming Soon][/I][/COLOR]' % (self.unairedcolor, label)
-						else: continue
-				except: pass
+				if isProgress:
+					pass
+				else:
+					try:
+						premiered = i['premiered']
+						if (not premiered and i['status'] in ('Rumored', 'Planned', 'In Production', 'Post Production', 'Upcoming')) or (int(re.sub('[^0-9]', '', premiered)) > int(re.sub('[^0-9]', '', str(self.today_date)))):
+							if self.showunaired: label = '[COLOR %s]%s [I][Coming Soon][/I][/COLOR]' % (self.unairedcolor, label)
+							else: continue
+					except: pass
 				try: indicators = getSeasonIndicators(imdb, tvdb)
 				except: indicators = None
 				meta = dict((k, v) for k, v in iter(i.items()) if v is not None and v != '')
