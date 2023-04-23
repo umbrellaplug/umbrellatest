@@ -474,8 +474,8 @@ class lib_tools:
 				control.makeFile(control.dataPath)
 				dbcon = database.connect(control.libCacheSimilar)
 				dbcur = dbcon.cursor()
-				dbcur.execute('''DROP TABLE IF EXISTS movies;''')
-				dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
+				dbcur.execute('''DROP TABLE IF EXISTS movies_temp;''')
+				dbcur.execute('''CREATE TABLE IF NOT EXISTS movies_temp (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
 				#"properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file", "director", "writer", "year", "mpaa", "set", "studio", "cast"]
 				movies = control.jsonrpc('{"jsonrpc":"2.0","method":"VideoLibrary.GetMovies","params":{"properties":["title","genre","uniqueid", "rating","thumbnail","playcount","file","director","writer","year","mpaa","set","studio","cast"]},"id":"42"}')
 				items = jsloads(movies)['result']['movies']
@@ -514,8 +514,12 @@ class lib_tools:
 							casts += uw['name']
 						else:
 							casts += uw['name'] +","
-					dbcur.execute('''INSERT INTO movies Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (items[l]['title'], myGenre, uniqueids, items[l]['rating'], items[l]['thumbnail'], items[l]['playcount'], items[l]['file'], directors, writers, items[l]['year'], items[l]['mpaa'], items[l]['set'], studios, casts))
+					dbcur.execute('''INSERT INTO movies_temp Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (items[l]['title'], myGenre, uniqueids, items[l]['rating'], items[l]['thumbnail'], items[l]['playcount'], items[l]['file'], directors, writers, items[l]['year'], items[l]['mpaa'], items[l]['set'], studios, casts))
 				dbcur.connection.commit()
+				dbcur.execute('''DROP TABLE IF EXISTS movies;''')
+				dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
+				dbcur.execute('''INSERT INTO movies SELECT * FROM movies_temp;''')
+				control.refresh()
 			except: log_utils.error()
 			finally:
 				dbcur.close() ; dbcon.close()
