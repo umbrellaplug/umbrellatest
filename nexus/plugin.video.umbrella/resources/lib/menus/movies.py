@@ -1598,7 +1598,11 @@ class Movies:
 					control.setHomeWindowProperty('umbrella.moviesimilarlibrary', str(getLS(40257)+' '+originalMovie["title"]))
 				except: pass
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list)
+			is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
+			if is_widget:
+				control.refresh()
+			else:
+				if create_directory: self.movieDirectory(self.list)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
