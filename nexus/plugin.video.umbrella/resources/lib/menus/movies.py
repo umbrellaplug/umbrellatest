@@ -1411,6 +1411,7 @@ class Movies:
 							from resources.lib.modules import log_utils
 							log_utils.error()
 						try:
+							control.log('[ plugin.video.umbrella ] Getting Movies from cached database list.', 1)
 							sameGenreMoviesSelect = dbcur.execute('''SELECT * FROM movies WHERE %s;'''% localCache).fetchall()
 							if not sameGenreMoviesSelect: 
 								return
@@ -1599,10 +1600,9 @@ class Movies:
 				except: pass
 			if self.list is None: self.list = []
 			is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
+			if create_directory: self.movieDirectory(self.list)
 			if is_widget:
 				control.refresh()
-			else:
-				if create_directory: self.movieDirectory(self.list)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
