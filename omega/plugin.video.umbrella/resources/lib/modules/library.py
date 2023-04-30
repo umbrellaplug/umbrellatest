@@ -516,15 +516,30 @@ class lib_tools:
 							casts += uw['name'] +","
 					dbcur.execute('''INSERT INTO movies_temp Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (items[l]['title'], myGenre, uniqueids, items[l]['rating'], items[l]['thumbnail'], items[l]['playcount'], items[l]['file'], directors, writers, items[l]['year'], items[l]['mpaa'], items[l]['set'], studios, casts))
 				dbcur.connection.commit()
-				control.log('[ plugin.video.umbrella ]  Library Dropping Temp Movie DB to refresh.', 1)
-				dbcur.execute('''DROP TABLE IF EXISTS movies;''')
-				dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
-				dbcur.execute('''INSERT INTO movies SELECT * FROM movies_temp;''')
+				control.log('[ plugin.video.umbrella ]  Adding new movies into cache list.', 1)
+				#dbcur.execute('''DROP TABLE IF EXISTS movies;''')
+				#dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
+				dbcur.execute('''INSERT OR REPLACE INTO movies SELECT * FROM movies_temp;''')
 				control.refresh()
 			except: log_utils.error()
 			finally:
 				dbcur.close() ; dbcon.close()
+				self.syncDeletedfromCache()
 
+
+
+	def syncDeletedfromCache(self):
+		try:
+			control.makeFile(control.dataPath)
+			dbcon = database.connect(control.libCacheSimilar)
+			dbcur = dbcon.cursor()
+			#DELETE FROM cache WHERE NOT EXISTS (SELECT main.id from main WHERE main.id=cache.id)
+			dbcur.execute('''DELETE FROM movies WHERE NOT EXISTS (SELECT * FROM movies_temp);''')
+			control.log('[ plugin.video.umbrella ]  Deleting items that are no longer in library from cache.', 1)
+			dbcur.connection.commit()
+		except: log_utils.error()
+		finally:
+			dbcur.close() ; dbcon.close()
 
 
 
