@@ -1405,7 +1405,7 @@ class Movies:
 							if not control.existsPath(control.dataPath): control.makeFile(control.dataPath)
 							dbcon = database.connect(control.libCacheSimilar)
 							dbcur = dbcon.cursor()
-							dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
+							dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT UNIQUE, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
 							dbcur.connection.commit()
 						except: 
 							from resources.lib.modules import log_utils
@@ -1466,7 +1466,7 @@ class Movies:
 							if not control.existsPath(control.dataPath): control.makeFile(control.dataPath)
 							dbcon = database.connect(control.libCacheSimilar)
 							dbcur = dbcon.cursor()
-							dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
+							dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT UNIQUE, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
 							dbcur.connection.commit()
 						except: 
 							from resources.lib.modules import log_utils

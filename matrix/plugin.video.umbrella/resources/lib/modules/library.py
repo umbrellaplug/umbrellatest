@@ -463,6 +463,7 @@ class lib_tools:
 		control.makeFile(control.dataPath)
 		dbcon = database.connect(control.libCacheSimilar)
 		dbcur = dbcon.cursor()
+		dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT UNIQUE, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
 		results = dbcur.execute('''SELECT * FROM movies;''').fetchall()
 		if not results:
 			results = 0
@@ -475,7 +476,7 @@ class lib_tools:
 				dbcon = database.connect(control.libCacheSimilar)
 				dbcur = dbcon.cursor()
 				dbcur.execute('''DROP TABLE IF EXISTS movies_temp;''')
-				dbcur.execute('''CREATE TABLE IF NOT EXISTS movies_temp (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
+				dbcur.execute('''CREATE TABLE IF NOT EXISTS movies_temp (title TEXT, genre TEXT, uniqueid TEXT UNIQUE, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
 				#"properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file", "director", "writer", "year", "mpaa", "set", "studio", "cast"]
 				movies = control.jsonrpc('{"jsonrpc":"2.0","method":"VideoLibrary.GetMovies","params":{"properties":["title","genre","uniqueid", "rating","thumbnail","playcount","file","director","writer","year","mpaa","set","studio","cast"]},"id":"42"}')
 				items = jsloads(movies)['result']['movies']
@@ -533,7 +534,10 @@ class lib_tools:
 			control.makeFile(control.dataPath)
 			dbcon = database.connect(control.libCacheSimilar)
 			dbcur = dbcon.cursor()
-			dbcur.execute('''DELETE FROM movies WHERE NOT EXISTS (SELECT * FROM movies_temp);''')
+			#remove duplicates.....
+			#dbcur.execute('''DELETE FROM movies WHERE rowid > (SELECT MIN(rowid) FROM movies p2 WHERE movies.title = p2.title AND movies.genre = p2.genre);''')
+			#delete everything not in movies_temp
+			dbcur.execute('''DELETE FROM movies WHERE title NOT IN (SELECT title from movies_temp);''')
 			control.log('[ plugin.video.umbrella ]  Deleting items that are no longer in library from cache.', 1)
 			dbcur.connection.commit()
 		except: log_utils.error()

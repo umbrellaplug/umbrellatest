@@ -1,4 +1,4 @@
-[B][COLOR black]Update - v6.6.200 - Apr 30th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.202 - May 1st, 2023[/COLOR][/B]
 --[FIX][I] Added option for prioritize direct to top of results.[/I]
 --[FIX][I] Fixed MP4 filtering.[/I]
 --[FIX][I] Added Progress by TV Shows and removed all caching for progress from trakt.[/I]
@@ -6,6 +6,7 @@
 --[FIX][I] Changed library sync to use temp table and added container refresh.[/I]
 --[FIX][I] Changed similar from library to use a temp database.[/I]
 --[FIX][I] Changed deleted method for database when syncing cached movies.[/I]
+--[FIX][I] Added ability to clear cached movies database table.[/I]
 --[CHANGE][I] Removed all changes made for TV Show Progress. Feature will not be added. Use TMDBHelper.[/I]
 
 [B][COLOR black]Update - v6.6.19 - Mar 31st, 2023[/COLOR][/B]

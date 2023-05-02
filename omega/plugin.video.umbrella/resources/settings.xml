@@ -5924,6 +5924,14 @@
 					</constraints>
 					<control type="button" format="action"/>
 				</setting>
+				<setting id="clearMoviesCacheButton" type="action" label="40402" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=cache_clearMovieCache)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<control type="button" format="action"/>
+				</setting>
 				<setting id="clearMetaButton" type="action" label="32612" help="">
 					<level>0</level>
 					<data>RunPlugin(plugin://plugin.video.umbrella/?action=cache_clearMeta)</data>

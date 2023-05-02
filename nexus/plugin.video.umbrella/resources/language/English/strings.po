@@ -4550,3 +4550,7 @@ msgstr ""
 msgctxt "#40401"
 msgid "Progress Shows"
 msgstr ""
+
+msgctxt "#40402"
+msgid "Clear [COLOR yellow]Library Movies [/COLOR]Cache..."
+msgstr ""
