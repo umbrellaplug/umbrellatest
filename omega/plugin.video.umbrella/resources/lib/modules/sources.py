@@ -865,6 +865,8 @@ class Sources:
 			self.sources = [i for i in self.sources if 'HEVC' not in i.get('info', '')]
 		if getSetting('remove.av1') == 'true':
 			self.sources = [i for i in self.sources if ' AV1 ' not in i.get('info', '')]
+		if getSetting('remove.atvp') == 'true':
+			self.sources = [i for i in self.sources if ' APPLE-TV-PLUS ' not in i.get('info', '')]
 		if getSetting('remove.avc') == 'true':
 			self.sources = [i for i in self.sources if ' AVC ' not in i.get('info', '')]
 		if getSetting('remove.divx') == 'true':

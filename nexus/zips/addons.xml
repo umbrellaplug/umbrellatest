@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.202">
+<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.203">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.cocoscrapers" version="1.0.10" />
@@ -148,7 +148,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.202 - May 1st, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.203 - May 2nd, 2023[/COLOR][/B]
 --[FIX][I] Added option for prioritize direct to top of results.[/I]
 --[FIX][I] Fixed MP4 filtering.[/I]
 --[FIX][I] Added Progress by TV Shows and removed all caching for progress from trakt.[/I]
@@ -157,6 +157,7 @@
 --[FIX][I] Changed similar from library to use a temp database.[/I]
 --[FIX][I] Changed deleted method for database when syncing cached movies.[/I]
 --[FIX][I] Added ability to clear cached movies database table.[/I]
+--[FIX][I] Added AppleTV+ quality filter.[/I]
 --[CHANGE][I] Removed all changes made for TV Show Progress. Feature will not be added. Use TMDBHelper.[/I]
 		</news>
 	</extension>

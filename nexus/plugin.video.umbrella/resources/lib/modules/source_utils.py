@@ -57,6 +57,8 @@ ABV_LANG = ('.ara.', '.ces.', '.chi.', '.chs.', '.cze.', '.dan.', '.de.', '.deu.
 SUBS = ('subita', 'subfrench', 'subspanish', 'subtitula', 'swesub', 'nl.subs')
 ADS = ('1xbet', 'betwin')
 
+APPLE_TV = ('ATVP')
+
 def seas_ep_filter(season, episode, release_title, split=False):
 	try:
 		release_title = re.sub(r'[^A-Za-z0-9-]+', '.', unquote(release_title).replace('\'', '')).replace('&', 'and').replace('%', '.percent').lower()
@@ -123,6 +125,7 @@ def getFileType(name_info=None, url=None):
 		if any(value in fmt for value in VIDEO_3D):  file_type += ' 3D /'
 
 		if '.sdr' in fmt: file_type += ' SDR /'
+		elif any(value in fmt for value in APPLE_TV): file_type += ' APPLE-TV-PLUS /' #new apple tv plus format keep seeing
 		elif any(value in fmt for value in DOLBY_VISION): file_type += ' DOLBY-VISION /'
 		elif any(value in fmt for value in HDR): file_type += ' HDR /'
 		elif all(i in fmt for i in ('2160p', 'remux')): file_type += ' HDR /'

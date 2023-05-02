@@ -4554,3 +4554,7 @@ msgstr ""
 msgctxt "#40402"
 msgid "Clear [COLOR yellow]Library Movies [/COLOR]Cache..."
 msgstr ""
+
+msgctxt "#40403"
+msgid "Remove AppleTV+"
+msgstr ""
