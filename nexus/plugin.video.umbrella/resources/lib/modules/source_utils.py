@@ -57,7 +57,7 @@ ABV_LANG = ('.ara.', '.ces.', '.chi.', '.chs.', '.cze.', '.dan.', '.de.', '.deu.
 SUBS = ('subita', 'subfrench', 'subspanish', 'subtitula', 'swesub', 'nl.subs')
 ADS = ('1xbet', 'betwin')
 
-APPLE_TV = ('ATVP')
+APPLE_TV = ('atvp',)
 
 def seas_ep_filter(season, episode, release_title, split=False):
 	try:

@@ -515,7 +515,10 @@ class lib_tools:
 							casts += uw['name']
 						else:
 							casts += uw['name'] +","
-					dbcur.execute('''INSERT INTO movies_temp Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (items[l]['title'], myGenre, uniqueids, items[l]['rating'], items[l]['thumbnail'], items[l]['playcount'], items[l]['file'], directors, writers, items[l]['year'], items[l]['mpaa'], items[l]['set'], studios, casts))
+					try:
+						dbcur.execute('''INSERT INTO movies_temp Values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (items[l]['title'], myGenre, uniqueids, items[l]['rating'], items[l]['thumbnail'], items[l]['playcount'], items[l]['file'], directors, writers, items[l]['year'], items[l]['mpaa'], items[l]['set'], studios, casts))
+					except:
+						control.log('[ plugin.video.umbrella ]  Cannot add title to movies_temp. Title: %s UniqueID: %s' % (items[l]['title'], uniqueids ), 1)
 				control.log('[ plugin.video.umbrella ]  Adding new movies into cache list.', 1)
 				#dbcur.execute('''DROP TABLE IF EXISTS movies;''') #we are not going to drop the table anymore.
 				#dbcur.execute('''CREATE TABLE IF NOT EXISTS movies (title TEXT, genre TEXT, uniqueid TEXT, rating TEXT, thumbnail TEXT, playcount TEXT, file TEXT, director TEXT, writer TEXT, year TEXT, mpaa TEXT, "set" TEXT, studio TEXT, cast TEXT);''')
