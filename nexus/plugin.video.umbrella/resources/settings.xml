@@ -2082,6 +2082,11 @@
 					<default>false</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="sources.retryall" type="boolean" label="40405" help="" parent="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="showHelpremoveUncached" type="action" label="32137" help="">
 					<level>0</level>
 					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_ShowHelp&amp;name=removeUncached)</data>

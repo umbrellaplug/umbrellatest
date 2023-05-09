@@ -27,6 +27,7 @@ def router(argv2):
 	url = params.get('url')
 	query = params.get('query')
 	source = params.get('source')
+	select = params.get('select')
 	if action is None:
 		from resources.lib.menus import navigator
 		isUpdate = control.homeWindow.getProperty('umbrella.updated')
@@ -906,6 +907,11 @@ def router(argv2):
 			from resources.lib.modules import sources
 			sources.Sources().playItem(title, params.get('items'), source, params.get('meta'))
 
+	elif action == 'rescrapeAuto':
+		from resources.lib.modules import sources
+		premiered = params.get('premiered')
+		meta = params.get('meta')
+		sources.Sources(all_providers='true', rescrapeAll='true').play(title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta, select=select, rescrape='true')
 	elif action == 'rescrapeMenu':
 		from resources.lib.modules import sources
 		premiered = params.get('premiered')
