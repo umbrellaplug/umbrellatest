@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.205">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.206">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.cocoscrapers" version="1.0.10"/>
@@ -147,7 +147,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.205 - May 8th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.206 - May 9th, 2023[/COLOR][/B]
 --[FIX][I] Added option for prioritize direct to top of results.[/I]
 --[FIX][I] Fixed MP4 filtering.[/I]
 --[FIX][I] Adjusted icon to match format name for case sensitive systems.[/I]

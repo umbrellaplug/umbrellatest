@@ -1299,7 +1299,10 @@ class Sources:
 						self.rescrapeAll = 'true'
 						plugin = 'plugin://plugin.video.umbrella/'
 						systitle = quote_plus(title)
-						systvshowtitle = quote_plus(tvshowtitle)
+						if tvshowtitle:
+							systvshowtitle = quote_plus(tvshowtitle)
+						else:
+							systvshowtitle = ''
 						meta = self.meta
 						sysmeta = quote_plus(jsdumps(meta))
 						control.cancelPlayback()
