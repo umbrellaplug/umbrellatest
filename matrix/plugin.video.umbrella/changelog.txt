@@ -1,4 +1,9 @@
-[B][COLOR black]Update - v6.6.205 - May 8th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.21 - May 13th, 2023[/COLOR][/B]
+--[FIX][I] Small adjustment for new rescrape with all providers auto feature.[/I]
+--[FIX][I] Added new entries and context menu entries for languages. Currently not translated.[/I]
+--[FIX][I] Added setting.[/I]
+
+[B][COLOR black]Update - v6.6.20 - May 11th, 2023[/COLOR][/B]
 --[FIX][I] Added option for prioritize direct to top of results.[/I]
 --[FIX][I] Fixed MP4 filtering.[/I]
 --[FIX][I] Adjusted icon to match format name for case sensitive systems.[/I]
@@ -9,8 +14,7 @@
 --[FIX][I] Added AppleTV+ quality filter.[/I]
 --[FIX][I] Added catch for movies_temp insert.[/I]
 --[DEBUG][I] Logging added to help identify when items fail meta check.[/I]
---[ENHANCEMENT][I] Added new settimg to allow for search with all providers if no sources found.[/I]
---[CHANGE][I] Removed all changes made for TV Show Progress. Feature will not be added. Use TMDBHelper.[/I]
+--[ENHANCEMENT][I] Added new setting to allow for search with all providers if no sources found.[/I]
 
 [B][COLOR black]Update - v6.6.19 - Mar 31st, 2023[/COLOR][/B]
 --[FIX][I] Fixed issue with playlist creation for playnext from widgets.[/I]
