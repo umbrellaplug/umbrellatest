@@ -1,4 +1,5 @@
-[B][COLOR black]Update - v6.6.212 - May 15th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.213 - May 15th, 2023[/COLOR][/B]
+--[Fix][I] Adjusted filters to better identify HDR.[/I]
 --[Enhancement][I] Lazy ass TV Shows Progress added.[/I]
 --[Logging][I] Additional logging for source select.[/I]
 
