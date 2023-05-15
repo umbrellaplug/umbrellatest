@@ -184,6 +184,7 @@ class Sources:
 			#except:
 			#	log_utils.error()
 			log_utils.log(' [ plugin.video.umbrella ] From sources.play() Sending to player.Player().play_source()', level=log_utils.LOGDEBUG)
+			control.log('[ plugin.video.umbrella ] playing from play which indicates pre-scrape or autoplay source url is: %s' % url, 1)
 			from resources.lib.modules import player
 			player.Player().play_source(title, year, season, episode, imdb, tmdb, tvdb, url, self.meta)
 		except:
@@ -191,6 +192,7 @@ class Sources:
 			control.cancelPlayback()
 
 	def sourceSelect(self, title, items, uncached_items, meta):
+		control.log('[ plugin.video.umbrella ] sourceSelect Start', 1)
 		try:
 			from resources.lib.windows.source_results import SourceResultsXML
 			control.hide()
@@ -223,6 +225,7 @@ class Sources:
 		except: log_utils.error('Error sourceSelect(): ')
 
 		def checkLibMeta(): # check Kodi db for meta for library playback.
+			control.log('[ plugin.video.umbrella ] sourceSelect checkLibMeta', 1)
 			def cleanLibArt(art):
 				if not art: return ''
 				art = unquote(art.replace('image://', ''))
@@ -302,6 +305,7 @@ class Sources:
 			action, chosen_source = window.run()
 			del window
 			if action == 'play_Item' and self.uncached_chosen != True:
+				control.log('[ plugin.video.umbrella ] sourceSelect playItem: %s' % title, 1)
 				return self.playItem(title, items, chosen_source.getProperty('umbrella.source_dict'), self.meta)
 			else:
 				control.cancelPlayback()
@@ -373,6 +377,7 @@ class Sources:
 					except: pass
 					del progressDialog
 					from resources.lib.modules import player
+					control.log('[ plugin.video.umbrella ] playing from sourceSelect playitem url: %s' % self.url, 1)
 					player.Player().play_source(title, self.year, self.season, self.episode, self.imdb, self.tmdb, self.tvdb, self.url, meta)
 					return self.url
 				except: log_utils.error()
