@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.211">
+<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.212">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.cocoscrapers" version="1.0.10" />
@@ -148,7 +148,8 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.211 - May 15th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.212 - May 15th, 2023[/COLOR][/B]
+--[Enhancement][I] Lazy ass TV Shows Progress added.[/I]
 --[Logging][I] Additional logging for source select.[/I]
 		</news>
 	</extension>

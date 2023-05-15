@@ -1183,9 +1183,7 @@ class TVshows:
 	def tvshow_progress(self, url):
 		self.list = []
 		try:
-			try: url = getattr(self, url + '_link')
-			except: pass
-			cache.get(self.trakt_progress_list, 0, url, self.trakt_user, self.lang, self.trakt_directProgressScrape)
+			cache.get(self.trakt_tvshow_progress, 0)
 			self.sort(type='progress')
 			if self.list is None: self.list = []
 			hasNext = False
@@ -1197,6 +1195,22 @@ class TVshows:
 			if not self.list:
 				control.hide()
 				if self.notifications: control.notification(title=32326, message=33049)
+
+	def trakt_tvshow_progress(self, create_directory=True):
+		self.list = []
+		try:
+			historyurl = 'https://api.trakt.tv/users/me/watched/shows'
+			self.list = self.trakt_list(historyurl, self.trakt_user)
+			next = ''
+			for i in range(len(self.list)): self.list[i]['next'] = next
+			self.worker()
+			if self.list is None: self.list = []
+			if create_directory: self.tvshowDirectory(self.list)
+			return self.list
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+			return self.list
 
 	def worker(self):
 		try:
