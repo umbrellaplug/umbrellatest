@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.216">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.217">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.cocoscrapers" version="1.0.10"/>
@@ -147,11 +147,11 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B][COLOR black]Update - v6.6.216 - May 16th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.217 - May 16th, 2023[/COLOR][/B]
 --[Fix][I] Adjusted filters to better identify HDR.[/I]
 --[Enhancement][I] Lazy ass TV Shows Progress added.[/I]
 --[Logging][I] Additional logging for source select.[/I]
---[Logging][I] Red Coat logging....[/I]
+--[Logging][I] Red Coat logging.... FFS[/I]
 		</news>
 	</extension>
 

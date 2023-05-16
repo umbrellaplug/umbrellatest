@@ -450,9 +450,7 @@ def metadataClean(metadata):
 	return {k: v for k, v in iter(metadata.items()) if k in allowed}
 
 def set_info(item, meta, setUniqueIDs=None, resumetime=''):
-	LOGINFO=1
-	from resources.lib.modules import log_utils
-	log_utils.log('Setting info from control set_info', level=LOGINFO)
+	
 	if getKodiVersion() >= 20:
 		try:
 			#from resources.lib.modules import log_utils
@@ -497,8 +495,6 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 			info_tag.setWriters(to_list(meta_get('writer', [])))
 			info_tag.setDirectors(to_list(meta_get('director', [])))
 			info_tag.setIMDBNumber(meta_get('imdb_id'))
-			from resources.lib.modules import log_utils
-			log_utils.log('[ plugin.video.umbrella ] - Resumetime %s' % resumetime, level=LOGINFO)
 			if resumetime: info_tag.setResumePoint(float(resumetime))
 			if meta_get('mediatype') in ['tvshow', 'season']:
 				info_tag.setTvShowTitle(meta_get('tvshowtitle'))
