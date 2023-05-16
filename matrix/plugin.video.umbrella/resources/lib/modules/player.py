@@ -54,7 +54,7 @@ class Player(xbmc.Player):
 		try:
 			from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 			if not url: raise Exception
-			control.log('[ plugin.video.umbrella ] Play Source Received title: %s year: %s meta: %s' % (title, year, str(meta)), 1)
+			log_utils.log('[ plugin.video.umbrella ] Play Source Received title: %s year: %s meta: %s' % (title, year, str(meta)), level=log_utils.LOGDEBUG)
 			self.media_type = 'movie' if season is None or episode is None else 'episode'
 			self.title, self.year = title, str(year)
 			if self.media_type == 'movie':
@@ -90,7 +90,7 @@ class Player(xbmc.Player):
 			try:
 				self.offset = Bookmarks().get(name=self.name, imdb=imdb, tmdb=tmdb, tvdb=tvdb, season=season, episode=episode, year=self.year, runtime=meta.get('duration') if meta else 0)
 			except:
-				control.log('[ plugin.video.umbrella ] Get offset failed in player play_source name:%s imdb: %s tmdb: %s tvdb: %s' % (str(self.name), imdb, tmdb, tvdb),1)
+				log_utils.log('[ plugin.video.umbrella ] Get offset failed in player play_source name:%s imdb: %s tmdb: %s tvdb: %s' % (str(self.name), imdb, tmdb, tvdb),1)
 				self.offset = '0'
 			if self.offset == '-1':
 				log_utils.log('User requested playback cancel', level=log_utils.LOGDEBUG)
@@ -106,7 +106,7 @@ class Player(xbmc.Player):
 				item.setArt({'clearart': clearart, 'clearlogo': clearlogo, 'discart': discart, 'thumb': thumb, 'poster': poster, 'fanart': fanart})
 			#if 'castandart' in meta: item.setCast(meta.get('castandart', '')) #changed for kodi20 setinfo method
 			#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
-			control.log('[ plugin.video.umbrella ] Sending to control to set info from play_source()', 1)
+			log_utils.log('[ plugin.video.umbrella ] Sending to control to set info from play_source()', level=log_utils.LOGDEBUG)
 			control.set_info(item, meta, setUniqueIDs=setUniqueIDs) #changed for kodi20 setinfo method
 			item.setProperty('IsPlayable', 'true')
 			if int(control.playlist.size()) < 1 and self.media_type == 'episode' and self.enable_playnext: #this is the change made for play next from widget.
@@ -186,7 +186,7 @@ class Player(xbmc.Player):
 			try:
 				meta = [i for i in meta if (i.get('uniqueid', []).get('imdb', '') == self.imdb) or (i.get('uniqueid', []).get('unknown', '') == self.imdb)] # scraper now using "unknown"
 			except:
-				control.log('[ plugin.video.umbrella ] Get Meta Failed in getMeta: %s' % str(meta),1)
+				log_utils.log('[ plugin.video.umbrella ] Get Meta Failed in getMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
 				meta = None
 			if meta: meta = meta[0]
 			else: raise Exception()
@@ -243,7 +243,7 @@ class Player(xbmc.Player):
 			return (poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta)
 
 	def getWatchedPercent(self):
-		control.log('Playback Getting Watched Percent.', 1)
+		log_utils.log('Playback Getting Watched Percent.', level=log_utils.LOGDEBUG)
 		if self.isPlayback():
 			try:
 				position = self.getTime()

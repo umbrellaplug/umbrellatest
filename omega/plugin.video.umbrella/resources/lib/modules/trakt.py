@@ -1090,7 +1090,7 @@ def service_syncSeasons(): # season indicators and counts for watched shows ex. 
 	except: log_utils.error()
 
 def markMovieAsWatched(imdb):
-	control.log('Umbrella marking movie as watched',1)
+	log_utils.log('Umbrella marking movie as watched',level=log_utils.LOGDEBUG)
 	try:
 		result = getTraktAsJson('/sync/history', {"movies": [{"ids": {"imdb": imdb}}]})
 		return result['added']['movies'] != 0
