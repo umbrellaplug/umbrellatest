@@ -54,6 +54,7 @@ class Player(xbmc.Player):
 		try:
 			from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 			if not url: raise Exception
+			control.log('[ plugin.video.umbrella ] Play Source Received title: %s year: %s meta: %s' % (title, year, str(meta)), 1)
 			self.media_type = 'movie' if season is None or episode is None else 'episode'
 			self.title, self.year = title, str(year)
 			if self.media_type == 'movie':
@@ -105,6 +106,7 @@ class Player(xbmc.Player):
 				item.setArt({'clearart': clearart, 'clearlogo': clearlogo, 'discart': discart, 'thumb': thumb, 'poster': poster, 'fanart': fanart})
 			#if 'castandart' in meta: item.setCast(meta.get('castandart', '')) #changed for kodi20 setinfo method
 			#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
+			control.log('[ plugin.video.umbrella ] Sending to control to set info from play_source()', 1)
 			control.set_info(item, meta, setUniqueIDs=setUniqueIDs) #changed for kodi20 setinfo method
 			item.setProperty('IsPlayable', 'true')
 			if int(control.playlist.size()) < 1 and self.media_type == 'episode' and self.enable_playnext: #this is the change made for play next from widget.
@@ -138,7 +140,7 @@ class Player(xbmc.Player):
 			elif self.playeronly:
 				control.player.play(url) # using for crashing bug testing.
 				log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
-			else: 
+			else:
 				control.resolve(int(argv[1]), True, item)
 				log_utils.log('Played file as resolve.', level=log_utils.LOGDEBUG)
 			homeWindow.setProperty('script.trakt.ids', jsdumps(self.ids))

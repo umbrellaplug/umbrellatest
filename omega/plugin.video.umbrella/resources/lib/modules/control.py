@@ -450,7 +450,7 @@ def metadataClean(metadata):
 	return {k: v for k, v in iter(metadata.items()) if k in allowed}
 
 def set_info(item, meta, setUniqueIDs=None, resumetime=''):
-	if resumetime: resumetime = float(resumetime)
+	log('[ plugin.video.umbrella ] Setting info from control set_info', 1)
 	if getKodiVersion() >= 20:
 		try:
 			#from resources.lib.modules import log_utils

@@ -1264,7 +1264,8 @@ class TVshows:
 			if not tmdb:
 				if getSetting('debug.level') != '1': return
 				from resources.lib.modules import log_utils
-				return log_utils.log('tvshowtitle: (%s) missing tmdb_id: ids={imdb: %s, tmdb: %s, tvdb: %s}' % (self.list[i]['title'], imdb, tmdb, tvdb), __name__, log_utils.LOGDEBUG) # log TMDb shows that they do not have
+				#return log_utils.log('tvshowtitle: (%s) missing tmdb_id: ids={imdb: %s, tmdb: %s, tvdb: %s}' % (self.list[i]['title'], imdb, tmdb, tvdb), __name__, log_utils.LOGDEBUG) # log TMDb shows that they do not have
+				return None
 			showSeasons = tmdb_indexer().get_showSeasons_meta(tmdb)
 			if not showSeasons or '404:NOT FOUND' in showSeasons: return # trakt search turns up alot of junk with wrong tmdb_id's
 			values = {}
