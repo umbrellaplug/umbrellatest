@@ -115,6 +115,83 @@ class Sources:
 			try: meta = jsloads(unquote(meta.replace('%22', '\\"')))
 			except: pass
 			self.meta = meta
+			if meta == None:
+				log_utils.log('No meta was passed in checking',level=log_utils.LOGDEBUG)
+				self.imdb_user = getSetting('imdbuser').replace('ur', '')
+				self.tmdb_key = getSetting('tmdb.apikey')
+				if not self.tmdb_key: self.tmdb_key = 'edde6b5e41246ab79a2697cd125e1781'
+				self.tvdb_key = getSetting('tvdb.apikey')
+				if self.mediatype == 'episode': self.user = str(self.imdb_user) + str(self.tvdb_key)
+				else: self.user = str(self.tmdb_key)
+				self.lang = control.apiLanguage()['tvdb']
+				self.ids = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb}
+				meta = metacache.fetch([{'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb}], self.lang, self.user)[0]
+				if meta != self.ids: meta = dict((k, v) for k, v in iter(meta.items()) if v is not None and v != '')
+			def checkLibMeta(): # check Kodi db for meta for library playback.
+				log_utils.log('play checkLibMeta', level=log_utils.LOGDEBUG)
+				def cleanLibArt(art):
+					if not art: return ''
+					art = unquote(art.replace('image://', ''))
+					if art.endswith('/'): art = art[:-1]
+					return art
+				try:
+					if self.mediatype != 'movie': raise Exception()
+					# do not add IMDBNUMBER as tmdb scraper puts their id in the key value
+					meta = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"filter":{"or": [{"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}]}, "properties" : ["title", "originaltitle", "uniqueid", "year", "premiered", "genre", "studio", "country", "runtime", "rating", "votes", "mpaa", "director", "writer", "cast", "plot", "plotoutline", "tagline", "thumbnail", "art", "file"]}, "id": 1}' % (year, str(int(year) + 1), str(int(year) - 1)))
+					meta = jsloads(meta)['result']['movies']
+					try:
+						meta = [i for i in meta if i.get('uniqueid', []).get('imdb', '') == imdb]
+					except:
+						log_utils.log('Get Meta Failed in checkLibMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
+						meta = None
+					if meta: meta = meta[0]
+					else: raise Exception()
+					if 'mediatype' not in meta: meta.update({'mediatype': 'movie'})
+					if 'duration' not in meta: meta.update({'duration': meta.get('runtime')}) # Trakt scrobble resume needs this for lib playback
+					if 'castandrole' not in meta: meta.update({'castandrole': [(i['name'], i['role']) for i in meta.get('cast')]})
+					poster = cleanLibArt(meta.get('art').get('poster', '')) or self.poster
+					fanart = cleanLibArt(meta.get('art').get('fanart', '')) or self.fanart
+					clearart = cleanLibArt(meta.get('art').get('clearart', ''))
+					clearlogo = cleanLibArt(meta.get('art').get('clearlogo', ''))
+					discart = cleanLibArt(meta.get('art').get('discart'))
+					meta.update({'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'poster': poster, 'fanart': fanart, 'clearart': clearart, 'clearlogo': clearlogo, 'discart': discart})
+					return meta
+				except:
+					log_utils.error()
+					meta = {}
+				try:
+					if self.mediatype != 'episode': raise Exception()
+					# do not add IMDBNUMBER as tmdb scraper puts their id in the key value
+					show_meta = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetTVShows", "params": {"filter":{"or": [{"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}, {"field": "year", "operator": "is", "value": "%s"}]}, "properties" : ["title", "originaltitle", "uniqueid", "mpaa", "year", "genre", "runtime", "thumbnail", "file"]}, "id": 1}' % (self.year, str(int(self.year)+1), str(int(self.year)-1)))
+					show_meta = jsloads(show_meta)['result']['tvshows']
+					show_meta = [i for i in show_meta if i.get('uniqueid', []).get('imdb', '') == imdb]
+					if show_meta: show_meta = show_meta[0]
+					else: raise Exception()
+					tvshowid = show_meta['tvshowid']
+					meta = control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params":{"tvshowid": %d, "filter":{"and": [{"field": "season", "operator": "is", "value": "%s"}, {"field": "episode", "operator": "is", "value": "%s"}]}, "properties": ["title", "season", "episode", "showtitle", "firstaired", "runtime", "rating", "director", "writer", "cast", "plot", "thumbnail", "art", "file"]}, "id": 1}' % (tvshowid, self.season, self.episode))
+					meta = jsloads(meta)['result']['episodes']
+					if meta: meta = meta[0]
+					else: raise Exception()
+					if 'mediatype' not in meta: meta.update({'mediatype': 'episode'})
+					if 'tvshowtitle' not in meta: meta.update({'tvshowtitle': meta.get('showtitle')})
+					if 'castandrole' not in meta: meta.update({'castandrole': [(i['name'], i['role']) for i in meta.get('cast')]})
+					if 'genre' not in meta: meta.update({'genre': show_meta.get('genre')})
+					if 'duration' not in meta: meta.update({'duration': meta.get('runtime')}) # Trakt scrobble resume needs this for lib playback but Kodi lib returns "0" for shows or episodes
+					if 'mpaa' not in meta: meta.update({'mpaa': show_meta.get('mpaa')})
+					if 'premiered' not in meta: meta.update({'premiered': meta.get('firstaired')})
+					if 'year' not in meta: meta.update({'year': show_meta.get('year')}) # shows year not year episode aired
+					poster = cleanLibArt(meta.get('art').get('season.poster', '')) or self.poster
+					fanart = cleanLibArt(meta.get('art').get('tvshow.fanart', '')) or self.poster
+					clearart = cleanLibArt(meta.get('art').get('tvshow.clearart', ''))
+					clearlogo = cleanLibArt(meta.get('art').get('tvshow.clearlogo', ''))
+					discart = cleanLibArt(meta.get('art').get('discart'))
+					meta.update({'imdb': self.imdb, 'tmdb': self.tmdb, 'tvdb': self.tvdb, 'poster': poster, 'fanart': fanart, 'clearart': clearart, 'clearlogo': clearlogo, 'discart': discart})
+					return meta
+				except:
+					log_utils.error()
+					meta = {}
+			if self.meta is None or 'videodb' in control.infoLabel('ListItem.FolderPath'):
+				self.meta = checkLibMeta()
 			if self.mediatype == 'movie':
 				if getSetting('imdb.Moviemeta.check') == 'true': # check IMDB. TMDB and Trakt differ on a ratio of 1 in 20 and year is off by 1, some meta titles mismatch
 					title, year = self.imdb_meta_chk(imdb, title, year)

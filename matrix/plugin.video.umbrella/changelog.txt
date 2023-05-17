@@ -1,4 +1,5 @@
-[B][COLOR black]Update - v6.6.218 - May 17th, 2023[/COLOR][/B]
+[B][COLOR black]Update - v6.6.219 - May 17th, 2023[/COLOR][/B]
+--[Fix][I] Attempted fix for no meta sent from widgets created from library. Causing CRASHES[/I]
 --[Fix][I] Adjusted filters to better identify HDR.[/I]
 --[Enhancement][I] Lazy ass TV Shows Progress added.[/I]
 --[Logging][I] Significant changes to logging.[/I]
