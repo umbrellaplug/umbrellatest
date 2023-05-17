@@ -174,17 +174,16 @@ class Sources:
 				self.url = url
 				return self.errorForSources()
 			#try:
-			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Title: %s' % str(title), level=log_utils.LOGDEBUG)
-			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Year: %s' % str(year), level=log_utils.LOGDEBUG)
-			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Season: %s' % str(season), level=log_utils.LOGDEBUG)
-			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Episode: %s' % str(episode), level=log_utils.LOGDEBUG)
-			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() IMDB: %s TMDB: %s TVDB: %s' % (str(imdb), str(tmdb), str(tvdb)), level=log_utils.LOGDEBUG)
-			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() URL: %s' % str(url), level=log_utils.LOGDEBUG)
-			#	log_utils.log('[ plugin.video.umbrella ] From sources.play() Meta: %s' % str(self.meta), level=log_utils.LOGDEBUG)
+			#	log_utils.log('From sources.play() Title: %s' % str(title), level=log_utils.LOGDEBUG)
+			#	log_utils.log('From sources.play() Year: %s' % str(year), level=log_utils.LOGDEBUG)
+			#	log_utils.log('From sources.play() Season: %s' % str(season), level=log_utils.LOGDEBUG)
+			#	log_utils.log('From sources.play() Episode: %s' % str(episode), level=log_utils.LOGDEBUG)
+			#	log_utils.log('From sources.play() IMDB: %s TMDB: %s TVDB: %s' % (str(imdb), str(tmdb), str(tvdb)), level=log_utils.LOGDEBUG)
+			#	log_utils.log('From sources.play() URL: %s' % str(url), level=log_utils.LOGDEBUG)
+			#	log_utils.log('From sources.play() Meta: %s' % str(self.meta), level=log_utils.LOGDEBUG)
 			#except:
 			#	log_utils.error()
-			log_utils.log(' [ plugin.video.umbrella ] From sources.play() Sending to player.Player().play_source()', level=log_utils.LOGDEBUG)
-			log_utils.log('[ plugin.video.umbrella ] playing from play which indicates pre-scrape or autoplay source url is: %s' % url, level=log_utils.LOGDEBUG)
+			log_utils.log('Playing from play which indicates pre-scrape or autoplay source url is: %s' % url, level=log_utils.LOGDEBUG)
 			from resources.lib.modules import player
 			player.Player().play_source(title, year, season, episode, imdb, tmdb, tvdb, url, self.meta)
 		except:
@@ -192,7 +191,7 @@ class Sources:
 			control.cancelPlayback()
 
 	def sourceSelect(self, title, items, uncached_items, meta):
-		log_utils.log('[ plugin.video.umbrella ] sourceSelect Start', level=log_utils.LOGDEBUG)
+		log_utils.log('sourceSelect Start', level=log_utils.LOGDEBUG)
 		try:
 			from resources.lib.windows.source_results import SourceResultsXML
 			control.hide()
@@ -225,7 +224,7 @@ class Sources:
 		except: log_utils.error('Error sourceSelect(): ')
 
 		def checkLibMeta(): # check Kodi db for meta for library playback.
-			log_utils.log('[ plugin.video.umbrella ] sourceSelect checkLibMeta', level=log_utils.LOGDEBUG)
+			log_utils.log('sourceSelect checkLibMeta', level=log_utils.LOGDEBUG)
 			def cleanLibArt(art):
 				if not art: return ''
 				art = unquote(art.replace('image://', ''))
@@ -239,7 +238,7 @@ class Sources:
 				try:
 					meta = [i for i in meta if i.get('uniqueid', []).get('imdb', '') == self.imdb]
 				except:
-					log_utils.log('[ plugin.video.umbrella ] Get Meta Failed in checkLibMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
+					log_utils.log('Get Meta Failed in checkLibMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
 					meta = None
 				if meta: meta = meta[0]
 				else: raise Exception()
@@ -305,7 +304,7 @@ class Sources:
 			action, chosen_source = window.run()
 			del window
 			if action == 'play_Item' and self.uncached_chosen != True:
-				log_utils.log('[ plugin.video.umbrella ] sourceSelect playItem: %s' % title, level=log_utils.LOGDEBUG)
+				log_utils.log('sourceSelect playItem: %s' % title, level=log_utils.LOGDEBUG)
 				return self.playItem(title, items, chosen_source.getProperty('umbrella.source_dict'), self.meta)
 			else:
 				control.cancelPlayback()
@@ -376,7 +375,7 @@ class Sources:
 					try: progressDialog.close()
 					except: pass
 					del progressDialog
-					log_utils.log('[ plugin.video.umbrella ] playing from sourceSelect playitem url: %s' % self.url, level=log_utils.LOGDEBUG)
+					log_utils.log('playing from sourceSelect playitem url: %s' % self.url, level=log_utils.LOGDEBUG)
 					from resources.lib.modules import player
 					player.Player().play_source(title, self.year, self.season, self.episode, self.imdb, self.tmdb, self.tvdb, self.url, meta)
 					return self.url

@@ -42,7 +42,8 @@ def clean_settings():
 		try:
 			settings_xml = control.joinPath(profile_dir, 'settings.xml')
 		except:
-			log_utils.log('[ plugin.video.umbrella ] - Error Accessing Settings.xml at Startup. Caught error and moving on.')
+			from resources.lib.modules import log_utils
+			log_utils.log('Error Accessing Settings.xml at Startup. Caught error and moving on.')
 			return control.notification(title=addon_name, message=32115)
 		#root = ET.parse(settings_xml).getroot()
 		root = mdParse(settings_xml) #minidom instead of element tree
