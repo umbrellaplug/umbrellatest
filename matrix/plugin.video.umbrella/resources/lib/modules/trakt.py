@@ -931,7 +931,6 @@ def watchedShowsTime(tvdb, season, episode):
 	except: log_utils.error()
 
 def cachesyncTV(imdb, tvdb): # sync full watched shows then sync imdb_id "season indicators" and "season counts"
-	log_utils.log('Umbrella cache sync tv.', level=log_utils.LOGDEBUG)
 	try:
 		threads = [Thread(target=cachesyncTVShows), Thread(target=cachesyncSeasons, args=(imdb, tvdb))]
 		[i.start() for i in threads]
@@ -940,7 +939,7 @@ def cachesyncTV(imdb, tvdb): # sync full watched shows then sync imdb_id "season
 	except: log_utils.error()
 
 def cachesyncTVShows(timeout=0):
-	log_utils.log('Umbrella cache sync tv shows.', level=log_utils.LOGDEBUG)
+
 	try:
 		indicators = traktsync.get(syncTVShows, timeout)
 		#if getSetting('sync.watched.library') == 'true':

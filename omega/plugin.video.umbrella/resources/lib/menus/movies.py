@@ -1411,8 +1411,9 @@ class Movies:
 							from resources.lib.modules import log_utils
 							log_utils.error()
 						try:
-							from resources.lib.modules import log_utils
-							log_utils.log('Getting Movies from cached database list.', level=log_utils.LOGDEBUG)
+							if control.setting('debug.level') == '1':
+								from resources.lib.modules import log_utils
+								log_utils.log('Getting Movies from cached database list.', level=log_utils.LOGDEBUG)
 							sameGenreMoviesSelect = dbcur.execute('''SELECT * FROM movies WHERE %s;'''% localCache).fetchall()
 							if not sameGenreMoviesSelect: 
 								return
@@ -1450,7 +1451,9 @@ class Movies:
 									sameGenreMovies.append(jsloads(sameGenreMoviesStr))
 								except:
 									from resources.lib.modules import log_utils
-									log_utils.log('sameGenreMoviesStr: %s' % sameGenreMoviesStr, level=log_utils.LOGDEBUG)
+									if control.setting('debug.level') == '1':
+										log_utils.log('sameGenreMoviesStr: %s' % sameGenreMoviesStr, level=log_utils.LOGDEBUG)
+									log_utils.error()
 						except: 
 							from resources.lib.modules import log_utils
 							log_utils.error()
@@ -1512,7 +1515,9 @@ class Movies:
 									sameGenreMovies.append(jsloads(sameGenreMoviesStr))
 								except:
 									from resources.lib.modules import log_utils
-									log_utils.log('sameGenreMoviesStr: %s' % sameGenreMoviesStr, level=log_utils.LOGDEBUG)
+									if control.setting('debug.level') == '1':
+										log_utils.log('sameGenreMoviesStr: %s' % sameGenreMoviesStr, level=log_utils.LOGDEBUG)
+									log_utils.error()
 						except: 
 							from resources.lib.modules import log_utils
 							log_utils.error()
@@ -1584,8 +1589,9 @@ class Movies:
 						similar_list.append(z)
 				self.list = similar_list
 			else:
-				from resources.lib.modules import log_utils
-				log_utils.log('Only one similar score found.',level=log_utils.LOGDEBUG)
+				if control.setting('debug.level') == '1':
+					from resources.lib.modules import log_utils
+					log_utils.log('Only one similar score found.',level=log_utils.LOGDEBUG)
 
 			random.shuffle(self.list)
 			self.list = self.list[:50]

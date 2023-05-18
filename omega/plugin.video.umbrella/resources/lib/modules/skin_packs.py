@@ -30,8 +30,9 @@ class iconPackHandler:
 			selected_items = window.run()
 			del window
 			if selected_items:
-				from resources.lib.modules import log_utils
-				log_utils.log('selected items: %s' % str(selected_items), 1)
+				if control.setting('debug.level') == '1':
+					from resources.lib.modules import log_utils
+					log_utils.log('selected items: %s' % str(selected_items), 1)
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()

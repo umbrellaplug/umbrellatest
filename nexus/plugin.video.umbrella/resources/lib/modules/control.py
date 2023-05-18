@@ -453,8 +453,6 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 	
 	if getKodiVersion() >= 20:
 		try:
-			#from resources.lib.modules import log_utils
-			#log_utils.log(str(type(meta)),1)
 			meta_get = meta.get
 			info_tag = item.getVideoInfoTag()
 			info_tag.setMediaType(meta_get('mediatype'))
@@ -516,8 +514,6 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 		try: meta.pop('cast')
 		except: pass
 		item.setInfo('video', meta)
-		from resources.lib.modules import log_utils
-		log_utils.log('umbrella set item info not kodi 20.', 1)
 		if resumetime:
 			item.setProperties({'ResumeTime': resumetime, 'TotalTime': str(meta.get('duration', 2700))})
 	return item

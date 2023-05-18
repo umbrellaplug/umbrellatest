@@ -48,13 +48,15 @@ class Player(xbmc.Player):
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
 		self.playeronly = getSetting('use.playeronly') == 'true'
 		self.subtitletime = None
+		self.debuglog = control.setting('debug.level') == '1'
 		
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
 		try:
 			from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 			if not url: raise Exception
-			log_utils.log('Play Source Received title: %s year: %s metatype: %s meta: %s' % (title, year, type(meta), str(meta)), level=log_utils.LOGDEBUG)
+			if self.debuglog:
+				log_utils.log('Play Source Received title: %s year: %s metatype: %s' % (title, year, type(meta)), level=log_utils.LOGDEBUG)
 			self.media_type = 'movie' if season is None or episode is None else 'episode'
 			self.title, self.year = title, str(year)
 			if self.media_type == 'movie':
@@ -90,10 +92,12 @@ class Player(xbmc.Player):
 			try:
 				self.offset = Bookmarks().get(name=self.name, imdb=imdb, tmdb=tmdb, tvdb=tvdb, season=season, episode=episode, year=self.year, runtime=meta.get('duration') if meta else 0)
 			except:
-				log_utils.log('Get offset failed in player play_source name:%s imdb: %s tmdb: %s tvdb: %s' % (str(self.name), imdb, tmdb, tvdb),1)
+				if self.debuglog:
+					log_utils.log('Get offset failed in player play_source name:%s imdb: %s tmdb: %s tvdb: %s' % (str(self.name), imdb, tmdb, tvdb),1)
 				self.offset = '0'
 			if self.offset == '-1':
-				log_utils.log('User requested playback cancel', level=log_utils.LOGDEBUG)
+				if self.debuglog:
+					log_utils.log('User requested playback cancel', level=log_utils.LOGDEBUG)
 				control.notification(message=32328)
 				return control.cancelPlayback()
 
@@ -116,32 +120,40 @@ class Player(xbmc.Player):
 						control.playlist.add(url, item)
 						playerWindow.setProperty('umbrella.playlistStart_position', str(0))
 						control.player.play(control.playlist)
-						log_utils.log('Played file as playlist', level=log_utils.LOGDEBUG)
+						if self.debuglog:
+							log_utils.log('Played file as playlist', level=log_utils.LOGDEBUG)
 					else:
 						if debridPackCall and not self.playeronly: 
 							control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-							log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
+							if self.debuglog:
+								log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
 						elif self.playeronly:
 							control.player.play(url) # using for crashing bug testing.
-							log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
+							if self.debuglog:
+								log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
 						else: control.resolve(int(argv[1]), True, item)
 				except:
 					if debridPackCall and not self.playeronly: 
 						control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-						log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
+						if self.debuglog:
+							log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
 					elif self.playeronly:
 						control.player.play(url) # using for crashing bug testing.
-						log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
+						if self.debuglog:
+							log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
 					else: control.resolve(int(argv[1]), True, item)
 			elif debridPackCall and not self.playeronly: 
 				control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-				log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
+				if self.debuglog:
+					log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
 			elif self.playeronly:
 				control.player.play(url) # using for crashing bug testing.
-				log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
+				if self.debuglog:
+					log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
 			else:
 				control.resolve(int(argv[1]), True, item)
-				log_utils.log('Played file as resolve.', level=log_utils.LOGDEBUG)
+				if self.debuglog:
+					log_utils.log('Played file as resolve.', level=log_utils.LOGDEBUG)
 			homeWindow.setProperty('script.trakt.ids', jsdumps(self.ids))
 			self.keepAlive()
 			homeWindow.clearProperty('script.trakt.ids')
@@ -185,7 +197,8 @@ class Player(xbmc.Player):
 			try:
 				meta = [i for i in meta if (i.get('uniqueid', []).get('imdb', '') == self.imdb) or (i.get('uniqueid', []).get('unknown', '') == self.imdb)] # scraper now using "unknown"
 			except:
-				log_utils.log('Get Meta Failed in getMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
+				if self.debuglog:
+					log_utils.log('Get Meta Failed in getMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
 				meta = None
 			if meta: meta = meta[0]
 			else: raise Exception()
@@ -251,9 +264,9 @@ class Player(xbmc.Player):
 					if total_length != 0: self.media_length = total_length
 				except: pass
 			current_position = self.current_time
-			log_utils.log('getWatchedPercent() current_position: %s' % current_position, level=log_utils.LOGDEBUG)
+			#log_utils.log('getWatchedPercent() current_position: %s' % current_position, level=log_utils.LOGDEBUG)
 			total_length = self.media_length
-			log_utils.log('getWatchedPercent() total_length: %s' % total_length, level=log_utils.LOGDEBUG)
+			#log_utils.log('getWatchedPercent() total_length: %s' % total_length, level=log_utils.LOGDEBUG)
 			watched_percent = 0
 			if int(total_length) != 0:
 				try:
@@ -352,7 +365,8 @@ class Player(xbmc.Player):
 									else:
 										log_utils.error()
 								else:
-									log_utils.log('No match found for playnext method.', level=log_utils.LOGDEBUG)
+									if self.debuglog:
+										log_utils.log('No match found for playnext method.', level=log_utils.LOGDEBUG)
 							if int(control.playlist.size()) == 1 and self.playlist_built == False:
 								self.buildPlaylist()
 								self.playlist_built = True
@@ -537,6 +551,7 @@ class PlayNext(xbmc.Player):
 		self.stillwatching_count = int(getSetting('stillwatching.count'))
 		self.playing_file = None
 		self.providercache_hours = int(getSetting('cache.providers'))
+		self.debuglog = control.setting('debug.level') == '1'
 
 	def display_xml(self):
 		try:
@@ -668,6 +683,9 @@ class PlayNext(xbmc.Player):
 
 
 class Subtitles:
+	def __init__(self):
+		self.debuglog = control.setting('debug.level') == '1'
+
 	def get(self, name, imdb, season, episode):
 		try:
 			import gzip, codecs
@@ -746,7 +764,8 @@ class Subtitles:
 			try: lang = xbmc.convertLanguage(filter[0]['SubLanguageID'], xbmc.ISO_639_1)
 			except: lang = filter[0]['SubLanguageID']
 			filename = filter[0]['SubFileName']
-			log_utils.log('downloaded subtitle=%s' % filename, level=log_utils.LOGDEBUG)
+			if self.debuglog:
+				log_utils.log('downloaded subtitle=%s' % filename, level=log_utils.LOGDEBUG)
 
 			content = [filter[0]['IDSubtitleFile'],]
 			content = server.DownloadSubtitles(token, content)
@@ -828,7 +847,8 @@ class Subtitles:
 				filter += [i for i in result if i['SubLanguageID'] == lang and any(x in i['MovieReleaseName'].lower() for x in quality)]
 				filter += [i for i in result if i['SubLanguageID'] == lang]
 			if not filter: 
-				log_utils.log('nothing found for playnext subtitle that matches use fallback', level=log_utils.LOGDEBUG)
+				if self.debuglog:
+					log_utils.log('nothing found for playnext subtitle that matches use fallback', level=log_utils.LOGDEBUG)
 				return 'default'
 			try: lang = xbmc.convertLanguage(filter[0]['SubLanguageID'], xbmc.ISO_639_1)
 			except: lang = filter[0]['SubLanguageID']
@@ -865,6 +885,8 @@ class Subtitles:
 
 
 class Bookmarks:
+	def __init__(self):
+		self.debuglog = control.setting('debug.level') == '1'
 	def get(self, name, imdb=None, tmdb=None, tvdb=None, season=None, episode=None, year='0', runtime=None, ck=False):
 		markwatched_percentage = int(getSetting('markwatched.percent')) or 85
 		offset = '0'

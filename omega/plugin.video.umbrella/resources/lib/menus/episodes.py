@@ -435,8 +435,9 @@ class Episodes:
 					result = cache.get(tmdb_indexer().IdLookup, 96, imdb, tvdb)
 					values['tmdb'] = str(result.get('id', '')) if result.get('id') else ''
 				except:
-					from resources.lib.modules import log_utils
-					return log_utils.log('tvshowtitle: (%s) missing tmdb_id: ids={imdb: %s, tmdb: %s, tvdb: %s}' % (i['tvshowtitle'], imdb, tmdb, tvdb), __name__, log_utils.LOGDEBUG) # log TMDb shows that they do not have
+					if getSetting('debug.level') == '1':
+						from resources.lib.modules import log_utils
+						return log_utils.log('tvshowtitle: (%s) missing tmdb_id: ids={imdb: %s, tmdb: %s, tvdb: %s}' % (i['tvshowtitle'], imdb, tmdb, tvdb), __name__, log_utils.LOGDEBUG) # log TMDb shows that they do not have
 			try:
 				showSeasons = cache.get(tmdb_indexer().get_showSeasons_meta, 96, tmdb)
 				if not showSeasons: return

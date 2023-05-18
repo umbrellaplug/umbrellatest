@@ -70,7 +70,7 @@ class Sources:
 		self.useProviders = True if getSetting('sources.highlightmethod') == '1' else False
 		self.providerColors = {"useproviders": self.useProviders, "defaultcolor": self.sourceHighlightColor, "realdebrid": self.realdebridHighlightColor, "alldebrid": self.alldebridHighlightColor, "premiumize": self.premiumizeHighlightColor, "easynews": self.easynewsHighlightColor, "plexshare": self.plexHighlightColor, "gdrive": self.gdriveHighlightColor, "furk": self.furkHighlightColor,"filepursuit": self.filePursuitHighlightColor}
 		self.providercache_hours = int(getSetting('cache.providers'))
-		
+		self.debuglog = control.setting('debug.level') == '1'
 		self.retryallsources = getSetting('sources.retryall') == 'true'
 
 	def play(self, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta, select, rescrape=None):
@@ -87,7 +87,8 @@ class Sources:
 				playerWindow.clearProperty('umbrella.preResolved_nextUrl')
 				try: meta = jsloads(unquote(meta.replace('%22', '\\"')))
 				except: pass
-				log_utils.log('Playing preResolved_nextUrl = %s' % preResolved_nextUrl, level=log_utils.LOGDEBUG)
+				if self.debuglog:
+					log_utils.log('Playing preResolved_nextUrl = %s' % preResolved_nextUrl, level=log_utils.LOGDEBUG)
 				from resources.lib.modules import player
 				return player.Player().play_source(title, year, season, episode, imdb, tmdb, tvdb, preResolved_nextUrl, meta)
 			if title: title = self.getTitle(title)
@@ -116,7 +117,8 @@ class Sources:
 			except: pass
 			self.meta = meta
 			if meta == None:
-				log_utils.log('No meta was passed in checking',level=log_utils.LOGDEBUG)
+				if self.debuglog:
+					log_utils.log('No meta was passed in. Trying to find meta now.',level=log_utils.LOGDEBUG)
 				self.imdb_user = getSetting('imdbuser').replace('ur', '')
 				self.tmdb_key = getSetting('tmdb.apikey')
 				if not self.tmdb_key: self.tmdb_key = 'edde6b5e41246ab79a2697cd125e1781'
@@ -128,7 +130,6 @@ class Sources:
 				meta = metacache.fetch([{'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb}], self.lang, self.user)[0]
 				if meta != self.ids: meta = dict((k, v) for k, v in iter(meta.items()) if v is not None and v != '')
 			def checkLibMeta(): # check Kodi db for meta for library playback.
-				log_utils.log('play checkLibMeta', level=log_utils.LOGDEBUG)
 				def cleanLibArt(art):
 					if not art: return ''
 					art = unquote(art.replace('image://', ''))
@@ -142,7 +143,8 @@ class Sources:
 					try:
 						meta = [i for i in meta if i.get('uniqueid', []).get('imdb', '') == imdb]
 					except:
-						log_utils.log('Get Meta Failed in checkLibMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
+						if self.debuglog:
+							log_utils.log('Get Meta Failed in checkLibMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
 						meta = None
 					if meta: meta = meta[0]
 					else: raise Exception()
@@ -260,7 +262,7 @@ class Sources:
 			#	log_utils.log('From sources.play() Meta: %s' % str(self.meta), level=log_utils.LOGDEBUG)
 			#except:
 			#	log_utils.error()
-			log_utils.log('Playing from play which indicates pre-scrape or autoplay source url is: %s' % url, level=log_utils.LOGDEBUG)
+			#log_utils.log('Playing from play which indicates pre-scrape or autoplay source url is: %s' % url, level=log_utils.LOGDEBUG)
 			from resources.lib.modules import player
 			player.Player().play_source(title, year, season, episode, imdb, tmdb, tvdb, url, self.meta)
 		except:
@@ -268,7 +270,6 @@ class Sources:
 			control.cancelPlayback()
 
 	def sourceSelect(self, title, items, uncached_items, meta):
-		log_utils.log('sourceSelect Start', level=log_utils.LOGDEBUG)
 		try:
 			from resources.lib.windows.source_results import SourceResultsXML
 			control.hide()
@@ -301,7 +302,6 @@ class Sources:
 		except: log_utils.error('Error sourceSelect(): ')
 
 		def checkLibMeta(): # check Kodi db for meta for library playback.
-			log_utils.log('sourceSelect checkLibMeta', level=log_utils.LOGDEBUG)
 			def cleanLibArt(art):
 				if not art: return ''
 				art = unquote(art.replace('image://', ''))
@@ -315,7 +315,8 @@ class Sources:
 				try:
 					meta = [i for i in meta if i.get('uniqueid', []).get('imdb', '') == self.imdb]
 				except:
-					log_utils.log('Get Meta Failed in checkLibMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
+					if self.debuglog:
+						log_utils.log('Get Meta Failed in checkLibMeta: %s' % str(meta), level=log_utils.LOGDEBUG)
 					meta = None
 				if meta: meta = meta[0]
 				else: raise Exception()
@@ -381,7 +382,6 @@ class Sources:
 			action, chosen_source = window.run()
 			del window
 			if action == 'play_Item' and self.uncached_chosen != True:
-				log_utils.log('sourceSelect playItem: %s' % title, level=log_utils.LOGDEBUG)
 				return self.playItem(title, items, chosen_source.getProperty('umbrella.source_dict'), self.meta)
 			else:
 				control.cancelPlayback()
@@ -448,11 +448,9 @@ class Sources:
 					if not any(x in self.url.lower() for x in video_extensions) and 'plex.direct:' not in self.url:
 						log_utils.log('Playback not supported for (playItem()): %s' % self.url, level=log_utils.LOGWARNING)
 						continue
-					log_utils.log('Playing url from playItem(): %s' % self.url, level=log_utils.LOGDEBUG)
 					try: progressDialog.close()
 					except: pass
 					del progressDialog
-					log_utils.log('playing from sourceSelect playitem url: %s' % self.url, level=log_utils.LOGDEBUG)
 					from resources.lib.modules import player
 					player.Player().play_source(title, self.year, self.season, self.episode, self.imdb, self.tmdb, self.tvdb, self.url, meta)
 					return self.url
@@ -755,20 +753,24 @@ class Sources:
 					if control.monitor.abortRequested(): return sysexit()
 					url = self.sourcesResolve(next_sources[i])
 					if not url:
-						log_utils.log('preResolve failed for : next_sources[i]=%s' % str(next_sources[i]), level=log_utils.LOGWARNING)
+						if self.debuglog:
+							log_utils.log('preResolve failed for : next_sources[i]=%s' % str(next_sources[i]), level=log_utils.LOGWARNING)
 						continue
 					# if not any(x in url.lower() for x in video_extensions):
 					if not any(x in url.lower() for x in video_extensions) and 'plex.direct:' not in url:
-						log_utils.log('preResolve Playback not supported for (sourcesAutoPlay()): %s' % url, level=log_utils.LOGWARNING)
+						if self.debuglog:
+							log_utils.log('preResolve Playback not supported for (sourcesAutoPlay()): %s' % url, level=log_utils.LOGWARNING)
 						continue
 					if url:
 						control.sleep(500)
 						player_hasVideo = control.condVisibility('Player.HasVideo')
 						if player_hasVideo: # do not setPropery if user stops playback quickly because "onPlayBackStopped" is already called and won't be able to clear it.
 							playerWindow.setProperty('umbrella.preResolved_nextUrl', url)
-							log_utils.log('preResolved_nextUrl : %s' % url, level=log_utils.LOGDEBUG)
+							if self.debuglog:
+								log_utils.log('preResolved_nextUrl : %s' % url, level=log_utils.LOGDEBUG)
 						else:
-							log_utils.log('player_hasVideo = %s : skipping setting preResolved_nextUrl' % player_hasVideo, level=log_utils.LOGWARNING)
+							if self.debuglog:
+								log_utils.log('player_hasVideo = %s : skipping setting preResolved_nextUrl' % player_hasVideo, level=log_utils.LOGWARNING)
 						break
 				except: pass
 			except: log_utils.error()
@@ -1168,7 +1170,8 @@ class Sources:
 		if (self.mediatype == 'movie' or (self.mediatype == 'episode' and not self.enable_playnext)):
 			if getSetting('remove.duplicates.popup') != 'true':
 				control.notification(title=item_title, message='Removed %s duplicate sources from list' % (len(self.sources) - len(filter)))
-		log_utils.log('Removed %s duplicate sources for (%s) from list' % (len(self.sources) - len(filter), item_title), level=log_utils.LOGDEBUG)
+		if self.debuglog:
+			log_utils.log('Removed %s duplicate sources for (%s) from list' % (len(self.sources) - len(filter), item_title), level=log_utils.LOGDEBUG)
 		return filter
 
 	def sourcesAutoPlay(self, items):
@@ -1214,7 +1217,6 @@ class Sources:
 						log_utils.log('Playback not supported for (sourcesAutoPlay()): %s' % url, level=log_utils.LOGWARNING)
 						continue
 					if url:
-						log_utils.log('Playing url from (sourcesAutoPlay()): %s' % url, level=log_utils.LOGDEBUG)
 						break
 				except: pass
 			except: log_utils.error()
