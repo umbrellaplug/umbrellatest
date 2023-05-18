@@ -845,9 +845,6 @@ class TVshows:
 		def userList_totalItems(url):
 			items = trakt.getTraktAsJson(url)
 			if not items: return
-			if control.setting('debug.level') == '1':
-				from resources.lib.modules import log_utils
-				log_utils.log('Trakt list items: %s' % str(items), level=log_utils.LOGDEBUG)
 			watchedItems = trakt.watchedShows()
 			for item in items:
 				try:
