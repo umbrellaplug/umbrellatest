@@ -314,24 +314,19 @@ class lib_tools:
 
 	def importListsNowNoSelect(self, fromSettings=False):
 		try:
-			allTraktItems = self.getAllTraktLists()
-			for z in allTraktItems:
-				z['selected'] = ''
-			dbItems = self.getDBItems()
-			if len(dbItems) == 0:
-				self.createDBItems(allTraktItems)
-			else:
-				for y in allTraktItems:
-					for x in dbItems:
-						if x[5] == y['list_id']:
-							y['selected'] = x[6]
-			items = [ x for x in allTraktItems if x['selected'] == 'true']
-			self.importNow(items, select=False)
+			libepisodes().update()
+			libmovies().list_update()
+			libtvshows().list_update()
+			last_service_setting = datetime.now().strftime('%Y-%m-%d %H:%M')
+			control.setSetting('library.autoimportlists_last', str(last_service_setting))
+			lib_tools().updateSettings()
 			if fromSettings == True:
 				control.openSettings('13.2', 'plugin.video.umbrella')
+				
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
+
 
 	def getDBItems(self):
 		try:
