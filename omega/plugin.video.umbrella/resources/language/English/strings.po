@@ -4584,19 +4584,19 @@ msgid "Information Screens"
 msgstr ""
 
 msgctxt "#40410"
-msgid "This Month (TMDb)"
+msgid "Released this Month (TMDb)"
 msgstr ""
 
 msgctxt "#40411"
-msgid "This Month"
+msgid "Released this Month"
 msgstr ""
 
 msgctxt "#40412"
-msgid "This Month Released (TMDb)"
+msgid "Released this Month (Digital and DVD) (TMDb)"
 msgstr ""
 
 msgctxt "#40413"
-msgid "This Month Released"
+msgid "Released this Month (Digital and DVD)"
 msgstr ""
 
 msgctxt "#40414"

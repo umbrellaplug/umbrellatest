@@ -1,9 +1,10 @@
-[B]Update - v6.6.222 - May 30th, 2023[/B]
+[B]Update - v6.6.223 - June 12th, 2023[/B]
 --[Enhancement] Added new custom progress dialog.
 --[Enhancement] Added new custom ok dialog.
 --[Enhancement] Added new custom confirm dialog.
 --[Enhancement] Added new movie list for released this month.
 --[Enhancement] Added new movie list for released this month on physical or digital.
+--[Enhancement] Added import now option for auto imported trakt lists.
 
 [B]Update - v6.6.22 - May 18th, 2023[/B]
 --[Fix] Attempted fix for no meta sent from widgets created from library causing crashes on some systems.
