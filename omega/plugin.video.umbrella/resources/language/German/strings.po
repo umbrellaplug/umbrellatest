@@ -567,8 +567,8 @@ msgid "Open My Accounts Addon"
 msgstr "Add-on "Meine Konten" öffnen"
 
 msgctxt "#32136"
-msgid "sync(re) with My Accounts"
-msgstr "sync(re) mit My Accounts"
+msgid "Sync imported lists now"
+msgstr "Importierte Listen jetzt synchronisieren"
 
 msgctxt "#32137"
 msgid "[COLOR FFA0C12C] -- Help --[/COLOR]"

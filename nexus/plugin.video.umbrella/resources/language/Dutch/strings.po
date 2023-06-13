@@ -567,8 +567,8 @@ msgid "Open My Accounts Addon"
 msgstr "Open Mijn Accounts addon"
 
 msgctxt "#32136"
-msgid "sync(re) with My Accounts"
-msgstr "synchroniseren(opnieuw) met Mijn Accounts"
+msgid "Sync lists now"
+msgstr "synchroniseren(opnieuw) nu lijsten"
 
 msgctxt "#32137"
 msgid "[COLOR FFA0C12C] -- Help --[/COLOR]"
