@@ -13,7 +13,7 @@
 	<extension point="kodi.context.item">
 		<menu id="kodi.core.main">
 			<item library="resources\lib\context\addtoLibrary.py">
-				<label>Add to Library</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Add to Library</label>
 				<visible>
 					!String.IsEmpty(Window(home).Property(context.umbrella.addtoLibrary)) +
 					String.StartsWith(ListItem.path,plugin://plugin.video.umbrella/) +
@@ -22,7 +22,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\traktManager.py">
-				<label>Trakt Manager</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Trakt Manager</label>
 				<visible>
 					!String.IsEmpty(Window(home).Property(context.umbrella.traktManager)) +
 					String.StartsWith(ListItem.path,plugin://plugin.video.umbrella/) +
@@ -31,7 +31,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\clearProviders.py">
-				<label>Clear Providers</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Clear Providers</label>
 				<visible>
 					[!String.IsEmpty(Window(home).Property(context.umbrella.clearProviders)) +
 					String.StartsWith(ListItem.FolderPath,plugin://plugin.video.umbrella/?action=play) +
@@ -43,7 +43,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\clearBookmark.py">
-				<label>Clear Item Bookmark</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Clear Item Bookmark</label>
 				<visible>
 					!String.IsEmpty(Window(home).Property(context.umbrella.clearBookmark)) +
 					String.StartsWith(ListItem.FolderPath,plugin://plugin.video.umbrella/?action=play) +
@@ -53,7 +53,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\rescrape.py">
-				<label>Rescrape Item</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Rescrape Item</label>
 				<visible>
 					[!String.IsEmpty(Window(home).Property(context.umbrella.rescrape)) +
 					String.StartsWith(ListItem.FolderPath,plugin://plugin.video.umbrella/?action=play) +
@@ -62,7 +62,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\libRescrape.py">
-				<label>Rescrape Lib Item</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Rescrape Lib Item</label>
 				<visible>
 					[String.Contains(Container.FolderPath,videodb://) | String.Contains(Container.ListItem.FolderPath,videodb://)] +
 					[String.Contains(Container.ListItem.Path,Window(home).Property(umbrella.movieLib.path)) | String.Contains(Container.ListItem.Path,Window(home).Property(umbrella.tvLib.path))] +
@@ -70,7 +70,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\playFromHere.py">
-				<label>Play from here</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Play from here</label>
 				<visible>
 					!String.IsEmpty(Window(home).Property(context.umbrella.playFromHere)) +
 					String.StartsWith(ListItem.path,plugin://plugin.video.umbrella/) +
@@ -79,7 +79,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\autoPlay.py">
-				<label>Auto Play</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Auto Play</label>
 				<visible>
 					String.IsEmpty(Window(home).Property(umbrella.autoPlay.enabled)) +
 					!String.IsEmpty(Window(home).Property(context.umbrella.autoPlay)) +
@@ -89,7 +89,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\sourceSelect.py">
-				<label>Source Select</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Source Select</label>
 				<visible>
 					!String.IsEmpty(Window(home).Property(umbrella.autoPlay.enabled)) +
 					!String.IsEmpty(Window(home).Property(context.umbrella.sourceSelect)) +
@@ -99,7 +99,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\findSimilar.py">
-				<label>Find Similar</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Find Similar</label>
 				<visible>
 					!String.IsEmpty(Window(home).Property(context.umbrella.findSimilar)) +
 					String.StartsWith(ListItem.path,plugin://plugin.video.umbrella/) +
@@ -108,7 +108,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\browseSeries.py">
-				<label>Browse Series</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Browse Series</label>
 				<visible>
 					!String.IsEmpty(Window(home).Property(context.umbrella.browseSeries)) +
 					String.StartsWith(ListItem.path,plugin://plugin.video.umbrella/) +
@@ -117,7 +117,7 @@
 				</visible>
 			</item>
 			<item library="resources\lib\context\browseEpisodes.py">
-				<label>Browse Episodes</label>
+				<label>[B][COLOR $INFO[Window(home).Property(context.umbrella.highlightcolor)]]Umbrella[/COLOR][/B] - Browse Episodes</label>
 				<visible>
 					!String.IsEmpty(Window(home).Property(context.umbrella.browseEpisodes)) +
 					String.StartsWith(ListItem.path,plugin://plugin.video.umbrella/) +
