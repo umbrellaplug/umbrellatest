@@ -1645,7 +1645,7 @@ def sync_liked_lists(activities=None, forced=False):
 
 def sync_hidden_progress(activities=None, forced=False):
 	try:
-		link = '/users/hidden/progress_watched?limit=1000&type=show'
+		link = '/users/hidden/progress_watched?limit=2000&type=show'
 		if forced:
 			items = getTraktAsJson(link, silent=True)
 			traktsync.insert_hidden_progress(items)

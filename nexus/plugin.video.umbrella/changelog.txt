@@ -1,11 +1,16 @@
-[B]Update - v6.6.224 - June 12th, 2023[/B]
---[Enhancement] Added new custom progress dialog.
---[Enhancement] Added new custom ok dialog.
---[Enhancement] Added new custom confirm dialog.
+[B]Update - v6.6.240 - June 21st, 2023[/B]
+--[ENHANCEMENT] Modified limit of hidden trakt items to sync from 1000 to 2000. 
+
+[B]Update - v6.6.23 - June 14th, 2023[/B]
+--[Update] The "I have no style" update.
+--[Enhancement] Added new custom progress dialog. (Thanks Peter)
+--[Enhancement] Added new custom ok dialog. (Thanks Peter)
+--[Enhancement] Added new custom confirm dialog. (Thanks Peter)
 --[Enhancement] Added new movie list for released this month.
 --[Enhancement] Added new movie list for released this month on physical or digital.
 --[Enhancement] Added import now option for auto imported trakt lists.
---[Enhancement] Changed import now method due to red coat moaning.
+--[Coming Up] Select and Multi-Select dialog customization.
+--[Coming Up] Font use from skin for more consistent look and font sizes throughout.
 
 [B]Update - v6.6.22 - May 18th, 2023[/B]
 --[Fix] Attempted fix for no meta sent from widgets created from library causing crashes on some systems.
