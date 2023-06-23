@@ -665,30 +665,3 @@ def setContextColors():
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()
-
-# Monitor the information dialog and detect when it's closed
-def monitor_info_dialog():
-	# dialog_open = True
-	# time.sleep(100)
-	# while dialog_open:
-    #     # Check if the GUI window stack contains the information dialog
-    #     #import web_pdb; web_pdb.set_trace()
-	# 	response = send_rpc_request('GUI.GetProperties', {'properties': ['currentwindow']})
-	# 	window_stack = response['result']['currentwindow'].get('id')
-	# 	info_dialog_open = True if window_stack == 12003 else False
-	# 	xbmc.log("Information open.",1)
-	# 	if not info_dialog_open:
-	# 		# Information dialog has been closed
-	# 		homeWindow.clearProperty('umbrella.info_loaded')
-	# 		xbmc.log("Information dialog closed. Clearing Property",1)
-	# 		dialog_open = False
-
-	# 	# Wait for a short duration before checking again
-	# 	time.sleep(1)
-	xbmc.executebuiltin('Action(Info)')
-	sleep(200)
-	while xbmc.getCondVisibility('Window.IsTopMost(movieinformation)'):
-		xbmc.log("Information Window is on top.",1)
-		sleep(100)
-	homeWindow.clearProperty('umbrella.info_loaded')
-	xbmc.log("Information dialog closed. Clearing Property",1)

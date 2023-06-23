@@ -1,5 +1,7 @@
-[B]Update - v6.6.240 - June 21st, 2023[/B]
---[ENHANCEMENT] Modified limit of hidden trakt items to sync from 1000 to 2000. 
+[B]Update - v6.6.241 - June 23rd, 2023[/B]
+--[ENHANCEMENT] Added Poster artwork on resolving popup.
+--[ENHANCEMENT] Modified limit of hidden trakt items to sync from 1000 to 2000.
+--[ENHANCEMENT] Applied trakt hidden items filter to Progress Shows - More later once decided among users..
 
 [B]Update - v6.6.23 - June 14th, 2023[/B]
 --[Update] The "I have no style" update.

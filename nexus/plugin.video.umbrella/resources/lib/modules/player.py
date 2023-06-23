@@ -52,6 +52,17 @@ class Player(xbmc.Player):
 		
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
+		if self.debuglog:
+			try:
+				log_utils.log('play_source Title: %s Type: %s' % (str(title), type(title)), level=log_utils.LOGDEBUG)
+				log_utils.log('play_source Year: %s Type: %s' % (str(year), type(year)), level=log_utils.LOGDEBUG)
+				log_utils.log('play_source Season: %s Type: %s' % (str(season), type(season)), level=log_utils.LOGDEBUG)
+				log_utils.log('play_source Episode: %s Type: %s' % (str(episode), type(episode)), level=log_utils.LOGDEBUG)
+				log_utils.log('play_source IMDB: %s Type: %s TMDB: %s Type: %s TVDB: %s Type: %s' % (str(imdb), type(imdb), str(tmdb), type(tmdb), str(tvdb), type(tvdb)), level=log_utils.LOGDEBUG)
+				log_utils.log('play_source URL: %s Type: %s' % (str(url), type(url)), level=log_utils.LOGDEBUG)
+				log_utils.log('play_source Meta: %s Type: %s' % (str(self.meta), type(self.meta)), level=log_utils.LOGDEBUG)
+			except:
+				log_utils.error()
 		try:
 			from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 			if not url: raise Exception

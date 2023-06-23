@@ -430,10 +430,14 @@ class Sources:
 				else:
 					resolve_items = [i for i in chosen_source + sources_next + sources_prev]
 			except: log_utils.error()
+			try:
+				resolvePoster = meta.get('poster')
+			except:
+				resolvePoster = None
 			header = homeWindow.getProperty(self.labelProperty) + ': Resolving...'
 			if getSetting('progress.dialog') == '0':
 				if getSetting('dialogs.useumbrelladialog') == 'true':
-					progressDialog = control.getProgressWindow(header, None, 0)
+					progressDialog = control.getProgressWindow(header, resolvePoster, 1)
 					progressDialog.set_controls()
 				else:
 					progressDialog = control.progressDialog
@@ -1209,9 +1213,13 @@ class Sources:
 		if getSetting('autoplay.sd') == 'true': items = [i for i in items if not i['quality'] in ('4K', '1080p', '720p')]
 		header = homeWindow.getProperty(self.labelProperty) + ': Resolving...'
 		try:
+			resolvePoster = self.meta.get('poster')
+		except:
+			resolvePoster = None
+		try:
 			if getSetting('progress.dialog') == '0':
 				if getSetting('dialogs.useumbrelladialog') == 'true':
-					progressDialog = control.getProgressWindow(header, None, 0)
+					progressDialog = control.getProgressWindow(header, resolvePoster, 1)
 					progressDialog.set_controls()
 				else:
 					progressDialog = control.progressDialog
@@ -1771,11 +1779,10 @@ class Sources:
 		return window
 
 	def getInfo(self):
-		#import web_pdb; web_pdb.set_trace()
-		import xbmcgui
+		#import xbmcgui
 		# li = xbmcgui.Window(xbmcgui.getCurrentWindowId()).getSelectedItem()
 		# dialog = xbmcgui.Dialog(li)
 		# return dialog.info(li)
-		control.execute('Action(Info)')
-
+		#control.execute('Action(Info)')
 		#li = xbmcgui.Window().getControl(xbmcgui.getCurrentWindowId()).getSelectedItem()
+		pass

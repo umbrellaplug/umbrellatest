@@ -1204,12 +1204,18 @@ class TVshows:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
+			try:
+				hidden = traktsync.fetch_hidden_progress()
+				hidden = [str(i['tvdb']) for i in hidden]
+				self.list = [i for i in self.list if i['tvdb'] not in hidden] # removes hidden progress items
+			except:
+				from resources.lib.modules import log_utils
+				log_utils.error()
 			if create_directory: self.tvshowDirectory(self.list)
-			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
-			return self.list
+		return self.list
 
 	def worker(self):
 		try:
