@@ -491,6 +491,7 @@ class Player(xbmc.Player):
 		if self.offset != '0' and self.playback_resumed is False:
 			control.sleep(200)
 			if getSetting('trakt.scrobble') == 'true' and getSetting('resume.source') == '1': # re-adjust the resume point since dialog is based on meta runtime vs. getTotalTime() and inaccurate
+				log_utils.log('onAVStarted checking resume', level=log_utils.LOGDEBUG)
 				try:
 					total_time = self.getTotalTime()
 					progress = float(fetch_bookmarks(self.imdb, self.tmdb, self.tvdb, self.season, self.episode))
@@ -500,6 +501,7 @@ class Player(xbmc.Player):
 			self.playback_resumed = True
 		if getSetting('subtitles') == 'true': Subtitles().get(self.name, self.imdb, self.season, self.episode)
 		if self.traktCredentials:
+			log_utils.log('onAVStarted sending to scrobble reset.', level=log_utils.LOGDEBUG)
 			trakt.scrobbleReset(imdb=self.imdb, tmdb=self.tmdb, tvdb=self.tvdb, season=self.season, episode=self.episode, refresh=False) # refresh issues container.refresh()
 		log_utils.log('onAVStarted callback', level=log_utils.LOGDEBUG)
 

@@ -623,6 +623,10 @@ def syncAccounts():
 		setSetting('plex.device_id', addon('script.module.cocoscrapers').getSetting('plex.device_id'))
 		setSetting('gdrive.cloudflare_url', addon('script.module.cocoscrapers').getSetting('gdrive.cloudflare_url'))
 		homeWindow.setProperty('context.umbrella.highlightcolor', getHighlightColor())
+		if setting('context.useUmbrellaContext') == 'true':
+			homeWindow.setProperty('context.umbrella.showUmbrella', '[B][COLOR '+getHighlightColor()+']Umbrella[/COLOR][/B] - ')
+		else:
+			homeWindow.setProperty('context.umbrella.showUmbrella', '')
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()
