@@ -465,6 +465,7 @@ class Player(xbmc.Player):
 
 	def isPlayback(self):
 		# Kodi often starts playback where isPlaying() is true and isPlayingVideo() is false, since the video loading is still in progress, whereas the play is already started.
+		log_utils.log('isPlayBack Call isPlaying: %s isPlayingVideo: %s self.getTime: %s' % (self.isPlaying(), self.isPlayingVideo(), self.getTime()))
 		return self.isPlaying() and self.isPlayingVideo() and self.getTime() >= 0
 
 	def libForPlayback(self):
