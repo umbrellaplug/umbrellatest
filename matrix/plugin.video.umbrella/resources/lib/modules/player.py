@@ -472,7 +472,7 @@ class Player(xbmc.Player):
 			return self.isPlaying() and self.isPlayingVideo() and self.getTime() >= 0
 		except:
 			log_utils.log('isPlayBack Call Exception', log_utils.LOGDEBUG)
-			return True, False, 0.0
+			return True and False and 0.0
 
 	def libForPlayback(self):
 		if self.DBID is None: return
