@@ -471,6 +471,7 @@ class Player(xbmc.Player):
 			log_utils.log('isPlayBack Call isPlaying: %s isPlayingVideo: %s self.getTime: %s' % (self.isPlaying(), self.isPlayingVideo(), self.getTime()))
 			return self.isPlaying() and self.isPlayingVideo() and self.getTime() >= 0
 		except:
+			log_utils.log('isPlayBack Call Exception', log_utils.LOGDEBUG)
 			return True, False, 0.0
 
 	def libForPlayback(self):
@@ -489,6 +490,7 @@ class Player(xbmc.Player):
 
 ### Kodi player callback methods ###
 	def onAVStarted(self): # Kodi docs suggests "Use onAVStarted() instead of onPlayBackStarted() as of v18"
+		control.sleep(200)
 		for i in range(0, 500):
 			if self.isPlayback():
 				control.closeAll()
@@ -503,11 +505,14 @@ class Player(xbmc.Player):
 					progress = float(fetch_bookmarks(self.imdb, self.tmdb, self.tvdb, self.season, self.episode))
 					self.offset = (progress / 100) * total_time
 				except: pass
-			self.seekTime(self.offset)
+			try:
+				self.seekTime(self.offset)
+			except:
+				log_utils.log('Exception trying to seekTime() offset: %s'% self.offset, level=log_utils.LOGDEBUG)
 			self.playback_resumed = True
 		if getSetting('subtitles') == 'true': Subtitles().get(self.name, self.imdb, self.season, self.episode)
 		if self.traktCredentials:
-			log_utils.log('onAVStarted sending to scrobble reset.', level=log_utils.LOGDEBUG)
+			log_utils.log('onAVStarted sending to scrobble reset. imdb: %s type: %s tmdb: %s tmdb type: %s tvdb: %s tvdb type: %s season: %s season type: %s episode: %s episode type: %s'% (self.imdb, type(self.imdb), self.tmdb, type(self.tmdb), self.tvdb, type(self.tvdb), self.season, type(self.season), self.episode, type(self.episode)), level=log_utils.LOGDEBUG)
 			trakt.scrobbleReset(imdb=self.imdb, tmdb=self.tmdb, tvdb=self.tvdb, season=self.season, episode=self.episode, refresh=False) # refresh issues container.refresh()
 		log_utils.log('onAVStarted callback', level=log_utils.LOGDEBUG)
 
