@@ -127,6 +127,7 @@ class ReuseLanguageInvokerCheck:
 			if current_addon_setting == '':
 				current_addon_setting = 'true'
 				control.setSetting('reuse.languageinvoker', current_addon_setting)
+			log_utils.log('Current Addon Setting: %s Setting Type: %s Current XML Setting: %s Setting Type: %s' % (str(current_addon_setting), type(current_addon_setting), str(current_xml_setting), type(current_xml_setting)), log_utils.LOGDEBUG)
 			if current_xml_setting == current_addon_setting:
 				return control.log('[ plugin.video.umbrella ]  ReuseLanguageInvokerCheck Service Finished', LOGINFO)
 			control.okDialog(message='%s\n%s' % (control.lang(33023), control.lang(33020)))
