@@ -66,10 +66,9 @@ class Sources:
 		self.easynewsHighlightColor = control.getProviderHighlightColor('easynews')
 		self.plexHighlightColor = control.getProviderHighlightColor('plexshare')
 		self.gdriveHighlightColor = control.getProviderHighlightColor('gdrive')
-		self.furkHighlightColor = control.getProviderHighlightColor('furk')
 		self.filePursuitHighlightColor = control.getProviderHighlightColor('filepursuit')
 		self.useProviders = True if getSetting('sources.highlightmethod') == '1' else False
-		self.providerColors = {"useproviders": self.useProviders, "defaultcolor": self.sourceHighlightColor, "realdebrid": self.realdebridHighlightColor, "alldebrid": self.alldebridHighlightColor, "premiumize": self.premiumizeHighlightColor, "easynews": self.easynewsHighlightColor, "plexshare": self.plexHighlightColor, "gdrive": self.gdriveHighlightColor, "furk": self.furkHighlightColor,"filepursuit": self.filePursuitHighlightColor}
+		self.providerColors = {"useproviders": self.useProviders, "defaultcolor": self.sourceHighlightColor, "realdebrid": self.realdebridHighlightColor, "alldebrid": self.alldebridHighlightColor, "premiumize": self.premiumizeHighlightColor, "easynews": self.easynewsHighlightColor, "plexshare": self.plexHighlightColor, "gdrive": self.gdriveHighlightColor, "filepursuit": self.filePursuitHighlightColor}
 		self.providercache_hours = int(getSetting('cache.providers'))
 		self.debuglog = control.setting('debug.level') == '1'
 		self.retryallsources = getSetting('sources.retryall') == 'true'
@@ -1053,9 +1052,6 @@ class Sources:
 		if getSetting('easynews.enable') == 'true':
 			easynewsList = [i for i in direct if i['provider'] == 'easynews']
 			directstart.extend(easynewsList)
-		if getSetting('furk.enable') == 'true':
-			furkList = [i for i in direct if i['provider'] == 'furk']
-			directstart.extend(furkList)
 		if getSetting('plex.enable') == 'true':
 			plexList = [i for i in direct if i['provider'] == 'plexshare']
 			directstart.extend(plexList)
@@ -1302,7 +1298,7 @@ class Sources:
 			try:
 				direct = item['direct']
 				if direct:
-					direct_sources = ('furk', 'ad_cloud', 'pm_cloud', 'rd_cloud')
+					direct_sources = ('ad_cloud', 'pm_cloud', 'rd_cloud')
 					if item['provider'] in direct_sources:
 						try:
 							call = [i[1] for i in self.sourceDict if i[0] == item['provider']][0]
@@ -1536,7 +1532,7 @@ class Sources:
 		self.prem_providers = [] # for sorting by debrid and direct source links priority
 		if control.setting('easynews.user'): self.prem_providers += [('easynews', int(getSetting('easynews.priority')))]
 		if control.setting('filepursuit.api'): self.prem_providers += [('filepursuit', int(getSetting('filepursuit.priority')))]
-		if control.setting('furk.user_name'): self.prem_providers += [('furk', int(getSetting('furk.priority')))]
+		#if control.setting('furk.user_name'): self.prem_providers += [('furk', int(getSetting('furk.priority')))]
 		if control.setting('gdrive.cloudflare_url'): self.prem_providers += [('gdrive', int(getSetting('gdrive.priority')))]
 		if control.setting('plex.token'): self.prem_providers += [('plexshare', int(getSetting('plexshare.priority')))]
 		self.prem_providers += [(d.name, int(d.sort_priority)) for d in self.debrid_resolvers]

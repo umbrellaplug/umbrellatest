@@ -1,9 +1,10 @@
-[B]Update - v6.6.246 - June 27th, 2023[/B]
+[B]Update - v6.6.247 - June 28th, 2023[/B]
 --[ENHANCEMENT] Added Poster artwork on resolving popup.
 --[ENHANCEMENT] Modified limit of hidden trakt items to sync from 1000 to 2000.
 --[ENHANCEMENT] Applied trakt hidden items filter to Progress Shows - More later once decided among users..
 --[ENHANCEMENT] Added option to remove Umbrella text from context menu items.
 --[LOGGING] Added some logging to track play action.
+--[REMOVAL] Removed Furk from addon. It will no longer be supported.
 
 [B]Update - v6.6.23 - June 14th, 2023[/B]
 --[Update] The "I have no style" update.

@@ -52,22 +52,22 @@ class Player(xbmc.Player):
 		
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
-		if self.debuglog:
-			try:
-				log_utils.log('play_source Title: %s Type: %s' % (str(title), type(title)), level=log_utils.LOGDEBUG)
-				log_utils.log('play_source Year: %s Type: %s' % (str(year), type(year)), level=log_utils.LOGDEBUG)
-				log_utils.log('play_source Season: %s Type: %s' % (str(season), type(season)), level=log_utils.LOGDEBUG)
-				log_utils.log('play_source Episode: %s Type: %s' % (str(episode), type(episode)), level=log_utils.LOGDEBUG)
-				log_utils.log('play_source IMDB: %s Type: %s TMDB: %s Type: %s TVDB: %s Type: %s' % (str(imdb), type(imdb), str(tmdb), type(tmdb), str(tvdb), type(tvdb)), level=log_utils.LOGDEBUG)
-				log_utils.log('play_source URL: %s Type: %s' % (str(url), type(url)), level=log_utils.LOGDEBUG)
-				log_utils.log('play_source Meta: %s Type: %s' % (str(self.meta), type(self.meta)), level=log_utils.LOGDEBUG)
-			except:
-				log_utils.error()
+		# if self.debuglog:
+		# 	try:
+		# 		log_utils.log('play_source Title: %s Type: %s' % (str(title), type(title)), level=log_utils.LOGDEBUG)
+		# 		log_utils.log('play_source Year: %s Type: %s' % (str(year), type(year)), level=log_utils.LOGDEBUG)
+		# 		log_utils.log('play_source Season: %s Type: %s' % (str(season), type(season)), level=log_utils.LOGDEBUG)
+		# 		log_utils.log('play_source Episode: %s Type: %s' % (str(episode), type(episode)), level=log_utils.LOGDEBUG)
+		# 		log_utils.log('play_source IMDB: %s Type: %s TMDB: %s Type: %s TVDB: %s Type: %s' % (str(imdb), type(imdb), str(tmdb), type(tmdb), str(tvdb), type(tvdb)), level=log_utils.LOGDEBUG)
+		# 		log_utils.log('play_source URL: %s Type: %s' % (str(url), type(url)), level=log_utils.LOGDEBUG)
+		# 		log_utils.log('play_source Meta: %s Type: %s' % (str(self.meta), type(self.meta)), level=log_utils.LOGDEBUG)
+		# 	except:
+		# 		log_utils.error()
 		try:
 			from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 			if not url: raise Exception
-			if self.debuglog:
-				log_utils.log('Play Source Received title: %s year: %s metatype: %s' % (title, year, type(meta)), level=log_utils.LOGDEBUG)
+			# if self.debuglog:
+			# 	log_utils.log('Play Source Received title: %s year: %s metatype: %s' % (title, year, type(meta)), level=log_utils.LOGDEBUG)
 			self.media_type = 'movie' if season is None or episode is None else 'episode'
 			self.title, self.year = title, str(year)
 			if self.media_type == 'movie':
@@ -301,7 +301,6 @@ class Player(xbmc.Player):
 	def keepAlive(self):
 		pname = '%s.player.overlay' % control.addonInfo('id')
 		homeWindow.clearProperty(pname)
-		log_utils.log('inside keepAlive before isPlayback Check.', log_utils.LOGDEBUG)
 		xbmc.sleep(200) #added for keep alive crash
 		for i in range(0, 500):
 			if self.isPlayback():
@@ -479,7 +478,7 @@ class Player(xbmc.Player):
 			playTime = self.getTime() >= 0
 		except:
 			playTime = False
-		log_utils.log('isPlayBack Call isPlaying: %s isPlayingVideo: %s self.getTime: %s' % (playing, playingvideo, playTime))
+		#log_utils.log('isPlayBack Call isPlaying: %s isPlayingVideo: %s self.getTime: %s' % (playing, playingvideo, playTime))
 		return playing and playingvideo and playTime
 
 	def libForPlayback(self):
@@ -507,7 +506,6 @@ class Player(xbmc.Player):
 		if self.offset != '0' and self.playback_resumed is False:
 			control.sleep(200)
 			if getSetting('trakt.scrobble') == 'true' and getSetting('resume.source') == '1': # re-adjust the resume point since dialog is based on meta runtime vs. getTotalTime() and inaccurate
-				log_utils.log('onAVStarted checking resume', level=log_utils.LOGDEBUG)
 				try:
 					total_time = self.getTotalTime()
 					progress = float(fetch_bookmarks(self.imdb, self.tmdb, self.tvdb, self.season, self.episode))
@@ -520,7 +518,6 @@ class Player(xbmc.Player):
 			self.playback_resumed = True
 		if getSetting('subtitles') == 'true': Subtitles().get(self.name, self.imdb, self.season, self.episode)
 		if self.traktCredentials:
-			log_utils.log('onAVStarted sending to scrobble reset. imdb: %s type: %s tmdb: %s tmdb type: %s tvdb: %s tvdb type: %s season: %s season type: %s episode: %s episode type: %s'% (self.imdb, type(self.imdb), self.tmdb, type(self.tmdb), self.tvdb, type(self.tvdb), self.season, type(self.season), self.episode, type(self.episode)), level=log_utils.LOGDEBUG)
 			trakt.scrobbleReset(imdb=self.imdb, tmdb=self.tmdb, tvdb=self.tvdb, season=self.season, episode=self.episode, refresh=False) # refresh issues container.refresh()
 		log_utils.log('onAVStarted callback', level=log_utils.LOGDEBUG)
 
