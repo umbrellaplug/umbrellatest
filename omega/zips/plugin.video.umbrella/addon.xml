@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.248">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.249">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.cocoscrapers" version="1.0.10"/>
@@ -147,7 +147,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.248 - June 29th, 2023[/B]
+[B]Update - v6.6.249 - June 29th, 2023[/B]
 --[ENHANCEMENT] Added Poster artwork on resolving popup.
 --[ENHANCEMENT] Modified limit of hidden trakt items to sync from 1000 to 2000.
 --[ENHANCEMENT] Applied trakt hidden items filter to Progress Shows - More later once decided among users..

@@ -1366,7 +1366,7 @@ def scrobbleEpisode(imdb, tmdb, tvdb, season, episode, watched_percent):
 
 def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh=True, widgetRefresh=False):
 	if not getTraktCredentialsInfo(): return
-	control.busy()
+	if not control.player.isPlaying(): control.busy()
 	success = False
 	try:
 		content_type = 'movie' if not episode else 'episode'
@@ -1396,7 +1396,7 @@ def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh
 	except: log_utils.error()
 
 def scrobbleResetItems(imdb_ids, tvdb_dicts=None, refresh=True, widgetRefresh=False):
-	control.busy()
+	if control.player.isPlaying(): control.busy()
 	success = False
 	try:
 		content_type = 'movie' if not tvdb_dicts else 'episode'

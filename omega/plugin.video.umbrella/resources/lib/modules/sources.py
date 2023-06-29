@@ -1207,6 +1207,8 @@ class Sources:
 		return filter
 
 	def sourcesAutoPlay(self, items):
+		control.hide()
+		control.sleep(200)
 		if getSetting('autoplay.sd') == 'true': items = [i for i in items if not i['quality'] in ('4K', '1080p', '720p')]
 		header = homeWindow.getProperty(self.labelProperty) + ': Resolving...'
 		try:
