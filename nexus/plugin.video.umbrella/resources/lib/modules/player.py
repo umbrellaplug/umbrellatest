@@ -303,7 +303,6 @@ class Player(xbmc.Player):
 		control.sleep(200)
 		pname = '%s.player.overlay' % control.addonInfo('id')
 		homeWindow.clearProperty(pname)
-		xbmc.sleep(200) #added for keep alive crash
 		for i in range(0, 500):
 			if self.isPlayback():
 				control.closeAll()
