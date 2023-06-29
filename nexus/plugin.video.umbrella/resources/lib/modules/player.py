@@ -299,6 +299,8 @@ class Player(xbmc.Player):
 		return remaining_time
 
 	def keepAlive(self):
+		control.hide()
+		control.sleep(200)
 		pname = '%s.player.overlay' % control.addonInfo('id')
 		homeWindow.clearProperty(pname)
 		xbmc.sleep(200) #added for keep alive crash

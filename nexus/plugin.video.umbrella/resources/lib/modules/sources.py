@@ -1070,6 +1070,7 @@ class Sources:
 		if deepcopy_sources: hashList = [i['hash'] for i in deepcopy_sources]
 		threads = [] ; self.filter = []
 		valid_hosters = set([i['source'] for i in self.sources if 'magnet:' not in i['url']])
+		control.hide()
 
 		def checkStatus(function, debrid_name, valid_hoster):
 			try:

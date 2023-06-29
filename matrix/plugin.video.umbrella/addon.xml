@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.247">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.248">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.cocoscrapers" version="1.0.10"/>
@@ -147,13 +147,14 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.247 - June 28th, 2023[/B]
+[B]Update - v6.6.248 - June 29th, 2023[/B]
 --[ENHANCEMENT] Added Poster artwork on resolving popup.
 --[ENHANCEMENT] Modified limit of hidden trakt items to sync from 1000 to 2000.
 --[ENHANCEMENT] Applied trakt hidden items filter to Progress Shows - More later once decided among users..
 --[ENHANCEMENT] Added option to remove Umbrella text from context menu items.
 --[LOGGING] Added some logging to track play action.
 --[REMOVAL] Removed Furk from addon. It will no longer be supported.
+--[FIX] Added code to kill busy dialog when filtering sources completed.
 		</news>
 	</extension>
 
