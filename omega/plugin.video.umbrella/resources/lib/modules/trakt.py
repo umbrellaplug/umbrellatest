@@ -1371,7 +1371,7 @@ def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh
 	try:
 		content_type = 'movie' if not episode else 'episode'
 		resume_info = traktsync.fetch_bookmarks(imdb, tmdb, tvdb, season, episode, ret_type='resume_info')
-		log_utils.log('Trakt ScrobbleReset imdb: %s imdb type: %s tmdb: %s tmdb type: %s tvdb: %s tvdb type: %s season: %s season type: %s episode: %s episode type: %s resume info: %s' % (imdb, type(imdb), tmdb, type(tmdb), tvdb, type(tvdb), season, type(season), episode, type(episode), str(resume_info)), level=log_utils.LOGDEBUG)
+		#log_utils.log('Trakt ScrobbleReset imdb: %s imdb type: %s tmdb: %s tmdb type: %s tvdb: %s tvdb type: %s season: %s season type: %s episode: %s episode type: %s resume info: %s' % (imdb, type(imdb), tmdb, type(tmdb), tvdb, type(tvdb), season, type(season), episode, type(episode), str(resume_info)), level=log_utils.LOGDEBUG)
 		if resume_info == '0': return control.hide() # returns string "0" if no data in db 
 		headers['Authorization'] = 'Bearer %s' % getSetting('trakt.user.token')
 		success = session.delete('https://api.trakt.tv/sync/playback/%s' % resume_info[1], headers=headers).status_code == 204

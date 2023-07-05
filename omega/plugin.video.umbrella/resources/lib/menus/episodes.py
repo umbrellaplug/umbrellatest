@@ -618,6 +618,9 @@ class Episodes:
 				values.update(seasonEpisodes)
 				values.update(episode_meta)
 				values['year'] = itemyear.get('year')
+				duration = values['duration']
+				if duration:
+					values.update({'duration': int(duration)*60})
 				for k in ('episodes',): values.pop(k, None) # pop() keys from seasonEpisodes that are not needed anymore
 				try: # used for fanart fetch since not available in seasonEpisodes request
 					art = cache.get(tmdb_indexer().get_art, 96, tmdb)
@@ -789,7 +792,6 @@ class Episodes:
 					if not self.progress_showunaired and i.get('unaired', '') == 'true': continue
 				else:
 					if not self.showunaired and i.get('unaired', '') == 'true': continue
-
 
 
 				tvshowtitle, title, imdb, tmdb, tvdb = i.get('tvshowtitle'), i.get('title'), i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', '')
@@ -999,11 +1001,11 @@ class Episodes:
 						meta.update({'title': new_title})
 					except: pass
 				#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
-				
 				try:
 					resumetime = resumetime
 				except:
 					resumetime = ''
+				
 				control.set_info(item, meta, setUniqueIDs=setUniqueIDs, resumetime=resumetime)
 				if is_widget and control.getKodiVersion() > 19.5 and self.useFullContext != True:
 					pass

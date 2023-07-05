@@ -1217,7 +1217,6 @@ class TVshows:
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
-			#import web_pdb; web_pdb.set_trace()
 			#if create_directory: self.tvshowDirectory(self.list)
 		except:
 			from resources.lib.modules import log_utils

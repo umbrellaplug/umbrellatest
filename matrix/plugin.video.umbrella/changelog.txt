@@ -1,4 +1,7 @@
-[B]Update - v6.6.249 - June 29th, 2023[/B]
+[B]Update - v6.6.251 - July 5th, 2023[/B]
+--[FIX] Changes made for duration for episodes pulled from trakt.
+
+[B]Update - v6.6.24 - June 29th, 2023[/B]
 --[ENHANCEMENT] Added Poster artwork on resolving popup.
 --[ENHANCEMENT] Modified limit of hidden trakt items to sync from 1000 to 2000.
 --[ENHANCEMENT] Applied trakt hidden items filter to Progress Shows - More later once decided among users..
