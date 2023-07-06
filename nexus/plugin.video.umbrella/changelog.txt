@@ -1,5 +1,6 @@
-[B]Update - v6.6.251 - July 5th, 2023[/B]
+[B]Update - v6.6.252 - July 6th, 2023[/B]
 --[FIX] Changes made for duration for episodes pulled from trakt.
+--[FIX] Logging added for troubleshooting caching.
 
 [B]Update - v6.6.24 - June 29th, 2023[/B]
 --[ENHANCEMENT] Added Poster artwork on resolving popup.

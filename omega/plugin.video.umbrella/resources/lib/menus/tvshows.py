@@ -162,7 +162,14 @@ class TVshows:
 			elif u in self.trakt_link and self.search_link in url:
 				self.list = cache.get(self.trakt_list, 0, url, self.trakt_user)
 				if idx: self.worker()
+			elif u in self.trakt_link and 'trending' in url:
+				from resources.lib.modules import log_utils
+				log_utils.log('TVShows get() trending trakt Hours Used: %s'% self.trakttrending_hours, log_utils.LOGDEBUG)
+				self.list = cache.get(self.trakt_list, self.trakttrending_hours, url, self.trakt_user) #trakt trending
+				if idx: self.worker()
 			elif u in self.trakt_link:
+				from resources.lib.modules import log_utils
+				log_utils.log('TVShows get() other trakt Hours Used: %s'% self.trakt_hours, log_utils.LOGDEBUG)
 				self.list = cache.get(self.trakt_list, self.trakt_hours, url, self.trakt_user) #trakt other
 				if idx: self.worker()
 			elif u in self.imdb_link and ('/user/' in url or '/list/' in url):
@@ -265,6 +272,8 @@ class TVshows:
 			if '/popular' in url:
 				self.list = cache.get(self.trakt_public_list, self.traktpopular_hours, url)
 			elif '/trending' in url:
+				from resources.lib.modules import log_utils
+				log_utils.log('TraktPublicLists Hours Used: %s' % str(self.trakttrending_hours), log_utils.LOGDEBUG)
 				self.list = cache.get(self.trakt_public_list, self.trakttrending_hours, url)
 			else:
 				self.list = cache.get(self.trakt_public_list, self.trakt_hours, url) #trakt other
