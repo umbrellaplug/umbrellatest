@@ -26,6 +26,7 @@ def get(function, duration, *args):
 		key = _hash_function(function, args)
 		cache_result = cache_get(key)
 		if cache_result:
+			from resources.lib.modules import log_utils
 			try: result = literal_eval(cache_result['value'])
 			except: result = None
 			if _is_cache_valid(cache_result['date'], duration):
@@ -62,8 +63,6 @@ def get(function, duration, *args):
 def _is_cache_valid(cached_time, cache_timeout):
 	now = int(time())
 	diff = now - cached_time
-	from resources.lib.modules import log_utils
-	log_utils.log('is_cache_valid diff between now and cached time:%s cache_timeout: %s'% (diff, (cache_timeout*3600)), log_utils.LOGDEBUG)
 	return (cache_timeout * 3600) > diff
 
 def timeout(function, *args):

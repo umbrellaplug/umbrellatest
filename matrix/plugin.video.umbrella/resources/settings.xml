@@ -5724,6 +5724,11 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="context.umbrella.playTrailer" type="boolean" label="40431" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="context.umbrella.traktManager" type="boolean" label="32515" help="">
 					<level>0</level>
 					<default>true</default>

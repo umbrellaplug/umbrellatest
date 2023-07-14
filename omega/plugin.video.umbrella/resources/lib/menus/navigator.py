@@ -97,7 +97,6 @@ class Navigator:
 			self.addDirectoryItem(40331 if self.indexLabels else 32442, 'movies&url=tmdbrecentweek', 'tmdb.png' if self.iconLogos else 'trending.png', 'DefaultTVShows.png')
 		if getMenuEnabled('navi.movie.trakt.recommended'):
 			self.addDirectoryItem(32445 if self.indexLabels else 32444, 'movies&url=traktrecommendations', 'trakt.png' if self.iconLogos else 'highly-rated.png', 'DefaultMovies.png')
-		#will need some sort of check here
 		if self.hasLibMovies and getMenuEnabled('navi.movie.lib.similar'):
 			self.addDirectoryItem(40392 if self.indexLabels else 40392, 'moviesimilarFromLibrary', 'most-popular.png' if self.iconLogos else 'most-popular.png', 'DefaultMovies.png')
 		if self.hasLibMovies and getMenuEnabled('navi.movie.lib.recommended'):	

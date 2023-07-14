@@ -4666,3 +4666,7 @@ msgstr ""
 msgctxt "#40430"
 msgid "Show Umbrella next to Umbrella context items."
 msgstr ""
+
+msgctxt "#40431"
+msgid "Play Trailer"
+msgstr ""

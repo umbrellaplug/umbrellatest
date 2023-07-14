@@ -466,6 +466,7 @@ def trigger_widget_refresh():
 	execute('UpdateLibrary(video,/fake/path/to/force/refresh/on/home)') # make sure this is ok coupled with above
 
 def refresh_playAction(): # for umbrella global CM play actions
+	xbmc.log('refresh playAction', 1)
 	autoPlayTV = 'true' if setting('play.mode.tv') == '1' else ''
 	homeWindow.setProperty('umbrella.autoPlaytv.enabled', autoPlayTV)
 	autoPlayMovie = 'true' if setting('play.mode.movie') == '1' else ''

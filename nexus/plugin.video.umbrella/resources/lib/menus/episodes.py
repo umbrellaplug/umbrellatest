@@ -782,6 +782,7 @@ class Episodes:
 		traktManagerMenu, playlistManagerMenu, queueMenu = getLS(32070), getLS(35522), getLS(32065)
 		tvshowBrowserMenu, addToLibrary = getLS(32071), getLS(32551)
 		clearSourcesMenu, rescrapeMenu, progressRefreshMenu = getLS(32611), getLS(32185), getLS(32194)
+		trailerMenu = getLS(40431)
 
 		for i in items:
 			try:

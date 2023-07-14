@@ -802,6 +802,11 @@ def router(argv2):
 			windowedtrailer = params.get('windowedtrailer')
 			windowedtrailer = int(windowedtrailer) if windowedtrailer in ("0","1") else 0
 			trailer.Trailer().play(params.get('type'), name, year, url, imdb, windowedtrailer)
+		elif action == 'play_Trailer_Context':
+			from resources.lib.modules import trailer
+			windowedtrailer = params.get('windowedtrailer')
+			windowedtrailer = int(windowedtrailer) if windowedtrailer in ("0","1") else 0
+			trailer.Trailer().playContext(params.get('type'), name, year, url, imdb, windowedtrailer)
 		elif action == 'play_Random':
 			rtype = params.get('rtype')
 			if rtype == 'movie':

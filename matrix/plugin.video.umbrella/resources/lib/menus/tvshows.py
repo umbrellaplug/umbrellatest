@@ -164,12 +164,10 @@ class TVshows:
 				if idx: self.worker()
 			elif u in self.trakt_link and 'trending' in url:
 				from resources.lib.modules import log_utils
-				log_utils.log('TVShows get() trending trakt Hours Used: %s'% self.trakttrending_hours, log_utils.LOGDEBUG)
 				self.list = cache.get(self.trakt_list, self.trakttrending_hours, url, self.trakt_user) #trakt trending
 				if idx: self.worker()
 			elif u in self.trakt_link:
 				from resources.lib.modules import log_utils
-				log_utils.log('TVShows get() other trakt Hours Used: %s'% self.trakt_hours, log_utils.LOGDEBUG)
 				self.list = cache.get(self.trakt_list, self.trakt_hours, url, self.trakt_user) #trakt other
 				if idx: self.worker()
 			elif u in self.imdb_link and ('/user/' in url or '/list/' in url):
@@ -1338,7 +1336,7 @@ class TVshows:
 		traktManagerMenu, queueMenu = getLS(32070), getLS(32065)
 		showPlaylistMenu, clearPlaylistMenu = getLS(35517), getLS(35516)
 		playRandom, addToLibrary = getLS(32535), getLS(32551)
-		nextMenu, findSimilarMenu = getLS(32053), getLS(32184)
+		nextMenu, findSimilarMenu, trailerMenu = getLS(32053), getLS(32184), getLS(40431)
 		for i in items:
 			try:
 				imdb, tmdb, tvdb, year, trailer = i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', ''), i.get('year', ''), i.get('trailer', '')
@@ -1383,6 +1381,8 @@ class TVshows:
 
 ####-Context Menu and Overlays-####
 				cm = []
+				if trailer:
+					cm.append((trailerMenu, 'RunPlugin(%s?action=play_Trailer_Context&type=%s&name=%s&year=%s&imdb=%s&url=%s)' % (sysaddon, 'show', systitle, year, imdb, trailer)))
 				try:
 					watched = (getTVShowOverlay(indicators[1], imdb, tvdb) == '5') if indicators else False
 					if self.traktCredentials:
