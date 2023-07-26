@@ -190,13 +190,9 @@ class Movies:
 				self.list = cache.get(self.trakt_list, 6, url, self.trakt_user)
 				if idx: self.worker()
 			elif u in self.trakt_link and 'trending' in url:
-				from resources.lib.modules import log_utils
-				log_utils.log('Movies get() trending trakt Hours Used: %s'% self.trakttrending_hours, log_utils.LOGDEBUG)
 				self.list = cache.get(self.trakt_list,self.trakttrending_hours, url, self.trakt_user) #trakt trending
 				if idx: self.worker()
 			elif u in self.trakt_link:
-				from resources.lib.modules import log_utils
-				log_utils.log('Movies get() trakt other Hours Used: %s'% self.trakt_hours, log_utils.LOGDEBUG)
 				self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user) #trakt other
 				if idx: self.worker()
 			elif u in self.imdb_link and ('/user/' in url or '/list/' in url):

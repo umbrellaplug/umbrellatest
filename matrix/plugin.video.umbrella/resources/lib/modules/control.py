@@ -430,17 +430,26 @@ def getBackgroundColor(n):
 	return color 
 
 def getColor(n):
-	colorChart = ('ff000000','ffffffff', 'ffd3d3d3', 'ff808080', 'FFFFF0DB', 'ffb8860b', 'ffffd700', 'ffffff00', 'ffcd853f', 'ffff4500',
-						'ffffc0cb','ffff1493','ffff00ff','fff08080', 'FFD10000', 'FF750000', 'ff8a2be2', 'ff9932cc', 'ff800080', 'ff4b0082', 'ff483d8b', 'ff6a5acd','ff000080', 'ff0000ff', 'ff00bfff', 'ff1e90ff','ff87ceeb', 'ffb0e0e6', 'ff40e0d0', 'ff00ffff', 'ff00ffff','ff7fffd4','ffadff2f','ff00fa9a','ff008000', 'ff00ff00', 'ffff0000')
-	if not n: n = '0'
-	color = colorChart[int(n)]
-	return color
+	if getKodiVersion()>=20:
+		return n
+	else:
+		colorChart = ('ff000000','ffffffff', 'ffd3d3d3', 'ff808080', 'FFFFF0DB', 'ffb8860b', 'ffffd700', 'ffffff00', 'ffcd853f', 'ffff4500',
+							'ffffc0cb','ffff1493','ffff00ff','fff08080', 'FFD10000', 'FF750000', 'ff8a2be2', 'ff9932cc', 'ff800080', 'ff4b0082', 'ff483d8b', 'ff6a5acd','ff000080', 'ff0000ff', 'ff00bfff', 'ff1e90ff','ff87ceeb', 'ffb0e0e6', 'ff40e0d0', 'ff00ffff', 'ff00ffff','ff7fffd4','ffadff2f','ff00fa9a','ff008000', 'ff00ff00', 'ffff0000')
+		if not n: n = '0'
+		color = colorChart[int(n)]
+		return color
 
 def getHighlightColor():
-	return getColor(setting('highlight.color'))
+	if getKodiVersion() >= 20:
+		return (setting('highlight.color'))
+	else:
+		return getColor(setting('highlight.color'))
 
 def getSourceHighlightColor():
-	return getColor(setting('sources.highlight.color'))
+	if getKodiVersion() >= 20:
+		return (setting('sources.highlight.color'))
+	else:
+		return getColor(setting('sources.highlight.color'))
 
 def getProviderHighlightColor(sourcename):
     #Real-Debrid
@@ -450,7 +459,10 @@ def getProviderHighlightColor(sourcename):
 	return getColor(setting(source))
 
 def getPlayNextBackgroundColor():
-	return getBackgroundColor(setting('playnext.background.color'))
+	if getKodiVersion() >= 20:
+		return (setting('playnext.background.color'))
+	else:
+		return getBackgroundColor(setting('playnext.background.color'))
 
 def getMenuEnabled(menu_title):
 	is_enabled = setting(menu_title).strip()

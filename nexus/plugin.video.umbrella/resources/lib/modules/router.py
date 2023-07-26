@@ -286,6 +286,9 @@ def router(argv2):
 	elif action == 'shows_progress':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().tvshow_progress(url)
+	elif action == 'shows_watched':
+		from resources.lib.menus import tvshows
+		tvshows.TVshows().tvshow_watched(url)
 
 	####################################################
 	#---SEASONS

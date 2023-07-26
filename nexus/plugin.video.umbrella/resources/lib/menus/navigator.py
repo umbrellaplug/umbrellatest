@@ -249,6 +249,7 @@ class Navigator:
 				self.addDirectoryItem(35308, 'episodesUnfinished&url=traktunfinished', 'trakt.png', 'trakt.png', queue=True)
 				self.addDirectoryItem(32037, 'calendar&url=progress', 'trakt.png', 'trakt.png', queue=True)
 				self.addDirectoryItem(40401, 'shows_progress&url=progresstv', 'trakt.png', 'trakt.png', queue=True)
+				self.addDirectoryItem(40433, 'shows_watched&url=watchedtv', 'trakt.png', 'trakt.png', queue=True)
 				self.addDirectoryItem(32019, 'upcomingProgress&url=progress', 'trakt.png', 'trakt.png', queue=True)
 				self.addDirectoryItem(32202, 'calendar&url=mycalendarRecent', 'trakt.png', 'trakt.png', queue=True)
 				self.addDirectoryItem(32203, 'calendar&url=mycalendarUpcoming', 'trakt.png', 'trakt.png', queue=True)

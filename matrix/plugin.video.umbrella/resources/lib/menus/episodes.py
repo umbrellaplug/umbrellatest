@@ -238,6 +238,15 @@ class Episodes:
 				if self.list:
 					for i in range(len(self.list)): self.list[i]['traktHistory'] = True
 					self.list = sorted(self.list, key=lambda k: k['lastplayed'], reverse=True)
+					result = []
+					for i in self.list:
+						notAdded = True
+						for j in result:
+							if i.get('episodeIDS') == j.get('episodeIDS'):
+								notAdded = False
+						if notAdded == True:
+							result.append(i)
+					self.list = result
 			elif self.tvmaze_link in url and url == self.added_link:
 				urls = [i['url'] for i in self.calendars(idx=False)][:5]
 				self.list = []

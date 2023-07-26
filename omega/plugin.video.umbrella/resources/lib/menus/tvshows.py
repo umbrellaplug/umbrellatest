@@ -46,6 +46,7 @@ class TVshows:
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 		self.trakt_directProgressScrape = getSetting('trakt.directProgress.scrape') == 'true'
 		self.trakt_progress_hours = int(getSetting('cache.traktprogress'))
+		self.watched_progress = getSetting('tvshows.progress.watched') == 'true'
 		if datetime.today().month > 6:
 			traktyears='years='+str(datetime.today().year)
 		else:
@@ -1230,6 +1231,36 @@ class TVshows:
 			log_utils.error()
 		return self.list
 
+	def tvshow_watched(self, url):
+		self.list = []
+		try:
+			cache.get(self.trakt_tvshow_watched, 0)
+			self.sort(type='watched')
+			if self.list is None: self.list = []
+			hasNext = False
+			self.tvshowDirectory(self.list, next=hasNext, isProgress=False, isWatched=True)
+			return self.list
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+			if not self.list:
+				control.hide()
+				if self.notifications: control.notification(title=32326, message=33049)
+
+	def trakt_tvshow_watched(self, create_directory=True):
+		self.list = []
+		try:
+			historyurl = 'https://api.trakt.tv/users/me/watched/shows'
+			self.list = self.trakt_list(historyurl, self.trakt_user)
+			next = ''
+			for i in range(len(self.list)): self.list[i]['next'] = next
+			self.worker()
+			if self.list is None: self.list = []
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+		return self.list
+
 	def worker(self):
 		try:
 			if not self.list: return
@@ -1318,7 +1349,7 @@ class TVshows:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def tvshowDirectory(self, items, next=True, isProgress=False):
+	def tvshowDirectory(self, items, next=True, isProgress=False, isWatched=False):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 		if getSetting('trakt.directProgress.scrape') == 'true' and getSetting('enable.playnext') == 'true':
 			pass
@@ -1430,6 +1461,16 @@ class TVshows:
 					if self.hide_watched_in_widget and str(xbmc.getInfoLabel("Window.Property(xmlfile)")) != 'Custom_1114_Search.xml':
 						if str(meta.get('playcount')) == '1':
 							continue
+				if isProgress:
+					#check for watched removal in progress for shows here.
+					if self.watched_progress:
+						pass
+					else:
+						if str(meta.get('playcount')) == '1':
+							continue
+				if isWatched:
+					if str(meta.get('playcount')) != '1':
+						continue
 				setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb} #k20setinfo
 				#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
 				control.set_info(item, meta, setUniqueIDs)
