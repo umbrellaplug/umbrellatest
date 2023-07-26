@@ -638,6 +638,26 @@ def syncAccounts():
 			homeWindow.setProperty('context.umbrella.showUmbrella', '[B][COLOR '+getHighlightColor()+']Umbrella[/COLOR][/B] - ')
 		else:
 			homeWindow.setProperty('context.umbrella.showUmbrella', '')
+		if getKodiVersion() >= 20:
+			if setting('umbrella.colorbuttonset') == 'false':
+				setSetting('highlight.color', 'FFFEFE22')
+				setSetting('movie.unaired.identify', 'FF76FF7A')
+				setSetting('dialogs.customcolor', 'FF1CA9C9')
+				setSetting('dialogs.titlebar.color', 'FF1CA9C9')
+				setSetting('dialogs.button.color', 'FF1CA9C9')
+				setSetting('unaired.identify', 'FF76FF7A')
+				setSetting('playnext.background.color', 'FF000000')
+				setSetting('scraper.dialog.color', 'FFCEFF1D')
+				setSetting('sources.highlight.color', 'FF1FCECB')
+				setSetting('sources.real-debrid.color', 'FFEE204D')
+				setSetting('sources.alldebrid.color', 'FFFFCF48')
+				setSetting('sources.premiumize.me.color', 'FF6699CC')
+				setSetting('sources.easynews.color', 'FFFFAE42')
+				setSetting('sources.plexshare.color', 'FF7442C8')
+				setSetting('sources.gdrive.color', 'FFFF48D0')
+				setSetting('sources.filepursuit.color', 'FF3BB08F')
+				setSetting('sources.gdrive.color', 'FFFF48D0')
+				setSetting('umbrella.colorbuttonset', 'true')
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()

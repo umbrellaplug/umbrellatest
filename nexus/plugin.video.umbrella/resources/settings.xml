@@ -5488,6 +5488,16 @@
 					</dependencies>
 					<control type="edit" format="string"></control>
 				</setting>
+				<setting id="umbrella.colorbuttonset" type="boolean" label="CB" help="">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
 			</group>
 		</category>
 	</section>

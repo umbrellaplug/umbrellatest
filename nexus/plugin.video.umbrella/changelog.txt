@@ -1,6 +1,6 @@
-[B]Update - v6.6.254 - July 26th, 2023[/B]
-***You must re-select all color options from addon settings***
+[B]Update - v6.6.255 - July 26th, 2023[/B]
 --[Enhancement] Color button setting is back for Kodi 20+.
+--[Enhancement] Wrote code to write default color button colors on load.
 --[FIX] Changes made for duration for episodes pulled from trakt.
 --[FIX] Removed duplicates from history in movies and episodes.
 --[Enhancement] Added option to show or hide watched in TV Shows Progress.
