@@ -595,6 +595,7 @@ def darkColor(color):
 		else:
 			return 'dark'
 	except:
+		return 'dark'
 		from resources.lib.modules import log_utils
 		log_utils.error()
 

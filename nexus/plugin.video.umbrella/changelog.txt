@@ -1,4 +1,7 @@
-[B]Update - v6.6.255 - July 26th, 2023[/B]
+[B]Update - v6.6.261 - July 28th, 2023[/B]
+--[Fix] Dark color compare fix for blank values.
+
+[B]Update - v6.6.26 - July 26th, 2023[/B]
 --[Enhancement] Color button setting is back for Kodi 20+.
 --[Enhancement] Wrote code to write default color button colors on load.
 --[FIX] Changes made for duration for episodes pulled from trakt.
