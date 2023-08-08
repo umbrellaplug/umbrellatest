@@ -338,7 +338,6 @@ class Player(xbmc.Player):
 						if watcher and property != '5':
 							homeWindow.setProperty(pname, '5')
 							if getSetting('debug.level') == '1':
-								from resources.lib.modules import log_utils
 								log_utils.log('Sending Movie to be marked as watched. IMDB: %s Title: %s Watch Percentage Used: %s Current Percentage: %s' % (self.imdb, self.title, self.markwatched_percentage, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 							playcount.markMovieDuringPlayback(self.imdb, '5')
 					except: pass
@@ -348,7 +347,6 @@ class Player(xbmc.Player):
 						if watcher and property != '5':
 							homeWindow.setProperty(pname, '5')
 							if getSetting('debug.level') == '1':
-								from resources.lib.modules import log_utils
 								log_utils.log('Sending Episode to be marked as watched. IMDB: %s TVDB: %s Season: %s Episode: %s Title: %s Watch Percentage Used: %s Current Percentage: %s' % (self.imdb, self.tvdb, self.season, self.episode, self.title, self.markwatched_percentage, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 							playcount.markEpisodeDuringPlayback(self.imdb, self.tvdb, self.season, self.episode, '5')
 						if self.enable_playnext and not self.play_next_triggered:
@@ -363,14 +361,12 @@ class Player(xbmc.Player):
 								if getSetting('playnext.method')== '0':
 									if remaining_time < (self.playnext_time + 1) and remaining_time != 0:
 										if getSetting('debug.level') == '1':
-											from resources.lib.modules import log_utils
 											log_utils.log('Playnext triggered by method time. IMDB: %s Title: %s Time Used: %s Remaining Time: %s' % (self.imdb, self.title, self.playnext_time, remaining_time), level=log_utils.LOGDEBUG)
 										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 										self.play_next_triggered = True
 								elif getSetting('playnext.method')== '1':	
 									if self.getWatchedPercent() >= int(self.playnext_percentage) and remaining_time != 0:
 										if getSetting('debug.level') == '1':
-											from resources.lib.modules import log_utils
 											log_utils.log('Playnext triggered by method percentage. IMDB: %s Title: %s Percentage Used: %s Current Percentage: %s' % (self.imdb, self.title, self.playnext_percentage, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 										self.play_next_triggered = True
@@ -382,7 +378,6 @@ class Player(xbmc.Player):
 											subtitletimeumb = int(getSetting('playnext.sub.seconds'))
 											if remaining_time < (subtitletimeumb + 1) and remaining_time != 0:
 												if getSetting('debug.level') == '1':
-													from resources.lib.modules import log_utils
 													log_utils.log('Playnext triggered by method subtitle backup. IMDB: %s Title: %s Time Used: %s Current Time: %s' % (self.imdb, self.title, subtitletimeumb, remaining_time), level=log_utils.LOGDEBUG)
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
@@ -390,14 +385,12 @@ class Player(xbmc.Player):
 											subtitletimeumb = int(getSetting('playnext.sub.percent'))
 											if self.getWatchedPercent() >= int(subtitletimeumb) and remaining_time != 0:
 												if getSetting('debug.level') == '1':
-													from resources.lib.modules import log_utils
 													log_utils.log('Playnext triggered by method subtitle backup. IMDB: %s Title: %s Percent Used: %s Current Percent: %s' % (self.imdb, self.title, subtitletimeumb, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
 									elif self.subtitletime != None and str(self.subtitletime) != 'default':
 										if remaining_time < (int(self.subtitletime) + 1) and remaining_time != 0:
 											if getSetting('debug.level') == '1':
-													from resources.lib.modules import log_utils
 													log_utils.log('Playnext triggered by method subtitle. IMDB: %s Title: %s Subtitle Time Used: %s Current Time: %s' % (self.imdb, self.title, self.subtitletime, remaining_time), level=log_utils.LOGDEBUG)
 											xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 											self.play_next_triggered = True
@@ -425,7 +418,6 @@ class Player(xbmc.Player):
 
 	def buildPlaylist(self):
 		if getSetting('debug.level') == '1':
-			from resources.lib.modules import log_utils
 			log_utils.log('Playnext build playlist. Meta is: %s' % str(self.meta), level=log_utils.LOGDEBUG)
 		currentEpisode = self.episode
 		currentSeason = self.season
@@ -735,48 +727,44 @@ class PlayNext(xbmc.Player):
 	def show_playnext_xml(self):
 		try:
 			next_meta = self.getNext_meta()
-			if not next_meta: raise Exception()
+			if not next_meta:
+				log_utils.log('Next Meta Missing TMDB: %s Season: %s Episode: %s' % str(self.title, self.season, self.episode), level=log_utils.LOGDEBUG)
+				raise Exception()
 			#some changes here for playnext and themes.
 			from resources.lib.windows.playnext import PlayNextXML
 			if getSetting('playnext.theme') == '2'and control.skin in ('skin.auramod'):
 				if getSetting('debug.level') == '1':
-					from resources.lib.modules import log_utils
 					log_utils.log('Show Playnext Theme Netflix with Auramod Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('auraplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif getSetting('playnext.theme') == '2'and control.skin not in ('skin.auramod'):
 				if getSetting('debug.level') == '1':
-					from resources.lib.modules import log_utils
 					log_utils.log('Show Playnext Theme Netflix No Aura. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('auraplaynext2.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif getSetting('playnext.theme') == '1' and (control.skin in ('skin.arctic.horizon.2')):
 				if getSetting('debug.level') == '1':
-					from resources.lib.modules import log_utils
 					log_utils.log('Show Playnext Theme AH2 with AH2 Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.fuse'):
 				if getSetting('debug.level') == '1':
-					from resources.lib.modules import log_utils
 					log_utils.log('Show Playnext Theme AH2 with Arctic Fuse Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext3.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif getSetting('playnext.theme') == '1' and control.skin not in ('skin.arctic.horizon.2') and control.skin not in ('skin.arctic.fuse'):
 				if getSetting('debug.level') == '1':
-					from resources.lib.modules import log_utils
 					log_utils.log('Show Playnext Theme AH2 without AH2 or AF. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext2.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif getSetting('playnext.theme') == '3':
 				if getSetting('debug.level') == '1':
-					from resources.lib.modules import log_utils
 					log_utils.log('Show Playnext Theme Arctic Fuse. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext4.xml', control.addonPath(control.addonId()), meta=next_meta)
 			else:
 				if getSetting('debug.level') == '1':
-					from resources.lib.modules import log_utils
 					log_utils.log('Show Playnext Theme Default Theme. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('playnext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			window.run()
 			del window
 			self.play_next_triggered = True
 		except:
+
 			log_utils.error()
 			self.play_next_triggered = True
 
@@ -785,7 +773,6 @@ class PlayNext(xbmc.Player):
 			next_meta = self.getNext_meta()
 			if not next_meta: raise Exception()
 			if getSetting('debug.level') == '1':
-				from resources.lib.modules import log_utils
 				log_utils.log('Show Playnext Still Watching. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 			from resources.lib.windows.playnext_stillwatching import StillWatchingXML
 			if getSetting('playnext.theme') == '2'and control.skin in ('skin.auramod'):

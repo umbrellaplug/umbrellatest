@@ -1,4 +1,4 @@
-[B]Update - v6.6.272 - August 8th, 2023[/B]
+[B]Update - v6.6.273 - August 8th, 2023[/B]
 --[Fix] Custom color view created to allow for color selection across different versions of kodi and skins.
 --[Fix] Playnext AH2 skin "Still Waiting" fixed.
 --[Fix] Playnext AH2 skin with Arctic Fuse skin issue fixed.
@@ -6,6 +6,7 @@
 --[Enhancement] Multiple seasons added for playnext.
 --[Logging] Logging added for playnext screens and tracking when popups are called.
 --[Logging] Logging added for marking watched and tracking when items are sent to trakt to be marked as watched.
+--[Logging] Fixed new logging causing an exception.
 
 [B]Update - v6.6.27 - August 1st, 2023[/B]
 --[Fix] Dark color compare fix for blank values.

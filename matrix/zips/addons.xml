@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.272">
+<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.273">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.cocoscrapers" version="1.0.12" />
@@ -157,7 +157,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.272 - August 8th, 2023[/B]
+[B]Update - v6.6.273 - August 8th, 2023[/B]
 --[Fix] Custom color view created to allow for color selection across different versions of kodi and skins.
 --[Fix] Playnext AH2 skin "Still Waiting" fixed.
 --[Fix] Playnext AH2 skin with Arctic Fuse skin issue fixed.
@@ -165,6 +165,7 @@
 --[Enhancement] Multiple seasons added for playnext.
 --[Logging] Logging added for playnext screens and tracking when popups are called.
 --[Logging] Logging added for marking watched and tracking when items are sent to trakt to be marked as watched.
+--[Logging] Fixed new logging causing an exception.
 		</news>
 	</extension>
 
