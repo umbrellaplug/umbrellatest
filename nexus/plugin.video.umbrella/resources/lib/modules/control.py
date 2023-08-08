@@ -603,20 +603,23 @@ def to_list(item_str):
 	return item_str
 
 def darkColor(color):
-	color = color[color.find(']')+1 : color.find('/')-1]
-	try:
-		compareColor = color[2:]
-		import math
-		rgbColor = tuple(int(compareColor[i:i+2], 16)  for i in (0, 2, 4))
-		[r,g,b]=rgbColor
-		hsp = math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))
-		if (hsp>127.5):
-			return 'light'
-		else:
+	if color:
+		try:
+			color = color[color.find(']')+1 : color.find('/')-1]
+			compareColor = color[2:]
+			import math
+			rgbColor = tuple(int(compareColor[i:i+2], 16)  for i in (0, 2, 4))
+			[r,g,b]=rgbColor
+			hsp = math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))
+			if (hsp>127.5):
+				return 'light'
+			else:
+				return 'dark'
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
 			return 'dark'
-	except:
-		from resources.lib.modules import log_utils
-		log_utils.error()
+	else:
 		return 'dark'
 
 def reload_addon():
