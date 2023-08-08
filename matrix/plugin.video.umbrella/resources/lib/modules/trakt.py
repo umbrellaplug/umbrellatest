@@ -1097,10 +1097,13 @@ def service_syncSeasons(): # season indicators and counts for watched shows ex. 
 	except: log_utils.error()
 
 def markMovieAsWatched(imdb):
-	log_utils.log('Umbrella marking movie as watched',level=log_utils.LOGDEBUG)
 	try:
 		result = getTraktAsJson('/sync/history', {"movies": [{"ids": {"imdb": imdb}}]})
-		return result['added']['movies'] != 0
+		result = result['added']['movies'] != 0
+		if getSetting('debug.level') == '1':
+			from resources.lib.modules import log_utils
+			log_utils.log('Trakt markMovieAsWatched IMDB: %s Result: %s' % (imdb, result), level=log_utils.LOGDEBUG)
+		return result
 	except: log_utils.error()
 
 def markMovieAsNotWatched(imdb):
@@ -1159,12 +1162,18 @@ def markEpisodeAsWatched(imdb, tvdb, season, episode):
 	try:
 		season, episode = int('%01d' % int(season)), int('%01d' % int(episode)) #same
 		result = getTraktAsJson('/sync/history', {"shows": [{"seasons": [{"episodes": [{"number": episode}], "number": season}], "ids": {"imdb": imdb, "tvdb": tvdb}}]})
-		if not result: return False
+		if not result: result = False
 		if result['added']['episodes'] == 0 and tvdb:
 			control.sleep(1000)
 			result = getTraktAsJson('/sync/history', {"shows": [{"seasons": [{"episodes": [{"number": episode}], "number": season}], "ids": {"imdb": tvdb}}]})
-			if not result: return False
-		return result['added']['episodes'] !=0
+			if not result: result = False
+			result = result['added']['episodes'] !=0
+		else:
+			result = result['added']['episodes'] !=0
+		if getSetting('debug.level') == '1':
+			from resources.lib.modules import log_utils
+			log_utils.log('Trakt markEpisodeAsWatched IMDB: %s TVDB: %s Season: %s Episode: %s Result: %s' % (imdb, tvdb, season, episode, result), level=log_utils.LOGDEBUG)
+		return result
 	except: log_utils.error()
 
 def markEpisodeAsNotWatched(imdb, tvdb, season, episode):

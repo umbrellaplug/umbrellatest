@@ -72,8 +72,6 @@ class Sources:
 		self.providercache_hours = int(getSetting('cache.providers'))
 		self.debuglog = control.setting('debug.level') == '1'
 		self.retryallsources = getSetting('sources.retryall') == 'true'
-		self.info_tv = getSetting('playback.info_tv') == 'true'
-		self.info_movies = getSetting('playback.info_movies') == 'true'
 
 	def play(self, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta, select, rescrape=None):
 		# control.log('info_tv: %s tvshowtitle: %s' % (self.info_tv, tvshowtitle),1)

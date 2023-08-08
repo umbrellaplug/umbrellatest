@@ -29,6 +29,7 @@ class Player(xbmc.Player):
 		xbmc.Player.__init__(self)
 		self.play_next_triggered = False
 		self.preScrape_triggered = False
+		self.playnextSeasons_triggered = False
 		self.playlist_built = False
 		self.playbackStopped_triggered = False
 		self.playback_resumed = False
@@ -49,6 +50,7 @@ class Player(xbmc.Player):
 		self.playeronly = getSetting('use.playeronly') == 'true'
 		self.subtitletime = None
 		self.debuglog = control.setting('debug.level') == '1'
+		self.multi_season = control.setting('umbrella.multiSeason') == 'true'
 		
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
@@ -335,6 +337,9 @@ class Player(xbmc.Player):
 					try:
 						if watcher and property != '5':
 							homeWindow.setProperty(pname, '5')
+							if getSetting('debug.level') == '1':
+								from resources.lib.modules import log_utils
+								log_utils.log('Sending Movie to be marked as watched. IMDB: %s Title: %s Watch Percentage Used: %s Current Percentage: %s' % (self.imdb, self.title, self.markwatched_percentage, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 							playcount.markMovieDuringPlayback(self.imdb, '5')
 					except: pass
 					xbmc.sleep(2000)
@@ -342,6 +347,9 @@ class Player(xbmc.Player):
 					try:
 						if watcher and property != '5':
 							homeWindow.setProperty(pname, '5')
+							if getSetting('debug.level') == '1':
+								from resources.lib.modules import log_utils
+								log_utils.log('Sending Episode to be marked as watched. IMDB: %s TVDB: %s Season: %s Episode: %s Title: %s Watch Percentage Used: %s Current Percentage: %s' % (self.imdb, self.tvdb, self.season, self.episode, self.title, self.markwatched_percentage, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 							playcount.markEpisodeDuringPlayback(self.imdb, self.tvdb, self.season, self.episode, '5')
 						if self.enable_playnext and not self.play_next_triggered:
 							if int(control.playlist.size()) > 1:
@@ -349,12 +357,21 @@ class Player(xbmc.Player):
 									xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_preScrapeNext)')
 									self.preScrape_triggered = True
 								remaining_time = self.getRemainingTime()
+								if self.multi_season and self.playnextSeasons_triggered == False:
+									self.buildSeasonPlaylist()
+									self.playnextSeasons_triggered = True
 								if getSetting('playnext.method')== '0':
 									if remaining_time < (self.playnext_time + 1) and remaining_time != 0:
+										if getSetting('debug.level') == '1':
+											from resources.lib.modules import log_utils
+											log_utils.log('Playnext triggered by method time. IMDB: %s Title: %s Time Used: %s Remaining Time: %s' % (self.imdb, self.title, self.playnext_time, remaining_time), level=log_utils.LOGDEBUG)
 										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 										self.play_next_triggered = True
 								elif getSetting('playnext.method')== '1':	
 									if self.getWatchedPercent() >= int(self.playnext_percentage) and remaining_time != 0:
+										if getSetting('debug.level') == '1':
+											from resources.lib.modules import log_utils
+											log_utils.log('Playnext triggered by method percentage. IMDB: %s Title: %s Percentage Used: %s Current Percentage: %s' % (self.imdb, self.title, self.playnext_percentage, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 										self.play_next_triggered = True
 								elif getSetting('playnext.method')== '2':
@@ -364,15 +381,24 @@ class Player(xbmc.Player):
 										if getSetting('playnext.sub.backupmethod')== '0': #subtitle failed use seconds as backup
 											subtitletimeumb = int(getSetting('playnext.sub.seconds'))
 											if remaining_time < (subtitletimeumb + 1) and remaining_time != 0:
+												if getSetting('debug.level') == '1':
+													from resources.lib.modules import log_utils
+													log_utils.log('Playnext triggered by method subtitle backup. IMDB: %s Title: %s Time Used: %s Current Time: %s' % (self.imdb, self.title, subtitletimeumb, remaining_time), level=log_utils.LOGDEBUG)
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
 										elif getSetting('playnext.sub.backupmethod') == '1': #subtitle failed use percentage as backup
 											subtitletimeumb = int(getSetting('playnext.sub.percent'))
 											if self.getWatchedPercent() >= int(subtitletimeumb) and remaining_time != 0:
+												if getSetting('debug.level') == '1':
+													from resources.lib.modules import log_utils
+													log_utils.log('Playnext triggered by method subtitle backup. IMDB: %s Title: %s Percent Used: %s Current Percent: %s' % (self.imdb, self.title, subtitletimeumb, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
 									elif self.subtitletime != None and str(self.subtitletime) != 'default':
 										if remaining_time < (int(self.subtitletime) + 1) and remaining_time != 0:
+											if getSetting('debug.level') == '1':
+													from resources.lib.modules import log_utils
+													log_utils.log('Playnext triggered by method subtitle. IMDB: %s Title: %s Subtitle Time Used: %s Current Time: %s' % (self.imdb, self.title, self.subtitletime, remaining_time), level=log_utils.LOGDEBUG)
 											xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 											self.play_next_triggered = True
 									else:
@@ -398,7 +424,9 @@ class Player(xbmc.Player):
 			elif self.getWatchedPercent() >= int(self.markwatched_percentage): self._end_playback()
 
 	def buildPlaylist(self):
-		seasonPlaynext = False
+		if getSetting('debug.level') == '1':
+			from resources.lib.modules import log_utils
+			log_utils.log('Playnext build playlist. Meta is: %s' % str(self.meta), level=log_utils.LOGDEBUG)
 		currentEpisode = self.episode
 		currentSeason = self.season
 		from resources.lib.menus import episodes
@@ -456,6 +484,70 @@ class Player(xbmc.Player):
 							item.setProperty('IsPlayable', 'true')
 							item.setProperty('tvshow.tmdb_id', tmdb)
 							control.playlist.add(url=url, listitem=item)
+				except:
+					log_utils.error()
+			if self.multi_season and self.playnextSeasons_triggered == False:
+				self.buildSeasonPlaylist()
+				self.playnextSeasons_triggered = True
+		except:
+			log_utils.error()
+
+	def buildSeasonPlaylist(self):
+		#get all seasons
+		#get every season greater than current season
+		#get every episode for each season and add to playlist
+		currentSeason = self.season
+		currentEpisode = self.episode
+		items = []
+		from resources.lib.menus import seasons, episodes
+		seasons = seasons.Seasons().tmdb_list(tvshowtitle='', imdb='', tmdb=self.tmdb, tvdb='', art=None)
+		
+		shows = episodes.Episodes().get(self.meta.get('tvshowtitle'), self.meta.get('year'), self.imdb, self.tmdb, self.tvdb, self.meta, create_directory=True)
+		items.extend(shows)
+		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
+		try:
+			for count, i in enumerate(items):
+				try:
+					tvshowtitle, title, imdb, tmdb, tvdb = i.get('tvshowtitle'), i.get('title'), i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', '')
+					year, season, episode, premiered = i.get('year', ''), i.get('season'), i.get('episode'), i.get('premiered', '')
+					runtime = i.get('duration')
+					if 'label' not in i: i['label'] = title
+					if (not i['label'] or i['label'] == '0'): label = '%sx%02d  %s %s' % (season, int(episode), 'Episode', episode)
+					else: label = '%sx%02d  %s' % (season, int(episode), i['label'])
+					systitle, systvshowtitle, syspremiered = quote_plus(title), quote_plus(tvshowtitle), quote_plus(premiered)
+					meta = dict((k, v) for k, v in iter(i.items()) if v is not None and v != '')
+					mediatype = 'episode'
+					meta.update({'code': imdb, 'imdbnumber': imdb, 'mediatype': mediatype, 'tag': [imdb, tmdb]}) # "tag" and "tagline" for movies only, but works in my skin mod so leave
+					try: meta.update({'title': i['label']})
+					except: pass
+					if self.prefer_tmdbArt: poster = meta.get('poster3') or meta.get('poster') or meta.get('poster2')
+					else: poster = meta.get('poster2') or meta.get('poster3') or meta.get('poster')
+					season_poster = meta.get('season_poster') or poster
+					landscape = meta.get('landscape')
+					fanart = ''
+					thumb = meta.get('thumb') or landscape or fanart or season_poster
+					icon = meta.get('icon') or season_poster or poster
+					banner = meta.get('banner')
+					art = {}
+					art.update({'poster': season_poster, 'tvshow.poster': poster, 'season.poster': season_poster, 'fanart': fanart, 'icon': icon, 'thumb': thumb, 'banner': banner,
+							'clearlogo': meta.get('clearlogo', ''), 'tvshow.clearlogo': meta.get('clearlogo', ''), 'clearart': meta.get('clearart', ''), 'tvshow.clearart': meta.get('clearart', ''), 'landscape': thumb})
+					for k in ('metacache', 'poster2', 'poster3', 'fanart2', 'fanart3', 'banner2', 'banner3', 'trailer'): meta.pop(k, None)
+					meta.update({'poster': poster, 'fanart': fanart, 'banner': banner, 'thumb': thumb, 'icon': icon})
+					sysmeta = quote_plus(jsdumps(meta))
+					url = '%s?action=play_Item&title=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&season=%s&episode=%s&tvshowtitle=%s&premiered=%s&meta=%s' % (
+											sysaddon, systitle, year, imdb, tmdb, tvdb, season, episode, systvshowtitle, syspremiered, sysmeta)
+					item = control.item(label=label, offscreen=True)
+					setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb}
+					info = {'episode': int(episode), 'sortepisode': int(episode), 'season': int(season), 'sortseason': int(season), 'year': str(year), 'premiered': i.get('premiered', ''), 'aired': meta.get('airtime', ''), 'imdbnumber': imdb, 'duration': runtime, 'dateadded': '', 'rating': i.get('rating'), 'votes': i.get('votes'), 'mediatype': self.media_type, 'title': i.get('title'), 'originaltitle': i.get('title'), 'sorttitle': i.get('title'), 'plot': i.get('plot'), 'plotoutline': i.get('plot'), 'tvshowtitle': tvshowtitle, 'director': [i.get('director')], 'writer': [i.get('writer')], 'genre': [i.get('genre')], 'studio': [i.get('studio')], 'playcount': 0}
+					if int(season) > int(currentSeason):
+						item.setContentLookup(False)
+						cm = []
+						item.addContextMenuItems(cm)
+						control.set_info(item, info, setUniqueIDs=setUniqueIDs)
+						item.setArt(art)
+						item.setProperty('IsPlayable', 'true')
+						item.setProperty('tvshow.tmdb_id', tmdb)
+						control.playlist.add(url=url, listitem=item)
 				except:
 					log_utils.error()
 		except:
@@ -647,14 +739,39 @@ class PlayNext(xbmc.Player):
 			#some changes here for playnext and themes.
 			from resources.lib.windows.playnext import PlayNextXML
 			if getSetting('playnext.theme') == '2'and control.skin in ('skin.auramod'):
+				if getSetting('debug.level') == '1':
+					from resources.lib.modules import log_utils
+					log_utils.log('Show Playnext Theme Netflix with Auramod Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('auraplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
-			if getSetting('playnext.theme') == '2'and control.skin not in ('skin.auramod'):
+			elif getSetting('playnext.theme') == '2'and control.skin not in ('skin.auramod'):
+				if getSetting('debug.level') == '1':
+					from resources.lib.modules import log_utils
+					log_utils.log('Show Playnext Theme Netflix No Aura. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('auraplaynext2.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.horizon.2'):
+			elif getSetting('playnext.theme') == '1' and (control.skin in ('skin.arctic.horizon.2')):
+				if getSetting('debug.level') == '1':
+					from resources.lib.modules import log_utils
+					log_utils.log('Show Playnext Theme AH2 with AH2 Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '1' and control.skin not in ('skin.arctic.horizon.2'):
+			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.fuse'):
+				if getSetting('debug.level') == '1':
+					from resources.lib.modules import log_utils
+					log_utils.log('Show Playnext Theme AH2 with Arctic Fuse Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
+				window = PlayNextXML('ahplaynext3.xml', control.addonPath(control.addonId()), meta=next_meta)
+			elif getSetting('playnext.theme') == '1' and control.skin not in ('skin.arctic.horizon.2') and control.skin not in ('skin.arctic.fuse'):
+				if getSetting('debug.level') == '1':
+					from resources.lib.modules import log_utils
+					log_utils.log('Show Playnext Theme AH2 without AH2 or AF. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext2.xml', control.addonPath(control.addonId()), meta=next_meta)
+			elif getSetting('playnext.theme') == '3':
+				if getSetting('debug.level') == '1':
+					from resources.lib.modules import log_utils
+					log_utils.log('Show Playnext Theme Arctic Fuse. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
+				window = PlayNextXML('ahplaynext4.xml', control.addonPath(control.addonId()), meta=next_meta)
 			else:
+				if getSetting('debug.level') == '1':
+					from resources.lib.modules import log_utils
+					log_utils.log('Show Playnext Theme Default Theme. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('playnext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			window.run()
 			del window
@@ -667,15 +784,22 @@ class PlayNext(xbmc.Player):
 		try:
 			next_meta = self.getNext_meta()
 			if not next_meta: raise Exception()
+			if getSetting('debug.level') == '1':
+				from resources.lib.modules import log_utils
+				log_utils.log('Show Playnext Still Watching. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 			from resources.lib.windows.playnext_stillwatching import StillWatchingXML
 			if getSetting('playnext.theme') == '2'and control.skin in ('skin.auramod'):
 				window = StillWatchingXML('auraplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
-			if getSetting('playnext.theme') == '2'and control.skin not in ('skin.auramod'):
+			elif getSetting('playnext.theme') == '2'and control.skin not in ('skin.auramod'):
 				window = StillWatchingXML('auraplaynext_stillwatching2.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.horizon.2'):
 				window = StillWatchingXML('ahplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '1' and control.skin not in ('skin.arctic.horizon.2'):
-				window = StillWatchingXML('ahplaynext2_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
+			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.fuse'):
+				window = StillWatchingXML('ahplaynext_stillwatching3.xml', control.addonPath(control.addonId()), meta=next_meta)
+			elif getSetting('playnext.theme') == '1' and control.skin not in ('skin.arctic.horizon.2') and control.skin not in ('skin.arctic.fuse'):
+				window = StillWatchingXML('ahplaynext_stillwatching2.xml', control.addonPath(control.addonId()), meta=next_meta)
+			elif getSetting('playnext.theme') == '3':
+				window = StillWatchingXML('ahplaynext_stillwatching4.xml', control.addonPath(control.addonId()), meta=next_meta)
 			else:
 				window = StillWatchingXML('playnext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
 			window.run()

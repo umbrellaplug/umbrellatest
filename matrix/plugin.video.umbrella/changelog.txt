@@ -1,6 +1,20 @@
-[B]Update - v6.6.254 - July 26th, 2023[/B]
-***You must re-select all color options from addon settings***
+[B]Update - v6.6.272 - August 8th, 2023[/B]
+--[Fix] Custom color view created to allow for color selection across different versions of kodi and skins.
+--[Fix] Playnext AH2 skin "Still Waiting" fixed.
+--[Fix] Playnext AH2 skin with Arctic Fuse skin issue fixed.
+--[Enhancement] Playnext Arctic Fuse skin added.
+--[Enhancement] Multiple seasons added for playnext.
+--[Logging] Logging added for playnext screens and tracking when popups are called.
+--[Logging] Logging added for marking watched and tracking when items are sent to trakt to be marked as watched.
+
+[B]Update - v6.6.27 - August 1st, 2023[/B]
+--[Fix] Dark color compare fix for blank values.
+--[Info] I am aware some skins are not showing colors and options for colors. Setting skin to default should allow you to set your colors. Once set, you can then use skin again.
+--[Info] Changes are being made to allow for a custom view for color options to avoid any further issues.
+
+[B]Update - v6.6.26 - July 26th, 2023[/B]
 --[Enhancement] Color button setting is back for Kodi 20+.
+--[Enhancement] Wrote code to write default color button colors on load.
 --[FIX] Changes made for duration for episodes pulled from trakt.
 --[FIX] Removed duplicates from history in movies and episodes.
 --[Enhancement] Added option to show or hide watched in TV Shows Progress.

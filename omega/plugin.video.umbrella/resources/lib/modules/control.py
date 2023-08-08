@@ -423,46 +423,66 @@ def autoTraktSubscription(tvshowtitle, year, imdb, tvdb): #---start adding TMDb 
 # 	return color
 
 def getBackgroundColor(n):
-	colorChart = ('black','white', 'lightgray', 'gray', 'FFFFF0DB', 'darkgoldenrod', 'gold', 'yellow', 'peru', 'orangered',
-						'pink','deeppink','fuchsia','lightcoral', 'FFD10000', 'FF750000', 'blueviolet', 'darkorchid', 'purple', 'indigo', 'darkslateblue', 'slateblue','navy', 'blue', 'deepskyblue', 'dodgerblue','skyblue', 'powderblue', 'turquoise', 'cyan', 'aqua','aquamarine','greenyellow','mediumspringgreen','green', 'lime','red')
-	if not n: n = '0'
-	color = colorChart[int(n)]
-	return color 
+	try:
+		color = n[n.find(']')+1 : n.find('/')-1]
+	except:
+		color = 'FF000000'
+	return color
+	# colorChart = ('black','white', 'lightgray', 'gray', 'FFFFF0DB', 'darkgoldenrod', 'gold', 'yellow', 'peru', 'orangered',
+	# 					'pink','deeppink','fuchsia','lightcoral', 'FFD10000', 'FF750000', 'blueviolet', 'darkorchid', 'purple', 'indigo', 'darkslateblue', 'slateblue','navy', 'blue', 'deepskyblue', 'dodgerblue','skyblue', 'powderblue', 'turquoise', 'cyan', 'aqua','aquamarine','greenyellow','mediumspringgreen','green', 'lime','red')
+	# if not n: n = '0'
+	# color = colorChart[int(n)]
+
+	# return color 
 
 def getColor(n):
-	if getKodiVersion()>=20:
-		return n
-	else:
-		colorChart = ('ff000000','ffffffff', 'ffd3d3d3', 'ff808080', 'FFFFF0DB', 'ffb8860b', 'ffffd700', 'ffffff00', 'ffcd853f', 'ffff4500',
-							'ffffc0cb','ffff1493','ffff00ff','fff08080', 'FFD10000', 'FF750000', 'ff8a2be2', 'ff9932cc', 'ff800080', 'ff4b0082', 'ff483d8b', 'ff6a5acd','ff000080', 'ff0000ff', 'ff00bfff', 'ff1e90ff','ff87ceeb', 'ffb0e0e6', 'ff40e0d0', 'ff00ffff', 'ff00ffff','ff7fffd4','ffadff2f','ff00fa9a','ff008000', 'ff00ff00', 'ffff0000')
-		if not n: n = '0'
-		color = colorChart[int(n)]
-		return color
+	try:
+		color = n[n.find(']')+1 : n.find('/')-1]
+	except:
+		color = 'FF000000'
+	return color
 
 def getHighlightColor():
-	if getKodiVersion() >= 20:
-		return (setting('highlight.color'))
-	else:
-		return getColor(setting('highlight.color'))
+	colorString = setting('highlight.color')
+	color = colorString[colorString.find(']')+1 : colorString.find('/')-1]
+	return color
 
 def getSourceHighlightColor():
-	if getKodiVersion() >= 20:
-		return (setting('sources.highlight.color'))
-	else:
-		return getColor(setting('sources.highlight.color'))
+	colorString = setting('sources.highlight.color')
+	color = colorString[colorString.find(']')+1 : colorString.find('/')-1]
+	return color
 
 def getProviderHighlightColor(sourcename):
     #Real-Debrid
     #Premiumize.me
 	sourcename = str(sourcename).lower()
 	source = 'sources.'+sourcename+'.color'
-	return getColor(setting(source))
+	colorString = setting(source)
+	color = colorString[colorString.find(']')+1 : colorString.find('/')-1]
+	return color
+
+def getColorPicker(params):
+	#will need to open a window here.
+	from resources.lib.windows.colorpick import ColorPick
+	window = ColorPick('colorpick.xml', addonPath(addonId()), current_setting=params.get('current_setting'), current_value=params.get('current_value'))
+	colorPick = window.run()
+	del window
+	return colorPick
+
+def showColorPicker(current_setting):
+	current_value = setting(current_setting)
+	chosen_color = getColorPicker({'current_setting': current_setting, 'current_value': current_value})
+	if chosen_color:
+		setSetting(current_setting, str('[COLOR=%s]%s[/COLOR]' % (chosen_color, chosen_color)))
 
 def getPlayNextBackgroundColor():
-	if getKodiVersion() >= 20:
-		return (setting('playnext.background.color'))
-	else:
-		return getBackgroundColor(setting('playnext.background.color'))
+	# if getKodiVersion() >= 20:
+	# 	return (setting('playnext.background.color'))
+	# else:
+	# 	return getBackgroundColor(setting('playnext.background.color'))
+	colorString = setting('playnext.background.color')
+	color = colorString[colorString.find(']')+1 : colorString.find('/')-1]
+	return color
 
 def getMenuEnabled(menu_title):
 	is_enabled = setting(menu_title).strip()
@@ -478,7 +498,6 @@ def trigger_widget_refresh():
 	execute('UpdateLibrary(video,/fake/path/to/force/refresh/on/home)') # make sure this is ok coupled with above
 
 def refresh_playAction(): # for umbrella global CM play actions
-	xbmc.log('refresh playAction', 1)
 	autoPlayTV = 'true' if setting('play.mode.tv') == '1' else ''
 	homeWindow.setProperty('umbrella.autoPlaytv.enabled', autoPlayTV)
 	autoPlayMovie = 'true' if setting('play.mode.movie') == '1' else ''
@@ -584,6 +603,7 @@ def to_list(item_str):
 	return item_str
 
 def darkColor(color):
+	color = color[color.find(']')+1 : color.find('/')-1]
 	try:
 		compareColor = color[2:]
 		import math
@@ -595,9 +615,9 @@ def darkColor(color):
 		else:
 			return 'dark'
 	except:
-		return 'dark'
 		from resources.lib.modules import log_utils
 		log_utils.error()
+		return 'dark'
 
 def reload_addon():
     disable_enable_addon()
@@ -634,31 +654,29 @@ def syncAccounts():
 		setSetting('plex.client_id', addon('script.module.cocoscrapers').getSetting('plex.client_id'))
 		setSetting('plex.device_id', addon('script.module.cocoscrapers').getSetting('plex.device_id'))
 		setSetting('gdrive.cloudflare_url', addon('script.module.cocoscrapers').getSetting('gdrive.cloudflare_url'))
-		homeWindow.setProperty('context.umbrella.highlightcolor', getHighlightColor())
+		if setting('umbrella.colorSet') == 'false':
+			setSetting('highlight.color', '[COLOR=FFFFFF33]FFFFFF33[/COLOR]')
+			setSetting('movie.unaired.identify', '[COLOR=FF5CFF34]FF5CFF34[/COLOR]')
+			setSetting('dialogs.customcolor', '[COLOR=FF00B8E6]FF00B8E6[/COLOR]')
+			setSetting('dialogs.titlebar.color', '[COLOR=FF00B8E6]FF00B8E6[/COLOR]')
+			setSetting('dialogs.button.color', '[COLOR=FF00B8E6]FF00B8E6[/COLOR]')
+			setSetting('unaired.identify', '[COLOR=FF34FF33]FF34FF33[/COLOR]')
+			setSetting('playnext.background.color', '[COLOR=FF000000]FF000000[/COLOR]')
+			setSetting('scraper.dialog.color', '[COLOR=FFFFFF33]FFFFFF33[/COLOR]')
+			setSetting('sources.highlight.color', '[COLOR=FF4DFFFF]FF4DFFFF[/COLOR]')
+			setSetting('sources.real-debrid.color', '[COLOR=FFFF3334]FFFF3334[/COLOR]')
+			setSetting('sources.alldebrid.color', '[COLOR=FFFFB84E]FFFFB84E[/COLOR]')
+			setSetting('sources.premiumize.me.color', '[COLOR=FF4700B4]FF4700B4[/COLOR]')
+			setSetting('sources.easynews.color', '[COLOR=FF24B301]FF24B301[/COLOR]')
+			setSetting('sources.plexshare.color', '[COLOR=FFAD34FF]FFAD34FF[/COLOR]')
+			setSetting('sources.gdrive.color', '[COLOR=FFFF4DFF]FFFF4DFF[/COLOR]')
+			setSetting('sources.filepursuit.color', '[COLOR=FF00CC29]FF00CC29[/COLOR]')
+			setSetting('umbrella.colorSet', 'true')
 		if setting('context.useUmbrellaContext') == 'true':
 			homeWindow.setProperty('context.umbrella.showUmbrella', '[B][COLOR '+getHighlightColor()+']Umbrella[/COLOR][/B] - ')
 		else:
 			homeWindow.setProperty('context.umbrella.showUmbrella', '')
-		if getKodiVersion() >= 20:
-			if setting('umbrella.colorbuttonset') == 'false':
-				setSetting('highlight.color', 'FFFEFE22')
-				setSetting('movie.unaired.identify', 'FF76FF7A')
-				setSetting('dialogs.customcolor', 'FF1CA9C9')
-				setSetting('dialogs.titlebar.color', 'FF1CA9C9')
-				setSetting('dialogs.button.color', 'FF1CA9C9')
-				setSetting('unaired.identify', 'FF76FF7A')
-				setSetting('playnext.background.color', 'FF000000')
-				setSetting('scraper.dialog.color', 'FFCEFF1D')
-				setSetting('sources.highlight.color', 'FF1FCECB')
-				setSetting('sources.real-debrid.color', 'FFEE204D')
-				setSetting('sources.alldebrid.color', 'FFFFCF48')
-				setSetting('sources.premiumize.me.color', 'FF6699CC')
-				setSetting('sources.easynews.color', 'FFFFAE42')
-				setSetting('sources.plexshare.color', 'FF7442C8')
-				setSetting('sources.gdrive.color', 'FFFF48D0')
-				setSetting('sources.filepursuit.color', 'FF3BB08F')
-				setSetting('sources.gdrive.color', 'FFFF48D0')
-				setSetting('umbrella.colorbuttonset', 'true')
+		homeWindow.setProperty('context.umbrella.highlightcolor', getHighlightColor())
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()
