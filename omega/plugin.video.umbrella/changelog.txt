@@ -1,8 +1,9 @@
-[B]Update - v6.6.274 - August 9th, 2023[/B]
+[B]Update - v6.6.275 - August 10th, 2023[/B]
 --[Fix] Fixed Playnext not clearing next episode when video stopped
 --[Fix] Custom color view created to allow for color selection across different versions of kodi and skins.
 --[Fix] Playnext AH2 skin "Still Waiting" fixed.
 --[Fix] Playnext AH2 skin with Arctic Fuse skin issue fixed.
+--[Fix] Colors not working for providers on source selection.
 --[Enhancement] All color settings re-worked to make loading faster.
 --[Enhancement] Removed all calls to getColor, getHighlightColor, and getSourceHighlightColor and made settings accessed directly.
 --[Enhancement] Removed all places settings were accessed more than once in code and moved to global setting to increase speed.

@@ -422,8 +422,7 @@ def getProviderHighlightColor(sourcename):
 	sourcename = str(sourcename).lower()
 	source = 'sources.'+sourcename+'.color'
 	colorString = setting(source)
-	color = colorString[colorString.find(']')+1 : colorString.find('/')-1]
-	return color
+	return colorString
 
 def getColorPicker(params):
 	#will need to open a window here.
