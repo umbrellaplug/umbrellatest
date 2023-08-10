@@ -942,7 +942,7 @@ def router(argv2):
 		from resources.lib.modules import sources
 		premiered = params.get('premiered')
 		meta = params.get('meta')
-		highlight_color = control.getHighlightColor()
+		highlight_color = control.setting('highlight.color')
 		items = [
 			control.lang(32207),
 			control.lang(32208),

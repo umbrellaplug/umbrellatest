@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.273">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.274">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.cocoscrapers" version="1.0.12"/>
@@ -156,10 +156,14 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.273 - August 8th, 2023[/B]
+[B]Update - v6.6.274 - August 9th, 2023[/B]
+--[Fix] Fixed Playnext not clearing next episode when video stopped
 --[Fix] Custom color view created to allow for color selection across different versions of kodi and skins.
 --[Fix] Playnext AH2 skin "Still Waiting" fixed.
 --[Fix] Playnext AH2 skin with Arctic Fuse skin issue fixed.
+--[Enhancement] All color settings re-worked to make loading faster.
+--[Enhancement] Removed all calls to getColor, getHighlightColor, and getSourceHighlightColor and made settings accessed directly.
+--[Enhancement] Removed all places settings were accessed more than once in code and moved to global setting to increase speed.
 --[Enhancement] Playnext Arctic Fuse skin added.
 --[Enhancement] Multiple seasons added for playnext.
 --[Logging] Logging added for playnext screens and tracking when popups are called.

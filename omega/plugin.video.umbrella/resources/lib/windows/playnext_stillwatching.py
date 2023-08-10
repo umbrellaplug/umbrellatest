@@ -5,7 +5,7 @@
 
 from datetime import datetime, timedelta
 import xbmc
-from resources.lib.modules.control import getSourceHighlightColor, getPlayNextBackgroundColor, setting as getSetting, playerWindow
+from resources.lib.modules.control import setting as getSetting, playerWindow
 from json import dumps as jsdumps, loads as jsloads
 from resources.lib.modules import tools
 from resources.lib.windows.base import BaseDialog
@@ -22,6 +22,8 @@ class StillWatchingXML(BaseDialog):
 		self.playing_file = self.getPlayingFile()
 		self.duration = self.getTotalTime() - self.getTime()
 		self.default_action = int(getSetting('stillwatching.default.action'))
+		self.playNextBG = getSetting('playnext.background.color')
+		self.source_color = getSetting('sources.highlight.color')
 		self.closed = False
 
 	def onInit(self):
@@ -103,7 +105,7 @@ class StillWatchingXML(BaseDialog):
 	def set_properties(self):
 		if self.meta is None: return
 		try:
-			self.setProperty('umbrella.highlight.color', getSourceHighlightColor())
+			self.setProperty('umbrella.highlight.color', self.source_color)
 			self.setProperty('umbrella.tvshowtitle', self.meta.get('tvshowtitle'))
 			self.setProperty('tvshowtitle', self.meta.get('tvshowtitle'))
 			self.setProperty('title', self.meta.get('title'))
@@ -132,7 +134,7 @@ class StillWatchingXML(BaseDialog):
 			except:
 				self.setProperty('umbrella.duration', '')
 				self.setProperty('umbrella.endtime', '')
-			self.setProperty('umbrella.playnext.background.color', getPlayNextBackgroundColor())
+			self.setProperty('umbrella.playnext.background.color', self.playNextBG)
 			if getSetting('playnext.hidebutton') == 'false':
 				self.setProperty('umbrella.hidebutton','true')
 			if getSetting('playnext.theme') == '1' or getSetting('playnext.theme') == '2' or getSetting('playnext.theme') == '3':

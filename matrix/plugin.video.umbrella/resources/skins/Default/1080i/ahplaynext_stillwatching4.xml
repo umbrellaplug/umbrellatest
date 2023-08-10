@@ -26,6 +26,8 @@
                 <height>50</height>
                 <onleft>3012</onleft>
                 <onright>3011</onright>
+                <onup>3012</onup>
+                <ondown>3011</ondown>
                 <font>font10</font>
                 <texturefocus colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/hideround.png</texturefocus>
                 <texturenofocus colordiffuse="1fdedede">common/hideround2.png</texturenofocus>
@@ -36,6 +38,8 @@
                 <height>50</height>
                 <onleft>3013</onleft>
                 <onright>3012</onright>
+                <onup>3013</onup>
+                <ondown>3012</ondown>
                 <font>font10</font>
                 <texturefocus colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/playround.png</texturefocus>
                 <texturenofocus colordiffuse="1fdedede">common/playround2.png</texturenofocus>
@@ -46,6 +50,8 @@
                 <height>50</height>
                 <onleft>3011</onleft>
                 <onright>3013</onright>
+                <onup>3011</onup>
+                <ondown>3013</ondown>
                 <font>font10</font>
                 <texturefocus colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/stopround.png</texturefocus>
                 <texturenofocus colordiffuse="1fdedede">common/stopround2.png</texturenofocus>
@@ -64,6 +70,8 @@
                 <height>50</height>
                 <onleft>3012</onleft>
                 <onright>3012</onright>
+                <onup>3012</onup>
+                <ondown>3012</ondown>
                 <font>font10</font>
                 <texturefocus colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/playround.png</texturefocus>
                 <texturenofocus colordiffuse="1fdedede">common/playround2.png</texturenofocus>
@@ -74,6 +82,8 @@
                 <height>50</height>
                 <onleft>3011</onleft>
                 <onright>3011</onright>
+                <onup>3011</onup>
+                <ondown>3011</ondown>
                 <font>font10</font>
                 <texturefocus colordiffuse="$INFO[Window().Property(skin.selectColor)]">common/stopround.png</texturefocus>
                 <texturenofocus colordiffuse="1fdedede">common/stopround2.png</texturenofocus>
@@ -176,7 +186,7 @@
                 </control>
             </control>
         </control>
-        <control type="button" id="3013">
+        <control type="button" id="3014">
             <nested />
             <top>-1000</top>
             <left>-1000</left>

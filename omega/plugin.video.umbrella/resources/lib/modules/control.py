@@ -415,42 +415,6 @@ def autoTraktSubscription(tvshowtitle, year, imdb, tvdb): #---start adding TMDb 
 	from resources.lib.modules import library
 	library.libtvshows().add(tvshowtitle, year, imdb, tvdb)
 
-# def getColor(n):
-# 	colorChart = ('blue', 'red', 'yellow', 'deeppink', 'cyan', 'lawngreen', 'gold', 'magenta', 'yellowgreen',
-# 						'skyblue', 'lime', 'limegreen', 'deepskyblue', 'white', 'whitesmoke', 'nocolor', 'black')
-# 	if not n: n = '8'
-# 	color = colorChart[int(n)]
-# 	return color
-
-def getBackgroundColor(n):
-	try:
-		color = n[n.find(']')+1 : n.find('/')-1]
-	except:
-		color = 'FF000000'
-	return color
-	# colorChart = ('black','white', 'lightgray', 'gray', 'FFFFF0DB', 'darkgoldenrod', 'gold', 'yellow', 'peru', 'orangered',
-	# 					'pink','deeppink','fuchsia','lightcoral', 'FFD10000', 'FF750000', 'blueviolet', 'darkorchid', 'purple', 'indigo', 'darkslateblue', 'slateblue','navy', 'blue', 'deepskyblue', 'dodgerblue','skyblue', 'powderblue', 'turquoise', 'cyan', 'aqua','aquamarine','greenyellow','mediumspringgreen','green', 'lime','red')
-	# if not n: n = '0'
-	# color = colorChart[int(n)]
-
-	# return color 
-
-def getColor(n):
-	try:
-		color = n[n.find(']')+1 : n.find('/')-1]
-	except:
-		color = 'FF000000'
-	return color
-
-def getHighlightColor():
-	colorString = setting('highlight.color')
-	color = colorString[colorString.find(']')+1 : colorString.find('/')-1]
-	return color
-
-def getSourceHighlightColor():
-	colorString = setting('sources.highlight.color')
-	color = colorString[colorString.find(']')+1 : colorString.find('/')-1]
-	return color
 
 def getProviderHighlightColor(sourcename):
     #Real-Debrid
@@ -473,16 +437,8 @@ def showColorPicker(current_setting):
 	current_value = setting(current_setting)
 	chosen_color = getColorPicker({'current_setting': current_setting, 'current_value': current_value})
 	if chosen_color:
-		setSetting(current_setting, str('[COLOR=%s]%s[/COLOR]' % (chosen_color, chosen_color)))
-
-def getPlayNextBackgroundColor():
-	# if getKodiVersion() >= 20:
-	# 	return (setting('playnext.background.color'))
-	# else:
-	# 	return getBackgroundColor(setting('playnext.background.color'))
-	colorString = setting('playnext.background.color')
-	color = colorString[colorString.find(']')+1 : colorString.find('/')-1]
-	return color
+		setSetting(current_setting+'.display', str('[COLOR=%s]%s[/COLOR]' % (chosen_color, chosen_color)))
+		setSetting(current_setting, str('%s' % (chosen_color)))
 
 def getMenuEnabled(menu_title):
 	is_enabled = setting(menu_title).strip()
@@ -546,7 +502,8 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 			info_tag.setYear(convert_type(int, meta_get('year', 0)))
 			info_tag.setRating(convert_type(float, meta_get('rating', 0.0)))
 			info_tag.setMpaa(meta_get('mpaa'))
-			info_tag.setDuration(meta_get('duration', 0))
+			if meta_get('duration') != '':
+				info_tag.setDuration(meta_get('duration', 0))
 			info_tag.setPlaycount(convert_type(int , meta_get('playcount', 0)))
 			if isinstance(meta_get('votes'), str): 
 				meta_votes = str(meta_get('votes')).replace(",","")
@@ -603,23 +560,19 @@ def to_list(item_str):
 	return item_str
 
 def darkColor(color):
-	if color:
-		try:
-			color = color[color.find(']')+1 : color.find('/')-1]
-			compareColor = color[2:]
-			import math
-			rgbColor = tuple(int(compareColor[i:i+2], 16)  for i in (0, 2, 4))
-			[r,g,b]=rgbColor
-			hsp = math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))
-			if (hsp>127.5):
-				return 'light'
-			else:
-				return 'dark'
-		except:
-			from resources.lib.modules import log_utils
-			log_utils.error()
+	try:
+		compareColor = color[2:]
+		import math
+		rgbColor = tuple(int(compareColor[i:i+2], 16)  for i in (0, 2, 4))
+		[r,g,b]=rgbColor
+		hsp = math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))
+		if (hsp>127.5):
+			return 'light'
+		else:
 			return 'dark'
-	else:
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()
 		return 'dark'
 
 def reload_addon():
@@ -657,29 +610,45 @@ def syncAccounts():
 		setSetting('plex.client_id', addon('script.module.cocoscrapers').getSetting('plex.client_id'))
 		setSetting('plex.device_id', addon('script.module.cocoscrapers').getSetting('plex.device_id'))
 		setSetting('gdrive.cloudflare_url', addon('script.module.cocoscrapers').getSetting('gdrive.cloudflare_url'))
-		if setting('umbrella.colorSet') == 'false':
-			setSetting('highlight.color', '[COLOR=FFFFFF33]FFFFFF33[/COLOR]')
-			setSetting('movie.unaired.identify', '[COLOR=FF5CFF34]FF5CFF34[/COLOR]')
-			setSetting('dialogs.customcolor', '[COLOR=FF00B8E6]FF00B8E6[/COLOR]')
-			setSetting('dialogs.titlebar.color', '[COLOR=FF00B8E6]FF00B8E6[/COLOR]')
-			setSetting('dialogs.button.color', '[COLOR=FF00B8E6]FF00B8E6[/COLOR]')
-			setSetting('unaired.identify', '[COLOR=FF34FF33]FF34FF33[/COLOR]')
-			setSetting('playnext.background.color', '[COLOR=FF000000]FF000000[/COLOR]')
-			setSetting('scraper.dialog.color', '[COLOR=FFFFFF33]FFFFFF33[/COLOR]')
-			setSetting('sources.highlight.color', '[COLOR=FF4DFFFF]FF4DFFFF[/COLOR]')
-			setSetting('sources.real-debrid.color', '[COLOR=FFFF3334]FFFF3334[/COLOR]')
-			setSetting('sources.alldebrid.color', '[COLOR=FFFFB84E]FFFFB84E[/COLOR]')
-			setSetting('sources.premiumize.me.color', '[COLOR=FF4700B4]FF4700B4[/COLOR]')
-			setSetting('sources.easynews.color', '[COLOR=FF24B301]FF24B301[/COLOR]')
-			setSetting('sources.plexshare.color', '[COLOR=FFAD34FF]FFAD34FF[/COLOR]')
-			setSetting('sources.gdrive.color', '[COLOR=FFFF4DFF]FFFF4DFF[/COLOR]')
-			setSetting('sources.filepursuit.color', '[COLOR=FF00CC29]FF00CC29[/COLOR]')
-			setSetting('umbrella.colorSet', 'true')
+		if setting('umbrella.colorSecond') == 'false':
+			setSetting('highlight.color', 'FFFFFF33')
+			setSetting('highlight.color.display', '[COLOR=FFFFFF33]FFFFFF33[/COLOR]')
+			setSetting('movie.unaired.identify', 'FF5CFF34')
+			setSetting('movie.unaired.identify.display', '[COLOR=FF5CFF34]FF5CFF34[/COLOR]')
+			setSetting('dialogs.customcolor', 'FF00B8E6')
+			setSetting('dialogs.customcolor.display', '[COLOR=FF00B8E6]FF00B8E6[/COLOR]')
+			setSetting('dialogs.titlebar.color', 'FF00B8E6')
+			setSetting('dialogs.titlebar.color.display', '[COLOR=FF00B8E6]FF00B8E6[/COLOR]')
+			setSetting('dialogs.button.color', 'FF00B8E6')
+			setSetting('dialogs.button.color.display', '[COLOR=FF00B8E6]FF00B8E6[/COLOR]')
+			setSetting('unaired.identify', 'FF34FF33')
+			setSetting('unaired.identify.display', '[COLOR=FF34FF33]FF34FF33[/COLOR]')
+			setSetting('playnext.background.color', 'FF000000')
+			setSetting('playnext.background.color.display', '[COLOR=FF000000]FF000000[/COLOR]')
+			setSetting('scraper.dialog.color', 'FFFFFF33')
+			setSetting('scraper.dialog.color.display', '[COLOR=FFFFFF33]FFFFFF33[/COLOR]')
+			setSetting('sources.highlight.color', 'FF4DFFFF')
+			setSetting('sources.highlight.color.display', '[COLOR=FF4DFFFF]FF4DFFFF[/COLOR]')
+			setSetting('sources.real-debrid.color', 'FFFF3334')
+			setSetting('sources.real-debrid.color.display', '[COLOR=FFFF3334]FFFF3334[/COLOR]')
+			setSetting('sources.alldebrid.color', 'FFFFB84E')
+			setSetting('sources.alldebrid.color.display', '[COLOR=FFFFB84E]FFFFB84E[/COLOR]')
+			setSetting('sources.premiumize.me.color', 'FF4700B4')
+			setSetting('sources.premiumize.me.color.display', '[COLOR=FF4700B4]FF4700B4[/COLOR]')
+			setSetting('sources.easynews.color', 'FF24B301')
+			setSetting('sources.easynews.color.display', '[COLOR=FF24B301]FF24B301[/COLOR]')
+			setSetting('sources.plexshare.color', 'FFAD34FF')
+			setSetting('sources.plexshare.color.display', '[COLOR=FFAD34FF]FFAD34FF[/COLOR]')
+			setSetting('sources.gdrive.color', 'FFFF4DFF')
+			setSetting('sources.gdrive.color.display', '[COLOR=FFFF4DFF]FFFF4DFF[/COLOR]')
+			setSetting('sources.filepursuit.color', 'FF00CC29')
+			setSetting('sources.filepursuit.color.display', '[COLOR=FF00CC29]FF00CC29[/COLOR]')
+			setSetting('umbrella.colorSecond', 'true')
 		if setting('context.useUmbrellaContext') == 'true':
-			homeWindow.setProperty('context.umbrella.showUmbrella', '[B][COLOR '+getHighlightColor()+']Umbrella[/COLOR][/B] - ')
+			homeWindow.setProperty('context.umbrella.showUmbrella', '[B][COLOR '+setting('highlight.color')+']Umbrella[/COLOR][/B] - ')
 		else:
 			homeWindow.setProperty('context.umbrella.showUmbrella', '')
-		homeWindow.setProperty('context.umbrella.highlightcolor', getHighlightColor())
+		homeWindow.setProperty('context.umbrella.highlightcolor', setting('highlight.color'))
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()
@@ -718,7 +687,7 @@ def removeCorruptSettings():
 def setContextColors():
 	#tell me i cannot do some shit again.
 	try:
-		homeWindow.setProperty('context.umbrella.highlightcolor', getColor(setting('highlight.color')))
+		homeWindow.setProperty('context.umbrella.highlightcolor', setting('highlight.color'))
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()

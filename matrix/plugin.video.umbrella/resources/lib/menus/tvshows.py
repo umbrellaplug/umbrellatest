@@ -35,9 +35,9 @@ class TVshows:
 		self.notifications = notifications
 		self.enable_fanarttv = getSetting('enable.fanarttv') == 'true'
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
-		self.unairedcolor = control.getColor(getSetting('unaired.identify'))
+		self.unairedcolor = getSetting('unaired.identify')
 		self.showunaired = getSetting('showunaired') == 'true'
-		self.highlight_color = control.getHighlightColor()
+		self.highlight_color = control.setting('highlight.color')
 		self.date_time = datetime.now()
 		self.today_date = (self.date_time).strftime('%Y-%m-%d')
 		self.imdb_user = getSetting('imdbuser').replace('ur', '')

@@ -422,7 +422,7 @@ class Player(xbmc.Player):
 		currentEpisode = self.episode
 		currentSeason = self.season
 		from resources.lib.menus import episodes
-		items = episodes.Episodes().get(self.meta.get('tvshowtitle'), self.meta.get('year'), self.imdb, self.tmdb, self.tvdb, self.meta, self.season, create_directory=True)
+		items = episodes.Episodes().get(self.meta.get('tvshowtitle'), self.meta.get('year'), self.imdb, self.tmdb, self.tvdb, self.meta, self.season, create_directory=False)
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		try:
 			for count, i in enumerate(items):
@@ -494,7 +494,7 @@ class Player(xbmc.Player):
 		from resources.lib.menus import seasons, episodes
 		seasons = seasons.Seasons().tmdb_list(tvshowtitle='', imdb='', tmdb=self.tmdb, tvdb='', art=None)
 		
-		shows = episodes.Episodes().get(self.meta.get('tvshowtitle'), self.meta.get('year'), self.imdb, self.tmdb, self.tvdb, self.meta, create_directory=True)
+		shows = episodes.Episodes().get(self.meta.get('tvshowtitle'), self.meta.get('year'), self.imdb, self.tmdb, self.tvdb, self.meta, create_directory=False)
 		items.extend(shows)
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		try:
@@ -531,7 +531,7 @@ class Player(xbmc.Player):
 					item = control.item(label=label, offscreen=True)
 					setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb}
 					info = {'episode': int(episode), 'sortepisode': int(episode), 'season': int(season), 'sortseason': int(season), 'year': str(year), 'premiered': i.get('premiered', ''), 'aired': meta.get('airtime', ''), 'imdbnumber': imdb, 'duration': runtime, 'dateadded': '', 'rating': i.get('rating'), 'votes': i.get('votes'), 'mediatype': self.media_type, 'title': i.get('title'), 'originaltitle': i.get('title'), 'sorttitle': i.get('title'), 'plot': i.get('plot'), 'plotoutline': i.get('plot'), 'tvshowtitle': tvshowtitle, 'director': [i.get('director')], 'writer': [i.get('writer')], 'genre': [i.get('genre')], 'studio': [i.get('studio')], 'playcount': 0}
-					if int(season) > int(currentSeason):
+					if int(season) > int(currentSeason) and int(season) != 0:
 						item.setContentLookup(False)
 						cm = []
 						item.addContextMenuItems(cm)
@@ -620,6 +620,7 @@ class Player(xbmc.Player):
 			playerWindow.clearProperty('umbrella.preResolved_nextUrl')
 			playerWindow.clearProperty('umbrella.playlistStart_position')
 			clear_local_bookmarks() # clear all umbrella bookmarks from kodi database
+			control.playlist.clear()
 			if not self.onPlayBackStopped_ran or (self.playbackStopped_triggered and not self.onPlayBackStopped_ran): # Kodi callback unreliable and often not issued
 				self.onPlayBackStopped_ran = True
 				self.playbackStopped_triggered = False
@@ -632,7 +633,6 @@ class Player(xbmc.Player):
 				if getSetting('crefresh') == 'true' and seekable:
 					log_utils.log('container.refresh issued', level=log_utils.LOGDEBUG)
 					control.refresh() #not all skins refresh after playback stopped
-				control.playlist.clear()
 				#control.trigger_widget_refresh() # skinshortcuts handles widget refresh
 				#control.checkforSkin(action='off')
 				log_utils.log('onPlayBackStopped callback', level=log_utils.LOGDEBUG)
@@ -642,7 +642,7 @@ class Player(xbmc.Player):
 		if self.onPlayBackEnded_ran: return
 		Bookmarks().reset(self.current_time, self.media_length, self.name, self.year)
 		self.libForPlayback()
-		if control.playlist.getposition() == control.playlist.size() or control.playlist.size() == 1:
+		if control.playlist.getposition() == control.playlist.size() or control.playlist.size() == 1 or control.playlist.getposition() == 0:
 			control.playlist.clear()
 		log_utils.log('onPlayBackEnded callback', level=log_utils.LOGDEBUG)
 		#control.checkforSkin(action='off')
@@ -764,7 +764,6 @@ class PlayNext(xbmc.Player):
 			del window
 			self.play_next_triggered = True
 		except:
-
 			log_utils.error()
 			self.play_next_triggered = True
 

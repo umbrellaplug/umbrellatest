@@ -25,7 +25,7 @@ REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
 session = requests.Session()
 retries = Retry(total=4, backoff_factor=0.3, status_forcelist=[429, 500, 502, 503, 504, 520, 521, 522, 524, 530])
 session.mount('https://api.trakt.tv', HTTPAdapter(max_retries=retries, pool_maxsize=100))
-highlight_color = control.getHighlightColor()
+highlight_color = getSetting('highlight.color')
 server_notification = getSetting('trakt.server.notifications') == 'true'
 service_syncInterval = int(getSetting('trakt.service.syncInterval')) if getSetting('trakt.service.syncInterval') else 15
 trakt_icon = control.joinPath(control.artPath(), 'trakt.png')
@@ -190,8 +190,8 @@ def getTraktDeviceToken(traktDeviceCode):
 				"client_secret": traktClientSecret()}
 		start = time.time()
 		expires_in = traktDeviceCode['expires_in']
-		verification_url = control.lang(32513) % (control.getHighlightColor(), str(traktDeviceCode['verification_url']))
-		user_code = control.lang(32514) % (control.getHighlightColor(), str(traktDeviceCode['user_code']))
+		verification_url = control.lang(32513) % (highlight_color, str(traktDeviceCode['verification_url']))
+		user_code = control.lang(32514) % (highlight_color, str(traktDeviceCode['user_code']))
 		line = '%s\n%s\n%s'
 		try:
 			from resources.lib.modules.source_utils import copy2clip

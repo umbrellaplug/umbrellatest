@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from resources.lib.windows.base import BaseDialog
 from resources.lib.modules import colors
-from resources.lib.modules.control import dialog, getColor, setting as getSetting, darkColor
+from resources.lib.modules.control import dialog, setting as getSetting, darkColor
 
 button_ids = (10, 11)
 palettes = {'rainbow': colors.rainbow}
@@ -20,11 +20,11 @@ class ColorPick(BaseDialog):
         self.current_palette = palette_list[0]
         self.make_menu()
         self.lightordark = getSetting('dialogs.lightordarkmode')
-        self.buttonColor = getColor(getSetting('dialogs.button.color'))
-        self.customBackgroundColor = getColor(getSetting('dialogs.customcolor'))
+        self.buttonColor = getSetting('dialogs.button.color')
+        self.customBackgroundColor = getSetting('dialogs.customcolor')
         self.dark_text_background = darkColor(self.customBackgroundColor)
         self.useCustomTitleColor = getSetting('dialogs.usecolortitle') == 'true'
-        self.customTitleColor = getColor(getSetting('dialogs.titlebar.color'))
+        self.customTitleColor = getSetting('dialogs.titlebar.color')
         self.set_properties()
 
     def onInit(self):
@@ -52,8 +52,7 @@ class ColorPick(BaseDialog):
                 self.selected = None
                 self.close()
             elif focus_id == 12:
-                color = self.current_value[self.current_value.find(']')+1 : self.current_value.find('/')-1]
-                color_value = dialog.input('Enter Color Value', defaultt=color)
+                color_value = dialog.input('Enter Color Value', defaultt=self.current_value)
                 if not color_value: return
                 if len(color_value) == 6:
                     color_value = "FF"+color_value
