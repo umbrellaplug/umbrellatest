@@ -668,6 +668,7 @@ class PlayNext(xbmc.Player):
 		self.providercache_hours = int(getSetting('cache.providers'))
 		self.debuglog = control.setting('debug.level') == '1'
 		self.playnext_method = control.setting('playnext.method')
+		self.playnext_theme = getSetting('playnext.theme')
 
 	def display_xml(self):
 		try:
