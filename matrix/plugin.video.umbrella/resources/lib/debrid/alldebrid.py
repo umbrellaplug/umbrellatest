@@ -28,7 +28,6 @@ invalid_extensions = ('.bmp', '.exe', '.gif', '.jpg', '.nfo', '.part', '.png', '
 session = requests.Session()
 retries = Retry(total=5, backoff_factor=0.1, status_forcelist=[500, 502, 503, 504])
 session.mount('https://api.alldebrid.com', HTTPAdapter(max_retries=retries, pool_maxsize=100))
-highlightColor = control.setting('highlight.color')
 
 
 class AllDebrid:
@@ -39,6 +38,7 @@ class AllDebrid:
 		self.timeout = 20
 		self.server_notifications = getSetting('alldebrid.server.notifications')
 		self.store_to_cloud = getSetting('alldebrid.saveToCloud') == 'true'
+		self.highlight_color = control.setting('highlight.color')
 
 	def _get(self, url, url_append=''):
 		response = None
@@ -131,7 +131,7 @@ class AllDebrid:
 		else:
 			self.progressDialog = control.progressDialog
 			self.progressDialog.create(getLS(40056))
-		self.progressDialog.update(-1, line % (getLS(32513) % (highlightColor,'https://alldebrid.com/pin/'), getLS(32514) % (highlightColor,response['pin']),getLS(40390)))
+		self.progressDialog.update(-1, line % (getLS(32513) % (self.highlight_color,'https://alldebrid.com/pin/'), getLS(32514) % (self.highlight_color,response['pin']),getLS(40390)))
 		try:
 			from resources.lib.modules.source_utils import copy2clip
 			copy2clip(response['pin'])
@@ -290,7 +290,7 @@ class AllDebrid:
 				else: active = False
 				folder_name = string_tools.strip_non_ascii_and_unprintable(item['filename'])
 				id = item['id']
-				status_str = '[COLOR %s]%s[/COLOR]' % (highlightColor, item['status'].capitalize())
+				status_str = '[COLOR %s]%s[/COLOR]' % (self.highlight_color, item['status'].capitalize())
 				if active: label = '%02d | [B]%s[/B] - %s | [B]%s[/B]' % (count, status_str, str(percent) + '%', folder_name)
 				else: label = '%02d | [B]%s[/B] | [B]%s[/B] | [I]%s [/I]' % (count, status_str, folder_str, folder_name)
 				if status_code == 4:
@@ -325,7 +325,7 @@ class AllDebrid:
 				cm = []
 				folder_name = string_tools.strip_non_ascii_and_unprintable(item['filename'])
 				id = item['id']
-				status_str = '[COLOR %s]%s[/COLOR]' % (highlightColor, item['status'].capitalize())
+				status_str = '[COLOR %s]%s[/COLOR]' % (self.highlight_color, item['status'].capitalize())
 				label = '%02d | [B]%s[/B] | [B]%s[/B] | [I]%s [/I]' % (count, status_str, folder_str, folder_name)
 				url = '%s?action=ad_BrowseUserCloud&source=%s' % (sysaddon, quote_plus(jsdumps(item)))
 				cm.append((deleteMenu % 'Transfer', 'RunPlugin(%s?action=ad_DeleteTransfer&id=%s&name=%s)' %

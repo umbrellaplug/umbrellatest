@@ -1353,6 +1353,7 @@ def scrobbleMovie(imdb, tmdb, watched_percent):
 		if not imdb.startswith('tt'): imdb = 'tt' + imdb
 		success = getTrakt('/scrobble/pause', {"movie": {"ids": {"imdb": imdb}}, "progress": watched_percent})
 		if success:
+			log_utils.log('Trakt Scrobble Movie Success: imdb: %s s' % (imdb), level=log_utils.LOGDEBUG)
 			if getSetting('trakt.scrobble.notify') == 'true': control.notification(message=32088)
 			control.sleep(1000)
 			sync_playbackProgress(forced=True)
@@ -1366,6 +1367,7 @@ def scrobbleEpisode(imdb, tmdb, tvdb, season, episode, watched_percent):
 		season, episode = int('%01d' % int(season)), int('%01d' % int(episode))
 		success = getTrakt('/scrobble/pause', {"show": {"ids": {"tvdb": tvdb}}, "episode": {"season": season, "number": episode}, "progress": watched_percent})
 		if success:
+			log_utils.log('Trakt Scrobble Episode Success: imdb: %s s' % (imdb), level=log_utils.LOGDEBUG)
 			if getSetting('trakt.scrobble.notify') == 'true': control.notification(message=32088)
 			control.sleep(1000)
 			sync_playbackProgress(forced=True)
@@ -1380,7 +1382,7 @@ def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh
 	try:
 		content_type = 'movie' if not episode else 'episode'
 		resume_info = traktsync.fetch_bookmarks(imdb, tmdb, tvdb, season, episode, ret_type='resume_info')
-		#log_utils.log('Trakt ScrobbleReset imdb: %s imdb type: %s tmdb: %s tmdb type: %s tvdb: %s tvdb type: %s season: %s season type: %s episode: %s episode type: %s resume info: %s' % (imdb, type(imdb), tmdb, type(tmdb), tvdb, type(tvdb), season, type(season), episode, type(episode), str(resume_info)), level=log_utils.LOGDEBUG)
+		log_utils.log('Trakt ScrobbleReset imdb: %s imdb type: %s tmdb: %s tmdb type: %s tvdb: %s tvdb type: %s season: %s season type: %s episode: %s episode type: %s resume info: %s' % (imdb, type(imdb), tmdb, type(tmdb), tvdb, type(tvdb), season, type(season), episode, type(episode), str(resume_info)), level=log_utils.LOGDEBUG)
 		if resume_info == '0': return control.hide() # returns string "0" if no data in db 
 		headers['Authorization'] = 'Bearer %s' % getSetting('trakt.user.token')
 		success = session.delete('https://api.trakt.tv/sync/playback/%s' % resume_info[1], headers=headers).status_code == 204
@@ -1512,6 +1514,7 @@ def force_traktSync():
 	control.notification(message='Forced Trakt Sync Complete')
 
 def sync_playbackProgress(activities=None, forced=False):
+	log_utils.log('Trakt Sync Playback Called Forced: %s' % (str(forced)), level=log_utils.LOGDEBUG)
 	try:
 		link = '/sync/playback/?extended=full'
 		if forced:

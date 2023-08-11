@@ -49,9 +49,10 @@ class Player(xbmc.Player):
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
 		self.playeronly = getSetting('use.playeronly') == 'true'
 		self.subtitletime = None
-		self.debuglog = control.setting('debug.level') == '1'
-		self.multi_season = control.setting('umbrella.multiSeason') == 'true'
-		
+		self.debuglog = getSetting('debug.level') == '1'
+		self.multi_season = getSetting('umbrella.multiSeason') == 'true'
+		self.playnext_method = getSetting('playnext.method')
+		self.playnext_theme = getSetting('playnext.theme')
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
 		# if self.debuglog:
@@ -337,7 +338,7 @@ class Player(xbmc.Player):
 					try:
 						if watcher and property != '5':
 							homeWindow.setProperty(pname, '5')
-							if getSetting('debug.level') == '1':
+							if self.debuglog:
 								log_utils.log('Sending Movie to be marked as watched. IMDB: %s Title: %s Watch Percentage Used: %s Current Percentage: %s' % (self.imdb, self.title, self.markwatched_percentage, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 							playcount.markMovieDuringPlayback(self.imdb, '5')
 					except: pass
@@ -346,7 +347,7 @@ class Player(xbmc.Player):
 					try:
 						if watcher and property != '5':
 							homeWindow.setProperty(pname, '5')
-							if getSetting('debug.level') == '1':
+							if self.debuglog:
 								log_utils.log('Sending Episode to be marked as watched. IMDB: %s TVDB: %s Season: %s Episode: %s Title: %s Watch Percentage Used: %s Current Percentage: %s' % (self.imdb, self.tvdb, self.season, self.episode, self.title, self.markwatched_percentage, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 							playcount.markEpisodeDuringPlayback(self.imdb, self.tvdb, self.season, self.episode, '5')
 						if self.enable_playnext and not self.play_next_triggered:
@@ -358,39 +359,39 @@ class Player(xbmc.Player):
 								if self.multi_season and self.playnextSeasons_triggered == False:
 									self.buildSeasonPlaylist()
 									self.playnextSeasons_triggered = True
-								if getSetting('playnext.method')== '0':
+								if self.playnext_method== '0':
 									if remaining_time < (self.playnext_time + 1) and remaining_time != 0:
-										if getSetting('debug.level') == '1':
+										if self.debuglog:
 											log_utils.log('Playnext triggered by method time. IMDB: %s Title: %s Time Used: %s Remaining Time: %s' % (self.imdb, self.title, self.playnext_time, remaining_time), level=log_utils.LOGDEBUG)
 										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 										self.play_next_triggered = True
-								elif getSetting('playnext.method')== '1':	
+								elif self.playnext_method== '1':	
 									if self.getWatchedPercent() >= int(self.playnext_percentage) and remaining_time != 0:
-										if getSetting('debug.level') == '1':
+										if self.debuglog:
 											log_utils.log('Playnext triggered by method percentage. IMDB: %s Title: %s Percentage Used: %s Current Percentage: %s' % (self.imdb, self.title, self.playnext_percentage, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 										xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 										self.play_next_triggered = True
-								elif getSetting('playnext.method')== '2':
+								elif self.playnext_method== '2':
 									if self.subtitletime is None:
 										self.subtitletime = Subtitles().downloadForPlayNext(self.name, self.imdb, self.season, self.episode, self.media_length)
 									if str(self.subtitletime) == 'default':
 										if getSetting('playnext.sub.backupmethod')== '0': #subtitle failed use seconds as backup
 											subtitletimeumb = int(getSetting('playnext.sub.seconds'))
 											if remaining_time < (subtitletimeumb + 1) and remaining_time != 0:
-												if getSetting('debug.level') == '1':
+												if self.debuglog:
 													log_utils.log('Playnext triggered by method subtitle backup. IMDB: %s Title: %s Time Used: %s Current Time: %s' % (self.imdb, self.title, subtitletimeumb, remaining_time), level=log_utils.LOGDEBUG)
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
 										elif getSetting('playnext.sub.backupmethod') == '1': #subtitle failed use percentage as backup
 											subtitletimeumb = int(getSetting('playnext.sub.percent'))
 											if self.getWatchedPercent() >= int(subtitletimeumb) and remaining_time != 0:
-												if getSetting('debug.level') == '1':
+												if self.debuglog:
 													log_utils.log('Playnext triggered by method subtitle backup. IMDB: %s Title: %s Percent Used: %s Current Percent: %s' % (self.imdb, self.title, subtitletimeumb, self.getWatchedPercent()), level=log_utils.LOGDEBUG)
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
 									elif self.subtitletime != None and str(self.subtitletime) != 'default':
-										if remaining_time < (int(self.subtitletime) + 1) and remaining_time != 0:
-											if getSetting('debug.level') == '1':
+										if (remaining_time < (int(self.subtitletime) + 1) or remaining_time < 21) and remaining_time != 0:
+											if self.debuglog:
 													log_utils.log('Playnext triggered by method subtitle. IMDB: %s Title: %s Subtitle Time Used: %s Current Time: %s' % (self.imdb, self.title, self.subtitletime, remaining_time), level=log_utils.LOGDEBUG)
 											xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 											self.play_next_triggered = True
@@ -417,7 +418,7 @@ class Player(xbmc.Player):
 			elif self.getWatchedPercent() >= int(self.markwatched_percentage): self._end_playback()
 
 	def buildPlaylist(self):
-		if getSetting('debug.level') == '1':
+		if self.debuglog:
 			log_utils.log('Playnext build playlist. Meta is: %s' % str(self.meta), level=log_utils.LOGDEBUG)
 		currentEpisode = self.episode
 		currentSeason = self.season
@@ -666,6 +667,7 @@ class PlayNext(xbmc.Player):
 		self.playing_file = None
 		self.providercache_hours = int(getSetting('cache.providers'))
 		self.debuglog = control.setting('debug.level') == '1'
+		self.playnext_method = control.setting('playnext.method')
 
 	def display_xml(self):
 		try:
@@ -732,32 +734,32 @@ class PlayNext(xbmc.Player):
 				raise Exception()
 			#some changes here for playnext and themes.
 			from resources.lib.windows.playnext import PlayNextXML
-			if getSetting('playnext.theme') == '2'and control.skin in ('skin.auramod'):
-				if getSetting('debug.level') == '1':
+			if self.playnext_theme == '2'and control.skin in ('skin.auramod'):
+				if self.debuglog:
 					log_utils.log('Show Playnext Theme Netflix with Auramod Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('auraplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '2'and control.skin not in ('skin.auramod'):
-				if getSetting('debug.level') == '1':
+			elif self.playnext_theme == '2'and control.skin not in ('skin.auramod'):
+				if self.debuglog:
 					log_utils.log('Show Playnext Theme Netflix No Aura. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('auraplaynext2.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '1' and (control.skin in ('skin.arctic.horizon.2')):
-				if getSetting('debug.level') == '1':
+			elif self.playnext_theme == '1' and (control.skin in ('skin.arctic.horizon.2')):
+				if self.debuglog:
 					log_utils.log('Show Playnext Theme AH2 with AH2 Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.fuse'):
-				if getSetting('debug.level') == '1':
+			elif self.playnext_theme == '1' and control.skin in ('skin.arctic.fuse'):
+				if self.debuglog:
 					log_utils.log('Show Playnext Theme AH2 with Arctic Fuse Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext3.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '1' and control.skin not in ('skin.arctic.horizon.2') and control.skin not in ('skin.arctic.fuse'):
-				if getSetting('debug.level') == '1':
+			elif self.playnext_theme == '1' and control.skin not in ('skin.arctic.horizon.2') and control.skin not in ('skin.arctic.fuse'):
+				if self.debuglog:
 					log_utils.log('Show Playnext Theme AH2 without AH2 or AF. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext2.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '3':
-				if getSetting('debug.level') == '1':
+			elif self.playnext_theme == '3':
+				if self.debuglog:
 					log_utils.log('Show Playnext Theme Arctic Fuse. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext4.xml', control.addonPath(control.addonId()), meta=next_meta)
 			else:
-				if getSetting('debug.level') == '1':
+				if self.debuglog:
 					log_utils.log('Show Playnext Theme Default Theme. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 				window = PlayNextXML('playnext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			window.run()
@@ -771,20 +773,20 @@ class PlayNext(xbmc.Player):
 		try:
 			next_meta = self.getNext_meta()
 			if not next_meta: raise Exception()
-			if getSetting('debug.level') == '1':
+			if self.debuglog:
 				log_utils.log('Show Playnext Still Watching. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
 			from resources.lib.windows.playnext_stillwatching import StillWatchingXML
-			if getSetting('playnext.theme') == '2'and control.skin in ('skin.auramod'):
+			if self.playnext_theme == '2'and control.skin in ('skin.auramod'):
 				window = StillWatchingXML('auraplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '2'and control.skin not in ('skin.auramod'):
+			elif self.playnext_theme == '2'and control.skin not in ('skin.auramod'):
 				window = StillWatchingXML('auraplaynext_stillwatching2.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.horizon.2'):
+			elif self.playnext_theme == '1' and control.skin in ('skin.arctic.horizon.2'):
 				window = StillWatchingXML('ahplaynext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '1' and control.skin in ('skin.arctic.fuse'):
+			elif self.playnext_theme == '1' and control.skin in ('skin.arctic.fuse'):
 				window = StillWatchingXML('ahplaynext_stillwatching3.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '1' and control.skin not in ('skin.arctic.horizon.2') and control.skin not in ('skin.arctic.fuse'):
+			elif self.playnext_theme == '1' and control.skin not in ('skin.arctic.horizon.2') and control.skin not in ('skin.arctic.fuse'):
 				window = StillWatchingXML('ahplaynext_stillwatching2.xml', control.addonPath(control.addonId()), meta=next_meta)
-			elif getSetting('playnext.theme') == '3':
+			elif self.playnext_theme == '3':
 				window = StillWatchingXML('ahplaynext_stillwatching4.xml', control.addonPath(control.addonId()), meta=next_meta)
 			else:
 				window = StillWatchingXML('playnext_stillwatching.xml', control.addonPath(control.addonId()), meta=next_meta)
@@ -931,7 +933,7 @@ class Subtitles:
 				if Player().isPlayback():
 					control.sleep(500)
 					control.notification(title=filename, message=getLS(32191) % lang.upper())
-			if getSetting('playnext.method')== '2' and getSetting('enable.playnext')== 'true' and Player().subtitletime == None: #added to check for playnext using subtitles if downloaded.
+			if self.playnext_method== '2' and getSetting('enable.playnext')== 'true' and Player().subtitletime == None: #added to check for playnext using subtitles if downloaded.
 				times = []
 				pattern = r'(\d{2}:\d{2}:\d{2},d{3}$)|(\d{2}:\d{2}:\d{2})'
 				with control.openFile(subtitle) as file:

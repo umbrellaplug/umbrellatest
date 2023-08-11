@@ -44,6 +44,8 @@ class PlayNextXML(BaseDialog):
 
 	def onClick(self, control_id):
 		if control_id == 3011: # Play Now, skip to end of current
+			from resources.lib.modules import log_utils
+			log_utils.log('PlayNext Play Button! Playlist Position: %s Playlist Count: %s ' % (control.playlist.getposition(), control.playlist.size()), log_utils.LOGDEBUG)
 			xbmc.executebuiltin('PlayerControl(BigSkipForward)')
 			self.doClose()
 		if control_id == 3012: # Stop playback
