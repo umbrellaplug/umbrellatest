@@ -127,38 +127,43 @@ class Player(xbmc.Player):
 			#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
 			control.set_info(item, meta, setUniqueIDs=setUniqueIDs) #changed for kodi20 setinfo method
 			item.setProperty('IsPlayable', 'true')
-			if int(control.playlist.size()) < 1 and self.media_type == 'episode' and self.enable_playnext: #this is the change made for play next from widget.
-				try:
-					episodelabel = '%sx%02d %s' % (int(season), int(episode), self.meta.get('title'))
-					if self.meta.get('title'):
-						item.setLabel(episodelabel) #set the episode name here.
-						control.playlist.add(url, item)
-						playerWindow.setProperty('umbrella.playlistStart_position', str(0))
-						control.player.play(control.playlist)
-						#control.resolve(int(argv[1]), True, item)
-						if self.debuglog:
-							log_utils.log('Played file as resolve', level=log_utils.LOGDEBUG)
-					else:
-						if debridPackCall and not self.playeronly: 
-							control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-							if self.debuglog:
-								log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
-						elif self.playeronly:
-							control.player.play(url) # using for crashing bug testing.
-							if self.debuglog:
-								log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
-						else: control.resolve(int(argv[1]), True, item)
-				except:
-					if debridPackCall and not self.playeronly: 
-						control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-						if self.debuglog:
-							log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
-					elif self.playeronly:
-						control.player.play(url) # using for crashing bug testing.
-						if self.debuglog:
-							log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
-					else: control.resolve(int(argv[1]), True, item)
-			elif debridPackCall and not self.playeronly: 
+			self.checkPlaylist()
+#######################################################################################################################################################################
+			# if int(control.playlist.size()) < 1 and self.media_type == 'episode' and self.enable_playnext: #this is the change made for play next from widget.
+			# 	try:
+			# 		episodelabel = '%sx%02d %s' % (int(season), int(episode), self.meta.get('title'))
+			# 		if self.meta.get('title'):
+			# 			item.setLabel(episodelabel) #set the episode name here.
+			# 			#playlist checking functions here.
+
+			# 			control.playlist.add(url, item)
+			# 			playerWindow.setProperty('umbrella.playlistStart_position', str(0))
+			# 			#control.player.play(control.playlist)
+			# 			control.resolve(int(argv[1]), True, item)
+			# 			if self.debuglog:
+			# 				log_utils.log('Played file as resolve', level=log_utils.LOGDEBUG)
+			# 		else:
+			# 			if debridPackCall and not self.playeronly: 
+			# 				control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
+			# 				if self.debuglog:
+			# 					log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
+			# 			elif self.playeronly:
+			# 				control.player.play(url) # using for crashing bug testing.
+			# 				if self.debuglog:
+			# 					log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
+			# 			else: control.resolve(int(argv[1]), True, item)
+			# 	except:
+			# 		if debridPackCall and not self.playeronly: 
+			# 			control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
+			# 			if self.debuglog:
+			# 				log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
+			# 		elif self.playeronly:
+			# 			control.player.play(url) # using for crashing bug testing.
+			# 			if self.debuglog:
+			# 				log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
+			# 		else: control.resolve(int(argv[1]), True, item)
+#################################################################################################################################################################################
+			if debridPackCall and not self.playeronly: 
 				control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
 				if self.debuglog:
 					log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
@@ -269,6 +274,11 @@ class Player(xbmc.Player):
 		except:
 			log_utils.error()
 			return (poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta)
+
+	def checkPlaylist(self):
+		#need to check for exisiting playlist here and handle that.
+		#todo build playlist for single item that matches resolve.
+		pass
 
 	def getWatchedPercent(self):
 		try:
