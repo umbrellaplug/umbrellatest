@@ -27,6 +27,7 @@ class PlayNextXML(BaseDialog):
 		self.closed = False
 
 	def onInit(self):
+		playerWindow.setProperty('umbrella.playnextPlayPressed', str(0))
 		self.set_properties()
 		self.background_tasks()
 
@@ -44,6 +45,7 @@ class PlayNextXML(BaseDialog):
 
 	def onClick(self, control_id):
 		if control_id == 3011: # Play Now, skip to end of current
+			playerWindow.setProperty('umbrella.playnextPlayPressed', str(1))
 			from resources.lib.modules import log_utils
 			log_utils.log('PlayNext Play Button! Playlist Position: %s Playlist Count: %s ' % (control.playlist.getposition(), control.playlist.size()), log_utils.LOGDEBUG)
 			xbmc.executebuiltin('PlayerControl(BigSkipForward)')

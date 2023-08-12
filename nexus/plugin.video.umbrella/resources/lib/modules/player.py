@@ -53,6 +53,7 @@ class Player(xbmc.Player):
 		self.multi_season = getSetting('umbrella.multiSeason') == 'true'
 		self.playnext_method = getSetting('playnext.method')
 		self.playnext_theme = getSetting('playnext.theme')
+		playerWindow.setProperty('umbrella.playnextPlayPressed', str(0))
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
 		# if self.debuglog:
@@ -134,8 +135,9 @@ class Player(xbmc.Player):
 						control.playlist.add(url, item)
 						playerWindow.setProperty('umbrella.playlistStart_position', str(0))
 						control.player.play(control.playlist)
+						#control.resolve(int(argv[1]), True, item)
 						if self.debuglog:
-							log_utils.log('Played file as playlist', level=log_utils.LOGDEBUG)
+							log_utils.log('Played file as resolve', level=log_utils.LOGDEBUG)
 					else:
 						if debridPackCall and not self.playeronly: 
 							control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
@@ -419,7 +421,7 @@ class Player(xbmc.Player):
 
 	def buildPlaylist(self):
 		if self.debuglog:
-			log_utils.log('Playnext build playlist. Meta is: %s' % str(self.meta), level=log_utils.LOGDEBUG)
+			log_utils.log('Playnext build playlist.', level=log_utils.LOGDEBUG)
 		currentEpisode = self.episode
 		currentSeason = self.season
 		from resources.lib.menus import episodes
@@ -643,7 +645,12 @@ class Player(xbmc.Player):
 		if self.onPlayBackEnded_ran: return
 		Bookmarks().reset(self.current_time, self.media_length, self.name, self.year)
 		self.libForPlayback()
-		if control.playlist.getposition() == control.playlist.size() or control.playlist.size() == 1 or control.playlist.getposition() == 0:
+		try:
+			playingfile = Player.isPlaying()
+		except:
+			playingfile = False
+		log_utils.log('onPlayBackEnded Playlist Position: %s isPlaying: %s' % (control.playlist.getposition(), playingfile), level=log_utils.LOGDEBUG)
+		if control.playlist.getposition() == control.playlist.size() or control.playlist.size() == 1 or (control.playlist.getposition() == 0 and playerWindow.getProperty('playnextPlayPressed') == '0'):
 			control.playlist.clear()
 		log_utils.log('onPlayBackEnded callback', level=log_utils.LOGDEBUG)
 		#control.checkforSkin(action='off')
@@ -737,31 +744,31 @@ class PlayNext(xbmc.Player):
 			from resources.lib.windows.playnext import PlayNextXML
 			if self.playnext_theme == '2'and control.skin in ('skin.auramod'):
 				if self.debuglog:
-					log_utils.log('Show Playnext Theme Netflix with Auramod Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
+					log_utils.log('Show Playnext Theme Netflix with Auramod Skin.', level=log_utils.LOGDEBUG)
 				window = PlayNextXML('auraplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif self.playnext_theme == '2'and control.skin not in ('skin.auramod'):
 				if self.debuglog:
-					log_utils.log('Show Playnext Theme Netflix No Aura. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
+					log_utils.log('Show Playnext Theme Netflix No Aura.', level=log_utils.LOGDEBUG)
 				window = PlayNextXML('auraplaynext2.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif self.playnext_theme == '1' and (control.skin in ('skin.arctic.horizon.2')):
 				if self.debuglog:
-					log_utils.log('Show Playnext Theme AH2 with AH2 Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
+					log_utils.log('Show Playnext Theme AH2 with AH2 Skin', level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif self.playnext_theme == '1' and control.skin in ('skin.arctic.fuse'):
 				if self.debuglog:
-					log_utils.log('Show Playnext Theme AH2 with Arctic Fuse Skin. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
+					log_utils.log('Show Playnext Theme AH2 with Arctic Fuse Skin.', level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext3.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif self.playnext_theme == '1' and control.skin not in ('skin.arctic.horizon.2') and control.skin not in ('skin.arctic.fuse'):
 				if self.debuglog:
-					log_utils.log('Show Playnext Theme AH2 without AH2 or AF. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
+					log_utils.log('Show Playnext Theme AH2 without AH2 or AF.', level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext2.xml', control.addonPath(control.addonId()), meta=next_meta)
 			elif self.playnext_theme == '3':
 				if self.debuglog:
-					log_utils.log('Show Playnext Theme Arctic Fuse. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
+					log_utils.log('Show Playnext Theme Arctic Fuse.', level=log_utils.LOGDEBUG)
 				window = PlayNextXML('ahplaynext4.xml', control.addonPath(control.addonId()), meta=next_meta)
 			else:
 				if self.debuglog:
-					log_utils.log('Show Playnext Theme Default Theme. Meta is: %s' % str(next_meta), level=log_utils.LOGDEBUG)
+					log_utils.log('Show Playnext Theme Default Theme.', level=log_utils.LOGDEBUG)
 				window = PlayNextXML('playnext.xml', control.addonPath(control.addonId()), meta=next_meta)
 			window.run()
 			del window
