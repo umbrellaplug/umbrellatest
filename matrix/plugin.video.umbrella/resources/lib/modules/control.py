@@ -485,8 +485,9 @@ def set_info(item, meta, setUniqueIDs=None, resumetime='', fileNameandPath=None)
 			info_tag.setMediaType(meta_get('mediatype'))
 			if setUniqueIDs:
 				info_tag.setUniqueIDs(setUniqueIDs)
-			log('unique id title:%s imdb:%s filenameandpath: %s'%(meta_get('title'), setUniqueIDs.get('imdb'), fileNameandPath), 1)
-			info_tag.setPath(unquote(fileNameandPath))
+			#log('unique id title:%s imdb:%s filenameandpath: %s'%(meta_get('title'), setUniqueIDs.get('imdb'), fileNameandPath), 1)
+			if fileNameandPath:
+				info_tag.setPath(unquote(fileNameandPath))
 			if fileNameandPath:
 				info_tag.setFilenameAndPath(unquote(fileNameandPath))
 			if meta_get('title') == None:
@@ -495,8 +496,8 @@ def set_info(item, meta, setUniqueIDs=None, resumetime='', fileNameandPath=None)
 				info_title = meta_get('title')
 			info_tag.setTitle(info_title)
 			info_tag.setSortTitle(meta_get('sorttitle'))
-			info_tag.setSortEpisode(meta_get('sortepisode'))
-			info_tag.setSortSeason(meta_get('sortseason'))
+			#info_tag.setSortEpisode(meta_get('sortepisode'))
+			#info_tag.setSortSeason(meta_get('sortseason'))
 			info_tag.setOriginalTitle(meta_get('originaltitle'))
 			info_tag.setPlot(meta_get('plot'))
 			info_tag.setPlotOutline(meta_get('plot'))
