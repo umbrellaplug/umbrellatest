@@ -13,6 +13,7 @@ import xbmcvfs
 #import xml.etree.ElementTree as ET
 from threading import Thread
 from xml.dom.minidom import parse as mdParse
+from urllib.parse import unquote
 import json
 import requests
 import time
@@ -476,8 +477,7 @@ def metadataClean(metadata):
 					'album', 'artist', 'votes', 'path', 'trailer', 'dateadded', 'mediatype', 'dbid')
 	return {k: v for k, v in iter(metadata.items()) if k in allowed}
 
-def set_info(item, meta, setUniqueIDs=None, resumetime=''):
-	
+def set_info(item, meta, setUniqueIDs=None, resumetime='', fileNameandPath=None):
 	if getKodiVersion() >= 20:
 		try:
 			meta_get = meta.get
@@ -485,17 +485,21 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 			info_tag.setMediaType(meta_get('mediatype'))
 			if setUniqueIDs:
 				info_tag.setUniqueIDs(setUniqueIDs)
-			info_tag.setPath(meta_get('path'))
-			info_tag.setFilenameAndPath(meta_get('filenameandpath'))
+			log('unique id title:%s imdb:%s filenameandpath: %s'%(meta_get('title'), setUniqueIDs.get('imdb'), fileNameandPath), 1)
+			info_tag.setPath(unquote(fileNameandPath))
+			if fileNameandPath:
+				info_tag.setFilenameAndPath(unquote(fileNameandPath))
 			if meta_get('title') == None:
 				info_title = item.getLabel()
 			else:
 				info_title = meta_get('title')
 			info_tag.setTitle(info_title)
 			info_tag.setSortTitle(meta_get('sorttitle'))
+			info_tag.setSortEpisode(meta_get('sortepisode'))
+			info_tag.setSortSeason(meta_get('sortseason'))
 			info_tag.setOriginalTitle(meta_get('originaltitle'))
 			info_tag.setPlot(meta_get('plot'))
-			info_tag.setPlotOutline(meta_get('plotoutline'))
+			info_tag.setPlotOutline(meta_get('plot'))
 			info_tag.setDateAdded(meta_get('dateadded'))
 			info_tag.setPremiered(meta_get('premiered'))
 			info_tag.setYear(convert_type(int, meta_get('year', 0)))
@@ -503,7 +507,7 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 			info_tag.setMpaa(meta_get('mpaa'))
 			if meta_get('duration') != '':
 				info_tag.setDuration(meta_get('duration', 0))
-			info_tag.setPlaycount(convert_type(int , meta_get('playcount', 0)))
+			info_tag.setPlaycount(convert_type(int, meta_get('playcount', 0)))
 			if isinstance(meta_get('votes'), str): 
 				meta_votes = str(meta_get('votes')).replace(",","")
 			else:
@@ -520,7 +524,7 @@ def set_info(item, meta, setUniqueIDs=None, resumetime=''):
 			info_tag.setStudios(to_list(meta_get('studio', [])))
 			info_tag.setWriters(to_list(meta_get('writer', [])))
 			info_tag.setDirectors(to_list(meta_get('director', [])))
-			info_tag.setIMDBNumber(meta_get('imdb_id'))
+			info_tag.setIMDBNumber(setUniqueIDs.get('imdb'))
 			if resumetime: info_tag.setResumePoint(float(resumetime))
 			if meta_get('mediatype') in ['tvshow', 'season']:
 				info_tag.setTvShowTitle(meta_get('tvshowtitle'))
@@ -690,3 +694,6 @@ def setContextColors():
 	except:
 		from resources.lib.modules import log_utils
 		log_utils.error()
+
+
+
