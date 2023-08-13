@@ -47,12 +47,12 @@ class Player(xbmc.Player):
 		self.traktCredentials = trakt.getTraktCredentialsInfo()
 		self.onPlayBackEnded_ran = False
 		self.prefer_tmdbArt = getSetting('prefer.tmdbArt') == 'true'
-		self.playeronly = getSetting('use.playeronly') == 'true'
 		self.subtitletime = None
 		self.debuglog = getSetting('debug.level') == '1'
 		self.multi_season = getSetting('umbrella.multiSeason') == 'true'
 		self.playnext_method = getSetting('playnext.method')
 		self.playnext_theme = getSetting('playnext.theme')
+		self.playnext_min = getSetting('playnext.min.seconds')
 		playerWindow.setProperty('umbrella.playnextPlayPressed', str(0))
 
 	def play_source(self, title, year, season, episode, imdb, tmdb, tvdb, url, meta, debridPackCall=False):
@@ -115,7 +115,7 @@ class Player(xbmc.Player):
 					log_utils.log('User requested playback cancel', level=log_utils.LOGDEBUG)
 				control.notification(message=32328)
 				return control.cancelPlayback()
-
+			self.playing_file = url
 			item = control.item(path=url)
 			#item.setUniqueIDs(self.ids) #changed for kodi20 setinfo method
 			setUniqueIDs = self.ids #changed for kodi20 setinfo method
@@ -125,49 +125,25 @@ class Player(xbmc.Player):
 				item.setArt({'clearart': clearart, 'clearlogo': clearlogo, 'discart': discart, 'thumb': thumb, 'poster': poster, 'fanart': fanart})
 			#if 'castandart' in meta: item.setCast(meta.get('castandart', '')) #changed for kodi20 setinfo method
 			#item.setInfo(type='video', infoLabels=control.metadataClean(meta))
-			control.set_info(item, meta, setUniqueIDs=setUniqueIDs) #changed for kodi20 setinfo method
+			control.set_info(item, meta, setUniqueIDs=setUniqueIDs, fileNameandPath=self.playing_file) #changed for kodi20 setinfo method
 			item.setProperty('IsPlayable', 'true')
-			if int(control.playlist.size()) < 1 and self.media_type == 'episode' and self.enable_playnext: #this is the change made for play next from widget.
-				try:
-					episodelabel = '%sx%02d %s' % (int(season), int(episode), self.meta.get('title'))
-					if self.meta.get('title'):
-						item.setLabel(episodelabel) #set the episode name here.
-						control.playlist.add(url, item)
-						playerWindow.setProperty('umbrella.playlistStart_position', str(0))
-						control.player.play(control.playlist)
-						#control.resolve(int(argv[1]), True, item)
-						if self.debuglog:
-							log_utils.log('Played file as resolve', level=log_utils.LOGDEBUG)
-					else:
-						if debridPackCall and not self.playeronly: 
-							control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-							if self.debuglog:
-								log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
-						elif self.playeronly:
-							control.player.play(url) # using for crashing bug testing.
-							if self.debuglog:
-								log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
-						else: control.resolve(int(argv[1]), True, item)
-				except:
-					if debridPackCall and not self.playeronly: 
-						control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
-						if self.debuglog:
-							log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
-					elif self.playeronly:
-						control.player.play(url) # using for crashing bug testing.
-						if self.debuglog:
-							log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
-					else: control.resolve(int(argv[1]), True, item)
-			elif debridPackCall and not self.playeronly: 
+			playlistAdded = self.checkPlaylist(item)
+			if debridPackCall: 
 				control.player.play(url, item) # seems this is only way browseDebrid pack files will play and have meta marked as watched
 				if self.debuglog:
 					log_utils.log('Played file as player.play', level=log_utils.LOGDEBUG)
-			elif self.playeronly:
-				control.player.play(url) # using for crashing bug testing.
+			elif playlistAdded and self.enable_playnext:
+				control.player.play(control.playlist)
 				if self.debuglog:
-					log_utils.log('Played file as player.play with only the url', level=log_utils.LOGDEBUG)
+					log_utils.log('Played file as playlist.', level=log_utils.LOGDEBUG)
+				if self.multi_season:
+					self.buildSeasonPlaylist(fromEpisode=True)
+				else:
+					self.buildPlaylist()
 			else:
 				control.resolve(int(argv[1]), True, item)
+				if self.media_type == 'episode' and self.multi_season:
+					self.buildSeasonPlaylist()
 				if self.debuglog:
 					log_utils.log('Played file as resolve.', level=log_utils.LOGDEBUG)
 			homeWindow.setProperty('script.trakt.ids', jsdumps(self.ids))
@@ -270,6 +246,43 @@ class Player(xbmc.Player):
 			log_utils.error()
 			return (poster, thumb, season_poster, fanart, banner, clearart, clearlogo, discart, meta)
 
+	def checkPlaylist(self, item):
+		#need to check for exisiting playlist here and handle that.
+		#movie needs to clear the playlist
+		if self.media_type != "episode":
+			log_utils.log('checkPlaylist() Item is movie, clearing playlist.', level=log_utils.LOGDEBUG)
+			control.playlist.clear()
+			return False
+		#item paths for current items on playlist.
+		current_playlist_uris = [ control.playlist[i].getPath() for i in range(control.playlist.size())]
+
+		#check if new playlist or already built
+		from sys import argv
+		action = argv[2].lstrip('?/')
+		if len(current_playlist_uris) == 1 and current_playlist_uris[0].split('/')[-1].lstrip('?') == action:
+			return False
+
+		#check if no playlist is currently added.
+		if control.playlist.getposition() == -1:
+			return self.singleItemPlaylist(item)
+
+		#todo build playlist for single item that matches resolve.
+
+	def singleItemPlaylist(self, item):
+		try:
+			control.cancelPlayback()
+			episodelabel = '%sx%02d %s' % (int(self.season), int(self.episode), self.meta.get('title'))
+			if self.meta.get('title'):
+				item.setLabel(episodelabel)
+			from sys import argv
+			#action = argv[2].lstrip('?/')
+			#base = argv[0]
+			newurl = item.getVideoInfoTag().getFilenameAndPath()
+			control.playlist.add(url=newurl, listitem=item)
+			return True
+		except:
+			return False
+
 	def getWatchedPercent(self):
 		try:
 			if self.isPlayback():
@@ -359,8 +372,9 @@ class Player(xbmc.Player):
 									self.preScrape_triggered = True
 								remaining_time = self.getRemainingTime()
 								if self.multi_season and self.playnextSeasons_triggered == False:
-									self.buildSeasonPlaylist()
-									self.playnextSeasons_triggered = True
+									#self.buildSeasonPlaylist()
+									#self.playnextSeasons_triggered = True
+									pass
 								if self.playnext_method== '0':
 									if remaining_time < (self.playnext_time + 1) and remaining_time != 0:
 										if self.debuglog:
@@ -392,7 +406,7 @@ class Player(xbmc.Player):
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
 									elif self.subtitletime != None and str(self.subtitletime) != 'default':
-										if (remaining_time < (int(self.subtitletime) + 1) or remaining_time < 21) and remaining_time != 0:
+										if (remaining_time < (int(self.subtitletime) + 1) or remaining_time < self.playnext_min) and remaining_time != 0:
 											if self.debuglog:
 													log_utils.log('Playnext triggered by method subtitle. IMDB: %s Title: %s Subtitle Time Used: %s Current Time: %s' % (self.imdb, self.title, self.subtitletime, remaining_time), level=log_utils.LOGDEBUG)
 											xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
@@ -403,8 +417,9 @@ class Player(xbmc.Player):
 									if self.debuglog:
 										log_utils.log('No match found for playnext method.', level=log_utils.LOGDEBUG)
 							if int(control.playlist.size()) == 1 and self.playlist_built == False:
-								self.buildPlaylist()
-								self.playlist_built = True
+								#self.buildPlaylist()
+								#self.playlist_built = True
+								pass
 					except: log_utils.error()
 					xbmc.sleep(1000)
 
@@ -481,13 +496,10 @@ class Player(xbmc.Player):
 							control.playlist.add(url=url, listitem=item)
 				except:
 					log_utils.error()
-			if self.multi_season and self.playnextSeasons_triggered == False:
-				self.buildSeasonPlaylist()
-				self.playnextSeasons_triggered = True
 		except:
 			log_utils.error()
 
-	def buildSeasonPlaylist(self):
+	def buildSeasonPlaylist(self, fromEpisode=False):
 		#get all seasons
 		#get every season greater than current season
 		#get every episode for each season and add to playlist
@@ -534,7 +546,7 @@ class Player(xbmc.Player):
 					item = control.item(label=label, offscreen=True)
 					setUniqueIDs = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb}
 					info = {'episode': int(episode), 'sortepisode': int(episode), 'season': int(season), 'sortseason': int(season), 'year': str(year), 'premiered': i.get('premiered', ''), 'aired': meta.get('airtime', ''), 'imdbnumber': imdb, 'duration': runtime, 'dateadded': '', 'rating': i.get('rating'), 'votes': i.get('votes'), 'mediatype': self.media_type, 'title': i.get('title'), 'originaltitle': i.get('title'), 'sorttitle': i.get('title'), 'plot': i.get('plot'), 'plotoutline': i.get('plot'), 'tvshowtitle': tvshowtitle, 'director': [i.get('director')], 'writer': [i.get('writer')], 'genre': [i.get('genre')], 'studio': [i.get('studio')], 'playcount': 0}
-					if int(season) > int(currentSeason) and int(season) != 0:
+					if int(season) > int(currentSeason) or ((int(season) == int(currentSeason) and int(episode) > int(self.episode)) and fromEpisode) and int(season) != 0:
 						item.setContentLookup(False)
 						cm = []
 						item.addContextMenuItems(cm)

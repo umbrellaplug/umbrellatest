@@ -102,9 +102,6 @@ class Sources:
 			control.sleep(200)
 			if control.playlist.getposition() == 0 or control.playlist.size() <= 1: 
 				playerWindow.clearProperty('umbrella.preResolved_nextUrl')
-			if control.playlist.getposition() == -1:
-				control.playlist.clear()
-				playerWindow.clearProperty('umbrella.preResolved_nextUrl')
 			preResolved_nextUrl = playerWindow.getProperty('umbrella.preResolved_nextUrl')
 			if preResolved_nextUrl != '':
 				control.sleep(500)

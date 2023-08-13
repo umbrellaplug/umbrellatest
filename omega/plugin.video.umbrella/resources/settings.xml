@@ -1442,7 +1442,7 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting id="playnext.percent" type="integer" label="40321" help="" parent="playnext.method">>
+				<setting id="playnext.percent" type="integer" label="40321" help="" parent="playnext.method">
 					<level>0</level>
 					<default>80</default>
 					<constraints>
@@ -1454,6 +1454,23 @@
 						<dependency type="visible">
 							<condition operator="is" setting="enable.playnext">true</condition>
 							<condition operator="is" setting="playnext.method">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="playnext.min.seconds" type="integer" label="40441" help="40442" parent="playnext.method">
+					<level>0</level>
+					<default>20</default>
+					<constraints>
+						<minimum>5</minimum>
+						<maximum>300</maximum>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="enable.playnext">true</condition>
+							<condition operator="is" setting="playnext.method">2</condition>
 						</dependency>
 					</dependencies>
 					<control type="slider" format="integer">
