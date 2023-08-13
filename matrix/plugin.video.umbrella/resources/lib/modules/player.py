@@ -406,7 +406,7 @@ class Player(xbmc.Player):
 												xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
 												self.play_next_triggered = True
 									elif self.subtitletime != None and str(self.subtitletime) != 'default':
-										if (remaining_time < (int(self.subtitletime) + 1) or remaining_time < self.playnext_min) and remaining_time != 0:
+										if (remaining_time < (int(self.subtitletime) + 1) or remaining_time < int(self.playnext_min)) and remaining_time != 0:
 											if self.debuglog:
 													log_utils.log('Playnext triggered by method subtitle. IMDB: %s Title: %s Subtitle Time Used: %s Current Time: %s' % (self.imdb, self.title, self.subtitletime, remaining_time), level=log_utils.LOGDEBUG)
 											xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_nextWindowXML)')
