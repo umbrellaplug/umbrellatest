@@ -138,6 +138,7 @@ class Player(xbmc.Player):
 					log_utils.log('Played file as playlist.', level=log_utils.LOGDEBUG)
 				if self.multi_season:
 					if self.playlist_built == False:
+						log_utils.log('Building Season Playlist platlistAdded and enabled playnext and multi season enabled and playlist_built false.', 1)
 						self.buildSeasonPlaylist(fromEpisode=True)
 						self.playlist_built = True
 				else:
@@ -146,8 +147,9 @@ class Player(xbmc.Player):
 						self.playlist_built = True
 			else:
 				control.resolve(int(argv[1]), True, item)
-				if self.media_type == 'episode' and self.multi_season:
-					if self.playlist_built == False:
+				if self.media_type == 'episode' and self.multi_season and self.playlist_built == False:
+					if int(control.playlist.size()) <= int(meta.get('seasons')[int(season)].get('episode_count')):
+						log_utils.log('Building Season Playlist on resolve playlist_built false.', 1)
 						self.buildSeasonPlaylist()
 						self.playlist_built = True
 				if self.debuglog:
@@ -433,6 +435,7 @@ class Player(xbmc.Player):
 			elif self.getWatchedPercent() >= int(self.markwatched_percentage): self._end_playback()
 
 	def buildPlaylist(self):
+		log_utils.log('Building Regular Playlist',1)
 		if self.debuglog:
 			log_utils.log('Playnext build playlist.', level=log_utils.LOGDEBUG)
 		currentEpisode = self.episode
@@ -501,6 +504,7 @@ class Player(xbmc.Player):
 		#get all seasons
 		#get every season greater than current season
 		#get every episode for each season and add to playlist
+		log_utils.log('Building Season Playlist',1)
 		currentSeason = self.season
 		currentEpisode = self.episode
 		items = []
