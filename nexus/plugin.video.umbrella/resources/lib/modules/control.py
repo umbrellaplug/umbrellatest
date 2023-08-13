@@ -525,7 +525,8 @@ def set_info(item, meta, setUniqueIDs=None, resumetime='', fileNameandPath=None)
 			info_tag.setStudios(to_list(meta_get('studio', [])))
 			info_tag.setWriters(to_list(meta_get('writer', [])))
 			info_tag.setDirectors(to_list(meta_get('director', [])))
-			info_tag.setIMDBNumber(setUniqueIDs.get('imdb'))
+			if setUniqueIDs:
+				info_tag.setIMDBNumber(setUniqueIDs.get('imdb'))
 			if resumetime: info_tag.setResumePoint(float(resumetime))
 			if meta_get('mediatype') in ['tvshow', 'season']:
 				info_tag.setTvShowTitle(meta_get('tvshowtitle'))
