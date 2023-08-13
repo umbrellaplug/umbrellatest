@@ -137,13 +137,19 @@ class Player(xbmc.Player):
 				if self.debuglog:
 					log_utils.log('Played file as playlist.', level=log_utils.LOGDEBUG)
 				if self.multi_season:
-					self.buildSeasonPlaylist(fromEpisode=True)
+					if self.playlist_built == False:
+						self.buildSeasonPlaylist(fromEpisode=True)
+						self.playlist_built = True
 				else:
-					self.buildPlaylist()
+					if self.playlist_built == False:
+						self.buildPlaylist()
+						self.playlist_built = True
 			else:
 				control.resolve(int(argv[1]), True, item)
 				if self.media_type == 'episode' and self.multi_season:
-					self.buildSeasonPlaylist()
+					if self.playlist_built == False:
+						self.buildSeasonPlaylist()
+						self.playlist_built = True
 				if self.debuglog:
 					log_utils.log('Played file as resolve.', level=log_utils.LOGDEBUG)
 			homeWindow.setProperty('script.trakt.ids', jsdumps(self.ids))
@@ -371,10 +377,6 @@ class Player(xbmc.Player):
 									xbmc.executebuiltin('RunPlugin(plugin://plugin.video.umbrella/?action=play_preScrapeNext)')
 									self.preScrape_triggered = True
 								remaining_time = self.getRemainingTime()
-								if self.multi_season and self.playnextSeasons_triggered == False:
-									#self.buildSeasonPlaylist()
-									#self.playnextSeasons_triggered = True
-									pass
 								if self.playnext_method== '0':
 									if remaining_time < (self.playnext_time + 1) and remaining_time != 0:
 										if self.debuglog:
@@ -416,10 +418,6 @@ class Player(xbmc.Player):
 								else:
 									if self.debuglog:
 										log_utils.log('No match found for playnext method.', level=log_utils.LOGDEBUG)
-							if int(control.playlist.size()) == 1 and self.playlist_built == False:
-								#self.buildPlaylist()
-								#self.playlist_built = True
-								pass
 					except: log_utils.error()
 					xbmc.sleep(1000)
 
