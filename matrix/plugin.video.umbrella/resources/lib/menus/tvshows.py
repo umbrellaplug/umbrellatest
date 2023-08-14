@@ -473,9 +473,13 @@ class TVshows:
 					self.list = sorted(self.list, key=lambda k: k['added'], reverse=reverse)
 				elif attribute == 6:
 					for i in range(len(self.list)):
-						if 'lastplayed' not in self.list[i]: self.list[i]['lastplayed'] = ''
+						if 'lastplayed' not in self.list[i]: 
+							self.list[i]['lastplayed'] = ''
+							from resources.lib.modules import log_utils
+							log_utils.log('TVShow Last Played Blank Title: %' % self.list[i]['title'], 1)
 					#self.list = sorted(self.list, key=lambda k: k['lastplayed'], reverse=reverse)
-					self.list = sorted(self.list, key=lambda k: datetime.strptime(k['lastplayed'], "%Y-%m-%dT%H:%M:%S.%fZ"), reverse=reverse)
+					if self.list:
+						self.list = sorted(self.list, key=lambda k: datetime.strptime(k['lastplayed'], "%Y-%m-%dT%H:%M:%S.%fZ"), reverse=reverse)
 			elif reverse:
 				self.list = list(reversed(self.list))
 		except:

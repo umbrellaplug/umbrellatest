@@ -1382,9 +1382,9 @@ def scrobbleReset(imdb, tmdb=None, tvdb=None, season=None, episode=None, refresh
 	try:
 		content_type = 'movie' if not episode else 'episode'
 		resume_info = traktsync.fetch_bookmarks(imdb, tmdb, tvdb, season, episode, ret_type='resume_info')
-		log_utils.log('Trakt ScrobbleReset imdb: %s imdb type: %s tmdb: %s tmdb type: %s tvdb: %s tvdb type: %s season: %s season type: %s episode: %s episode type: %s resume info: %s' % (imdb, type(imdb), tmdb, type(tmdb), tvdb, type(tvdb), season, type(season), episode, type(episode), str(resume_info)), level=log_utils.LOGDEBUG)
 		if resume_info == '0': return control.hide() # returns string "0" if no data in db 
 		headers['Authorization'] = 'Bearer %s' % getSetting('trakt.user.token')
+		if headers['trakt-api-key'] == '': headers['trakt-api-key']=traktClientID()
 		success = session.delete('https://api.trakt.tv/sync/playback/%s' % resume_info[1], headers=headers).status_code == 204
 		if content_type == 'movie':
 			items = [{'type': 'movie', 'movie': {'ids': {'imdb': imdb}}}]
@@ -1523,6 +1523,7 @@ def sync_playbackProgress(activities=None, forced=False):
 		else:
 			db_last_paused = traktsync.last_sync('last_paused_at')
 			activity = getPausedActivity(activities)
+			log_utils.log('Trakt Sync Playback db_last_paused: %s  activity: %s difference: %s' % (db_last_paused, activity,(activity - db_last_paused)),log_utils.LOGDEBUG)
 			if activity - db_last_paused >= 120: # do not sync unless 2 min difference or more
 				items = getTraktAsJson(link, silent=True)
 				if items: traktsync.insert_bookmarks(items)
