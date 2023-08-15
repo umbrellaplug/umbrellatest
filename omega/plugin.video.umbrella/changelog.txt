@@ -1,4 +1,7 @@
-[B]Update - v6.6.285 - August 13th, 2023[/B]
+[B]Update - v6.6.286 - August 14th, 2023[/B]
+--[Enhancement] Added a setting to allow for hiding episode counts on unwatched and fully watched shows.
+
+[B]Update - v6.6.28 - August 13th, 2023[/B]
 --[Fix] Added additional check for authorization id to avoid blank trakt auth ids causing mark playback fail.
 --[Fix] Added fallback for playnext subtitles for a minimum in seconds setting. default is 20.
 --[Fix] Re-Worked playlist construction with playnext.

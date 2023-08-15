@@ -129,6 +129,7 @@ class TVshows:
 		# self.tmdb_certification_link = 'https://api.themoviedb.org/3/discover/tv?api_key=%s&language=en-US&certification_country=US&certification=%s&sort_by=%s&page=1' % ('%s', '%s', self.tmdb_DiscoverSort())
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
+		self.showCounts = getSetting('tvshows.episodecount') == 'true'
 
 	def get(self, url, idx=True, create_directory=True):
 		self.list = []
@@ -1423,7 +1424,13 @@ class TVshows:
 					if self.traktCredentials:
 						cm.append((traktManagerMenu, 'RunPlugin(%s?action=tools_traktManager&name=%s&imdb=%s&tvdb=%s&watched=%s)' % (sysaddon, systitle, imdb, tvdb, watched)))
 					if watched:
-						meta.update({'playcount': 1, 'overlay': 5})
+						if self.showCounts:
+							if (int(count['watched']) != str(count['total'])):
+								meta.update({'playcount': 0, 'overlay': 4})
+							else:
+								meta.update({'playcount': 1, 'overlay': 5})
+						else:
+							meta.update({'playcount': 1, 'overlay': 5})
 						cm.append((unwatchedMenu, 'RunPlugin(%s?action=playcount_TVShow&name=%s&imdb=%s&tvdb=%s&query=4)' % (sysaddon, systitle, imdb, tvdb)))
 					else:
 						meta.update({'playcount': 0, 'overlay': 4})
@@ -1445,19 +1452,37 @@ class TVshows:
 				item.setArt(art)
 				try: 
 					count = getShowCount(indicators[1], imdb, tvdb) if indicators else None # if indicators and no matching imdb_id in watched items then it returns None and we use TMDb meta to avoid Trakt request
-					if count:
-						if int(count['watched']) > 0:
-							item.setProperties({'WatchedEpisodes': str(count['watched']), 'UnWatchedEpisodes': str(count['unwatched'])})
+					if self.showCounts:
+						if count:
+							if int(count['watched']) > 0 and (int(count['watched']) != int(count['total'])):
+								item.setProperties({'WatchedEpisodes': str(count['watched']), 'UnWatchedEpisodes': str(count['unwatched'])})
+								item.setProperty('WatchedProgress', str(int(float(count['watched']) / float(count['total']) * 100)))
+							else:
+								item.setProperties({'UnWatchedEpisodes': str(count['unwatched'])})
+								item.setProperty('WatchedProgress', 0)
+							item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': str(count['total'])})
+							
 						else:
-							item.setProperties({'UnWatchedEpisodes': str(count['unwatched'])})
-						item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': str(count['total'])})
-						item.setProperty('WatchedProgress', str(int(float(count['watched']) / float(count['total']) * 100)))
+							if control.getKodiVersion() >= 20:
+								item.setProperties({'UnWatchedEpisodes': '0'}) # for shows never watched
+								pass #do not set watched status on shows that have nothing watched.
+							else:
+								item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': str(meta.get('total_aired_episodes', ''))}) # for shows never watched
+							item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': str(meta.get('total_aired_episodes', ''))})
 					else:
-						if control.getKodiVersion() >= 20:
-							item.setProperties({'UnWatchedEpisodes': str(meta.get('total_aired_episodes', ''))}) # for shows never watched
+						if count:
+							if int(count['watched']) > 0:
+								item.setProperties({'WatchedEpisodes': str(count['watched']), 'UnWatchedEpisodes': str(count['unwatched'])})
+							else:
+								item.setProperties({'UnWatchedEpisodes': str(count['unwatched'])})
+							item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': str(count['total'])})
+							item.setProperty('WatchedProgress', str(int(float(count['watched']) / float(count['total']) * 100)))
 						else:
-							item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': str(meta.get('total_aired_episodes', ''))}) # for shows never watched
-						item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': str(meta.get('total_aired_episodes', ''))})
+							if control.getKodiVersion() >= 20:
+								item.setProperties({'UnWatchedEpisodes': str(meta.get('total_aired_episodes', ''))}) # for shows never watched
+							else:
+								item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': str(meta.get('total_aired_episodes', ''))}) # for shows never watched
+							item.setProperties({'TotalSeasons': str(meta.get('total_seasons', '')), 'TotalEpisodes': str(meta.get('total_aired_episodes', ''))})
 				except: pass
 				item.setProperty('tmdb_id', str(tmdb))
 				if is_widget: 

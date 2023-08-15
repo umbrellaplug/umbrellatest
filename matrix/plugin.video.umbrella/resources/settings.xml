@@ -1260,6 +1260,7 @@
 		</category>
 		<category id="tv shows" label="32002" help="40185">
 			<group id="1">
+				
 				<setting id="flatten.tvshows" type="boolean" label="32317" help="">
 					<level>0</level>
 					<default>false</default>
@@ -1336,6 +1337,11 @@
 					<control type="toggle"/>
 				</setting>
 				<setting id="tvshows.progress.watched" type="boolean" label="40432" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="tvshows.episodecount" type="boolean" label="40443" help="">
 					<level>0</level>
 					<default>false</default>
 					<control type="toggle"/>

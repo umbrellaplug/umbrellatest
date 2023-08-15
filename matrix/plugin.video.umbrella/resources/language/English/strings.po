@@ -4714,3 +4714,7 @@ msgstr ""
 msgctxt "#40442"
 msgid "For situations where the subtitles go till the very end but you want a backup time in seconds for playnext popup. Default is 20."
 msgstr ""
+
+msgctxt "#40443"
+msgid "Hide episode counts on unwatched and fully watched"
+msgstr ""
