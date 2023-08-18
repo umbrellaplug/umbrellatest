@@ -1424,13 +1424,7 @@ class TVshows:
 					if self.traktCredentials:
 						cm.append((traktManagerMenu, 'RunPlugin(%s?action=tools_traktManager&name=%s&imdb=%s&tvdb=%s&watched=%s)' % (sysaddon, systitle, imdb, tvdb, watched)))
 					if watched:
-						if self.showCounts:
-							if (int(count['watched']) != str(count['total'])):
-								meta.update({'playcount': 0, 'overlay': 4})
-							else:
-								meta.update({'playcount': 1, 'overlay': 5})
-						else:
-							meta.update({'playcount': 1, 'overlay': 5})
+						meta.update({'playcount': 1, 'overlay': 5})
 						cm.append((unwatchedMenu, 'RunPlugin(%s?action=playcount_TVShow&name=%s&imdb=%s&tvdb=%s&query=4)' % (sysaddon, systitle, imdb, tvdb)))
 					else:
 						meta.update({'playcount': 0, 'overlay': 4})
@@ -1454,7 +1448,10 @@ class TVshows:
 					count = getShowCount(indicators[1], imdb, tvdb) if indicators else None # if indicators and no matching imdb_id in watched items then it returns None and we use TMDb meta to avoid Trakt request
 					if self.showCounts:
 						if count:
-							if int(count['watched']) > 0 and (int(count['watched']) != int(count['total'])):
+							if int(count['watched']) > 0 and (str(count['watched']) != str(count['total'])): #watched but not 100%
+								item.setProperties({'WatchedEpisodes': str(count['watched']), 'UnWatchedEpisodes': str(count['unwatched'])})
+								item.setProperty('WatchedProgress', str(int(float(count['watched']) / float(count['total']) * 100)))
+							elif int(count['watched']) > 0 and (str(count['watched']) == str(count['total'])): #watched 100%
 								item.setProperties({'WatchedEpisodes': str(count['watched']), 'UnWatchedEpisodes': str(count['unwatched'])})
 								item.setProperty('WatchedProgress', str(int(float(count['watched']) / float(count['total']) * 100)))
 							else:
@@ -1464,7 +1461,7 @@ class TVshows:
 							
 						else:
 							if control.getKodiVersion() >= 20:
-								item.setProperties({'UnWatchedEpisodes': '0'}) # for shows never watched
+								item.setProperties({'UnWatchedEpisodes': ''}) # for shows never watched
 								pass #do not set watched status on shows that have nothing watched.
 							else:
 								item.setProperties({'WatchedEpisodes': '0', 'UnWatchedEpisodes': str(meta.get('total_aired_episodes', ''))}) # for shows never watched

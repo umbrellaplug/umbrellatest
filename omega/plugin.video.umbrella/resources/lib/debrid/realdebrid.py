@@ -469,8 +469,11 @@ class RealDebrid:
 				file_url = self.unrestrict_link(rd_link)
 				if file_url.endswith('rar'):
 					file_url, failed_reason = None, 'RD returned unsupported .rar file --> %s' % file_url
-				if not any(file_url.lower().endswith(x) for x in extensions):
-					file_url, failed_reason = None, 'RD returned unsupported file extension --> %s' % file_url
+				try:
+					if not any(file_url.lower().endswith(x) for x in extensions):
+						file_url, failed_reason = None, 'RD returned unsupported file extension --> %s' % file_url
+				except:
+						file_url, failed_reason = None, 'RD returned unsupported file extension or error getting file extension.' 
 				if not self.store_to_cloud: self.delete_torrent(torrent_id)
 			if not file_url:
 				log_utils.log('Real-Debrid: FAILED TO RESOLVE MAGNET "%s" : (%s)' % (magnet_url, failed_reason), __name__, log_utils.LOGWARNING)
