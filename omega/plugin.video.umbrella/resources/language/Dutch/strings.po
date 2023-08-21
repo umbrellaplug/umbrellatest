@@ -4620,31 +4620,31 @@ msgstr ""
 
 msgctxt "#40391"
 msgid "Enable library (Marked Watched) sync"
-msgstr ""
+msgstr "Bibliotheeksynchronisatie (Marked Watched) inschakelen"
 
 msgctxt "#40392"
 msgid "Similar to Recent Watched (Library)"
-msgstr ""
+msgstr "Gelijk aan Recent bekeken (bibliotheek)"
 
 msgctxt "#40393"
 msgid "Recommended (Library)"
-msgstr ""
+msgstr "Aanbevolen (bibliotheek)"
 
 msgctxt "#40394"
 msgid "Show Watched in Lists (Library)"
-msgstr ""
+msgstr "Toon bekeken in lijsten (bibliotheek)"
 
 msgctxt "#40395"
 msgid "Hide Watched in Widgets"
-msgstr ""
+msgstr "Verberg bekeken in Widgets"
 
 msgctxt "#40396"
 msgid "Hidden"
-msgstr ""
+msgstr "Verborgen"
 
 msgctxt "#40397"
 msgid "Use Full Context Menu in Widgets (Kodi 20 Only)"
-msgstr ""
+msgstr "Volledig contextmenu gebruiken in widgets (alleen Kodi 20)"
 
 msgctxt "#40398"
 msgid "Widget Context Menu"
@@ -4652,11 +4652,11 @@ msgstr ""
 
 msgctxt "#30001"
 msgid "Return to home screen on back"
-msgstr ""
+msgstr "Keer terug naar het startscherm op de achterkant"
 
 msgctxt "#30002"
 msgid "Enable/Disable context menu items"
-msgstr ""
+msgstr "Schakel context menu items in/uit"
 
 msgctxt "#30004"
 msgid "Clear Providers"
@@ -4668,7 +4668,7 @@ msgstr ""
 
 msgctxt "#30006"
 msgid "Play from Here"
-msgstr ""
+msgstr "Speel vanaf hier"
 
 msgctxt "#30007"
 msgid "Auto Play"
@@ -4676,123 +4676,123 @@ msgstr ""
 
 msgctxt "#30008"
 msgid "Source Select"
-msgstr ""
+msgstr "Bron selecteren"
 
 msgctxt "#30009"
 msgid "Find Similar"
-msgstr ""
+msgstr "Vind vergelijkbaar"
 
 msgctxt "#30010"
 msgid "Browse Series"
-msgstr ""
+msgstr "Blader door series"
 
 msgctxt "#30011"
 msgid "Browse Episodes"
-msgstr ""
+msgstr "Blader door afleveringen"
 
 msgctxt "#30012"
 msgid "Context Menu Settings"
-msgstr ""
+msgstr "Context menu instellingen"
 
 msgctxt "#30013"
 msgid "Clear Bookmark"
-msgstr ""
+msgstr "Bladwijzer wissen"
 
 msgctxt "#30014"
 msgid "Options"
-msgstr ""
+msgstr "Opties"
 
 msgctxt "#30015"
 msgid "Notify Me About Available Updates"
-msgstr ""
+msgstr "Houd mij op de hoogte van beschikbare updates"
 
 msgctxt "#30016"
 msgid "Use default option vs Menu"
-msgstr ""
+msgstr "Gebruik standaardoptie vs Menu"
 
 msgctxt "#30017"
 msgid "selected default"
-msgstr ""
+msgstr "geselecteerde standaard"
 
 msgctxt "#30018"
 msgid "Rescrape Item - AutoPlay"
-msgstr ""
+msgstr "Item opnieuw scrapen - Automatisch afspelen"
 
 msgctxt "#30019"
 msgid "Rescrape Item - Source Select"
-msgstr ""
+msgstr "Item opnieuw scrapen - Bron selecteren"
 
 msgctxt "#30020"
 msgid "Rescrape Item with All Providers - AutoPlay"
-msgstr ""
+msgstr "Item opnieuw scrapen met alle providers - AutoPlay"
 
 msgctxt "#30021"
 msgid "Rescrape Item with All Providers - Source Select"
-msgstr ""
+msgstr "Item opnieuw scrapen met alle providers - Bron selecteren"
 
 msgctxt "#30021"
 msgid "Rescrape Item with All Providers - Source Select"
-msgstr ""
+msgstr "Item opnieuw scrapen met alle providers - Bron selecteren"
 
 msgctxt "#40399"
 msgid "Cache movies for similar list"
-msgstr ""
+msgstr "Films cachen voor vergelijkbare lijst"
 
 msgctxt "#40400"
 msgid "Prioritize Direct to top"
-msgstr ""
+msgstr "Prioriteit Direct naar boven"
 
 msgctxt "#40401"
 msgid "Progress Shows"
-msgstr ""
+msgstr "Voortgangs shows"
 
 msgctxt "#40402"
 msgid "Clear [COLOR yellow]Library Movies [/COLOR]Cache..."
-msgstr ""
+msgstr "Wis [COLOR yellow]Bibliotheek films [/COLOR]Cache..."
 
 msgctxt "#40403"
 msgid "Remove AppleTV+"
-msgstr ""
+msgstr "AppleTV+ verwijderen"
 
 msgctxt "#40404"
 msgid "No Sources found, retrying with all providers."
-msgstr ""
+msgstr "Geen bronnen gevonden, opnieuw geprobeerd met alle providers."
 
 msgctxt "#40405"
 msgid "Auto-Retry using all providers if no sources are found."
-msgstr ""
+msgstr "Probeer automatisch opnieuw met alle providers als er geen bronnen worden gevonden."
 
 msgctxt "#40406"
 msgid "Make umbrella work properly"
-msgstr ""
+msgstr "Zorg dat de umbrella goed werkt"
 
 msgctxt "#40407"
 msgid "Show information for TV Show on select"
-msgstr ""
+msgstr "Toon informatie voor tv show bij selectie"
 
 msgctxt "#40408"
 msgid "Show information for Movie on select"
-msgstr ""
+msgstr "Toon informatie voor film bij selecteren"
 
 msgctxt "#40409"
 msgid "Information Screens"
-msgstr ""
+msgstr "Informatieschermen"
 
 msgctxt "#40410"
 msgid "Released this Month (TMDb)"
-msgstr ""
+msgstr "Deze maand uitgebracht (TMDb)"
 
 msgctxt "#40411"
 msgid "Released this Month"
-msgstr ""
+msgstr "Deze maand uitgebracht"
 
 msgctxt "#40412"
 msgid "Released this Month (Digital and DVD) (TMDb)"
-msgstr ""
+msgstr "Deze maand uitgebracht (digitaal en dvd) (TMDb)"
 
 msgctxt "#40413"
 msgid "Released this Month (Digital and DVD)"
-msgstr ""
+msgstr "Deze maand uitgebracht (digitaal en dvd)"
 
 msgctxt "#40414"
 msgid "Umbrella"
@@ -4800,7 +4800,7 @@ msgstr ""
 
 msgctxt "#40415"
 msgid "No Results"
-msgstr ""
+msgstr "Geen resultaten"
 
 msgctxt "#40416"
 msgid "Dialogs"
@@ -4820,7 +4820,7 @@ msgstr ""
 
 msgctxt "#40420"
 msgid "Light or Dark Mode"
-msgstr ""
+msgstr "Lichte of donkere modus"
 
 msgctxt "#40421"
 msgid "Button color"
@@ -4828,11 +4828,11 @@ msgstr ""
 
 msgctxt "#40422"
 msgid "Dark Mode"
-msgstr ""
+msgstr "Donkere modus"
 
 msgctxt "#40423"
 msgid "Light Mode"
-msgstr ""
+msgstr "Lichte modus"
 
 msgctxt "#40424"
 msgid "Custom Color"
@@ -4840,44 +4840,44 @@ msgstr ""
 
 msgctxt "#40425"
 msgid "Use Custom Umbrella Dialogs"
-msgstr ""
+msgstr "Gebruik aangepaste Umbrella dialogen"
 
 msgctxt "#40426"
 msgid "Test Ok Dialog"
-msgstr ""
+msgstr "Dialoogvenster Test OK"
 
 msgctxt "#40427"
 msgid "Test Confirm Dialog"
-msgstr ""
+msgstr "Dialoogvenster Test bevestigen"
 
 msgctxt "#40428"
 msgid "Message from testing dialog."
-msgstr ""
+msgstr "Bericht van test dialoogvenster."
 
 msgctxt "#40429"
 msgid "Import list(s) now"
-msgstr ""
+msgstr "Importeer lijst(en) nu"
 
 msgctxt "#40430"
 msgid "Show Umbrella next to Umbrella context items."
-msgstr ""
+msgstr "Umbrella weergeven naast Umbrella context items."
 
 msgctxt "#40431"
 msgid "Play Trailer"
-msgstr ""
+msgstr "Trailer afspelen"
 
 msgctxt "#40432"
 msgid "Show watched in TV Show Progress"
-msgstr ""
+msgstr "Show bekeken in Voortgang tv show"
 
 msgctxt "#40433"
 msgid "Watched Shows"
-msgstr ""
+msgstr "Shows bekeken"
 
 msgctxt "#40434"
 msgid "Watched Sorting"
-msgstr ""
+msgstr "Sorteren bekeken"
 
 msgctxt "#40435"
 msgid "History Sorting"
-msgstr ""
+msgstr "Geschiedenis sorteren"
