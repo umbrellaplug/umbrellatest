@@ -20,7 +20,7 @@ from resources.lib.modules import log_utils
 from resources.lib.modules import string_tools
 from resources.lib.modules.source_utils import supported_video_extensions, getFileType, aliases_check
 from resources.lib.cloud_scrapers import cloudSources
-from cocoscrapers import sources as fs_sources
+#from cocoscrapers import sources as fs_sources
 import xbmc
 import xbmcgui
 
@@ -33,7 +33,7 @@ single_expiry = timedelta(hours=6)
 season_expiry = timedelta(hours=48)
 show_expiry = timedelta(hours=48)
 video_extensions = supported_video_extensions()
-
+internal_scrapers_clouds_list = [('realdebrid', 'rd_cloud', 'rd'), ('premiumize', 'pm_cloud', 'pm'), ('alldebrid', 'ad_cloud', 'ad')]
 
 class Sources:
 	def __init__(self, all_providers=False, custom_query=False, filterless_scrape=False, rescrapeAll=False):
@@ -72,28 +72,9 @@ class Sources:
 		self.providercache_hours = int(getSetting('cache.providers'))
 		self.debuglog = control.setting('debug.level') == '1'
 		self.retryallsources = getSetting('sources.retryall') == 'true'
+		self.external_module = getSetting('external_provider.module')
 
 	def play(self, title, year, imdb, tmdb, tvdb, season, episode, tvshowtitle, premiered, meta, select, rescrape=None):
-		# control.log('info_tv: %s tvshowtitle: %s' % (self.info_tv, tvshowtitle),1)
-		# control.log('info_movies: %s tvshowtitle: %s' % (self.info_movies, tvshowtitle),1)
-		# if (self.info_tv and tvshowtitle) or (self.info_movies and tvshowtitle == None):
-		# 	control.log('window property umbrella.info_loaded: %s' % (homeWindow.getProperty('umbrella.info_loaded')),1)
-		# 	if not homeWindow.getProperty('umbrella.info_loaded') == 'true':
-		# 		from sys import argv
-		# 		homeWindow.setProperty('umbrella.info_loaded', 'true')
-		# 		control.playlist.clear()
-		# 		item = control.item(label='', offscreen=True)
-		# 		control.resolve(int(argv[1]), False, item)
-		# 		#Monitor the information dialog
-		# 		#control.monitor_info_dialog()
-		# 		return control.monitor_info_dialog()
-		# 	else:
-		# 		homeWindow.clearProperty('umbrella.info_loaded')
-		# else:
-		# 	homeWindow.clearProperty('umbrella.info_loaded')
-		# if str(xbmc.getInfoLabel("Window.Property(xmlfile)")) != 'DialogVideoInfo.xml':
-		# 	return xbmc.executebuiltin('Action(Info)')
-		# else:
 		self.premiered = premiered
 		if not self.prem_providers:
 			control.sleep(200) ; control.hide()
@@ -1521,13 +1502,28 @@ class Sources:
 		self.tmdbProperty = 'plugin.video.umbrella.container.tmdb'
 		self.tvdbProperty = 'plugin.video.umbrella.container.tvdb'
 		self.labelProperty = 'plugin.video.umbrella.container.label'
-
-		if self.all_providers == 'true':
-			self.sourceDict = fs_sources(ret_all=True)
+		if getSetting('provider.external.enabled') == 'true':
+			if getSetting('external_provider.module', '') == '':
+				#no external_provider_module
+				control.notification(message=control.lang(40447))
+				self.sourceDict = cloudSources()
+			else:
+				try:
+					from sys import path
+					path.append(control.transPath('special://home/addons/%s/lib' % getSetting('external_provider.module', '')))
+					from importlib import import_module
+					fs_sources = getattr(import_module(getSetting('external_provider.name')), 'sources')
+					if self.all_providers == 'true':
+						self.sourceDict = fs_sources(ret_all=True)
+					else:
+						#self.sourceDict = self.get_internal_scrapers()
+						self.sourceDict = fs_sources()
+						self.sourceDict.extend(cloudSources())
+				except:
+					control.notification(message=control.lang(40448))
+					self.sourceDict = cloudSources()
 		else:
-			self.sourceDict = fs_sources()
-			self.sourceDict.extend(cloudSources())
-
+			self.sourceDict = cloudSources()
 		from resources.lib.debrid import premium_hosters
 		self.debrid_resolvers = debrid.debrid_resolvers()
 
@@ -1784,3 +1780,29 @@ class Sources:
 		#control.execute('Action(Info)')
 		#li = xbmcgui.Window().getControl(xbmcgui.getCurrentWindowId()).getSelectedItem()
 		pass
+
+	def get_internal_scrapers(self):
+		settings = ['provider.external', 'provider.plex', 'provider.gdrive']
+		#rd_cloud.enabled
+		#pm_cloud.enabled
+		#ad_cloud.enabled
+		#internal_scrapers_clouds_list = [('realdebrid', 'rd_cloud', 'rd'), ('premiumize', 'pm_cloud', 'pm'), ('alldebrid', 'ad_cloud', 'ad')]
+		settings_append = settings.append
+		for item in internal_scrapers_clouds_list:
+			if self.enabled_debrid_check(item[0], item[2]): settings_append(item[1])
+		active = [i.split('.')[1] for i in settings if getSetting('%s.enabled' % i) == 'true']
+		return active
+
+	def enabled_debrid_check(self, debrid_service, short_name):
+		#premiumize.enable
+		#realdebrid.enable
+		#alldebrid.enable
+		if not getSetting('%s.enable' % debrid_service) == 'true': return False
+		return self.has_debrid_token(short_name)
+
+	def has_debrid_token(self, debrid_service):
+		if debrid_service == 'rd':
+			if getSetting('realdebridtoken') in (None, ''): return False
+		else:
+			if getSetting('%s.token' % debrid_service) in (None, ''): return False
+		return True

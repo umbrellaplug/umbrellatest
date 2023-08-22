@@ -4308,7 +4308,7 @@ msgid "Clear Furk API"
 msgstr ""
 
 msgctxt "#40362"
-msgid "Accounts(Non-Debrid)"
+msgid "Providers"
 msgstr ""
 
 msgctxt "#40363"
@@ -4717,4 +4717,40 @@ msgstr ""
 
 msgctxt "#40443"
 msgid "Hide episode counts on unwatched and fully watched"
+msgstr ""
+
+msgctxt "#40444"
+msgid "Enable External Providers"
+msgstr ""
+
+msgctxt "#40445"
+msgid "External Provider:"
+msgstr ""
+
+msgctxt "#40446"
+msgid "%s is not a valid external module selection. Please choose a different module."
+msgstr ""
+
+msgctxt "#40447"
+msgid "External Providers are enabled but no provider was found."
+msgstr ""
+
+msgctxt "#40448"
+msgid "Error setting external providers."
+msgstr ""
+
+msgctxt "#40449"
+msgid "External module set successfully."
+msgstr ""
+
+msgctxt "#40450"
+msgid "External Providers"
+msgstr ""
+
+msgctxt "#40451"
+msgid "[COLOR FFA0C12C] -- External Modules Help --[/COLOR]"
+msgstr ""
+
+msgctxt "#40452"
+msgid "[B]SETTINGS[/B] : Providers"
 msgstr ""
