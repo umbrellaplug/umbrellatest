@@ -108,11 +108,11 @@ def setHomeWindowProperty(propertyname, property):
 ####################################################
 # --- Custom Dialogs
 ####################################################
-def getProgressWindow(heading='', icon=None, qr=0):
+def getProgressWindow(heading='', icon=None, qr=0, artwork=0):
 	if icon == None:
 		icon = addonIcon()
 	from resources.lib.windows.umbrella_dialogs import ProgressUmbrella
-	window = ProgressUmbrella('progress_umbrella.xml', addonPath(addonId()), heading=heading, icon=icon, qr=qr)
+	window = ProgressUmbrella('progress_umbrella.xml', addonPath(addonId()), heading=heading, icon=icon, qr=qr, artwork=artwork)
 	Thread(target=window.run).start()
 	return window
 
@@ -662,7 +662,7 @@ def syncAccounts():
 			setSetting('sources.filepursuit.color', 'FF00CC29')
 			setSetting('sources.filepursuit.color.display', '[COLOR=FF00CC29]FF00CC29[/COLOR]')
 			setSetting('umbrella.colorSecond', 'true')
-		if setting('umbrella.externalWarning') == 'false':
+		if setting('umbrella.externalWarning') != 'true':
 			setSetting('umbrella.externalWarning', 'true')
 			from resources.help import help
 			help.get('externalProviders')
