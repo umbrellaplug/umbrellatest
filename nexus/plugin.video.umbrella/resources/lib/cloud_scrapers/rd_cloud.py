@@ -37,10 +37,10 @@ class source:
 			# log_utils.log('query_list = %s' % query_list)
 			
 			cloud_folders = RealDebrid().user_torrents()
-			#cloud_folders2 = RealDebrid().user_downloads()
+			cloud_folders2 = RealDebrid().user_downloads()
 			if not cloud_folders: return sources
 			cloud_folders = [i for i in cloud_folders if i['status'] == 'downloaded']
-			#for x in cloud_folders2: cloud_folders.append(x)
+			for x in cloud_folders2: cloud_folders.append(x)
 			if not cloud_folders: return sources
 			ignoreM2ts = getSetting('rd_cloud.ignore.m2ts') == 'true'
 			extras_filter = cloud_utils.extras_filter()
@@ -130,7 +130,7 @@ class source:
 					from resources.lib.modules import log_utils
 					log_utils.error('RD_CLOUD: ')
 					return sources
-		
+		sources = [i for n, i in enumerate(sources) if i['name'] not in [y['name'] for y in sources[n + 1:]]]
 		return sources
 
 	def year_query_list(self):

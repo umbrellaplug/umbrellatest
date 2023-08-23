@@ -288,7 +288,7 @@ class Navigator:
 		#self.addDirectoryItem(32609, 'tools_openMyAccount', 'MyAccounts.png', 'DefaultAddonService.png', isFolder=False)
 		#self.addDirectoryItem(32506, 'tools_contextUmbrellaSettings', 'icon.png', 'DefaultAddonProgram.png', isFolder=False)
 		#-- Providers - 
-		self.addDirectoryItem(32651, 'tools_cocoScrapersSettings', 'cocoscrapers.png', 'DefaultAddonService.png', isFolder=False)
+		#self.addDirectoryItem(32651, 'tools_cocoScrapersSettings', 'cocoscrapers.png', 'DefaultAddonService.png', isFolder=False)
 		#-- General - 0
 		self.addDirectoryItem(32043, 'tools_openSettings&query=0.0', 'tools.png', 'DefaultAddonService.png', isFolder=False)
 		#-- Sorting and Filtering - 4

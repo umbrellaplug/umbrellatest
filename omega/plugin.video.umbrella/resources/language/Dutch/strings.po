@@ -1795,12 +1795,12 @@ msgid "[B]My Accounts - Show Changelog[/B]"
 msgstr "[B]Mijn accounts - Changelog weergeven[/B]"
 
 msgctxt "#32530"
-msgid "[B]umbrellascrapers - View Log File[/B]"
-msgstr "[B]CocoScrapers - Logbestand bekijken[/B]"
+msgid ""
+msgstr ""
 
 msgctxt "#32531"
-msgid "[B]umbrellascrapers - Show Changelog[/B]"
-msgstr "[B]CocoScrapers - Changelog weergeven[/B]"
+msgid ""
+msgstr ""
 
 msgctxt "#32532"
 msgid "[B]View Kodi Log File[/B]"
@@ -3403,8 +3403,8 @@ msgid "Premiumize Authorization Revoked"
 msgstr "Premiumize autorisatie ingetrokken"
 
 msgctxt "#40134"
-msgid "Manage in CocoScrapers"
-msgstr "Beheer in CocoScrapers"
+msgid ""
+msgstr ""
 
 msgctxt "#40135"
 msgid "Do not show removed duplicates popup"
@@ -3647,8 +3647,8 @@ msgid "Download settings category for subtitles. Automatic subtitle settings."
 msgstr "Download instellingen categorie voor ondertitels.  Automatische ondertitelinstellingen."
 
 msgctxt "#40195"
-msgid "Provider settings category for Providers. These settings need to be set and changed within CocoScrapers."
-msgstr "Categorie met providerinstellingen voor providers.  Deze instellingen moeten binnen CocoScrapers worden ingesteld en gewijzigd."
+msgid "Provider settings category for Providers."
+msgstr "Categorie met providerinstellingen voor providers."
 
 msgctxt "#40196"
 msgid "Plexshare"
@@ -4620,31 +4620,31 @@ msgstr ""
 
 msgctxt "#40391"
 msgid "Enable library (Marked Watched) sync"
-msgstr "Bibliotheeksynchronisatie (Marked Watched) inschakelen"
+msgstr ""
 
 msgctxt "#40392"
 msgid "Similar to Recent Watched (Library)"
-msgstr "Gelijk aan Recent bekeken (bibliotheek)"
+msgstr ""
 
 msgctxt "#40393"
 msgid "Recommended (Library)"
-msgstr "Aanbevolen (bibliotheek)"
+msgstr ""
 
 msgctxt "#40394"
 msgid "Show Watched in Lists (Library)"
-msgstr "Toon bekeken in lijsten (bibliotheek)"
+msgstr ""
 
 msgctxt "#40395"
 msgid "Hide Watched in Widgets"
-msgstr "Verberg bekeken in Widgets"
+msgstr ""
 
 msgctxt "#40396"
 msgid "Hidden"
-msgstr "Verborgen"
+msgstr ""
 
 msgctxt "#40397"
 msgid "Use Full Context Menu in Widgets (Kodi 20 Only)"
-msgstr "Volledig contextmenu gebruiken in widgets (alleen Kodi 20)"
+msgstr ""
 
 msgctxt "#40398"
 msgid "Widget Context Menu"
@@ -4652,11 +4652,11 @@ msgstr ""
 
 msgctxt "#30001"
 msgid "Return to home screen on back"
-msgstr "Keer terug naar het startscherm op de achterkant"
+msgstr ""
 
 msgctxt "#30002"
 msgid "Enable/Disable context menu items"
-msgstr "Schakel context menu items in/uit"
+msgstr ""
 
 msgctxt "#30004"
 msgid "Clear Providers"
@@ -4668,7 +4668,7 @@ msgstr ""
 
 msgctxt "#30006"
 msgid "Play from Here"
-msgstr "Speel vanaf hier"
+msgstr ""
 
 msgctxt "#30007"
 msgid "Auto Play"
@@ -4676,123 +4676,123 @@ msgstr ""
 
 msgctxt "#30008"
 msgid "Source Select"
-msgstr "Bron selecteren"
+msgstr ""
 
 msgctxt "#30009"
 msgid "Find Similar"
-msgstr "Vind vergelijkbaar"
+msgstr ""
 
 msgctxt "#30010"
 msgid "Browse Series"
-msgstr "Blader door series"
+msgstr ""
 
 msgctxt "#30011"
 msgid "Browse Episodes"
-msgstr "Blader door afleveringen"
+msgstr ""
 
 msgctxt "#30012"
 msgid "Context Menu Settings"
-msgstr "Context menu instellingen"
+msgstr ""
 
 msgctxt "#30013"
 msgid "Clear Bookmark"
-msgstr "Bladwijzer wissen"
+msgstr ""
 
 msgctxt "#30014"
 msgid "Options"
-msgstr "Opties"
+msgstr ""
 
 msgctxt "#30015"
 msgid "Notify Me About Available Updates"
-msgstr "Houd mij op de hoogte van beschikbare updates"
+msgstr ""
 
 msgctxt "#30016"
 msgid "Use default option vs Menu"
-msgstr "Gebruik standaardoptie vs Menu"
+msgstr ""
 
 msgctxt "#30017"
 msgid "selected default"
-msgstr "geselecteerde standaard"
+msgstr ""
 
 msgctxt "#30018"
 msgid "Rescrape Item - AutoPlay"
-msgstr "Item opnieuw scrapen - Automatisch afspelen"
+msgstr ""
 
 msgctxt "#30019"
 msgid "Rescrape Item - Source Select"
-msgstr "Item opnieuw scrapen - Bron selecteren"
+msgstr ""
 
 msgctxt "#30020"
 msgid "Rescrape Item with All Providers - AutoPlay"
-msgstr "Item opnieuw scrapen met alle providers - AutoPlay"
+msgstr ""
 
 msgctxt "#30021"
 msgid "Rescrape Item with All Providers - Source Select"
-msgstr "Item opnieuw scrapen met alle providers - Bron selecteren"
+msgstr ""
 
 msgctxt "#30021"
 msgid "Rescrape Item with All Providers - Source Select"
-msgstr "Item opnieuw scrapen met alle providers - Bron selecteren"
+msgstr ""
 
 msgctxt "#40399"
 msgid "Cache movies for similar list"
-msgstr "Films cachen voor vergelijkbare lijst"
+msgstr ""
 
 msgctxt "#40400"
 msgid "Prioritize Direct to top"
-msgstr "Prioriteit Direct naar boven"
+msgstr ""
 
 msgctxt "#40401"
 msgid "Progress Shows"
-msgstr "Voortgangs shows"
+msgstr ""
 
 msgctxt "#40402"
 msgid "Clear [COLOR yellow]Library Movies [/COLOR]Cache..."
-msgstr "Wis [COLOR yellow]Bibliotheek films [/COLOR]Cache..."
+msgstr ""
 
 msgctxt "#40403"
 msgid "Remove AppleTV+"
-msgstr "AppleTV+ verwijderen"
+msgstr ""
 
 msgctxt "#40404"
 msgid "No Sources found, retrying with all providers."
-msgstr "Geen bronnen gevonden, opnieuw geprobeerd met alle providers."
+msgstr ""
 
 msgctxt "#40405"
 msgid "Auto-Retry using all providers if no sources are found."
-msgstr "Probeer automatisch opnieuw met alle providers als er geen bronnen worden gevonden."
+msgstr ""
 
 msgctxt "#40406"
 msgid "Make umbrella work properly"
-msgstr "Zorg dat de umbrella goed werkt"
+msgstr ""
 
 msgctxt "#40407"
 msgid "Show information for TV Show on select"
-msgstr "Toon informatie voor tv show bij selectie"
+msgstr ""
 
 msgctxt "#40408"
 msgid "Show information for Movie on select"
-msgstr "Toon informatie voor film bij selecteren"
+msgstr ""
 
 msgctxt "#40409"
 msgid "Information Screens"
-msgstr "Informatieschermen"
+msgstr ""
 
 msgctxt "#40410"
 msgid "Released this Month (TMDb)"
-msgstr "Deze maand uitgebracht (TMDb)"
+msgstr ""
 
 msgctxt "#40411"
 msgid "Released this Month"
-msgstr "Deze maand uitgebracht"
+msgstr ""
 
 msgctxt "#40412"
 msgid "Released this Month (Digital and DVD) (TMDb)"
-msgstr "Deze maand uitgebracht (digitaal en dvd) (TMDb)"
+msgstr ""
 
 msgctxt "#40413"
 msgid "Released this Month (Digital and DVD)"
-msgstr "Deze maand uitgebracht (digitaal en dvd)"
+msgstr ""
 
 msgctxt "#40414"
 msgid "Umbrella"
@@ -4800,7 +4800,7 @@ msgstr ""
 
 msgctxt "#40415"
 msgid "No Results"
-msgstr "Geen resultaten"
+msgstr ""
 
 msgctxt "#40416"
 msgid "Dialogs"
@@ -4820,7 +4820,7 @@ msgstr ""
 
 msgctxt "#40420"
 msgid "Light or Dark Mode"
-msgstr "Lichte of donkere modus"
+msgstr ""
 
 msgctxt "#40421"
 msgid "Button color"
@@ -4828,11 +4828,11 @@ msgstr ""
 
 msgctxt "#40422"
 msgid "Dark Mode"
-msgstr "Donkere modus"
+msgstr ""
 
 msgctxt "#40423"
 msgid "Light Mode"
-msgstr "Lichte modus"
+msgstr ""
 
 msgctxt "#40424"
 msgid "Custom Color"
@@ -4840,44 +4840,44 @@ msgstr ""
 
 msgctxt "#40425"
 msgid "Use Custom Umbrella Dialogs"
-msgstr "Gebruik aangepaste Umbrella dialogen"
+msgstr ""
 
 msgctxt "#40426"
 msgid "Test Ok Dialog"
-msgstr "Dialoogvenster Test OK"
+msgstr ""
 
 msgctxt "#40427"
 msgid "Test Confirm Dialog"
-msgstr "Dialoogvenster Test bevestigen"
+msgstr ""
 
 msgctxt "#40428"
 msgid "Message from testing dialog."
-msgstr "Bericht van test dialoogvenster."
+msgstr ""
 
 msgctxt "#40429"
 msgid "Import list(s) now"
-msgstr "Importeer lijst(en) nu"
+msgstr ""
 
 msgctxt "#40430"
 msgid "Show Umbrella next to Umbrella context items."
-msgstr "Umbrella weergeven naast Umbrella context items."
+msgstr ""
 
 msgctxt "#40431"
 msgid "Play Trailer"
-msgstr "Trailer afspelen"
+msgstr ""
 
 msgctxt "#40432"
 msgid "Show watched in TV Show Progress"
-msgstr "Show bekeken in Voortgang tv show"
+msgstr ""
 
 msgctxt "#40433"
 msgid "Watched Shows"
-msgstr "Shows bekeken"
+msgstr ""
 
 msgctxt "#40434"
 msgid "Watched Sorting"
-msgstr "Sorteren bekeken"
+msgstr ""
 
 msgctxt "#40435"
 msgid "History Sorting"
-msgstr "Geschiedenis sorteren"
+msgstr ""

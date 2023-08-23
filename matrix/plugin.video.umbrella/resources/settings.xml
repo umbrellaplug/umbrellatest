@@ -4238,21 +4238,6 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting id="cocoScraperSettingsPlex" type="action" label="40134" help="">
-					<level>0</level>
-					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_cocoScrapersSettings&amp;query=Plex)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="button" format="action">
-						<close>true</close>
-					</control>
-				</setting>
 			</group>
 			<group id="3" label="32327">
 				<setting id="easynews.enable" type="boolean" label="32081" help="">
@@ -4331,21 +4316,6 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting id="cocoScraperSettingsEasyNews" type="action" label="40134" help="">
-					<level>0</level>
-					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_cocoScrapersSettings&amp;query=EasyNews)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="button" format="action">
-						<close>true</close>
-					</control>
-				</setting>
 			</group>
 			<group id="4" label="40203">
 				<setting id="filepursuit.enable" type="boolean" label="32081" help="">
@@ -4399,21 +4369,6 @@
 						<popup>false</popup>
 					</control>
 				</setting>
-				<setting id="cocoScraperSettingsFilePursuit" type="action" label="40134" help="">
-					<level>0</level>
-					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_cocoScrapersSettings&amp;query=FilePursuit)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="button" format="action">
-						<close>true</close>
-					</control>
-				</setting>
 			</group>
 			<group id="5" label="40205">
 				<setting id="gdrive.enable" type="boolean" label="32081" help="">
@@ -4465,21 +4420,6 @@
 					</dependencies>
 					<control type="slider" format="integer">
 						<popup>false</popup>
-					</control>
-				</setting>
-				<setting id="cocoScraperSettingsGDrive" type="action" label="40134" help="">
-					<level>0</level>
-					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_cocoScrapersSettings)</data>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">true</condition>
-						</dependency>
-					</dependencies>
-					<control type="button" format="action">
-						<close>true</close>
 					</control>
 				</setting>
 			</group>

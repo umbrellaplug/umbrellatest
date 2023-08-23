@@ -1795,11 +1795,11 @@ msgid "[B]My Accounts - Show Changelog[/B]"
 msgstr ""
 
 msgctxt "#32530"
-msgid "[B]umbrellascrapers - View Log File[/B]"
+msgid ""
 msgstr ""
 
 msgctxt "#32531"
-msgid "[B]umbrellascrapers - Show Changelog[/B]"
+msgid ""
 msgstr ""
 
 msgctxt "#32532"
@@ -2136,7 +2136,7 @@ msgid "Include Special Episodes (Season 0)"
 msgstr ""
 
 msgctxt "#32651"
-msgid "[B]Coco Scrapers[/B] Settings"
+msgid ""
 msgstr ""
 
 msgctxt "#32652"
@@ -3412,7 +3412,7 @@ msgid "Premiumize Authorization Revoked"
 msgstr ""
 
 msgctxt "#40134"
-msgid "Manage in CocoScrapers"
+msgid ""
 msgstr ""
 
 msgctxt "#40135"
@@ -3656,7 +3656,7 @@ msgid "Download settings category for subtitles. Automatic subtitle settings."
 msgstr ""
 
 msgctxt "#40195"
-msgid "Provider settings category for Providers. These settings need to be set and changed within CocoScrapers."
+msgid "Provider settings category for Providers."
 msgstr ""
 
 msgctxt "#40196"
