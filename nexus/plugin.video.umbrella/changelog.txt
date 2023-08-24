@@ -1,4 +1,7 @@
-[B]Update - v6.6.291 - August 23rd, 2023[/B]
+[B]Update - v6.6.292 - August 24th, 2023[/B]
+--[Enhancement] Changed text on resolving popups to no longer be bold. Never enough for you people.
+
+[B]Update - v6.6.29 - August 23rd, 2023[/B]
 --[Enhancement] Added ability to use external providers and removed requirements for scraper packages.
 --[Enhancement] Added a setting to allow for hiding episode counts on unwatched and fully watched shows.
 --[Enhancement] Added support for Trakt reset watching.
