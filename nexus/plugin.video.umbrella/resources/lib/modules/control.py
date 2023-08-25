@@ -720,3 +720,7 @@ def checkModules():
 		setSetting('external_provider.module', '')
 
 
+def processTimer():
+	from timeit import default_timer as timer
+	from datetime import timedelta
+	return timer()

@@ -1,5 +1,6 @@
-[B]Update - v6.6.292 - August 24th, 2023[/B]
+[B]Update - v6.6.293 - August 25th, 2023[/B]
 --[Enhancement] Changed text on resolving popups to no longer be bold. Never enough for you people.
+--[Logging] Added logging for testing time on functions.
 
 [B]Update - v6.6.29 - August 23rd, 2023[/B]
 --[Enhancement] Added ability to use external providers and removed requirements for scraper packages.

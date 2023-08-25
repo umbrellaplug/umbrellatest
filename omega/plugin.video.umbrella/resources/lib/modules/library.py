@@ -389,44 +389,93 @@ class lib_tools:
 	def getAllTraktLists(self):
 		full_list = []
 		try:
-			from resources.lib.modules import player
 			if not control.player.isPlaying(): control.busy()
+			wl_start = control.processTimer()
 			from resources.lib.menus import tvshows
 			wltv_items = tvshows.TVshows().traktWatchlist('https://api.trakt.tv/users/me/watchlist/shows', create_directory=None)
 			wltv_items_count = len(wltv_items)
 			wltv_item = {'name': 'Watchlist (TV Shows)', 'url': 'https://api.trakt.tv/users/me/watchlist/shows', 'list_owner': 'me', 'list_owner_slug': 'me', 'list_name': 'Watchlist (TV Shows)', 'list_id': 'watchlistTVshows', 'context':'https://api.trakt.tv/users/me/watchlist/shows', 'next': '', 'list_count': wltv_items_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'}
+			wl_stop = control.processTimer()
+			log_utils.log('Watch List Function Time: %s' % timedelta(seconds=wl_stop-wl_start), 1)
+			tv_start = control.processTimer()
 			tv_items = tvshows.TVshows().trakt_user_lists('trakt_list', trakt_user)
+			tv_stop = control.processTimer()
+			log_utils.log('TV List Function Time: %s' % timedelta(seconds=tv_stop-tv_start), 1)
+			coltv_start = control.processTimer()
 			coltv_items = tvshows.TVshows().traktCollection('https://api.trakt.tv/users/me/collection/shows', create_directory=None)
 			coltv_items_count = len(coltv_items)
 			coltv_item = {'name': 'Collection (TV Shows)', 'url': 'https://api.trakt.tv/users/me/collection/shows', 'list_owner': 'me', 'list_owner_slug': 'me', 'list_name': 'Collection (TV Shows)', 'list_id': 'collectionTVshows', 'context':'https://api.trakt.tv/users/me/watchlist/shows', 'next': '', 'list_count': coltv_items_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'}
+			coltv_stop = control.processTimer()
+			log_utils.log('Collection TV List Function Time: %s' % timedelta(seconds=coltv_stop-coltv_start), 1)
+			ltv_start = control.processTimer()
 			ltv_items = tvshows.TVshows().traktLlikedlists(create_directory=None)
+			ltv_stop = control.processTimer()
+			log_utils.log('Liked TV List Function Time: %s' % timedelta(seconds=ltv_stop-ltv_start), 1)
 			from resources.lib.menus import movies
+			movie_start = control.processTimer()
 			movie_items = movies.Movies().trakt_user_lists('trakt_list', trakt_user)
+			movie_stop = control.processTimer()
+			log_utils.log('Movie List Function Time: %s' % timedelta(seconds=movie_stop-movie_start), 1)
+			lmovie_start = control.processTimer()
 			lmovie_items = movies.Movies().traktLlikedlists(create_directory=None)
+			lmovie_stop = control.processTimer()
+			log_utils.log('Liked Movie List Function Time: %s' % timedelta(seconds=lmovie_stop-lmovie_start), 1)
+			wlm_start = control.processTimer()
 			wlm_items = movies.Movies().traktWatchlist('https://api.trakt.tv/users/me/watchlist/movies', create_directory=None)
 			wlm_items_count = len(wlm_items)
 			wlm_item = {'name': 'Watchlist (Movies)', 'url': 'https://api.trakt.tv/users/me/watchlist/movies', 'list_owner': 'me', 'list_owner_slug': 'me', 'list_name': 'Watchlist (Movies)', 'list_id': 'watchlistMovie', 'context': 'https://api.trakt.tv/users/me/watchlist/movies', 'next': '', 'list_count': wlm_items_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'}
+			wlm_stop = control.processTimer()
+			log_utils.log('Watchlist Movie List Function Time: %s' % timedelta(seconds=wlm_stop-wlm_start), 1)
+			colm_start = control.processTimer()
 			colm_items = movies.Movies().traktCollection('https://api.trakt.tv/users/me/collection/movies', create_directory=None)
 			colm_items_count = len(colm_items)
 			colm_item = {'name': 'Collection (Movies)', 'url': 'https://api.trakt.tv/users/me/collection/movies', 'list_owner': 'me', 'list_owner_slug': 'me', 'list_name': 'Collection (Movies)', 'list_id': 'collectionMovie', 'context':'https://api.trakt.tv/users/me/collection/movies', 'next': '', 'list_count': colm_items_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'}
+			colm_stop = control.processTimer()
+			log_utils.log('Collection Movie List Function Time: %s' % timedelta(seconds=colm_stop-colm_start), 1)
+			list_append_start = control.processTimer()
 			if wlm_items_count > 0:
 				full_list.append(wlm_item)
+			list_append_stop = control.processTimer()
+			log_utils.log('Watchlist Movies List Append Time: %s' % timedelta(seconds=list_append_stop-list_append_start), 1)
+			list_append_start = control.processTimer()
 			if wltv_items_count > 0:
 				full_list.append(wltv_item)
+			list_append_stop = control.processTimer()
+			log_utils.log('Watchlist TV List Append Time: %s' % timedelta(seconds=list_append_stop-list_append_start), 1)
 			if coltv_items_count > 0:
 				full_list.append(coltv_item)
+			list_append_start = control.processTimer()
 			if colm_items_count > 0:
 				full_list.append(colm_item)
+			list_append_stop = control.processTimer()
+			log_utils.log('Movie Collection List Append Time: %s' % timedelta(seconds=list_append_stop-list_append_start), 1)
+			list_append_start = control.processTimer()
 			for x in tv_items:
 				full_list.append(x)
+			list_append_stop = control.processTimer()
+			log_utils.log('TV Items Append Time: %s' % timedelta(seconds=list_append_stop-list_append_start), 1)
+			list_append_start = control.processTimer()
 			for x in ltv_items:
 				full_list.append(x)
+			list_append_stop = control.processTimer()
+			log_utils.log('Liked TV List Append Time: %s' % timedelta(seconds=list_append_stop-list_append_start), 1)
+			list_append_start = control.processTimer()
 			for x in movie_items:
 				full_list.append(x)
+			list_append_stop = control.processTimer()
+			log_utils.log('Movie Items Append Time: %s' % timedelta(seconds=list_append_stop-list_append_start), 1)
+			list_append_start = control.processTimer()
 			for x in lmovie_items:
 				full_list.append(x)
+			list_append_stop = control.processTimer()
+			log_utils.log('Liked Movie Append Time: %s' % timedelta(seconds=list_append_stop-list_append_start), 1)
+			
 			#myfull_list = [i for n, i in enumerate(full_list) if i not in full_list[:n]]
+			list_append_start = control.processTimer()
 			full_list = [i for n, i in enumerate(full_list) if i.get('list_id') not in [y.get('list_id') for y in full_list[n + 1:]]]
+			list_append_stop = control.processTimer()
+			log_utils.log('List Duplicate Removal Time: %s' % timedelta(seconds=list_append_stop-list_append_start), 1)
+			
 			control.hide()
 		except:
 			full_list = []
