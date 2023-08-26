@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.293">
+<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.294">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" />
@@ -156,9 +156,9 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.293 - August 25th, 2023[/B]
+[B]Update - v6.6.294 - August 25th, 2023[/B]
 --[Enhancement] Changed text on resolving popups to no longer be bold. Never enough for you people.
---[Logging] Added logging for testing time on functions.
+--[Fix] Changed code for movie and show collection and watchlist import to improve speed.
 		</news>
 	</extension>
 
