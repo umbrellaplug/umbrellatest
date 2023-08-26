@@ -790,6 +790,7 @@ class TVshows:
 
 	def traktLlikedlists(self, create_directory=True):
 		items = traktsync.fetch_liked_list('', True)
+		showOwnerShow = getSetting('trakt.lists.showowner') == 'true'
 		for item in items:
 			try:
 				if item['content_type'] == 'movies': continue
@@ -801,7 +802,7 @@ class TVshows:
 				list_url = self.traktlist_link % (list_owner_slug, list_id)
 				list_count = item['item_count']
 				next = ''
-				if getSetting('trakt.lists.showowner') == 'true':
+				if showOwnerShow:
 					label = '%s - [COLOR %s]%s[/COLOR]' % (list_name, self.highlight_color, list_owner)
 				else:
 					label = '%s' % (list_name)
