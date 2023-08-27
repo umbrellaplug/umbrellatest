@@ -5,6 +5,7 @@
 		<import addon="script.module.beautifulsoup4"/>
 		<import addon="script.module.metahandler" version="5.0.1a" optional="true"/>
 		<import addon="plugin.video.youtube" optional="true"/>
+		<import addon="script.module.web-pdb" />
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="umbrella.py">
 		<provides>video</provides>

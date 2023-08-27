@@ -134,6 +134,9 @@ def router(argv2):
 	elif action == 'movies_traktWatchListManager':
 		from resources.lib.menus import movies
 		movies.Movies().watchlistManager()
+	elif action == 'movies_favorites':
+		from resources.lib.modules import favourites
+		favourites.getFavouritesMoviesfromXML()
 	elif action == 'mdbTopListMovies':
 		from resources.lib.menus import movies
 		movies.Movies().getMBDTopLists()
