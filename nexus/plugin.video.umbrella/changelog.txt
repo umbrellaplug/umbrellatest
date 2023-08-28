@@ -1,6 +1,7 @@
-[B]Update - v6.6.295 - August 26th, 2023[/B]
+[B]Update - v6.6.296 - August 28th, 2023[/B]
 --[Enhancement] Changed text on resolving popups to no longer be bold. Never enough for you people.
 --[Fix] Changed code for movie and show collection and watchlist import to improve speed.
+--[Fix] Made changes to tv show and seasonal level information to avoid imdb id being overwritten.
 --[Enhancement] Added function to pass any function into to time.
 
 [B]Update - v6.6.29 - August 23rd, 2023[/B]

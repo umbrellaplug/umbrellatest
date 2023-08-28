@@ -135,9 +135,10 @@ def deleteProgress(meta, content):
 		dbcur.close() ; dbcon.close()
 
 def getFavouritesMoviesfromXML():
+	#this is not ready you should not be using this.
 	xml_file = control.transPath('special://profile/favourites.xml')
 	tree = mdParse(xml_file)
-	import web_pdb; web_pdb.set_trace()
+	#import web_pdb; web_pdb.set_trace()
 	favorites = tree.getElementsByTagName('favourite')
 	for count, favorite in enumerate(favorites):
 		from resources.lib.modules import log_utils

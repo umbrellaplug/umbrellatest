@@ -440,12 +440,13 @@ class lib_tools:
 			full_list.extend(tv_items)
 			#for x in ltv_items:
 				#full_list.append(x)
-			full_list.extend(ltv_items)
+			
 			# for x in movie_items:
 			# 	full_list.append(x)
 			full_list.extend(movie_items)
 			# for x in lmovie_items:
 			# 	full_list.append(x)
+			full_list.extend(ltv_items)
 			full_list.extend(lmovie_items)
 			
 			#myfull_list = [i for n, i in enumerate(full_list) if i not in full_list[:n]]
@@ -506,12 +507,8 @@ class lib_tools:
 				list_owner_slug = item['list'].get('user').get('ids').get('slug')
 				list_items = trakt.getTraktAsJson(list_link % (list_owner_slug, trakt_id, 'shows'), silent=True)
 				item['list']['content_type'] = ''
-				list_items = trakt.getTraktAsJson(list_link % (list_owner_slug, trakt_id, 'movies'), silent=True)
-				if not list_items or list_items == '[]': pass
+				if not list_items or list_items == '[]': continue
 				else: item['list']['content_type'] = 'movies'
-				list_items = trakt.getTraktAsJson(list_link % (list_owner_slug, trakt_id, 'shows'), silent=True)
-				if not list_items or list_items == '[]': pass
-				else: item['list']['content_type'] = 'mixed' if item['list']['content_type'] == 'movies' else 'shows'
 				list_name = item['list']['name']
 				list_owner = item['list']['user'].get('username')
 				list_url = self.traktlist_link % (list_owner_slug, trakt_id)
@@ -539,17 +536,15 @@ class lib_tools:
 		#self.traktlist_link = 'https://api.trakt.tv/users/%s/lists/%s/items/shows?limit=%s&page=1' % ('%s', '%s', self.page_limit)
 		self.traktlist_link = 'https://api.trakt.tv/users/%s/lists/%s/items/movies?limit=%s&page=1' % ('%s', '%s', self.page_limit)
 		self.highlight_color = control.setting('highlight.color')
-		#import web_pdb; web_pdb.set_trace()
 		for item in items:
 			try:
 				
 				list_link = '/users/%s/lists/%s/items/%s'
 				trakt_id = item['list']['ids'].get('trakt')
 				list_owner_slug = item['list'].get('user').get('ids').get('slug')
-				list_items = trakt.getTraktAsJson(list_link % (list_owner_slug, trakt_id, 'shows'), silent=True)
 				item['list']['content_type'] = ''
 				list_items = trakt.getTraktAsJson(list_link % (list_owner_slug, trakt_id, 'movies'), silent=True)
-				if not list_items or list_items == '[]': pass
+				if not list_items or list_items == '[]': continue
 				else: item['list']['content_type'] = 'movies'
 				list_items = trakt.getTraktAsJson(list_link % (list_owner_slug, trakt_id, 'shows'), silent=True)
 				if not list_items or list_items == '[]': pass
@@ -562,7 +557,7 @@ class lib_tools:
 					label = '%s - [COLOR %s]%s[/COLOR]' % (list_name, self.highlight_color, list_owner)
 				else:
 					label = '%s' % (list_name)
-				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_owner_slug': list_owner_slug, 'list_name': list_name, 'list_id': trakt_id, 'context': list_url, 'list_count': list_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'})
+				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_owner_slug': list_owner_slug, 'list_name': list_name, 'list_id': trakt_id, 'context': list_url, 'list_count': list_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()

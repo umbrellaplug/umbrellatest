@@ -405,14 +405,17 @@ class lib_tools:
 			coltv_items = control.timeFunction(lib_tools().getTVShowCollection)
 			coltv_items_count = len(coltv_items)
 			coltv_item = {'name': 'Collection (TV Shows)', 'url': 'https://api.trakt.tv/users/me/collection/shows', 'list_owner': 'me', 'list_owner_slug': 'me', 'list_name': 'Collection (TV Shows)', 'list_id': 'collectionTVshows', 'context':'https://api.trakt.tv/users/me/watchlist/shows', 'next': '', 'list_count': coltv_items_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'}
-			ltv_items = self.getTraktTVLikedLists()
+			ltv_items = control.timeFunction(lib_tools().getTraktTVLikedLists)
+			#ltv_items = self.getTraktTVLikedLists()
 			#ltv_items = tvshows.TVshows().traktLlikedlists(create_directory=None)
 			#ltv_items = control.timeFunction(tvshows.TVshows().traktLlikedlists, create_directory=None)
 			from resources.lib.menus import movies
 			movie_items = control.timeFunction(movies.Movies().trakt_user_lists, 'trakt_list', trakt_user)
 			#movie_items = movies.Movies().trakt_user_lists('trakt_list', trakt_user)
 			#lmovie_items = control.timeFunction(movies.Movies().traktLlikedlists, create_directory=None)
-			lmovie_items = movies.Movies().traktLlikedlists(create_directory=None)
+			#lmovie_items = movies.Movies().traktLlikedlists(create_directory=None)
+			#lmovie_items = self.getTraktMovieLikedLists()
+			lmovie_items = control.timeFunction(lib_tools().getTraktMovieLikedLists)
 			#new function needed for watchlist and collection lists
 			#wlm_items = movies.Movies().traktWatchlist('https://api.trakt.tv/users/me/watchlist/movies', create_directory=None)
 			wlm_items = control.timeFunction(lib_tools().getMovieWatchlist)
@@ -437,12 +440,13 @@ class lib_tools:
 			full_list.extend(tv_items)
 			#for x in ltv_items:
 				#full_list.append(x)
-			full_list.extend(ltv_items)
+			
 			# for x in movie_items:
 			# 	full_list.append(x)
 			full_list.extend(movie_items)
 			# for x in lmovie_items:
 			# 	full_list.append(x)
+			full_list.extend(ltv_items)
 			full_list.extend(lmovie_items)
 			
 			#myfull_list = [i for n, i in enumerate(full_list) if i not in full_list[:n]]
@@ -486,29 +490,74 @@ class lib_tools:
 		return items
 
 	def getTraktTVLikedLists(self):
+		self.list = []
 		try:
 			link = '/users/me/likes/lists'
 			items = trakt.getTraktAsJson(link, silent=True)
 		except:
 			items = []
 		showOwnerShow = control.setting('trakt.lists.showowner') == 'true'
-		import web_pdb; web_pdb.set_trace()
+		self.page_limit = control.setting('page.item.limit')
+		self.traktlist_link = 'https://api.trakt.tv/users/%s/lists/%s/items/shows?limit=%s&page=1' % ('%s', '%s', self.page_limit)
+		self.highlight_color = control.setting('highlight.color')
 		for item in items:
 			try:
-				if item['content_type'] == 'movies': continue
-				if item['content_type'] == 'mixed': continue
-				list_name = item['list_name']
-				list_owner = item['list_owner']
-				list_owner_slug = item['list_owner_slug']
-				list_id = item['trakt_id']
-				list_url = self.traktlist_link % (list_owner_slug, list_id)
-				list_count = item['item_count']
-				next = ''
+				list_link = '/users/%s/lists/%s/items/%s'
+				trakt_id = item['list']['ids'].get('trakt')
+				list_owner_slug = item['list'].get('user').get('ids').get('slug')
+				list_items = trakt.getTraktAsJson(list_link % (list_owner_slug, trakt_id, 'shows'), silent=True)
+				item['list']['content_type'] = ''
+				if not list_items or list_items == '[]': continue
+				else: item['list']['content_type'] = 'movies'
+				list_name = item['list']['name']
+				list_owner = item['list']['user'].get('username')
+				list_url = self.traktlist_link % (list_owner_slug, trakt_id)
+				list_count = item['list']['item_count']
 				if showOwnerShow:
 					label = '%s - [COLOR %s]%s[/COLOR]' % (list_name, self.highlight_color, list_owner)
 				else:
 					label = '%s' % (list_name)
-				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_owner_slug': list_owner_slug, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'list_count': list_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'})
+				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_owner_slug': list_owner_slug, 'list_name': list_name, 'list_id': trakt_id, 'context': list_url, 'list_count': list_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'})
+			except:
+				from resources.lib.modules import log_utils
+				log_utils.error()
+		self.list = sorted(self.list, key=lambda k: re.sub(r'(^the |^a |^an )', '', k['name'].lower()))
+		return self.list
+
+	def getTraktMovieLikedLists(self):
+		self.list = []
+		try:
+			link = '/users/me/likes/lists'
+			items = trakt.getTraktAsJson(link, silent=True)
+		except:
+			items = []
+		showOwnerShow = control.setting('trakt.lists.showowner') == 'true'
+		self.page_limit = control.setting('page.item.limit')
+		#self.traktlist_link = 'https://api.trakt.tv/users/%s/lists/%s/items/shows?limit=%s&page=1' % ('%s', '%s', self.page_limit)
+		self.traktlist_link = 'https://api.trakt.tv/users/%s/lists/%s/items/movies?limit=%s&page=1' % ('%s', '%s', self.page_limit)
+		self.highlight_color = control.setting('highlight.color')
+		for item in items:
+			try:
+				
+				list_link = '/users/%s/lists/%s/items/%s'
+				trakt_id = item['list']['ids'].get('trakt')
+				list_owner_slug = item['list'].get('user').get('ids').get('slug')
+				item['list']['content_type'] = ''
+				list_items = trakt.getTraktAsJson(list_link % (list_owner_slug, trakt_id, 'movies'), silent=True)
+				if not list_items or list_items == '[]': continue
+				else: item['list']['content_type'] = 'movies'
+				list_items = trakt.getTraktAsJson(list_link % (list_owner_slug, trakt_id, 'shows'), silent=True)
+				if not list_items or list_items == '[]': pass
+				else: item['list']['content_type'] = 'mixed' if item['list']['content_type'] == 'movies' else 'shows'
+				list_name = item['list']['name']
+				list_owner = item['list']['user'].get('username')
+				list_url = self.traktlist_link % (list_owner_slug, trakt_id)
+				list_count = item['list']['item_count']
+				if showOwnerShow:
+					label = '%s - [COLOR %s]%s[/COLOR]' % (list_name, self.highlight_color, list_owner)
+				else:
+					label = '%s' % (list_name)
+				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_owner_slug': list_owner_slug, 'list_name': list_name, 'list_id': trakt_id, 'context': list_url, 'list_count': list_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()

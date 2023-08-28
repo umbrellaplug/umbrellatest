@@ -1348,6 +1348,8 @@ class TVshows:
 				extended_art = fanarttv_cache.get(FanartTv().get_tvshow_art, 336, tvdb)
 				if extended_art: values.update(extended_art)
 			values = dict((k, v) for k, v in iter(values.items()) if v is not None and v != '') # remove empty keys so .update() doesn't over-write good meta with empty values.
+			if values.get('imdb') != imdb:
+				values['imdb'] = imdb
 			self.list[i].update(values)
 			meta = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'lang': self.lang, 'user': self.user, 'item': values}
 			self.meta.append(meta)
