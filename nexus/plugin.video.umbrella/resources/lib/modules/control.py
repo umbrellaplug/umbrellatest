@@ -14,9 +14,7 @@ import xbmcvfs
 from threading import Thread
 from xml.dom.minidom import parse as mdParse
 from urllib.parse import unquote
-import json
-import requests
-import time
+from re import sub as re_sub
 
 # Kodi JSON-RPC API endpoint
 api_url = 'http://localhost:8080/jsonrpc'
@@ -719,8 +717,19 @@ def checkModules():
 		setSetting('external_provider.name', '')
 		setSetting('external_provider.module', '')
 
-
-def processTimer():
+def timeFunction(function, *args):
 	from timeit import default_timer as timer
 	from datetime import timedelta
-	return timer()
+	start = timer()
+	try:
+		exeFunction = function(*args)
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()
+	stop = timer()
+	from resources.lib.modules import log_utils
+	log_utils.log('Function Timer: %s Time: %s' %(_get_function_name(function), timedelta(seconds=stop-start)),1)
+	return exeFunction
+
+def _get_function_name(function_instance):
+	return re_sub(r'.+\smethod\s|.+function\s|\sat\s.+|\sof\s.+', '', repr(function_instance))

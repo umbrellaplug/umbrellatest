@@ -6,6 +6,8 @@
 from json import loads as jsloads
 from sqlite3 import dbapi2 as database
 from resources.lib.modules import control
+from xml.dom.minidom import parse as mdParse
+from urllib.parse import unquote
 
 dataPath = control.transPath(control.addonInfo('path'))
 favouritesFile = control.joinPath(dataPath, 'favourites.db')
@@ -131,3 +133,19 @@ def deleteProgress(meta, content):
 	except: return
 	finally:
 		dbcur.close() ; dbcon.close()
+
+def getFavouritesMoviesfromXML():
+	#this is not ready you should not be using this.
+	xml_file = control.transPath('special://profile/favourites.xml')
+	tree = mdParse(xml_file)
+	#import web_pdb; web_pdb.set_trace()
+	favorites = tree.getElementsByTagName('favourite')
+	for count, favorite in enumerate(favorites):
+		from resources.lib.modules import log_utils
+		favor = favorite.childNodes[0].data
+		playmedia = favor[:9]
+		if playmedia == 'PlayMedia':
+			url = favor[9:]
+			url = url[:-2]
+			url = unquote(url)
+		log_utils.log('Favorites: %s' % url, 1)

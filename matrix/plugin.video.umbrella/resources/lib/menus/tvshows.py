@@ -790,6 +790,7 @@ class TVshows:
 
 	def traktLlikedlists(self, create_directory=True):
 		items = traktsync.fetch_liked_list('', True)
+		showOwnerShow = getSetting('trakt.lists.showowner') == 'true'
 		for item in items:
 			try:
 				if item['content_type'] == 'movies': continue
@@ -801,7 +802,7 @@ class TVshows:
 				list_url = self.traktlist_link % (list_owner_slug, list_id)
 				list_count = item['item_count']
 				next = ''
-				if getSetting('trakt.lists.showowner') == 'true':
+				if showOwnerShow:
 					label = '%s - [COLOR %s]%s[/COLOR]' % (list_name, self.highlight_color, list_owner)
 				else:
 					label = '%s' % (list_name)
@@ -1347,6 +1348,8 @@ class TVshows:
 				extended_art = fanarttv_cache.get(FanartTv().get_tvshow_art, 336, tvdb)
 				if extended_art: values.update(extended_art)
 			values = dict((k, v) for k, v in iter(values.items()) if v is not None and v != '') # remove empty keys so .update() doesn't over-write good meta with empty values.
+			if values.get('imdb') != imdb:
+				values['imdb'] = imdb
 			self.list[i].update(values)
 			meta = {'imdb': imdb, 'tmdb': tmdb, 'tvdb': tvdb, 'lang': self.lang, 'user': self.user, 'item': values}
 			self.meta.append(meta)
