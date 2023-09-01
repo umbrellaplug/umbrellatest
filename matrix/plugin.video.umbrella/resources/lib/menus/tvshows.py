@@ -854,7 +854,7 @@ class TVshows:
 				log_utils.error()
 		return self.list
 
-	def trakt_userList(self, url, create_directory=True):
+	def trakt_userList(self, url, create_directory=True, folderName=''):
 		self.list = []
 		q = dict(parse_qsl(urlsplit(url).query))
 		index = int(q['page']) - 1

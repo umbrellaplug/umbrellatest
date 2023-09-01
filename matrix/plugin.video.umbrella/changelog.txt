@@ -1,9 +1,10 @@
-[B]Update - v6.6.297 - August 31st, 2023[/B]
+[B]Update - v6.6.298 - September 1st, 2023[/B]
 --[Enhancement] Added ability to show titles on all sections.
 --[Enhancement] Changed text on resolving popups to no longer be bold.
+--[Enhancement] Added function to pass any function into to time.
 --[Fix] Changed code for movie and show collection and watchlist import to improve speed.
 --[Fix] Made changes to tv show and seasonal level information to avoid imdb id being overwritten.
---[Enhancement] Added function to pass any function into to time.
+--[Fix] Fixed TV Show lists exception caused by update.
 
 [B]Update - v6.6.29 - August 23rd, 2023[/B]
 --[Enhancement] Added ability to use external providers and removed requirements for scraper packages.
