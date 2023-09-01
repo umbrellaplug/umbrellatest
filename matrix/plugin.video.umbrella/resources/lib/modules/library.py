@@ -393,38 +393,30 @@ class lib_tools:
 		try:
 			if not control.player.isPlaying(): control.busy()
 			from resources.lib.menus import tvshows
-			#wltv_items = tvshows.TVshows().traktWatchlist('https://api.trakt.tv/users/me/watchlist/shows', create_directory=None)
-			wltv_items = control.timeFunction(lib_tools().getTVShowWatchlist)
-			#wltv_items = self.getTVShowWatchlist()
+			#wltv_items = control.timeFunction(lib_tools().getTVShowWatchlist)
+			wltv_items = self.getTVShowWatchlist()
 			wltv_items_count = len(wltv_items)
 			wltv_item = {'name': 'Watchlist (TV Shows)', 'url': 'https://api.trakt.tv/users/me/watchlist/shows', 'list_owner': 'me', 'list_owner_slug': 'me', 'list_name': 'Watchlist (TV Shows)', 'list_id': 'watchlistTVshows', 'context':'https://api.trakt.tv/users/me/watchlist/shows', 'next': '', 'list_count': wltv_items_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'}
-			#tv_items = tvshows.TVshows().trakt_user_lists('trakt_list', trakt_user)
-			tv_items = control.timeFunction(tvshows.TVshows().trakt_user_lists, 'trakt_list', trakt_user)
-			#coltv_items = tvshows.TVshows().traktCollection('https://api.trakt.tv/users/me/collection/shows', create_directory=None)
-			#coltv_items = self.getTVShowCollection()
-			coltv_items = control.timeFunction(lib_tools().getTVShowCollection)
+			tv_items = tvshows.TVshows().trakt_user_lists('trakt_list', trakt_user)
+			#tv_items = control.timeFunction(tvshows.TVshows().trakt_user_lists, 'trakt_list', trakt_user)
+			coltv_items = self.getTVShowCollection()
+			#coltv_items = control.timeFunction(lib_tools().getTVShowCollection)
 			coltv_items_count = len(coltv_items)
 			coltv_item = {'name': 'Collection (TV Shows)', 'url': 'https://api.trakt.tv/users/me/collection/shows', 'list_owner': 'me', 'list_owner_slug': 'me', 'list_name': 'Collection (TV Shows)', 'list_id': 'collectionTVshows', 'context':'https://api.trakt.tv/users/me/watchlist/shows', 'next': '', 'list_count': coltv_items_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'}
-			ltv_items = control.timeFunction(lib_tools().getTraktTVLikedLists)
-			#ltv_items = self.getTraktTVLikedLists()
-			#ltv_items = tvshows.TVshows().traktLlikedlists(create_directory=None)
-			#ltv_items = control.timeFunction(tvshows.TVshows().traktLlikedlists, create_directory=None)
+			#ltv_items = control.timeFunction(lib_tools().getTraktTVLikedLists)
+			ltv_items = self.getTraktTVLikedLists()
 			from resources.lib.menus import movies
-			movie_items = control.timeFunction(movies.Movies().trakt_user_lists, 'trakt_list', trakt_user)
-			#movie_items = movies.Movies().trakt_user_lists('trakt_list', trakt_user)
-			#lmovie_items = control.timeFunction(movies.Movies().traktLlikedlists, create_directory=None)
+			#movie_items = control.timeFunction(movies.Movies().trakt_user_lists, 'trakt_list', trakt_user)
+			movie_items = movies.Movies().trakt_user_lists('trakt_list', trakt_user)
 			#lmovie_items = movies.Movies().traktLlikedlists(create_directory=None)
-			#lmovie_items = self.getTraktMovieLikedLists()
-			lmovie_items = control.timeFunction(lib_tools().getTraktMovieLikedLists)
-			#new function needed for watchlist and collection lists
-			#wlm_items = movies.Movies().traktWatchlist('https://api.trakt.tv/users/me/watchlist/movies', create_directory=None)
-			wlm_items = control.timeFunction(lib_tools().getMovieWatchlist)
-			#wlm_items = self.getMovieWatchlist()
+			lmovie_items = self.getTraktMovieLikedLists()
+			#lmovie_items = control.timeFunction(lib_tools().getTraktMovieLikedLists)
+			#wlm_items = control.timeFunction(lib_tools().getMovieWatchlist)
+			wlm_items = self.getMovieWatchlist()
 			wlm_items_count = len(wlm_items)
 			wlm_item = {'name': 'Watchlist (Movies)', 'url': 'https://api.trakt.tv/users/me/watchlist/movies', 'list_owner': 'me', 'list_owner_slug': 'me', 'list_name': 'Watchlist (Movies)', 'list_id': 'watchlistMovie', 'context': 'https://api.trakt.tv/users/me/watchlist/movies', 'next': '', 'list_count': wlm_items_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'}
-			#colm_items = movies.Movies().traktCollection('https://api.trakt.tv/users/me/collection/movies', create_directory=None)
-			#colm_items = self.getMovieCollection()
-			colm_items = control.timeFunction(lib_tools().getMovieCollection)
+			colm_items = self.getMovieCollection()
+			#colm_items = control.timeFunction(lib_tools().getMovieCollection)
 			colm_items_count = len(colm_items)
 			colm_item = {'name': 'Collection (Movies)', 'url': 'https://api.trakt.tv/users/me/collection/movies', 'list_owner': 'me', 'list_owner_slug': 'me', 'list_name': 'Collection (Movies)', 'list_id': 'collectionMovie', 'context':'https://api.trakt.tv/users/me/collection/movies', 'next': '', 'list_count': colm_items_count, 'image': 'trakt.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'}
 			if wlm_items_count > 0:
@@ -435,17 +427,8 @@ class lib_tools:
 				full_list.append(coltv_item)
 			if colm_items_count > 0:
 				full_list.append(colm_item)
-			# for x in tv_items:
-			# 	full_list.append(x)
 			full_list.extend(tv_items)
-			#for x in ltv_items:
-				#full_list.append(x)
-			
-			# for x in movie_items:
-			# 	full_list.append(x)
 			full_list.extend(movie_items)
-			# for x in lmovie_items:
-			# 	full_list.append(x)
 			full_list.extend(ltv_items)
 			full_list.extend(lmovie_items)
 			

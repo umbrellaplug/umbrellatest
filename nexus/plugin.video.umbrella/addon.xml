@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.296">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.297">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -155,8 +155,9 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.296 - August 28th, 2023[/B]
---[Enhancement] Changed text on resolving popups to no longer be bold. Never enough for you people.
+[B]Update - v6.6.297 - August 31st, 2023[/B]
+--[Enhancement] Added ability to show titles on all sections.
+--[Enhancement] Changed text on resolving popups to no longer be bold.
 --[Fix] Changed code for movie and show collection and watchlist import to improve speed.
 --[Fix] Made changes to tv show and seasonal level information to avoid imdb id being overwritten.
 --[Enhancement] Added function to pass any function into to time.

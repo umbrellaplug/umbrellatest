@@ -29,6 +29,7 @@ def router(argv2):
 	source = params.get('source')
 	select = params.get('select')
 	current_setting = params.get('setting')
+	folderName = params.get('folderName')
 	if action is None:
 		from resources.lib.menus import navigator
 		isUpdate = control.homeWindow.getProperty('umbrella.updated')
@@ -45,22 +46,22 @@ def router(argv2):
 	# elif action and action.startswith('movies_'):
 	elif action == 'movieNavigator':
 		from resources.lib.menus import navigator
-		navigator.Navigator().movies()
+		navigator.Navigator().movies(folderName=folderName)
 	elif action == 'movieliteNavigator':
 		from resources.lib.menus import navigator
-		navigator.Navigator().movies(lite=True)
+		navigator.Navigator().movies(lite=True, folderName=folderName)
 	elif action == 'mymovieNavigator':
 		from resources.lib.menus import navigator
-		navigator.Navigator().mymovies()
+		navigator.Navigator().mymovies(folderName=folderName)
 	elif action == 'mymovieliteNavigator':
 		from resources.lib.menus import navigator
-		navigator.Navigator().mymovies(lite=True)
+		navigator.Navigator().mymovies(lite=True, folderName=folderName)
 	elif action == 'movies':
 		from resources.lib.menus import movies
-		movies.Movies().get(url)
+		movies.Movies().get(url, folderName=folderName)
 	elif action == 'simklMovies':
 		from resources.lib.menus import movies
-		movies.Movies().getSimkl(url)
+		movies.Movies().getSimkl(url, folderName=folderName)
 	elif action == 'mixed' and 'movies' in url:
 		from resources.lib.menus import movies
 		movies.Movies().get(url)
@@ -69,13 +70,13 @@ def router(argv2):
 		movies.Movies().get(url)
 	elif action == 'tmdbmovies':
 		from resources.lib.menus import movies
-		movies.Movies().getTMDb(url)
+		movies.Movies().getTMDb(url, folderName=folderName)
 	elif action == 'tmdbmoviePage':
 		from resources.lib.menus import movies
-		movies.Movies().getTMDb(url)
+		movies.Movies().getTMDb(url, folderName=folderName)
 	elif action == 'movieSearch':
 		from resources.lib.menus import movies
-		movies.Movies().search()
+		movies.Movies().search(folderName=folderName)
 	elif action == 'movieSearchnew':
 		from resources.lib.menus import movies
 		movies.Movies().search_new()
@@ -88,25 +89,25 @@ def router(argv2):
 		movies.Movies().person()
 	elif action == 'movieGenres':
 		from resources.lib.menus import movies
-		movies.Movies().genres(url)
+		movies.Movies().genres(url, folderName=folderName)
 	elif action == 'movieLanguages':
 		from resources.lib.menus import movies
-		movies.Movies().languages()
+		movies.Movies().languages(folderName=folderName)
 	elif action == 'movieCertificates':
 		from resources.lib.menus import movies
-		movies.Movies().certifications(url)
+		movies.Movies().certifications(url, folderName=folderName)
 	elif action == 'movieYears':
 		from resources.lib.menus import movies
-		movies.Movies().years(url)
+		movies.Movies().years(url, folderName=folderName)
 	elif action == 'moviePersons':
 		from resources.lib.menus import movies
-		movies.Movies().persons(url)
+		movies.Movies().persons(url, folderName=folderName)
 	elif action == 'moviesUnfinished':
 		from resources.lib.menus import movies
-		movies.Movies().unfinished(url)
+		movies.Movies().unfinished(url, folderName=folderName)
 	elif action == 'movieUserlists':
 		from resources.lib.menus import movies
-		movies.Movies().userlists()
+		movies.Movies().userlists(folderName=folderName)
 	elif action == 'traktAuth':
 		from resources.lib.modules import trakt as Trakt
 		Trakt.traktAuth(fromSettings=1)
@@ -118,13 +119,13 @@ def router(argv2):
 		Trakt.getTraktAccountInfo()
 	elif action == 'movies_PublicLists':
 		from resources.lib.menus import movies
-		movies.Movies().getTraktPublicLists(url)
+		movies.Movies().getTraktPublicLists(url, folderName=folderName)
 	elif action == 'movies_SearchLists':
 		from resources.lib.menus import navigator
 		navigator.Navigator().traktSearchLists(params.get('media_type'))
 	elif action == 'movies_LikedLists':
 		from resources.lib.menus import movies
-		movies.Movies().traktLlikedlists()
+		movies.Movies().traktLlikedlists(folderName=folderName)
 	elif action == 'movies_traktUnfinishedManager':
 		from resources.lib.menus import movies
 		movies.Movies().unfinishedManager()
@@ -139,44 +140,44 @@ def router(argv2):
 		favourites.getFavouritesMoviesfromXML()
 	elif action == 'mdbTopListMovies':
 		from resources.lib.menus import movies
-		movies.Movies().getMBDTopLists()
+		movies.Movies().getMBDTopLists(folderName=folderName)
 	elif action == 'mdbUserListMovies':
 		from resources.lib.menus import movies
-		movies.Movies().getMDBUserList()
+		movies.Movies().getMDBUserList(folderName=folderName)
 	elif action == 'moviesimilarFromLibrary':
 		from resources.lib.menus import movies
 		movies.Movies().similarFromLibrary(tmdb=tmdb)
 	elif action == 'movierecommendedFromLibrary':
 		from resources.lib.menus import movies
-		movies.Movies().reccomendedFromLibrary()
+		movies.Movies().reccomendedFromLibrary(folderName=folderName)
 	####################################################
 	#---Collections
 	####################################################
 	elif action and action.startswith('collections'):
 		if action == 'collections_Navigator':
 			from resources.lib.menus import collections
-			collections.Collections().collections_Navigator()
+			collections.Collections().collections_Navigator(folderName=folderName)
 		elif action == 'collections_Boxset':
 			from resources.lib.menus import collections
-			collections.Collections().collections_Boxset()
+			collections.Collections().collections_Boxset(folderName=folderName)
 		elif action == 'collections_Kids':
 			from resources.lib.menus import collections
-			collections.Collections().collections_Kids()
+			collections.Collections().collections_Kids(folderName=folderName)
 		elif action == 'collections_BoxsetKids':
 			from resources.lib.menus import collections
-			collections.Collections().collections_BoxsetKids()
+			collections.Collections().collections_BoxsetKids(folderName=folderName)
 		elif action == 'collections_Superhero':
 			from resources.lib.menus import collections
-			collections.Collections().collections_Superhero()
+			collections.Collections().collections_Superhero(folderName=folderName)
 		elif action == 'collections_MartialArts':
 			from resources.lib.menus import collections
-			collections.Collections().collections_martial_arts()
+			collections.Collections().collections_martial_arts(folderName=folderName)
 		elif action == 'collections_MartialArtsActors':
 			from resources.lib.menus import collections
 			collections.Collections().collections_martial_arts_actors()
 		elif action == 'collections_Search':
 			from resources.lib.menus import collections
-			collections.Collections().search()
+			collections.Collections().search(folderName=folderName)
 		elif action == 'collections_Searchnew':
 			from resources.lib.menus import collections
 			collections.Collections().search_new()
@@ -185,7 +186,7 @@ def router(argv2):
 			collections.Collections().search_term(name)
 		elif action == 'collections':
 			from resources.lib.menus import collections
-			collections.Collections().get(url)
+			collections.Collections().get(url, folderName=folderName)
 
 	####################################################
 	# TV Shows
@@ -193,19 +194,19 @@ def router(argv2):
 	# if action and action.startswith('tv_'):
 	elif action == 'tvNavigator':
 		from resources.lib.menus import navigator
-		navigator.Navigator().tvshows()
+		navigator.Navigator().tvshows(folderName=folderName)
 	elif action == 'tvliteNavigator':
 		from resources.lib.menus import navigator
-		navigator.Navigator().tvshows(lite=True)
+		navigator.Navigator().tvshows(lite=True, folderName=folderName)
 	elif action == 'mytvNavigator':
 		from resources.lib.menus import navigator
-		navigator.Navigator().mytvshows()
+		navigator.Navigator().mytvshows(folderName=folderName)
 	elif action == 'mytvliteNavigator':
 		from resources.lib.menus import navigator
-		navigator.Navigator().mytvshows(lite=True)
+		navigator.Navigator().mytvshows(lite=True, folderName=folderName)
 	elif action == 'tvshows':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().get(url)
+		tvshows.TVshows().get(url, folderName=folderName)
 	elif action == 'mixed' and 'movies' not in url:
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().get(url)
@@ -214,13 +215,13 @@ def router(argv2):
 		tvshows.TVshows().get(url)
 	elif action == 'mdbTopListTV':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().getMBDTopLists()
+		tvshows.TVshows().getMBDTopLists(folderName=folderName)
 	elif action == 'tmdbTvshows':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().getTMDb(url)
+		tvshows.TVshows().getTMDb(url, folderName=folderName)
 	elif action == 'simklTvshows':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().getSimkl(url)
+		tvshows.TVshows().getSimkl(url, folderName=folderName)
 	elif action == 'tmdbTvshowPage':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().getTMDb(url)
@@ -232,7 +233,7 @@ def router(argv2):
 		tvshows.TVshows().getTVmaze(url)
 	elif action == 'tvSearch':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().search()
+		tvshows.TVshows().search(folderName=folderName)
 	elif action == 'tvSearchnew':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().search_new()
@@ -241,40 +242,40 @@ def router(argv2):
 		tvshows.TVshows().search_term(name)
 	elif action == 'tvPerson':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().person()
+		tvshows.TVshows().person(folderName=folderName)
 	elif action == 'tvGenres':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().genres(url)
+		tvshows.TVshows().genres(url, folderName=folderName)
 	elif action == 'tvNetworks':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().networks()
+		tvshows.TVshows().networks(folderName=folderName)
 	elif action == 'tvLanguages':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().languages()
+		tvshows.TVshows().languages(folderName=folderName)
 	elif action == 'tvCertificates':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().certifications()
+		tvshows.TVshows().certifications(folderName=folderName)
 	elif action == 'tvYears':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().years(url)
+		tvshows.TVshows().years(url, folderName=folderName)
 	elif action == 'tvPersons':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().persons(url)
 	elif action == 'tvUserlists':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().userlists()
+		tvshows.TVshows().userlists(folderName=folderName)
 	elif action == 'tvOriginals':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().originals()
+		tvshows.TVshows().originals(folderName)
 	elif action == 'tv_PublicLists':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().getTraktPublicLists(url)
+		tvshows.TVshows().getTraktPublicLists(url, folderName=folderName)
 	elif action == 'tv_SearchLists':
 		from resources.lib.menus import navigator
 		navigator.Navigator().traktSearchLists(params.get('media_type'))
 	elif action == 'shows_LikedLists':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().traktLlikedlists()
+		tvshows.TVshows().traktLlikedlists(folderName=folderName)
 	elif action == 'shows_traktHiddenManager':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().traktHiddenManager()
@@ -286,13 +287,13 @@ def router(argv2):
 		tvshows.TVshows().watchlistManager()
 	elif action == 'mdbUserListTV':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().getMDBUserList()
+		tvshows.TVshows().getMDBUserList(folderName=folderName)
 	elif action == 'shows_progress':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().tvshow_progress(url)
+		tvshows.TVshows().tvshow_progress(url, folderName=folderName)
 	elif action == 'shows_watched':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().tvshow_watched(url)
+		tvshows.TVshows().tvshow_watched(url, folderName=folderName)
 
 	####################################################
 	#---SEASONS
@@ -309,19 +310,19 @@ def router(argv2):
 		episodes.Episodes().get(tvshowtitle, year, imdb, tmdb, tvdb, params.get('meta'), season, episode)
 	elif action == 'calendar':
 		from resources.lib.menus import episodes
-		episodes.Episodes().calendar(url)
+		episodes.Episodes().calendar(url, folderName=folderName)
 	elif action == 'upcomingProgress':
 		from resources.lib.menus import episodes
-		episodes.Episodes().upcoming_progress(url)
+		episodes.Episodes().upcoming_progress(url, folderName=folderName)
 	elif action == 'episodes_clrProgressCache':
 		from resources.lib.menus import episodes
 		episodes.Episodes().clr_progress_cache(url)
 	elif action == 'calendars':
 		from resources.lib.menus import episodes
-		episodes.Episodes().calendars()
+		episodes.Episodes().calendars(folderName=folderName)
 	elif action == 'episodesUnfinished':
 		from resources.lib.menus import episodes
-		episodes.Episodes().unfinished(url)
+		episodes.Episodes().unfinished(url, folderName=folderName)
 	elif action == 'episodes_traktUnfinishedManager':
 		from resources.lib.menus import episodes
 		episodes.Episodes().unfinishedManager()
@@ -331,7 +332,7 @@ def router(argv2):
 	####################################################
 	elif action == 'premiumNavigator':
 		from resources.lib.menus import navigator
-		navigator.Navigator().premium_services()
+		navigator.Navigator().premium_services(folderName=folderName)
 
 	elif action and action.startswith('simkl_'):
 		if action == 'simkl_Authorize':
@@ -344,7 +345,7 @@ def router(argv2):
 	elif action and action.startswith('ad_'):
 		if action == 'ad_ServiceNavigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().alldebrid_service()
+			navigator.Navigator().alldebrid_service(folderName=folderName)
 		elif action == 'ad_AccountInfo':
 			from resources.lib.debrid import alldebrid
 			alldebrid.AllDebrid().account_info_to_dialog()
@@ -373,7 +374,7 @@ def router(argv2):
 	elif action and action.startswith('en_'):
 		if action == 'en_ServiceNavigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().easynews_service()
+			navigator.Navigator().easynews_service(folderName=folderName)
 		elif action == 'en_Search':
 			from resources.lib.debrid import easynews
 			easynews.EasyNews().search()
@@ -422,7 +423,7 @@ def router(argv2):
 	elif action and action.startswith('pm_'):
 		if action == 'pm_ServiceNavigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().premiumize_service()
+			navigator.Navigator().premiumize_service(folderName=folderName)
 		elif action == 'pm_AccountInfo':
 			from resources.lib.debrid import premiumize
 			premiumize.Premiumize().account_info_to_dialog()
@@ -454,7 +455,7 @@ def router(argv2):
 	elif action and action.startswith('rd_'):
 		if action == 'rd_ServiceNavigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().realdebrid_service()
+			navigator.Navigator().realdebrid_service(folderName=folderName)
 		elif action == 'rd_AccountInfo':
 			from resources.lib.debrid import realdebrid
 			realdebrid.RealDebrid().account_info_to_dialog()
@@ -486,13 +487,13 @@ def router(argv2):
 	elif action and action.startswith('anime_'):
 		if action == 'anime_Navigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().anime()
+			navigator.Navigator().anime(folderName=folderName)
 		elif action == 'anime_Movies':
 			from resources.lib.menus import movies
-			movies.Movies().get(url)
+			movies.Movies().get(url, folderName=folderName)
 		elif action == 'anime_TVshows':
 			from resources.lib.menus import tvshows
-			tvshows.TVshows().get(url)
+			tvshows.TVshows().get(url, folderName=folderName)
 
 	####################################################
 	#---YouTube
@@ -500,7 +501,7 @@ def router(argv2):
 	elif action == 'youtube':
 		from resources.lib.menus import youtube
 		id = params.get('id')
-		if id is None: youtube.yt_index().root(action)
+		if id is None: youtube.yt_index().root(action, folderName=folderName)
 		else: youtube.yt_index().get(action, id)
 	elif action == 'sectionItem':
 		pass # Placeholder. This is a non-clickable menu item for notes, etc.
@@ -528,7 +529,7 @@ def router(argv2):
 	elif action and action.startswith('download'):
 		if action == 'downloadNavigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().downloads()
+			navigator.Navigator().downloads(folderName=folderName)
 		elif action == 'download':
 			caller = params.get('caller')
 			image = params.get('image')
@@ -627,19 +628,19 @@ def router(argv2):
 			skin_packs.iconPackHandler().show_skin_packs()
 		elif action == 'tools_toolNavigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().tools()
+			navigator.Navigator().tools(folderName=folderName)
 		elif action == 'tools_traktToolsNavigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().traktTools()
+			navigator.Navigator().traktTools(folderName=folderName)
 		elif action == 'tools_searchNavigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().search()
+			navigator.Navigator().search(folderName=folderName)
 		elif action == 'tools_viewsNavigator':
 			from resources.lib.menus import navigator
 			navigator.Navigator().views()
 		elif action == 'tools_loggingNavigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().loggingNavigator()
+			navigator.Navigator().loggingNavigator(folderName=folderName)
 		elif action == 'tools_addView':
 			from resources.lib.modules import views
 			views.addView(params.get('content'))
@@ -974,7 +975,7 @@ def router(argv2):
 	elif action and action.startswith('library_'):
 		if action == 'library_Navigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().library()
+			navigator.Navigator().library(folderName=folderName)
 		elif action == 'library_movieToLibrary':
 			from resources.lib.modules import library
 			library.libmovies().add(name, title, year, imdb, tmdb)
@@ -1037,7 +1038,7 @@ def router(argv2):
 	elif action and action.startswith('cache_'):
 		if action == 'cache_Navigator':
 			from resources.lib.menus import navigator
-			navigator.Navigator().cf()
+			navigator.Navigator().cf(folderName=folderName)
 		elif action == 'cache_clearAll':
 			from resources.lib.menus import navigator
 			navigator.Navigator().clearCacheAll()

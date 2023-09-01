@@ -59,6 +59,7 @@ class Episodes:
 		self.simkl_hours = int(getSetting('cache.simkl'))
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
+		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 
 	def get(self, tvshowtitle, year, imdb, tmdb, tvdb, meta, season=None, episode=None, create_directory=True):
 		self.list = []
@@ -131,7 +132,7 @@ class Episodes:
 				control.hide()
 				if self.notifications: control.notification(title=32326, message=33049)
 
-	def unfinished(self, url, create_directory=True):
+	def unfinished(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -142,7 +143,7 @@ class Episodes:
 			else: self.list = cache.get(self.trakt_episodes_list, self.trakt_unfinished_hours, url, self.trakt_user, self.lang, items)
 			if self.list is None: self.list = []
 			self.list = sorted(self.list, key=lambda k: k['paused_at'], reverse=True)
-			if create_directory: self.episodeDirectory(self.list, unfinished=True, next=False)
+			if create_directory: self.episodeDirectory(self.list, unfinished=True, next=False, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -165,7 +166,7 @@ class Episodes:
 			log_utils.error()
 			control.hide()
 
-	def upcoming_progress(self, url):
+	def upcoming_progress(self, url, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -182,7 +183,7 @@ class Episodes:
 					self.list = sorted(self.list, key=lambda k: (k['premiered'] if k['premiered'] else '3021-01-01', k['airtime'])) # "3021" date hack to force unknown premiered dates to bottom of list
 				except: pass
 			if self.list is None: self.list = []
-			self.episodeDirectory(self.list, unfinished=False, next=False)
+			self.episodeDirectory(self.list, unfinished=False, next=False, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -198,7 +199,7 @@ class Episodes:
 		control.sleep(200)
 		control.refresh()
 
-	def calendar(self, url):
+	def calendar(self, url, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -255,7 +256,7 @@ class Episodes:
 				self.list = cache.get(self.tvmaze_list, 1, url, False)
 			if self.list is None: self.list = []
 			hasNext = True if isTraktHistory else False
-			self.episodeDirectory(self.list, unfinished=False, next=hasNext)
+			self.episodeDirectory(self.list, unfinished=False, next=hasNext, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -294,7 +295,7 @@ class Episodes:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def calendars(self, create_directory=True):
+	def calendars(self, create_directory=True, folderName=''):
 		m = getLS(32060).split('|')
 		try: months = [(m[0], 'January'), (m[1], 'February'), (m[2], 'March'), (m[3], 'April'), (m[4], 'May'), (m[5], 'June'), (m[6], 'July'),
 					(m[7], 'August'), (m[8], 'September'), (m[9], 'October'), (m[10], 'November'), (m[11], 'December')]
@@ -311,7 +312,7 @@ class Episodes:
 				url = self.calendar_link % (self.date_time - timedelta(days=i)).strftime('%Y-%m-%d')
 				self.list.append({'name': name, 'url': url, 'image': 'calendar.png', 'icon': 'DefaultYear.png', 'action': 'calendar'})
 			except: pass
-		if create_directory: self.addDirectory(self.list)
+		if create_directory: self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
 	def tmdb_list(self, tvshowtitle, imdb, tmdb, tvdb, meta, season):
@@ -735,8 +736,9 @@ class Episodes:
 				log_utils.error()
 		return items
 
-	def episodeDirectory(self, items, unfinished=False, next=True):
+	def episodeDirectory(self, items, unfinished=False, next=True, folderName=''):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
+		if self.useContainerTitles: control.setContainerName(folderName)
 		if not items: # with reuselanguageinvoker on an empty directory must be loaded, do not use sys.exit()
 			control.hide() ; control.notification(title=32326, message=33049)
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
@@ -1055,10 +1057,11 @@ class Episodes:
 			control.directory(syshandle, cacheToDisc=False) # disable cacheToDisc so unwatched counts loads fresh data counts if changes made
 			views.setView('episodes', {'skin.estuary': 55, 'skin.confluence': 504})
 
-	def addDirectory(self, items, queue=False):
+	def addDirectory(self, items, queue=False, folderName=''):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 		if not items: # with reuselanguageinvoker on an empty directory must be loaded, do not use sys.exit()
 			control.hide() ; control.notification(title=32326, message=33049)
+		if self.useContainerTitles: control.setContainerName(folderName)
 		syshandle = int(argv[1])
 		addonThumb = control.addonThumb()
 		artPath = control.artPath()

@@ -17,7 +17,6 @@ from resources.lib.modules.simkl import SIMKL as simkl
 from resources.lib.modules import cleangenre
 from resources.lib.modules import client
 from resources.lib.modules import control
-from resources.lib.modules.library import lib_tools
 from resources.lib.modules.playcount import getMovieIndicators, getMovieOverlay
 from resources.lib.modules import tools, log_utils
 from resources.lib.modules import trakt
@@ -31,6 +30,7 @@ import random
 getLS = control.lang
 getSetting = control.setting
 LOGINFO = log_utils.LOGINFO
+homeWindow = control.homeWindow
 
 class Movies:
 	def __init__(self, notifications=True):
@@ -86,7 +86,7 @@ class Movies:
 		self.oscars_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&production_status=released&groups=oscar_best_picture_winners&sort=year,desc&count=%s&start=1' % self.page_limit
 		self.oscarsnominees_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&production_status=released&groups=oscar_best_picture_nominees&sort=year,desc&count=%s&start=1' % self.page_limit
 		self.theaters_link = 'https://www.imdb.com/search/title/?title_type=feature&num_votes=500,&release_date=date[90],date[0]&languages=en&sort=release_date,desc&count=%s&start=1' % self.page_limit
-		self.imdb_comingsoon_link = 'https://www.imdb.com/movies-coming-soon/'
+		self.imdb_comingsoon_link = 'https://www.imdb.com/calendar/?ref_=rlm&region=US&type=MOVIE'
 		self.year_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=100,&production_status=released&year=%s,%s&sort=moviemeter,asc&count=%s&start=1' % ('%s', '%s', self.page_limit)
 		if self.hidecinema:
 			hidecinema_rollback = str(int(getSetting('hidecinema.rollback')) * 30)
@@ -151,8 +151,9 @@ class Movies:
 		self.showwatchedlib = getSetting('showwatchedlib')
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
+		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 
-	def get(self, url, idx=True, create_directory=True):
+	def get(self, url, idx=True, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -160,23 +161,23 @@ class Movies:
 			try: u = urlparse(url).netloc.lower()
 			except: pass
 			if url == 'traktbasedonrecent':
-				return self.trakt_based_on_recent()
+				return self.trakt_based_on_recent(folderName=folderName)
 			elif url == 'traktbasedonsimilar':
-				return self.trakt_based_on_similar()
+				return self.trakt_based_on_similar(folderName=folderName)
 			if url == 'tmdbrecentday':
-				return self.tmdb_trending_recentday()
+				return self.tmdb_trending_recentday(folderName=folderName)
 			if url == 'tmdbrecentweek':
-				return self.tmdb_trending_recentweek()
+				return self.tmdb_trending_recentweek(folderName=folderName)
 			elif u in self.search_tmdb_link and url != 'tmdbrecentday' and url != 'tmdbrecentweek':
-				return self.getTMDb(url)
+				return self.getTMDb(url, folderName=folderName)
 			elif u in self.simkltrendingweek_link or u in self.simkltrendingmonth_link or u in self.simkltrendingtoday_link:
-				return self.getSimkl(url)
+				return self.getSimkl(url, folderName=folderName)
 			elif u in self.trakt_link and '/users/' in url:
 				try:
 					isTraktHistory = (url.split('&page=')[0] in self.trakthistory_link)
 					if '/users/me/' not in url: raise Exception()
-					if '/collection/' in url: return self.traktCollection(url)
-					if '/watchlist/' in url: return self.traktWatchlist(url)
+					if '/collection/' in url: return self.traktCollection(url, folderName=folderName)
+					if '/watchlist/' in url: return self.traktWatchlist(url, folderName=folderName)
 					if trakt.getActivity() > cache.timeout(self.trakt_list, url, self.trakt_user):
 						self.list = cache.get(self.trakt_list, 0, url, self.trakt_user)
 					else: self.list = cache.get(self.trakt_list, 720, url, self.trakt_user)
@@ -201,7 +202,7 @@ class Movies:
 				if idx: self.worker()
 				# self.sort() # switched to request sorting for imdb
 			elif u in self.imdb_link:
-				if 'coming-soon' in url:
+				if 'calendar' in url:
 					self.list = cache.get(self.imdb_list, self.imdblist_hours, url, True)
 				else: self.list = cache.get(self.imdb_list, self.imdblist_hours, url)
 				if idx: self.worker()
@@ -209,7 +210,7 @@ class Movies:
 				self.list = self.mdb_list_items(url)
 				if idx: self.worker()
 			if self.list is None: self.list = []
-			if idx and create_directory: self.movieDirectory(self.list)
+			if idx and create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -218,7 +219,7 @@ class Movies:
 				control.hide()
 				if self.notifications: control.notification(title=32001, message=33049)
 
-	def getTMDb(self, url, create_directory=True):
+	def getTMDb(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -231,7 +232,7 @@ class Movies:
 			elif u in self.tmdb_link and '/list/' not in url:
 				self.list = tmdb_indexer().tmdb_list(url) # caching handled in list indexer
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -239,7 +240,7 @@ class Movies:
 			if not self.list:
 				control.hide()
 				if self.notifications: control.notification(title=32001, message=33049)
-	def getTraktPublicLists(self, url, create_directory=True):
+	def getTraktPublicLists(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -251,18 +252,18 @@ class Movies:
 			else:
 				self.list = cache.get(self.trakt_public_list, self.trakt_hours, url)
 			if self.list is None: self.list = []
-			if create_directory: self.addDirectory(self.list)
+			if create_directory: self.addDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
-	def getMBDTopLists(self, create_directory=True): 
+	def getMBDTopLists(self, create_directory=True, folderName=''): 
 		self.list = []
 		try:
 			self.list = cache.get(self.mbd_top_lists, 6)
 			#self.list = self.mbd_top_lists()
 			if self.list is None: self.list = []
-			if create_directory: self.addDirectory(self.list)
+			if create_directory: self.addDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -288,13 +289,13 @@ class Movies:
 				from resources.lib.modules import log_utils
 				log_utils.error()
 		return self.list
-	def getMDBUserList(self, create_directory=True): 
+	def getMDBUserList(self, create_directory=True, folderName=''): 
 		self.list = []
 		try:
 			self.list = cache.get(self.mbd_user_lists, self.mdblist_hours)
 			#self.list = self.mbd_user_lists()
 			if self.list is None: self.list = []
-			if create_directory: self.addDirectory(self.list)
+			if create_directory: self.addDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -320,7 +321,7 @@ class Movies:
 				from resources.lib.modules import log_utils
 				log_utils.error()
 		return self.list
-	def getTraktPublicLists(self, url, create_directory=True):
+	def getTraktPublicLists(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -332,18 +333,18 @@ class Movies:
 			else:
 				self.list = cache.get(self.trakt_public_list, self.trakt_hours, url)
 			if self.list is None: self.list = []
-			if create_directory: self.addDirectory(self.list)
+			if create_directory: self.addDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
-	def getMBDTopLists(self, create_directory=True): 
+	def getMBDTopLists(self, create_directory=True, folderName=''): 
 		self.list = []
 		try:
 			#self.list = cache.get(self.mbd_top_lists, 0)
 			self.list = self.mbd_top_lists()
 			if self.list is None: self.list = []
-			if create_directory: self.addDirectory(self.list)
+			if create_directory: self.addDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -370,7 +371,7 @@ class Movies:
 				log_utils.error()
 		return self.list
 
-	def mdb_list_items(self, url, create_directory=True):
+	def mdb_list_items(self, url, create_directory=True, folderName=''):
 		self.list = []
 		q = dict(parse_qsl(urlsplit(url).query))
 		index = int(q['page']) - 1
@@ -409,10 +410,10 @@ class Movies:
 		for i in range(len(self.list)): self.list[i]['next'] = next
 		self.worker()
 		if self.list is None: self.list = []
-		if create_directory: self.movieDirectory(self.list)
+		if create_directory: self.movieDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def trakt_based_on_recent(self, create_directory=True):
+	def trakt_based_on_recent(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/history/movies?limit=20&page=1'
@@ -421,23 +422,22 @@ class Movies:
 			item = randomItems[random.randint(0, len(randomItems) - 1)]
 			url = self.tmdb_recommendations % (item.get('tmdb'), '%s')
 			self.list = tmdb_indexer().tmdb_list(url)
-			if self.useContainerTitles:
-				try: 
-					control.setContainerName(getLS(40257)+' '+item.get('title'))
-					control.setHomeWindowProperty('umbrella.movierecent', str(getLS(40257)+' '+item.get('title')))
-				except: pass
+			try: 
+				folderName = getLS(40257)+' '+item.get('title')
+				control.setHomeWindowProperty('umbrella.movierecent', str(getLS(40257)+' '+item.get('title')))
+			except: pass
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 			return
 
-	def trakt_based_on_similar(self, create_directory=True):
+	def trakt_based_on_similar(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/history/movies?limit=20&page=1'
@@ -446,23 +446,22 @@ class Movies:
 			item = randomItems[random.randint(0, len(randomItems) - 1)]
 			url = self.tmdb_similar % (item.get('tmdb'), '%s')
 			self.list = tmdb_indexer().tmdb_list(url)
-			if self.useContainerTitles:
-				try: 
-					control.setContainerName(getLS(40259)+' '+item.get('title'))
-					control.setHomeWindowProperty('umbrella.moviesimilar', str(getLS(40259)+' '+item.get('title')))
-				except: pass
+			try: 
+				folderName = getLS(40259)+' '+item.get('title')
+				control.setHomeWindowProperty('umbrella.moviesimilar', str(getLS(40259)+' '+item.get('title')))
+			except: pass
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 			return
 
-	def tmdb_released_formats(self, create_directory=True):
+	def tmdb_released_formats(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			url = self.tmdb_released
@@ -471,14 +470,14 @@ class Movies:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 			return
 
-	def tmdb_trending_recentday(self, create_directory=True):
+	def tmdb_trending_recentday(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			url = self.tmdb_recentday
@@ -487,14 +486,14 @@ class Movies:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 			return
 
-	def tmdb_trending_recentweek(self, create_directory=True):
+	def tmdb_trending_recentweek(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			url = self.tmdb_recentweek
@@ -504,14 +503,14 @@ class Movies:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 			return
 
-	def getSimkl(self, url, create_directory=True):
+	def getSimkl(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -524,7 +523,7 @@ class Movies:
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -533,14 +532,14 @@ class Movies:
 				control.hide()
 				if self.notifications: control.notification(title=32001, message=33049)
 
-	def unfinished(self, url, idx=True, create_directory=True):
+	def unfinished(self, url, idx=True, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			self.list = traktsync.fetch_bookmarks(imdb='', ret_all=True, ret_type='movies')
 			if idx: self.worker()
 			self.list = sorted(self.list, key=lambda k: k['paused_at'], reverse=True)
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list, unfinished=True, next=False)
+			if create_directory: self.movieDirectory(self.list, unfinished=True, next=False, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -670,9 +669,10 @@ class Movies:
 		if sort == 2: sort_string = sort_string + '&vote_count.gte=500'
 		return sort_string
 
-	def search(self):
+	def search(self, folderName=''):
 		from resources.lib.menus import navigator
 		navigator.Navigator().addDirectoryItem(getLS(32603) % self.highlight_color, 'movieSearchnew', 'search.png', 'DefaultAddonsSearch.png', isFolder=False)
+		if self.useContainerTitles: control.setContainerName(folderName)
 		from sqlite3 import dbapi2 as database
 		try:
 			if not control.existsPath(control.dataPath): control.makeFile(control.dataPath)
@@ -743,16 +743,16 @@ class Movies:
 		control.closeAll()
 		control.execute('ActivateWindow(Videos,plugin://plugin.video.umbrella/?action=moviePersons&url=%s,return)' % (quote_plus(url)))
 
-	def persons(self, url):
+	def persons(self, url, folderName=''):
 		if url is None: self.list = cache.get(self.imdb_person_list, 24, self.personlist_link)
 		else: self.list = cache.get(self.imdb_person_list, 1, url)
 		if self.list is None: self.list = []
 		if self.list:
 			for i in range(0, len(self.list)): self.list[i].update({'content': 'actors', 'icon': 'DefaultActor.png', 'action': 'movies'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def genres(self, url):
+	def genres(self, url, folderName=''):
 		try: url = getattr(self, url + '_link')
 		except: pass
 		genres = [
@@ -768,10 +768,10 @@ class Movies:
 			if self.tmdb_link in url:
 				try: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % ('%s', i[3]), 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tmdbmovies'})
 				except: pass
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def languages(self):
+	def languages(self, folderName=''):
 		languages = [('Arabic', 'ar'), ('Bosnian', 'bs'), ('Bulgarian', 'bg'), ('Chinese', 'zh'), ('Croatian', 'hr'), ('Dutch', 'nl'),
 			('English', 'en'), ('Finnish', 'fi'), ('French', 'fr'), ('German', 'de'), ('Greek', 'el'),('Hebrew', 'he'), ('Hindi ', 'hi'),
 			('Hungarian', 'hu'), ('Icelandic', 'is'), ('Italian', 'it'), ('Japanese', 'ja'), ('Korean', 'ko'), ('Macedonian', 'mk'),
@@ -779,10 +779,10 @@ class Movies:
 			('Russian', 'ru'), ('Serbian', 'sr'), ('Slovenian', 'sl'), ('Spanish', 'es'), ('Swedish', 'sv'), ('Turkish', 'tr'), ('Ukrainian', 'uk')]
 		for i in languages:
 			self.list.append({'content': 'countries', 'name': str(i[0]), 'url': self.language_link % i[1], 'image': 'languages.png', 'icon': 'DefaultAddonLanguage.png', 'action': 'movies'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def certifications(self, url):
+	def certifications(self, url, folderName=''):
 		try: url = getattr(self, url + '_link')
 		except: pass
 		certificates = [
@@ -794,17 +794,17 @@ class Movies:
 		for i in certificates:
 			if self.imdb_link in url: self.list.append({'content': 'tags', 'name': str(i[0]), 'url': url % i[1], 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'movies'})
 			if self.tmdb_link in url: self.list.append({'content': 'tags', 'name': str(i[0]), 'url': url % ('%s', i[2]), 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'tmdbmovies'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def years(self, url):
+	def years(self, url, folderName=''):
 		try: url = getattr(self, url + '_link')
 		except: pass
 		year = (self.date_time.strftime('%Y'))
 		for i in range(int(year)-0, 1900, -1):
 			if self.imdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % (str(i), str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'movies'})
 			if self.tmdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % ('%s', str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tmdbmovies'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
 	def moviesListToLibrary(self, url):
@@ -858,7 +858,7 @@ class Movies:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def userlists(self):
+	def userlists(self, folderName=''):
 		userlists = []
 		try:
 			if not self.traktCredentials: raise Exception()
@@ -905,10 +905,10 @@ class Movies:
 			self.list.insert(0, {'name': getLS(32033), 'url': self.imdbwatchlist_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'})
 		if self.imdb_user != '': # imdb My Ratings
 			self.list.insert(0, {'name': getLS(32025), 'url': self.imdbratings_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'})
-		self.addDirectory(self.list, queue=True)
+		self.addDirectory(self.list, queue=True, folderName=folderName)
 		return self.list
 
-	def traktCollection(self, url, create_directory=True):
+	def traktCollection(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try:
@@ -931,13 +931,13 @@ class Movies:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def traktWatchlist(self, url, create_directory=True):
+	def traktWatchlist(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try:
@@ -960,13 +960,13 @@ class Movies:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def traktLlikedlists(self, create_directory=True):
+	def traktLlikedlists(self, create_directory=True, folderName=''):
 		items = traktsync.fetch_liked_list('', True)
 		for item in items:
 			try:
@@ -990,7 +990,7 @@ class Movies:
 				from resources.lib.modules import log_utils
 				log_utils.error()
 		self.list = sorted(self.list, key=lambda k: re.sub(r'(^the |^a |^an )', '', k['name'].lower()))
-		if create_directory: self.addDirectory(self.list, queue=True)
+		if create_directory: self.addDirectory(self.list, queue=True, folderName=folderName)
 		return self.list
 
 	def trakt_list(self, url, user):
@@ -1087,7 +1087,7 @@ class Movies:
 		return self.list
 
 
-	def trakt_userList(self, url, create_directory=True):
+	def trakt_userList(self, url, create_directory=True, folderName=''):
 		self.list = []
 		q = dict(parse_qsl(urlsplit(url).query))
 		index = int(q['page']) - 1
@@ -1136,7 +1136,7 @@ class Movies:
 		for i in range(len(self.list)): self.list[i]['next'] = next
 		self.worker()
 		if self.list is None: self.list = []
-		if create_directory: self.movieDirectory(self.list)
+		if create_directory: self.movieDirectory(self.list, folderName=folderName)
 		return self.list
 
 	def trakt_user_lists(self, url, user):
@@ -1330,7 +1330,7 @@ class Movies:
 		list = sorted(list, key=lambda k: re.sub(r'(^the |^a |^an )', '', k['name'].lower()))
 		return list
 
-	def reccomendedFromLibrary(self):
+	def reccomendedFromLibrary(self, folderName=''):
 		#from resources.lib.modules import log_utils
 		#log_utils.log('Rec List From Library', 1)
 		try:
@@ -1351,11 +1351,11 @@ class Movies:
 				self.worker()
 		except:
 			self.list  = []
-		self.movieDirectory(self.list)
+		self.movieDirectory(self.list, folderName=folderName)
 		return self.list
 
 
-	def similarFromLibrary(self, tmdb=None, create_directory=True):
+	def similarFromLibrary(self, tmdb=None, create_directory=True, folderName=''):
 		#from resources.lib.modules import log_utils
 		#log_utils.log('Similiar List From Library', 1)
 		try:
@@ -1615,14 +1615,14 @@ class Movies:
 				#log_utils.log('item similar scores item:%s score: %s'% (self.list[i]["title"], self.list[i]["similarscore"]))
 			#self.list = [x for x in self.list if x.get('playcount') == 0]
 			self.worker()
-			if self.useContainerTitles and originalMovie:
+			if originalMovie:
 				try: 
-					control.setContainerName(getLS(40257)+' '+originalMovie["title"])
+					folderName = getLS(40257)+' '+originalMovie["title"]
 					control.setHomeWindowProperty('umbrella.moviesimilarlibrary', str(getLS(40257)+' '+originalMovie["title"]))
 				except: pass
 			if self.list is None: self.list = []
 			is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
-			if create_directory: self.movieDirectory(self.list)
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			if is_widget:
 				control.refresh()
 			return self.list
@@ -1708,10 +1708,11 @@ class Movies:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def movieDirectory(self, items, unfinished=False, next=True):
+	def movieDirectory(self, items, unfinished=False, next=True, folderName=''):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 		if not items: # with reuselanguageinvoker on an empty directory must be loaded, do not use sys.exit()
 			control.hide() ; control.notification(title=32001, message=33049)
+		if self.useContainerTitles: control.setContainerName(folderName)
 		from resources.lib.modules.player import Bookmarks
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		play_mode = getSetting('play.mode.movie')
@@ -1859,9 +1860,9 @@ class Movies:
 				if 'None' in page: page = page.split('  [I]')[0]
 				nextMenu = '[COLOR skyblue]' + nextMenu + page + '[/COLOR]'
 				u = urlparse(url).netloc.lower()
-				if u not in self.tmdb_link: url = '%s?action=moviePage&url=%s' % (sysaddon, quote_plus(url))
-				elif u in self.tmdb_link: url = '%s?action=tmdbmoviePage&url=%s' % (sysaddon, quote_plus(url))
-				elif u in self.mbdlist_list_items: url = '%s?action=moviePage&url=%s' % (sysaddon, quote_plus(url))
+				if u not in self.tmdb_link: url = '%s?action=moviePage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
+				elif u in self.tmdb_link: url = '%s?action=tmdbmoviePage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
+				elif u in self.mbdlist_list_items: url = '%s?action=moviePage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
 				item = control.item(label=nextMenu, offscreen=True)
 				icon = control.addonNext()
 				item.setArt({'icon': icon, 'thumb': icon, 'poster': icon, 'banner': icon})
@@ -1875,10 +1876,11 @@ class Movies:
 		control.sleep(200)
 		views.setView('movies', {'skin.estuary': 55, 'skin.confluence': 500})
 
-	def addDirectory(self, items, queue=False):
+	def addDirectory(self, items, queue=False, folderName=''):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 		if not items: # with reuselanguageinvoker on an empty directory must be loaded, do not use sys.exit()
 			content = '' ; control.hide() ; control.notification(title=32001, message=33049)
+		if self.useContainerTitles: control.setContainerName(folderName)
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		addonThumb = control.addonThumb()
 		artPath = control.artPath()
