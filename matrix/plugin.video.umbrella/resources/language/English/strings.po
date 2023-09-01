@@ -3908,7 +3908,7 @@ msgid "Because you watched"
 msgstr ""
 
 msgctxt "#40258"
-msgid "Show list titles if available"
+msgid "Show section titles if available"
 msgstr ""
 
 msgctxt "#40259"
@@ -4753,4 +4753,44 @@ msgstr ""
 
 msgctxt "#40452"
 msgid "[B]SETTINGS[/B] : Providers"
+msgstr ""
+
+msgctxt "#40453"
+msgid "User Lists"
+msgstr ""
+
+msgctxt "#40454"
+msgid "Liked Lists"
+msgstr ""
+
+msgctxt "#40455"
+msgid "MDBList TV Shows"
+msgstr ""
+
+msgctxt "#40456"
+msgid "TVMaze"
+msgstr ""
+
+msgctxt "#40457"
+msgid "Trakt List"
+msgstr ""
+
+msgctxt "#40458"
+msgid "IMDb List"
+msgstr ""
+
+msgctxt "#40459"
+msgid "Viewtypes"
+msgstr ""
+
+msgctxt "#40460"
+msgid "Logging Tools"
+msgstr ""
+
+msgctxt "#40461"
+msgid "Trakt Management Tools"
+msgstr ""
+
+msgctxt "#40462"
+msgid "Cache Functions"
 msgstr ""

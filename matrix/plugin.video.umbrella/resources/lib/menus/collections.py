@@ -46,21 +46,24 @@ class Collections:
 		self.imdblist_hours = int(getSetting('cache.imdblist'))
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
+		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 
-	def collections_Navigator(self, lite=False):
-		self.addDirectoryItem('Movies', 'collections_Boxset', 'boxsets.png', 'DefaultVideoPlaylists.png')
-		self.addDirectoryItem('Based on a True Story', 'collections&url=%s' % quote_plus(self.tmdb_link % '7102955'), 'movies.png', 'DefaultVideoPlaylists.png')
-		self.addDirectoryItem('Boxing', 'collections&url=%s' % quote_plus(self.tmdb_link % '7102952'), 'boxing.png', 'DefaultVideoPlaylists.png')
-		self.addDirectoryItem('Martial Arts', 'collections_MartialArts', 'martial-arts.png', 'DefaultVideoPlaylists.png')
-		if control.getMenuEnabled('navi.xmascollections'): self.addDirectoryItem('Christmas Collections', 'collections&url=%s' % quote_plus(self.tmdb_link % '32770'), 'boxsets.png', 'DefaultVideoPlaylists.png')
-		self.addDirectoryItem('DC Comics', 'collections&url=%s' % quote_plus(self.tmdb_link % '32799'), 'dc-comics.png', 'DefaultVideoPlaylists.png')
-		self.addDirectoryItem('Marvel Comics', 'collections&url=%s' % quote_plus(self.tmdb_link % '32793'), 'marvel-comics.png', 'DefaultVideoPlaylists.png')
-		self.addDirectoryItem('Superheroes', 'collections_Superhero', 'collectionsuperhero.png', 'DefaultVideoPlaylists.png')
-		self.addDirectoryItem('Kids Collections', 'collections_Kids', 'collectionkids.png', 'DefaultVideoPlaylists.png')
-		self.addDirectoryItem('Search TMDb Collections', 'collections_Search', 'search.png', 'DefaultAddonsSearch.png')
+	def collections_Navigator(self, lite=False, folderName=''):
+		self.addDirectoryItem('Movies', 'collections_Boxset&folderName=%s' % getLS(32001), 'boxsets.png', 'DefaultVideoPlaylists.png')
+		self.addDirectoryItem('Based on a True Story', 'collections&url=%s&folderName=%s' % (quote_plus(self.tmdb_link % '7102955'), 'Based on a True Story'), 'movies.png', 'DefaultVideoPlaylists.png')
+		self.addDirectoryItem('Boxing', 'collections&url=%s&folderName=%s' % (quote_plus(self.tmdb_link % '7102952'), 'Boxing'), 'boxing.png', 'DefaultVideoPlaylists.png')
+		self.addDirectoryItem('Martial Arts', 'collections_MartialArts&folderName=%s' % 'Martial Arts', 'martial-arts.png', 'DefaultVideoPlaylists.png')
+		if control.getMenuEnabled('navi.xmascollections'): self.addDirectoryItem('Christmas Collections', 'collections&url=%s&folderName=%s' % (quote_plus(self.tmdb_link % '32770'), 'Christmas Collection'), 'boxsets.png', 'DefaultVideoPlaylists.png')
+		self.addDirectoryItem('DC Comics', 'collections&url=%s&folderName=%s' % (quote_plus(self.tmdb_link % '32799'), 'DC Comics'), 'dc-comics.png', 'DefaultVideoPlaylists.png')
+		self.addDirectoryItem('Marvel Comics', 'collections&url=%s&folderName=%s' % (quote_plus(self.tmdb_link % '32793'), 'Marvel Comics'), 'marvel-comics.png', 'DefaultVideoPlaylists.png')
+		self.addDirectoryItem('Superheroes', 'collections_Superhero&folderName=%s' % 'Superheroes', 'collectionsuperhero.png', 'DefaultVideoPlaylists.png')
+		self.addDirectoryItem('Kids Collections', 'collections_Kids&folderName=%s' % 'Kids Collections', 'collectionkids.png', 'DefaultVideoPlaylists.png')
+		self.addDirectoryItem('Search TMDb Collections', 'collections_Search&folderName=%s' % 'Search TMDb Collections', 'search.png', 'DefaultAddonsSearch.png')
+		if self.useContainerTitles: control.setContainerName(folderName)
 		self.endDirectory()
 
-	def collections_Boxset(self):
+	def collections_Boxset(self, folderName=''):
+		if self.useContainerTitles: control.setContainerName(folderName)
 		self.addDirectoryItem('12 Rounds (2009-2015)', 'collections&url=%s' % quote_plus(self.tmdb_link % '13120'), 'collectionboxset.png', 'DefaultVideoPlaylists.png')
 		self.addDirectoryItem('300 (2007-2014)', 'collections&url=%s' % quote_plus(self.tmdb_link % '13132'), 'collectionboxset.png', 'DefaultVideoPlaylists.png')
 		self.addDirectoryItem('48 Hrs. (1982-1990)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33259'), 'collectionboxset.png', 'DefaultVideoPlaylists.png')
@@ -258,12 +261,14 @@ class Collections:
 		self.addDirectoryItem('Zorro (1998-2005)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33413'), 'collectionboxset.png', 'DefaultVideoPlaylists.png')
 		self.endDirectory()
 
-	def collections_martial_arts(self):
+	def collections_martial_arts(self, folderName=''):
+		if self.useContainerTitles: control.setContainerName(folderName)
 		self.addDirectoryItem('All Movies', 'collections&url=%s' % quote_plus(self.tmdb_link % '117973'), 'boxsets.png', 'DefaultVideoPlaylists.png')
 		self.addDirectoryItem('By Actors', 'collections_MartialArtsActors', 'people.png', 'DefaultVideoPlaylists.png')
 		self.endDirectory()
 
-	def collections_martial_arts_actors(self):
+	def collections_martial_arts_actors(self, folderName=''):
+		if self.useContainerTitles: control.setContainerName(folderName)
 		self.addDirectoryItem('Brandon Lee', 'collections&url=%s' % quote_plus(self.tmdb_link % '117971'), 'https://i.postimg.cc/y8yBGNsG/Brandon-Lee.jpg', 'DefaultActor.png')
 		self.addDirectoryItem('Bruce Lee', 'collections&url=%s' % quote_plus(self.tmdb_link % '118011'), 'https://i.postimg.cc/rmcfP8yf/bruce-lee-Biography.jpg', 'DefaultActor.png')
 		self.addDirectoryItem('Chuck Norris', 'collections&url=%s' % quote_plus(self.tmdb_link % '118012'), 'https://i.postimg.cc/ZKkx7bfp/Chuck-Norris.jpg', 'DefaultActor.png')
@@ -285,7 +290,8 @@ class Collections:
 		self.addDirectoryItem('Tony Jaa', 'collections&url=%s' % quote_plus(self.tmdb_link % '118031'), 'https://i.postimg.cc/Bn80pCtm/Tony-Jaa.jpg', 'DefaultActor.png')
 		self.endDirectory(content='actors')
 
-	def collections_Superhero(self):
+	def collections_Superhero(self, folderName=''):
+		if self.useContainerTitles: control.setContainerName(folderName)
 		self.addDirectoryItem('Avengers (2008-2017)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33128'), 'collectionsuperhero.png', 'DefaultVideoPlaylists.png')
 		self.addDirectoryItem('Batman (1989-2016)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33129'), 'collectionsuperhero.png', 'DefaultVideoPlaylists.png')
 		self.addDirectoryItem('Captain America (2011-2016)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33130'), 'collectionsuperhero.png', 'DefaultVideoPlaylists.png')
@@ -302,13 +308,15 @@ class Collections:
 		self.addDirectoryItem('X-Men (2000-2016)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33137'), 'collectionsuperhero.png', 'DefaultVideoPlaylists.png')
 		self.endDirectory()
 
-	def collections_Kids(self):
+	def collections_Kids(self, folderName=''):
+		if self.useContainerTitles: control.setContainerName(folderName)
 		self.addDirectoryItem('Disney Collection', 'collections&url=%s' % quote_plus(self.tmdb_link % '32800'), 'collectiondisney.png', 'DefaultVideoPlaylists.png')
 		self.addDirectoryItem('Kids Boxset Collection', 'collections_BoxsetKids', 'collectionkidsboxset.png', 'DefaultVideoPlaylists.png')
 		self.addDirectoryItem('Kids Movie Collection', 'collections&url=%s' % quote_plus(self.tmdb_link % '32802'), 'collectionkids.png', 'DefaultVideoPlaylists.png')
 		self.endDirectory()
 
-	def collections_BoxsetKids(self):
+	def collections_BoxsetKids(self, folderName=''):
+		if self.useContainerTitles: control.setContainerName(folderName)
 		self.addDirectoryItem('101 Dalmations (1961-2003)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33182'), 'collectionkidsboxset.png', 'DefaultVideoPlaylists.png')
 		self.addDirectoryItem('Addams Family (1991-1998)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33183'), 'collectionkidsboxset.png', 'DefaultVideoPlaylists.png')
 		self.addDirectoryItem('Aladdin (1992-1996)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33184'), 'collectionkidsboxset.png', 'DefaultVideoPlaylists.png')
@@ -376,13 +384,14 @@ class Collections:
 		self.addDirectoryItem('Wizard of Oz (1939-2013)', 'collections&url=%s' % quote_plus(self.tmdb_link % '33258'), 'collectionkidsboxset.png', 'DefaultVideoPlaylists.png')
 		self.endDirectory()
 
-	def get(self, url):
+	def get(self, url, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
 			except: pass
 			try: u = urlparse(url).netloc.lower()
 			except: pass
+			if self.useContainerTitles: control.setContainerName(folderName)
 			if u in self.tmdb_link and any(value in url for value in ('/list/', '/collection/')):
 				self.list = tmdb_indexer().tmdb_collections_list(url) # caching handled in list indexer
 				if '/collection/' in url: self.sort() # TMDb "/collections/" does not support request sort
@@ -409,9 +418,10 @@ class Collections:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def search(self): # update self.addDirectoryItem() to work for methods and not import navigator
+	def search(self, folderName=''): # update self.addDirectoryItem() to work for methods and not import navigator
 		from resources.lib.menus import navigator
 		navigator.Navigator().addDirectoryItem(getLS(32603) % self.highlight_color, 'collections_Searchnew', 'search.png', 'DefaultAddonsSearch.png', isFolder=False)
+		if self.useContainerTitles: control.setContainerName(folderName)
 		from sqlite3 import dbapi2 as database
 		try:
 			if not control.existsPath(control.dataPath): control.makeFile(control.dataPath)

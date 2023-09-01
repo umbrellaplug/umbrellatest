@@ -130,8 +130,9 @@ class TVshows:
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
 		self.showCounts = getSetting('tvshows.episodecount') == 'true'
+		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 
-	def get(self, url, idx=True, create_directory=True):
+	def get(self, url, idx=True, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -139,22 +140,22 @@ class TVshows:
 			try: u = urlparse(url).netloc.lower()
 			except: pass
 			if url == 'traktbasedonrecent':
-				return self.trakt_based_on_recent()
+				return self.trakt_based_on_recent(folderName=folderName)
 			if url == 'traktbasedonsimilar':
-				return self.trakt_based_on_similar()
+				return self.trakt_based_on_similar(folderName=folderName)
 			if url == 'tmdbrecentday':
-				return self.tmdb_trending_recentday()
+				return self.tmdb_trending_recentday(folderName=folderName)
 			if url == 'tmdbrecentweek':
-				return self.tmdb_trending_recentweek()
+				return self.tmdb_trending_recentweek(folderName=folderName)
 			elif u in self.search_tmdb_link and url != 'tmdbrecentday' and url != 'tmdbrecentweek':
 				return self.getTMDb(url)
 			elif u in self.simkltrendingweek_link or u in self.simkltrendingmonth_link or u in self.simkltrendingtoday_link:
-				return self.getSimkl(url)
+				return self.getSimkl(url, folderName=folderName)
 			if u in self.trakt_link and '/users/' in url:
 				try:
 					if '/users/me/' not in url: raise Exception()
-					if '/collection/' in url: return self.traktCollection(url)
-					if '/watchlist/' in url: return self.traktWatchlist(url)
+					if '/collection/' in url: return self.traktCollection(url, folderName=folderName)
+					if '/watchlist/' in url: return self.traktWatchlist(url, folderName=folderName)
 					if trakt.getActivity() > cache.timeout(self.trakt_list, url, self.trakt_user):
 						self.list = cache.get(self.trakt_list, 0, url, self.trakt_user)
 					else: self.list = cache.get(self.trakt_list, 720, url, self.trakt_user)
@@ -184,7 +185,7 @@ class TVshows:
 				self.list = self.mdb_list_items(url)
 				if idx: self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.tvshowDirectory(self.list)
+			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -192,18 +193,18 @@ class TVshows:
 			if not self.list:
 				control.hide()
 				if self.notifications: control.notification(title=32002, message=33049)
-	def getMBDTopLists(self, create_directory=True):
+	def getMBDTopLists(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			self.list = cache.get(self.mbd_top_lists, 6)
 			#self.list = self.mbd_top_lists()
 			if self.list is None: self.list = []
-			if create_directory: self.addDirectory(self.list)
+			if create_directory: self.addDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
-	def getTMDb(self, url, create_directory=True):
+	def getTMDb(self, url, create_directory=True, folderName='Umbrella'):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -215,7 +216,7 @@ class TVshows:
 			elif u in self.tmdb_link and not '/list/' in url:
 				self.list = tmdb_indexer().tmdb_list(url) # caching handled in list indexer
 			if self.list is None: self.list = []
-			if create_directory: self.tvshowDirectory(self.list)
+			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -224,7 +225,7 @@ class TVshows:
 				control.hide()
 				if self.notifications: control.notification(title=32002, message=33049)
     
-	def getSimkl(self, url, create_directory=True):
+	def getSimkl(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -237,7 +238,7 @@ class TVshows:
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
-			if create_directory: self.tvshowDirectory(self.list)
+			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -246,7 +247,7 @@ class TVshows:
 				control.hide()
 				if self.notifications: control.notification(title=32002, message=33049)
 
-	def getTVmaze(self, url, idx=True):
+	def getTVmaze(self, url, idx=True, folderName=''):
 		from resources.lib.indexers import tvmaze
 		self.list = []
 		try:
@@ -255,7 +256,7 @@ class TVshows:
 			self.list = cache.get(tvmaze.TVshows().tvmaze_list, 168, url)
 			# if idx: self.worker() ## TVMaze has it's own full list builder.
 			if self.list is None: self.list = []
-			if idx: self.tvshowDirectory(self.list)
+			if idx: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -264,7 +265,7 @@ class TVshows:
 				control.hide()
 				if self.notifications: control.notification(title=32002, message=33049)
 
-	def getTraktPublicLists(self, url, create_directory=True):
+	def getTraktPublicLists(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -278,13 +279,13 @@ class TVshows:
 			else:
 				self.list = cache.get(self.trakt_public_list, self.trakt_hours, url) #trakt other
 			if self.list is None: self.list = []
-			if create_directory: self.addDirectory(self.list)
+			if create_directory: self.addDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 	
-	def trakt_based_on_recent(self, create_directory=True):
+	def trakt_based_on_recent(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/history/shows?limit=20&page=1'
@@ -296,21 +297,21 @@ class TVshows:
 			self.list = tmdb_indexer().tmdb_list(url)
 			if self.useContainerTitles:
 				try: 
-					control.setContainerName(getLS(40257)+' '+item.get('title'))
+					folderName=getLS(40257)+' '+item.get('title')
 					control.setHomeWindowProperty('umbrella.tvrecent', str(getLS(40257)+' '+item.get('title')))
 				except: pass
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.tvshowDirectory(self.list)
+			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 			return
 
-	def trakt_based_on_similar(self, create_directory=True):
+	def trakt_based_on_similar(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/history/shows?limit=20&page=1'
@@ -322,21 +323,21 @@ class TVshows:
 			self.list = tmdb_indexer().tmdb_list(url)
 			if self.useContainerTitles:
 				try: 
-					control.setContainerName(getLS(40259)+' '+item.get('title'))
+					folderName=getLS(40259)+' '+item.get('title')
 					control.setHomeWindowProperty('umbrella.tvsimilar', str(getLS(40257)+' '+item.get('title')))
 				except: pass
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.tvshowDirectory(self.list)
+			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 			return self.list
 
-	def tmdb_trending_recentday(self, create_directory=True):
+	def tmdb_trending_recentday(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			url = self.tmdb_recentday
@@ -346,14 +347,14 @@ class TVshows:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.tvshowDirectory(self.list)
+			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 			return
 
-	def tmdb_trending_recentweek(self, create_directory=True):
+	def tmdb_trending_recentweek(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			url = self.tmdb_recentweek
@@ -363,7 +364,7 @@ class TVshows:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.tvshowDirectory(self.list)
+			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -511,9 +512,10 @@ class TVshows:
 		if sort == 2: sort_string = sort_string + '&vote_count.gte=500'
 		return sort_string
 
-	def search(self):
+	def search(self, folderName=''):
 		from resources.lib.menus import navigator
 		navigator.Navigator().addDirectoryItem(getLS(32603) % self.highlight_color, 'tvSearchnew', 'search.png', 'DefaultAddonsSearch.png', isFolder=False)
+		if self.useContainerTitles: control.setContainerName(folderName)
 		from sqlite3 import dbapi2 as database
 		try:
 			if not control.existsPath(control.dataPath): control.makeFile(control.dataPath)
@@ -573,7 +575,7 @@ class TVshows:
 			url = self.search_tmdb_link % ('%s', quote_plus(name))
 		self.get(url)
 
-	def person(self):
+	def person(self, folderName=''):
 		k = control.keyboard('', getLS(32010))
 		k.doModal()
 		q = k.getText().strip() if k.isConfirmed() else None
@@ -582,16 +584,16 @@ class TVshows:
 		control.closeAll()
 		control.execute('ActivateWindow(Videos,plugin://plugin.video.umbrella/?action=tvPersons&url=%s,return)' % (quote_plus(url)))
 
-	def persons(self, url):
+	def persons(self, url, folderName=''):
 		if url is None: self.list = cache.get(self.imdb_person_list, 24, self.personlist_link)
 		else: self.list = cache.get(self.imdb_person_list, 1, url)
 		if self.list is None: self.list = []
 		if self.list:
 			for i in range(0, len(self.list)): self.list[i].update({'content': 'actors', 'icon': 'DefaultActor.png', 'action': 'tvshows'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def genres(self, url):
+	def genres(self, url, folderName=''):
 		try: url = getattr(self, url + '_link')
 		except: pass
 		genres = [
@@ -606,24 +608,24 @@ class TVshows:
 			if self.tmdb_link in url:
 				try: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % ('%s', i[3]), 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tmdbTvshows'})
 				except: pass
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def networks(self):
+	def networks(self, folderName=''):
 		networks = tmdb_indexer().get_networks()
 		for i in networks:
 			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def originals(self):
+	def originals(self, folderName=''):
 		originals = tmdb_indexer().get_originals()
 		for i in originals:
 			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def languages(self):
+	def languages(self, folderName=''):
 		languages = [
 			('Arabic', 'ar'), ('Bosnian', 'bs'), ('Bulgarian', 'bg'), ('Chinese', 'zh'), ('Croatian', 'hr'), ('Dutch', 'nl'), ('English', 'en'), ('Finnish', 'fi'),
 			('French', 'fr'), ('German', 'de'), ('Greek', 'el'), ('Hebrew', 'he'), ('Hindi ', 'hi'), ('Hungarian', 'hu'), ('Icelandic', 'is'), ('Italian', 'it'),
@@ -631,10 +633,10 @@ class TVshows:
 			('Romanian', 'ro'), ('Russian', 'ru'), ('Serbian', 'sr'), ('Spanish', 'es'), ('Swedish', 'sv'), ('Turkish', 'tr'), ('Ukrainian', 'uk')]
 		for i in languages:
 			self.list.append({'content': 'countries', 'name': str(i[0]), 'url': self.language_link % i[1], 'image': 'languages.png', 'icon': 'DefaultAddonLanguage.png', 'action': 'tvshows'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def certifications(self):
+	def certifications(self, folderName=''):
 		certificates = [
 			('Child Audience (TV-Y)', 'US%3ATV-Y'),
 			('Young Audience (TV-Y7)', 'US%3ATV-Y7'),
@@ -644,17 +646,17 @@ class TVshows:
 			('Mature Audience (TV-MA)', 'US%3ATV-MA')]
 		for i in certificates:
 			self.list.append({'content': 'tags', 'name': str(i[0]), 'url': self.certification_link % i[1], 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'tvshows'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def years(self, url):
+	def years(self, url, folderName=''):
 		try: url = getattr(self, url + '_link')
 		except: pass
 		year = (self.date_time.strftime('%Y'))
 		for i in range(int(year)-0, 1900, -1):
 			if self.imdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % (str(i), str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tvshows'})
 			if self.tmdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % ('%s', str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tmdbTvshows'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
 	def tvshowsListToLibrary(self, url):
@@ -682,7 +684,7 @@ class TVshows:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def userlists(self):
+	def userlists(self, folderName=''):
 		userlists = []
 		try:
 			if not self.traktCredentials: raise Exception()
@@ -727,10 +729,10 @@ class TVshows:
 			self.list.insert(0, {'name': getLS(32033), 'url': self.imdbwatchlist_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'})
 		if self.imdb_user != '': # imdb My Ratings
 			self.list.insert(0, {'name': getLS(32025), 'url': self.imdbratings_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'})
-		self.addDirectory(self.list)
+		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def traktCollection(self, url, create_directory=True):
+	def traktCollection(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try:
@@ -753,13 +755,13 @@ class TVshows:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.tvshowDirectory(self.list)
+			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def traktWatchlist(self, url, create_directory=True):
+	def traktWatchlist(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try:
@@ -782,13 +784,13 @@ class TVshows:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
-			if create_directory: self.tvshowDirectory(self.list)
+			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def traktLlikedlists(self, create_directory=True):
+	def traktLlikedlists(self, create_directory=True, folderName=''):
 		items = traktsync.fetch_liked_list('', True)
 		showOwnerShow = getSetting('trakt.lists.showowner') == 'true'
 		for item in items:
@@ -811,7 +813,7 @@ class TVshows:
 				from resources.lib.modules import log_utils
 				log_utils.error()
 		self.list = sorted(self.list, key=lambda k: re.sub(r'(^the |^a |^an )', '', k['name'].lower()))
-		if create_directory: self.addDirectory(self.list, queue=True)
+		if create_directory: self.addDirectory(self.list, queue=True, folderName=folderName)
 		return self.list
 
 	def trakt_list(self, url, user):
@@ -915,7 +917,7 @@ class TVshows:
 		for i in range(len(self.list)): self.list[i]['next'] = next
 		self.worker()
 		if self.list is None: self.list = []
-		if create_directory: self.tvshowDirectory(self.list)
+		if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 		return self.list
 
 	def trakt_user_lists(self, url, user):
@@ -1007,7 +1009,7 @@ class TVshows:
 				from resources.lib.modules import log_utils
 				log_utils.error()
 		return self.list
-	def mdb_list_items(self, url, create_directory=True):
+	def mdb_list_items(self, url, create_directory=True, folderName=''):
 		self.list = []
 		q = dict(parse_qsl(urlsplit(url).query))
 		index = int(q['page']) - 1
@@ -1047,16 +1049,16 @@ class TVshows:
 		for i in range(len(self.list)): self.list[i]['next'] = next
 		self.worker()
 		if self.list is None: self.list = []
-		if create_directory: self.tvshowDirectory(self.list)
+		if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 		return self.list
-	def getMDBUserList(self, create_directory=True): 
+	def getMDBUserList(self, create_directory=True, folderName=''): 
 		self.list = []
 		try:
 			#self.list = cache.get(self.mbd_top_lists, 0)
 			self.list = cache.get(self.mbd_user_lists, self.mdblist_hours)
 			#self.list = self.mbd_user_lists()
 			if self.list is None: self.list = []
-			if create_directory: self.addDirectory(self.list)
+			if create_directory: self.addDirectory(self.list, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -1193,14 +1195,14 @@ class TVshows:
 		list = sorted(list, key=lambda k: re.sub(r'(^the |^a |^an )', '', k['name'].lower()))
 		return list
 
-	def tvshow_progress(self, url):
+	def tvshow_progress(self, url, folderName=''):
 		self.list = []
 		try:
 			cache.get(self.trakt_tvshow_progress, 0)
 			self.sort(type='progress')
 			if self.list is None: self.list = []
 			hasNext = False
-			self.tvshowDirectory(self.list, next=hasNext, isProgress=True)
+			self.tvshowDirectory(self.list, next=hasNext, isProgress=True, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -1237,14 +1239,14 @@ class TVshows:
 			log_utils.error()
 		return self.list
 
-	def tvshow_watched(self, url):
+	def tvshow_watched(self, url, folderName=''):
 		self.list = []
 		try:
 			cache.get(self.trakt_tvshow_watched, 0)
 			self.sort(type='watched')
 			if self.list is None: self.list = []
 			hasNext = False
-			self.tvshowDirectory(self.list, next=hasNext, isProgress=False, isWatched=True)
+			self.tvshowDirectory(self.list, next=hasNext, isProgress=False, isWatched=True, folderName=folderName)
 			return self.list
 		except:
 			from resources.lib.modules import log_utils
@@ -1357,8 +1359,9 @@ class TVshows:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def tvshowDirectory(self, items, next=True, isProgress=False, isWatched=False):
+	def tvshowDirectory(self, items, next=True, isProgress=False, isWatched=False, folderName='Umbrella'):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
+		if self.useContainerTitles: control.setContainerName(folderName)
 		if getSetting('trakt.directProgress.scrape') == 'true' and getSetting('enable.playnext') == 'true':
 			pass
 		else:
@@ -1542,11 +1545,12 @@ class TVshows:
 		control.directory(syshandle, cacheToDisc=False) # disable cacheToDisc so unwatched counts loads fresh data counts if changes made
 		views.setView('tvshows', {'skin.estuary': 55, 'skin.confluence': 500})
 
-	def addDirectory(self, items, queue=False):
+	def addDirectory(self, items, queue=False, folderName='Umbrella'):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 		control.playlist.clear()
 		if not items: # with reuselanguageinvoker on an empty directory must be loaded, do not use sys.exit()
 			content = '' ; control.hide() ; control.notification(title=32002, message=33049)
+		if self.useContainerTitles: control.setContainerName(folderName)
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		addonThumb = control.addonThumb()
 		artPath = control.artPath()

@@ -422,11 +422,6 @@
 				<setting id="enable.containerTitles" type="boolean" label="40258" help="">
 					<level>0</level>
 					<default>true</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
 					<control type="toggle"/>
 				</setting>
 				
