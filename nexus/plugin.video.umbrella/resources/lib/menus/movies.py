@@ -182,7 +182,7 @@ class Movies:
 						self.list = cache.get(self.trakt_list, 0, url, self.trakt_user)
 					else: self.list = cache.get(self.trakt_list, 720, url, self.trakt_user)
 				except:
-					self.list = self.trakt_userList(url)
+					self.list = self.trakt_userList(url, create_directory=False)
 				if isTraktHistory and self.list:
 					for i in range(len(self.list)): self.list[i]['traktHistory'] = True
 				if idx: self.worker()
@@ -748,7 +748,7 @@ class Movies:
 		else: self.list = cache.get(self.imdb_person_list, 1, url)
 		if self.list is None: self.list = []
 		if self.list:
-			for i in range(0, len(self.list)): self.list[i].update({'content': 'actors', 'icon': 'DefaultActor.png', 'action': 'movies'})
+			for i in range(0, len(self.list)): self.list[i].update({'content': 'actors', 'icon': 'DefaultActor.png', 'action': 'movies&folderName=%s' % self.list[i]['name']})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -764,9 +764,9 @@ class Movies:
 			('Mystery', 'mystery', True, '9648'), ('Romance', 'romance', True, '10749'), ('Science Fiction', 'sci-fi', True, '878'),
 			('Sport', 'sport', True), ('Thriller', 'thriller', True, '53'), ('War', 'war', True, '10752'), ('Western', 'western', True, '37')]
 		for i in genres:
-			if self.imdb_link in url: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % i[1] if i[2] else self.keyword_link % i[1], 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'movies'})
+			if self.imdb_link in url: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % i[1] if i[2] else self.keyword_link % i[1], 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'movies&folderName=%s' % cleangenre.lang(i[0], self.lang)})
 			if self.tmdb_link in url:
-				try: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % ('%s', i[3]), 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tmdbmovies'})
+				try: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % ('%s', i[3]), 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tmdbmovies&folderName=%s' % cleangenre.lang(i[0], self.lang)})
 				except: pass
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
@@ -778,7 +778,7 @@ class Movies:
 			('Norwegian', 'no'), ('Persian', 'fa'), ('Polish', 'pl'), ('Portuguese', 'pt'), ('Punjabi', 'pa'), ('Romanian', 'ro'),
 			('Russian', 'ru'), ('Serbian', 'sr'), ('Slovenian', 'sl'), ('Spanish', 'es'), ('Swedish', 'sv'), ('Turkish', 'tr'), ('Ukrainian', 'uk')]
 		for i in languages:
-			self.list.append({'content': 'countries', 'name': str(i[0]), 'url': self.language_link % i[1], 'image': 'languages.png', 'icon': 'DefaultAddonLanguage.png', 'action': 'movies'})
+			self.list.append({'content': 'countries', 'name': str(i[0]), 'url': self.language_link % i[1], 'image': 'languages.png', 'icon': 'DefaultAddonLanguage.png', 'action': 'movies&folderName=%s' % str(i[0])})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -792,8 +792,8 @@ class Movies:
 			('Parental Restriction (R)', 'US%3AR', 'R'),
 			('Mature Audience (NC-17)', 'US%3ANC-17', 'NC-17')]
 		for i in certificates:
-			if self.imdb_link in url: self.list.append({'content': 'tags', 'name': str(i[0]), 'url': url % i[1], 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'movies'})
-			if self.tmdb_link in url: self.list.append({'content': 'tags', 'name': str(i[0]), 'url': url % ('%s', i[2]), 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'tmdbmovies'})
+			if self.imdb_link in url: self.list.append({'content': 'tags', 'name': str(i[0]), 'url': url % i[1], 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'movies&folderName=%s' % str(i[0])})
+			if self.tmdb_link in url: self.list.append({'content': 'tags', 'name': str(i[0]), 'url': url % ('%s', i[2]), 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'tmdbmovies&folderName=%s' % str(i[0])})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -802,8 +802,8 @@ class Movies:
 		except: pass
 		year = (self.date_time.strftime('%Y'))
 		for i in range(int(year)-0, 1900, -1):
-			if self.imdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % (str(i), str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'movies'})
-			if self.tmdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % ('%s', str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tmdbmovies'})
+			if self.imdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % (str(i), str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'movies&folderName=%s'% str(i)})
+			if self.tmdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % ('%s', str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tmdbmovies&folderName=%s' % str(i)})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -858,7 +858,7 @@ class Movies:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def userlists(self, folderName=''):
+	def userlists(self, create_directory=False, folderName=''):
 		userlists = []
 		try:
 			if not self.traktCredentials: raise Exception()
@@ -902,10 +902,10 @@ class Movies:
 			url = self.tmdb_link + '/3/account/{account_id}/watchlist/movies?api_key=%s&session_id=%s&sort_by=created_at.asc&page=1' % ('%s', self.tmdb_session_id)
 			self.list.insert(0, {'name': getLS(32033), 'url': url, 'image': 'tmdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tmdbmovies'})
 		if self.imdb_user != '': # imdb Watchlist
-			self.list.insert(0, {'name': getLS(32033), 'url': self.imdbwatchlist_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'})
+			self.list.insert(0, {'name': getLS(32033), 'url': self.imdbwatchlist_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies&folderName=%s' % getLS(32033)})
 		if self.imdb_user != '': # imdb My Ratings
-			self.list.insert(0, {'name': getLS(32025), 'url': self.imdbratings_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'})
-		self.addDirectory(self.list, queue=True, folderName=folderName)
+			self.list.insert(0, {'name': getLS(32025), 'url': self.imdbratings_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies&folderName=%s' % getLS(32025)})
+		if create_directory: self.addDirectory(self.list, queue=True, folderName=folderName)
 		return self.list
 
 	def traktCollection(self, url, create_directory=True, folderName=''):
@@ -975,6 +975,7 @@ class Movies:
 				if item['content_type'] == 'mixed':
 					listAction = 'mixed'
 				list_name = item['list_name']
+				listAction = listAction+'&folderName=%s' % list_name
 				list_owner = item['list_owner']
 				list_owner_slug = item['list_owner_slug']
 				list_id = item['trakt_id']
@@ -1148,6 +1149,7 @@ class Movies:
 				if item['content_type'] == 'mixed':
 					listAction = 'mixed'
 				list_name = item['list_name']
+				listAction = listAction+'&folderName=%s' % list_name
 				list_owner = item['list_owner']
 				list_owner_slug = item['list_owner_slug']
 				list_id = item['trakt_id']

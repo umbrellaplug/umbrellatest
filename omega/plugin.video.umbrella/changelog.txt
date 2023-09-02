@@ -1,4 +1,5 @@
-[B]Update - v6.6.298 - September 1st, 2023[/B]
+[B]Update - v6.6.299 - September 1st, 2023[/B]
+--[Enhancement] Added more section titles.
 --[Enhancement] Added ability to show titles on all sections.
 --[Enhancement] Changed text on resolving popups to no longer be bold.
 --[Enhancement] Added function to pass any function into to time.

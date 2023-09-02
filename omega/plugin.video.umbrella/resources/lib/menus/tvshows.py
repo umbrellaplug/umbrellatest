@@ -148,7 +148,7 @@ class TVshows:
 			if url == 'tmdbrecentweek':
 				return self.tmdb_trending_recentweek(folderName=folderName)
 			elif u in self.search_tmdb_link and url != 'tmdbrecentday' and url != 'tmdbrecentweek':
-				return self.getTMDb(url)
+				return self.getTMDb(url, folderName=folderName)
 			elif u in self.simkltrendingweek_link or u in self.simkltrendingmonth_link or u in self.simkltrendingtoday_link:
 				return self.getSimkl(url, folderName=folderName)
 			if u in self.trakt_link and '/users/' in url:
@@ -159,7 +159,7 @@ class TVshows:
 					if trakt.getActivity() > cache.timeout(self.trakt_list, url, self.trakt_user):
 						self.list = cache.get(self.trakt_list, 0, url, self.trakt_user)
 					else: self.list = cache.get(self.trakt_list, 720, url, self.trakt_user)
-				except: self.list = self.trakt_userList(url)
+				except: self.list = self.trakt_userList(url, create_directory=False)
 				if idx: self.worker()
 				self.sort()
 			elif u in self.trakt_link and self.search_link in url:
@@ -204,7 +204,7 @@ class TVshows:
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
-	def getTMDb(self, url, create_directory=True, folderName='Umbrella'):
+	def getTMDb(self, url, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
@@ -684,7 +684,7 @@ class TVshows:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def userlists(self, folderName=''):
+	def userlists(self, create_directory=False, folderName=''):
 		userlists = []
 		try:
 			if not self.traktCredentials: raise Exception()
@@ -726,10 +726,10 @@ class TVshows:
 			url = self.tmdb_link + '/3/account/{account_id}/watchlist/tv?api_key=%s&session_id=%s&sort_by=created_at.asc&page=1' % ('%s', self.tmdb_session_id)
 			self.list.insert(0, {'name': getLS(32033), 'url': url, 'image': 'tmdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tmdbTvshows'})
 		if self.imdb_user != '': # imdb Watchlist
-			self.list.insert(0, {'name': getLS(32033), 'url': self.imdbwatchlist_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'})
+			self.list.insert(0, {'name': getLS(32033), 'url': self.imdbwatchlist_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows&folderName=%s' % getLS(32033)})
 		if self.imdb_user != '': # imdb My Ratings
-			self.list.insert(0, {'name': getLS(32025), 'url': self.imdbratings_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'})
-		self.addDirectory(self.list, folderName=folderName)
+			self.list.insert(0, {'name': getLS(32025), 'url': self.imdbratings_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows&folderName=%s' % getLS(32025)})
+		if create_directory: self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
 	def traktCollection(self, url, create_directory=True, folderName=''):
@@ -929,6 +929,7 @@ class TVshows:
 				if item['content_type'] == 'mixed':
 					listAction = 'mixed'
 				list_name = item['list_name']
+				listAction = listAction+'&folderName=%s' % list_name
 				list_owner = item['list_owner']
 				list_owner_slug = item['list_owner_slug']
 				list_id = item['trakt_id']

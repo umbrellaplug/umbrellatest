@@ -64,7 +64,7 @@ def router(argv2):
 		movies.Movies().getSimkl(url, folderName=folderName)
 	elif action == 'mixed' and 'movies' in url:
 		from resources.lib.menus import movies
-		movies.Movies().get(url)
+		movies.Movies().get(url, folderName=folderName)
 	elif action == 'moviePage':
 		from resources.lib.menus import movies
 		movies.Movies().get(url)
@@ -107,7 +107,7 @@ def router(argv2):
 		movies.Movies().unfinished(url, folderName=folderName)
 	elif action == 'movieUserlists':
 		from resources.lib.menus import movies
-		movies.Movies().userlists(folderName=folderName)
+		movies.Movies().userlists(folderName=folderName, create_directory=True)
 	elif action == 'traktAuth':
 		from resources.lib.modules import trakt as Trakt
 		Trakt.traktAuth(fromSettings=1)
@@ -174,7 +174,7 @@ def router(argv2):
 			collections.Collections().collections_martial_arts(folderName=folderName)
 		elif action == 'collections_MartialArtsActors':
 			from resources.lib.menus import collections
-			collections.Collections().collections_martial_arts_actors()
+			collections.Collections().collections_martial_arts_actors(folderName=folderName)
 		elif action == 'collections_Search':
 			from resources.lib.menus import collections
 			collections.Collections().search(folderName=folderName)
@@ -209,7 +209,7 @@ def router(argv2):
 		tvshows.TVshows().get(url, folderName=folderName)
 	elif action == 'mixed' and 'movies' not in url:
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().get(url)
+		tvshows.TVshows().get(url, folderName=folderName)
 	elif action == 'tvshowPage':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().get(url)
@@ -263,7 +263,7 @@ def router(argv2):
 		tvshows.TVshows().persons(url)
 	elif action == 'tvUserlists':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().userlists(folderName=folderName)
+		tvshows.TVshows().userlists(folderName=folderName, create_directory=True)
 	elif action == 'tvOriginals':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().originals(folderName)
