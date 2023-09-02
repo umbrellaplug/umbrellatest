@@ -67,7 +67,7 @@ def router(argv2):
 		movies.Movies().get(url, folderName=folderName)
 	elif action == 'moviePage':
 		from resources.lib.menus import movies
-		movies.Movies().get(url)
+		movies.Movies().get(url, folderName=folderName)
 	elif action == 'tmdbmovies':
 		from resources.lib.menus import movies
 		movies.Movies().getTMDb(url, folderName=folderName)
@@ -212,7 +212,7 @@ def router(argv2):
 		tvshows.TVshows().get(url, folderName=folderName)
 	elif action == 'tvshowPage':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().get(url)
+		tvshows.TVshows().get(url, folderName=folderName)
 	elif action == 'mdbTopListTV':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().getMBDTopLists(folderName=folderName)
@@ -224,7 +224,7 @@ def router(argv2):
 		tvshows.TVshows().getSimkl(url, folderName=folderName)
 	elif action == 'tmdbTvshowPage':
 		from resources.lib.menus import tvshows
-		tvshows.TVshows().getTMDb(url)
+		tvshows.TVshows().getTMDb(url, folderName=folderName)
 	elif action == 'tvmazeTvshows':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().getTVmaze(url)

@@ -182,7 +182,7 @@ class TVshows:
 				self.list = cache.get(self.imdb_list, self.imdblist_hours, url)
 				if idx: self.worker()
 			elif u in self.mbdlist_list_items:
-				self.list = self.mdb_list_items(url)
+				self.list = self.mdb_list_items(url, create_directory=False)
 				if idx: self.worker()
 			if self.list is None: self.list = []
 			if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
@@ -589,7 +589,7 @@ class TVshows:
 		else: self.list = cache.get(self.imdb_person_list, 1, url)
 		if self.list is None: self.list = []
 		if self.list:
-			for i in range(0, len(self.list)): self.list[i].update({'content': 'actors', 'icon': 'DefaultActor.png', 'action': 'tvshows'})
+			for i in range(0, len(self.list)): self.list[i].update({'content': 'actors', 'icon': 'DefaultActor.png', 'action': 'tvshows&folderName=%s' % self.list[i]['name']})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -604,9 +604,9 @@ class TVshows:
 			('News', 'news', True, '10763'), ('Reality', 'reality_tv', True, '10764'), ('Romance', 'romance', True), ('Science Fiction', 'sci_fi', True, '10765'),
 			('Sport', 'sport', True), ('Talk-Show', 'talk_show', True, '10767'), ('Thriller', 'thriller', True), ('War', 'war', True, '10768'), ('Western', 'western', True, '37')]
 		for i in genres:
-			if self.imdb_link in url: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % i[1] if i[2] else self.keyword_link % i[1], 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tvshows'})
+			if self.imdb_link in url: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % i[1] if i[2] else self.keyword_link % i[1], 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tvshows&folderName=%s' % cleangenre.lang(i[0], self.lang)})
 			if self.tmdb_link in url:
-				try: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % ('%s', i[3]), 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tmdbTvshows'})
+				try: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % ('%s', i[3]), 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tmdbTvshows&folderName=%s' % cleangenre.lang(i[0], self.lang)})
 				except: pass
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
@@ -614,14 +614,14 @@ class TVshows:
 	def networks(self, folderName=''):
 		networks = tmdb_indexer().get_networks()
 		for i in networks:
-			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows'})
+			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows&folderName=%s' % i[0]})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
 	def originals(self, folderName=''):
 		originals = tmdb_indexer().get_originals()
 		for i in originals:
-			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows'})
+			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows&folderName=%s' % i[0]})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -632,7 +632,7 @@ class TVshows:
 			('Japanese', 'ja'), ('Korean', 'ko'), ('Norwegian', 'no'), ('Persian', 'fa'), ('Polish', 'pl'), ('Portuguese', 'pt'), ('Punjabi', 'pa'),
 			('Romanian', 'ro'), ('Russian', 'ru'), ('Serbian', 'sr'), ('Spanish', 'es'), ('Swedish', 'sv'), ('Turkish', 'tr'), ('Ukrainian', 'uk')]
 		for i in languages:
-			self.list.append({'content': 'countries', 'name': str(i[0]), 'url': self.language_link % i[1], 'image': 'languages.png', 'icon': 'DefaultAddonLanguage.png', 'action': 'tvshows'})
+			self.list.append({'content': 'countries', 'name': str(i[0]), 'url': self.language_link % i[1], 'image': 'languages.png', 'icon': 'DefaultAddonLanguage.png', 'action': 'tvshows&folderName=%s' % str(i[0])})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -645,7 +645,7 @@ class TVshows:
 			('Youth Audience (TV-14)', 'US%3ATV-14'),
 			('Mature Audience (TV-MA)', 'US%3ATV-MA')]
 		for i in certificates:
-			self.list.append({'content': 'tags', 'name': str(i[0]), 'url': self.certification_link % i[1], 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'tvshows'})
+			self.list.append({'content': 'tags', 'name': str(i[0]), 'url': self.certification_link % i[1], 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'tvshows&folderName=%s' % str(i[0])})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -654,8 +654,8 @@ class TVshows:
 		except: pass
 		year = (self.date_time.strftime('%Y'))
 		for i in range(int(year)-0, 1900, -1):
-			if self.imdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % (str(i), str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tvshows'})
-			if self.tmdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % ('%s', str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tmdbTvshows'})
+			if self.imdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % (str(i), str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tvshows&folderName=%s' % str(i)})
+			if self.tmdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % ('%s', str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tmdbTvshows&folderName=%s' % str(i)})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -984,7 +984,7 @@ class TVshows:
 					label = '%s - [COLOR %s]%s[/COLOR]' % (list_name, self.highlight_color, list_owner)
 				else:
 					label = '%s' % (list_name)
-				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'trakt.png', 'icon': 'trakt.png', 'action': 'tvshows'})
+				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'trakt.png', 'icon': 'trakt.png', 'action': 'tvshows&folderName=%s' % list_name})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -1005,7 +1005,7 @@ class TVshows:
 				list_count = item.get('params', {}).get('list_count', '')
 				list_url = self.mbdlist_list_items % (list_id)
 				label = '%s - %s shows' % (list_name, list_count)
-				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'tvshows'})
+				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'tvshows&folderName=%s' % list_name})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -1527,13 +1527,13 @@ class TVshows:
 				nextMenu = '[COLOR skyblue]' + nextMenu + page + '[/COLOR]'
 				u = urlparse(url).netloc.lower()
 				if u in self.imdb_link or u in self.trakt_link:
-					url = '%s?action=tvshowPage&url=%s' % (sysaddon, quote_plus(url))
+					url = '%s?action=tvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
 				elif u in self.tmdb_link:
-					url = '%s?action=tmdbTvshowPage&url=%s' % (sysaddon, quote_plus(url))
+					url = '%s?action=tmdbTvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
 				elif u in self.tvmaze_link:
-					url = '%s?action=tvmazeTvshowPage&url=%s' % (sysaddon, quote_plus(url))
+					url = '%s?action=tvmazeTvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
 				elif u in self.mbdlist_list_items:
-					url = '%s?action=tvshowPage&url=%s' % (sysaddon, quote_plus(url))
+					url = '%s?action=tvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
 				item = control.item(label=nextMenu, offscreen=True)
 				icon = control.addonNext()
 				item.setArt({'icon': icon, 'thumb': icon, 'poster': icon, 'banner': icon})

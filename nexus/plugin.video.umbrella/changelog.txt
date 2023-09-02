@@ -1,4 +1,6 @@
-[B]Update - v6.6.299 - September 1st, 2023[/B]
+[B]Update - v6.6.300 - September 1st, 2023[/B]
+--[Enhancement] Added list titles to sections titles.
+--[Enhancement] Updated Next button to carry over title.
 --[Enhancement] Added more section titles.
 --[Enhancement] Added ability to show titles on all sections.
 --[Enhancement] Changed text on resolving popups to no longer be bold.

@@ -207,7 +207,7 @@ class Movies:
 				else: self.list = cache.get(self.imdb_list, self.imdblist_hours, url)
 				if idx: self.worker()
 			elif u in self.mbdlist_list_items:
-				self.list = self.mdb_list_items(url)
+				self.list = self.mdb_list_items(url, create_directory=False)
 				if idx: self.worker()
 			if self.list is None: self.list = []
 			if idx and create_directory: self.movieDirectory(self.list, folderName=folderName)
@@ -240,23 +240,7 @@ class Movies:
 			if not self.list:
 				control.hide()
 				if self.notifications: control.notification(title=32001, message=33049)
-	def getTraktPublicLists(self, url, create_directory=True, folderName=''):
-		self.list = []
-		try:
-			try: url = getattr(self, url + '_link')
-			except: pass
-			if '/popular' in url:
-				self.list = cache.get(self.trakt_public_list, self.traktpopular_hours, url)
-			elif '/trending' in url:
-				self.list = cache.get(self.trakt_public_list, self.trakttrending_hours, url)
-			else:
-				self.list = cache.get(self.trakt_public_list, self.trakt_hours, url)
-			if self.list is None: self.list = []
-			if create_directory: self.addDirectory(self.list, folderName=folderName)
-			return self.list
-		except:
-			from resources.lib.modules import log_utils
-			log_utils.error()
+	
 	def getMBDTopLists(self, create_directory=True, folderName=''): 
 		self.list = []
 		try:
@@ -284,7 +268,7 @@ class Movies:
 				list_count = item.get('params', {}).get('list_count', '')
 				list_url = self.mbdlist_list_items % (list_id)
 				label = '%s - (%s)' % (list_name, list_count)
-				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'movies'})
+				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'movies&folderName=%s' % list_name})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -316,7 +300,7 @@ class Movies:
 				list_count = item.get('params', {}).get('list_count', '')
 				list_url = self.mbdlist_list_items % (list_id)
 				label = '%s - (%s)' % (list_name, list_count)
-				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'movies'})
+				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'movies&folderName=%s' % list_name})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -365,7 +349,7 @@ class Movies:
 				list_count = item.get('params', {}).get('list_count', '')
 				list_url = self.mbdlist_list_items % (list_id)
 				label = '%s - (%s)' % (list_name, list_count)
-				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'movies'})
+				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'movies&folderName=%s' % list_name})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -883,7 +867,7 @@ class Movies:
 			url = self.tmdb_link + '/3/account/{account_id}/lists?api_key=%s&language=en-US&session_id=%s&page=1' % ('%s', self.tmdb_session_id)
 			# lists = cache.get(tmdb_indexer.TMDb().userlists, 0, url)
 			lists = cache.get(tmdb_indexer().userlists, 0, url)
-			for i in range(len(lists)): lists[i].update({'image': 'tmdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tmdbmovies'})
+			for i in range(len(lists)): lists[i].update({'image': 'tmdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tmdbmovies&folderName=%s' % lists[i]['name']})
 			userlists += lists
 		except: pass
 		self.list = []
@@ -1128,6 +1112,7 @@ class Movies:
 			total_pages = len(paginated_ids)
 			self.list = paginated_ids[index]
 		try:
+
 			if int(q['limit']) != len(self.list): raise Exception()
 			if int(q['page']) == total_pages: raise Exception()
 			q.update({'page': str(int(q['page']) + 1)})
@@ -1204,7 +1189,7 @@ class Movies:
 					label = '%s - [COLOR %s]%s[/COLOR]' % (list_name, self.highlight_color, list_owner)
 				else:
 					label = '%s' % (list_name)
-				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'trakt.png', 'icon': 'trakt.png', 'action': 'movies'})
+				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'trakt.png', 'icon': 'trakt.png', 'action': 'movies&folderName=%s' % list_name})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -1325,7 +1310,7 @@ class Movies:
 				url = url.split('/list/', 1)[-1].strip('/')
 				url = self.imdblist_link % url
 				url = client.replaceHTMLCodes(url)
-				list.append({'name': name, 'url': url, 'context': url, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies'})
+				list.append({'name': name, 'url': url, 'context': url, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'movies&folderName=%' % name})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
