@@ -156,30 +156,30 @@ class TVshows:
 					if '/users/me/' not in url: raise Exception()
 					if '/collection/' in url: return self.traktCollection(url, folderName=folderName)
 					if '/watchlist/' in url: return self.traktWatchlist(url, folderName=folderName)
-					if trakt.getActivity() > cache.timeout(self.trakt_list, url, self.trakt_user):
-						self.list = cache.get(self.trakt_list, 0, url, self.trakt_user)
-					else: self.list = cache.get(self.trakt_list, 720, url, self.trakt_user)
+					if trakt.getActivity() > cache.timeout(self.trakt_list, url, self.trakt_user, folderName):
+						self.list = cache.get(self.trakt_list, 0, url, self.trakt_user, folderName)
+					else: self.list = cache.get(self.trakt_list, 720, url, self.trakt_user, folderName)
 				except: self.list = self.trakt_userList(url, create_directory=False)
 				if idx: self.worker()
 				self.sort()
 			elif u in self.trakt_link and self.search_link in url:
-				self.list = cache.get(self.trakt_list, 0, url, self.trakt_user)
+				self.list = cache.get(self.trakt_list, 0, url, self.trakt_user, folderName)
 				if idx: self.worker()
 			elif u in self.trakt_link and 'trending' in url:
 				from resources.lib.modules import log_utils
-				self.list = cache.get(self.trakt_list, self.trakttrending_hours, url, self.trakt_user) #trakt trending
+				self.list = cache.get(self.trakt_list, self.trakttrending_hours, url, self.trakt_user, folderName) #trakt trending
 				if idx: self.worker()
 			elif u in self.trakt_link:
 				from resources.lib.modules import log_utils
-				self.list = cache.get(self.trakt_list, self.trakt_hours, url, self.trakt_user) #trakt other
+				self.list = cache.get(self.trakt_list, self.trakt_hours, url, self.trakt_user, folderName) #trakt other
 				if idx: self.worker()
 			elif u in self.imdb_link and ('/user/' in url or '/list/' in url):
 				isRatinglink=True if self.imdbratings_link in url else False
-				self.list = cache.get(self.imdb_list, 0, url, isRatinglink)
+				self.list = cache.get(self.imdb_list, 0, url, isRatinglink, folderName)
 				if idx: self.worker()
 				# self.sort() # switched to request sorting for imdb
 			elif u in self.imdb_link:
-				self.list = cache.get(self.imdb_list, self.imdblist_hours, url)
+				self.list = cache.get(self.imdb_list, self.imdblist_hours, url, folderName)
 				if idx: self.worker()
 			elif u in self.mbdlist_list_items:
 				self.list = self.mdb_list_items(url, create_directory=False)
@@ -289,7 +289,7 @@ class TVshows:
 		self.list = []
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/history/shows?limit=20&page=1'
-			randomItems = self.trakt_list(historyurl, self.trakt_user)
+			randomItems = self.trakt_list(historyurl, self.trakt_use, folderName)
 			if not randomItems: return
 			import random
 			item = randomItems[random.randint(0, len(randomItems) - 1)]
@@ -315,7 +315,7 @@ class TVshows:
 		self.list = []
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/history/shows?limit=20&page=1'
-			randomItems = self.trakt_list(historyurl, self.trakt_user)
+			randomItems = self.trakt_list(historyurl, self.trakt_user, folderName)
 			if not randomItems: return
 			import random
 			item = randomItems[random.randint(0, len(randomItems) - 1)]
@@ -751,6 +751,7 @@ class TVshows:
 				q.update({'page': str(int(q['page']) + 1)})
 				q = (urlencode(q)).replace('%2C', ',')
 				next = url.replace('?' + urlparse(url).query, '') + '?' + q
+				next = next + '&folderName=%s' % folderName
 			except: next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
@@ -780,6 +781,7 @@ class TVshows:
 				q.update({'page': str(int(q['page']) + 1)})
 				q = (urlencode(q)).replace('%2C', ',')
 				next = url.replace('?' + urlparse(url).query, '') + '?' + q
+				next = next + '&folderName=%s' % folderName
 			except: next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
@@ -816,7 +818,7 @@ class TVshows:
 		if create_directory: self.addDirectory(self.list, queue=True, folderName=folderName)
 		return self.list
 
-	def trakt_list(self, url, user):
+	def trakt_list(self, url, user, folderName):
 		self.list = []
 		if ',return' in url: url = url.split(',return')[0]
 		items = trakt.getTraktAsJson(url)
@@ -827,6 +829,7 @@ class TVshows:
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
 			next = url.replace('?' + urlparse(url).query, '') + '?' + q
+			next = next + '&folderName=%s' % folderName
 		except: next = ''
 		for item in items: # rating and votes via TMDb, or I must use `extended=full and it slows down
 			try:
@@ -913,6 +916,7 @@ class TVshows:
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
 			next = url.replace('?' + urlparse(url).query, '') + '?' + q
+			next = next + '&folderName=%s' % folderName
 		except: next = ''
 		for i in range(len(self.list)): self.list[i]['next'] = next
 		self.worker()
@@ -920,7 +924,8 @@ class TVshows:
 		if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def trakt_user_lists(self, url, user):
+	def trakt_user_lists(self, url, user, folderName):
+		#import web_pdb; web_pdb.set_trace()
 		items = traktsync.fetch_user_lists('', True)
 		for item in items:
 			try:
@@ -1046,6 +1051,7 @@ class TVshows:
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
 			next = url.replace('?' + urlparse(url).query, '') + '?' + q
+			next = next + '&folderName=%s' % folderName
 		except: next = ''
 		for i in range(len(self.list)): self.list[i]['next'] = next
 		self.worker()
@@ -1086,7 +1092,7 @@ class TVshows:
 				log_utils.error()
 		return self.list
 
-	def imdb_list(self, url, isRatinglink=False):
+	def imdb_list(self, url, isRatinglink=False, folderName=''):
 		list = [] ; items = [] ; dupes = []
 		try:
 			for i in re.findall(r'date\[(\d+)\]', url):
@@ -1114,6 +1120,7 @@ class TVshows:
 				next = [i[0] for i in next if 'Next' in i[1]]
 			next = url.replace(urlparse(url).query, urlparse(next[0]).query)
 			next = client.replaceHTMLCodes(next)
+			next = next + '&folderName=%s' % folderName
 		except: next = ''
 		for item in items:
 			try:
@@ -1199,7 +1206,7 @@ class TVshows:
 	def tvshow_progress(self, url, folderName=''):
 		self.list = []
 		try:
-			cache.get(self.trakt_tvshow_progress, 0)
+			cache.get(self.trakt_tvshow_progress, 0, folderName)
 			self.sort(type='progress')
 			if self.list is None: self.list = []
 			hasNext = False
@@ -1212,11 +1219,11 @@ class TVshows:
 				control.hide()
 				if self.notifications: control.notification(title=32326, message=33049)
 
-	def trakt_tvshow_progress(self, create_directory=True):
+	def trakt_tvshow_progress(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/watched/shows'
-			self.list = self.trakt_list(historyurl, self.trakt_user)
+			self.list = self.trakt_list(historyurl, self.trakt_user, folderName)
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
@@ -1243,7 +1250,7 @@ class TVshows:
 	def tvshow_watched(self, url, folderName=''):
 		self.list = []
 		try:
-			cache.get(self.trakt_tvshow_watched, 0)
+			cache.get(self.trakt_tvshow_watched, 0, folderName=folderName)
 			self.sort(type='watched')
 			if self.list is None: self.list = []
 			hasNext = False
@@ -1256,11 +1263,11 @@ class TVshows:
 				control.hide()
 				if self.notifications: control.notification(title=32326, message=33049)
 
-	def trakt_tvshow_watched(self, create_directory=True):
+	def trakt_tvshow_watched(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
 			historyurl = 'https://api.trakt.tv/users/me/watched/shows'
-			self.list = self.trakt_list(historyurl, self.trakt_user)
+			self.list = self.trakt_list(historyurl, self.trakt_user, folderName)
 			next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()

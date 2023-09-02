@@ -530,7 +530,7 @@ class Episodes:
 		[i.join() for i in threads]
 		return self.list
 
-	def trakt_list(self, url, user):
+	def trakt_list(self, url, user, folderName):
 		itemlist = []
 		try:
 			for i in re.findall(r'date\[(\d+)\]', url): url = url.replace('date[%s]' % i, (self.date_time - timedelta(days=int(i))).strftime('%Y-%m-%d'))
@@ -546,6 +546,7 @@ class Episodes:
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
 			next = url.replace('?' + urlparse(url).query, '') + '?' + q
+			next = next + '&folderName=%s' % folderName
 		except: next = ''
 		for item in items:
 			try:
@@ -612,7 +613,8 @@ class Episodes:
 
 	def trakt_episodes_list(self, url, user, lang, items=None, direct=True):
 		self.list = []
-		if not items: items = self.trakt_list(url, user)
+		folderName=''
+		if not items: items = self.trakt_list(url, user, folderName)
 		def items_list(i):
 			values = i
 			tmdb, tvdb = i['tmdb'], i['tvdb']

@@ -1,4 +1,5 @@
-[B]Update - v6.6.300 - September 1st, 2023[/B]
+[B]Update - v6.6.301 - September 2nd, 2023[/B]
+--[Enhancement] Added list titles to next buttons. (Remake your widgets)
 --[Enhancement] Added list titles to sections titles.
 --[Enhancement] Updated Next button to carry over title.
 --[Enhancement] Added more section titles.

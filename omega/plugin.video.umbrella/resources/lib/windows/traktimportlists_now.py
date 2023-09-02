@@ -76,11 +76,12 @@ class TraktImportListsNowXML(BaseDialog):
 					isMovie = ''
 					isTVShow = ''
 					isMixed = ''
-					if item.get('action') == 'movies':
+					#import web_pdb; web_pdb.set_trace()
+					if item.get('action').split('&')[0] == 'movies':
 						isMovie = 'true'
-					if item.get('action') == 'tvshows':
+					if item.get('action').split('&')[0] == 'tvshows':
 						isTVShow = 'true'
-					if item.get('action') == 'mixed':
+					if item.get('action').split('&')[0] == 'mixed':
 						isMixed = 'true'
 					listitem = self.make_listitem()
 					listitem.setProperty('umbrella.list_owner', item.get('list_owner'))

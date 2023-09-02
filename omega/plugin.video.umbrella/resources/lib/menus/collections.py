@@ -409,7 +409,7 @@ class Collections:
 				return self.list
 
 			elif u in self.imdb_link:
-				self.list = cache.get(self.imdb_list, self.imdblist_hours, url)
+				self.list = cache.get(self.imdb_list, self.imdblist_hours, url, folderName)
 				self.worker()
 			if self.list is None: self.list = []
 			self.movieDirectory(self.list, folderName=folderName)
@@ -510,7 +510,7 @@ class Collections:
 			from resources.lib.modules import log_utils
 			log_utils.error()
 
-	def imdb_list(self, url, isRatinglink=False):
+	def imdb_list(self, url, isRatinglink=False, folderName=''):
 		list = []
 		try:
 			for i in re.findall(r'date\[(\d+)\]', url):
@@ -531,6 +531,7 @@ class Collections:
 				next = [i[0] for i in next if 'Next' in i[1]]
 			next = url.replace(urlparse(url).query, urlparse(next[0]).query)
 			next = client.replaceHTMLCodes(next)
+			next = next + '&folderName=%s' % folderName
 		except: next = ''
 		for item in items:
 			try:
