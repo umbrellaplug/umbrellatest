@@ -924,7 +924,7 @@ class TVshows:
 		if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 		return self.list
 
-	def trakt_user_lists(self, url, user, folderName):
+	def trakt_user_lists(self, url, user):
 		#import web_pdb; web_pdb.set_trace()
 		items = traktsync.fetch_user_lists('', True)
 		for item in items:

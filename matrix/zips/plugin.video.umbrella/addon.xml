@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.301">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.302">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -155,7 +155,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.301 - September 2nd, 2023[/B]
+[B]Update - v6.6.302 - September 2nd, 2023[/B]
 --[Enhancement] Added list titles to next buttons. (Remake your widgets)
 --[Enhancement] Added list titles to sections titles.
 --[Enhancement] Updated Next button to carry over title.
@@ -166,6 +166,7 @@
 --[Fix] Changed code for movie and show collection and watchlist import to improve speed.
 --[Fix] Made changes to tv show and seasonal level information to avoid imdb id being overwritten.
 --[Fix] Fixed TV Show lists exception caused by update.
+--[Fix] Fixed my fuck up on tv show lists.
 		</news>
 	</extension>
 
