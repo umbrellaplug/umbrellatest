@@ -1,4 +1,4 @@
-[B]Update - v6.6.304 - September 3rd, 2023[/B]
+[B]Update - v6.6.305 - September 3rd, 2023[/B]
 --[Enhancement] Added list titles to next buttons. (Remake your widgets)
 --[Enhancement] Added list titles to sections titles.
 --[Enhancement] Updated Next button to carry over title.
@@ -10,9 +10,7 @@
 --[Fix] Made changes to tv show and seasonal level information to avoid imdb id being overwritten.
 --[Fix] Fixed TV Show lists exception caused by update.
 --[Fix] Watched TV Fixed.
---[Fix] Removed Special Characters from list names.
---[Fix] Removed Special Characters from network names.
---[Fix] Fixed import I broke.
+--[Fix] Removed special characters in multiple places.
 
 [B]Update - v6.6.29 - August 23rd, 2023[/B]
 --[Enhancement] Added ability to use external providers and removed requirements for scraper packages.

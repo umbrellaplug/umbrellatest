@@ -962,7 +962,7 @@ class Movies:
 				if item['content_type'] == 'mixed':
 					listAction = 'mixed'
 				list_name = item['list_name']
-				listAction = listAction+'&folderName=%s' % list_name
+				listAction = listAction+'&folderName=%s' % list_name.replace("&",'')
 				list_owner = item['list_owner']
 				list_owner_slug = item['list_owner_slug']
 				list_id = item['trakt_id']
