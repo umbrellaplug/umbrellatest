@@ -925,7 +925,6 @@ class TVshows:
 		return self.list
 
 	def trakt_user_lists(self, url, user):
-		#import web_pdb; web_pdb.set_trace()
 		items = traktsync.fetch_user_lists('', True)
 		for item in items:
 			try:
@@ -934,7 +933,7 @@ class TVshows:
 				if item['content_type'] == 'mixed':
 					listAction = 'mixed'
 				list_name = item['list_name']
-				listAction = listAction+'&folderName=%s' % list_name
+				listAction = listAction+'&folderName=%s' % re.sub(r"[^a-zA-Z0-9 ]", "", list_name)
 				list_owner = item['list_owner']
 				list_owner_slug = item['list_owner_slug']
 				list_id = item['trakt_id']
@@ -1196,7 +1195,7 @@ class TVshows:
 				url = url.split('/list/', 1)[-1].strip('/')
 				url = self.imdblist_link % url
 				url = client.replaceHTMLCodes(url)
-				list.append({'name': name, 'url': url, 'context': url, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows'})
+				list.append({'name': name, 'url': url, 'context': url, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows&folderName=%s' % name})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -1250,7 +1249,7 @@ class TVshows:
 	def tvshow_watched(self, url, folderName=''):
 		self.list = []
 		try:
-			cache.get(self.trakt_tvshow_watched, 0, folderName=folderName)
+			cache.get(self.trakt_tvshow_watched, 0, folderName)
 			self.sort(type='watched')
 			if self.list is None: self.list = []
 			hasNext = False

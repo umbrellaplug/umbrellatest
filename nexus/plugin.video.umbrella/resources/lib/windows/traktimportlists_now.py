@@ -76,7 +76,6 @@ class TraktImportListsNowXML(BaseDialog):
 					isMovie = ''
 					isTVShow = ''
 					isMixed = ''
-					#import web_pdb; web_pdb.set_trace()
 					if item.get('action').split('&')[0] == 'movies':
 						isMovie = 'true'
 					if item.get('action').split('&')[0] == 'tvshows':

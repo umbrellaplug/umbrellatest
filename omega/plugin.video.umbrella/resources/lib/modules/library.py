@@ -431,7 +431,6 @@ class lib_tools:
 			full_list.extend(movie_items)
 			full_list.extend(ltv_items)
 			full_list.extend(lmovie_items)
-			#import web_pdb; web_pdb.set_trace()
 			#myfull_list = [i for n, i in enumerate(full_list) if i not in full_list[:n]]
 			full_list = [i for n, i in enumerate(full_list) if i.get('list_id') not in [y.get('list_id') for y in full_list[n + 1:]]]
 			control.hide()
