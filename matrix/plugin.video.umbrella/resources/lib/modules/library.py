@@ -222,6 +222,7 @@ class lib_tools:
 				log_utils.error()
     
 	def importNow(self, selected_items, select=True):
+		
 		if control.setting('library.autoimportlists_last') == getLS(40224):
 			from resources.lib.modules.control import lang
 			if not yesnoDialog(getLS(40227), '', ''): return
@@ -714,7 +715,7 @@ class libmovies:
 			dbcur.connection.commit()
 		except: log_utils.error()
 		try:
-			results = dbcur.execute('''SELECT * FROM lists WHERE type="movies" OR type="mixed";''').fetchall()
+			results = dbcur.execute('''SELECT * FROM lists WHERE type LIKE "movies%" OR type LIKE "mixed%";''').fetchall()
 			if not results: 
 				if service_notification and general_notification:
 					return #control.notification(message=32113)
@@ -725,7 +726,7 @@ class libmovies:
 			dbcur.close() ; dbcon.close()
 		total_added = 0
 		for list in results:
-			type, list_name, url = list[0], list[1], list[2]
+			type, list_name, url = list[0].split("&")[0], list[1], list[2]
 			try:
 				url = url.split('&page')[0]
 				url = url.split('?limit')[0]
@@ -734,19 +735,19 @@ class libmovies:
 			try:
 				if 'trakt' in url and type=="mixed":
 					from resources.lib.menus import movies
-					items = movies.Movies().trakt_list_mixed(url, control.setting('trakt.user.name').strip(),'Trakt Mixed List')
+					items = movies.Movies().trakt_list_mixed(url, control.setting('trakt.user.name').strip())
 					items = self.checkListDB(items, url)
 				if 'trakt' in url and type=="movies" and 'watchlist' not in url and 'me/collection' not in url:
 					from resources.lib.menus import movies
-					items = movies.Movies().trakt_list(url, control.setting('trakt.user.name').strip(),'Trakt Watchlist')
+					items = movies.Movies().trakt_list(url, control.setting('trakt.user.name').strip(), folderName='Trakt Watchlist')
 					items = self.checkListDB(items, url)
 				if 'trakt' in url and type=="movies" and 'watchlist' in url:
 					from resources.lib.menus import movies
-					items = movies.Movies().traktWatchlist(url, create_directory=None)
+					items = movies.Movies().traktWatchlist(url, create_directory=None, folderName='Trakt Movies')
 					items = self.checkListDB(items, url)
 				if 'trakt' in url and type=="movies" and 'me/collection' in url:
 					from resources.lib.menus import movies
-					items = movies.Movies().traktCollection(url, create_directory=None)
+					items = movies.Movies().traktCollection(url, create_directory=None, folderName='Trakt Collection')
 					items = self.checkListDB(items, url)
 				if 'themoviedb' in url:
 					from resources.lib.indexers import tmdb
@@ -1057,7 +1058,7 @@ class libtvshows:
 			dbcur.connection.commit()
 		except: log_utils.error()
 		try:
-			results = dbcur.execute('''SELECT * FROM lists WHERE type="tvshows";''').fetchall()
+			results = dbcur.execute('''SELECT * FROM lists WHERE type LIKE "tvshows%";''').fetchall()
 			if not results: 
 				if service_notification and general_notification:
 					return #control.notification(message=32124)
@@ -1068,7 +1069,7 @@ class libtvshows:
 			dbcur.close() ; dbcon.close()
 		total_added = 0 ; items = []
 		for list in results:
-			type, list_name, url = list[0], list[1], list[2]
+			type, list_name, url = list[0].split("&")[0], list[1], list[2]
 			try:
 				url = url.split('&page')[0]
 				url = url.split('?limit')[0]
@@ -1077,15 +1078,15 @@ class libtvshows:
 			try:
 				if 'trakt' in url and 'watchlist' not in url and 'me/collection' not in url:
 					from resources.lib.menus import tvshows
-					items = tvshows.TVshows().trakt_list(url, control.setting('trakt.user.name').strip(),'Trakt List')
+					items = tvshows.TVshows().trakt_list(url, control.setting('trakt.user.name').strip(), folderName='Trakt List')
 					items = libmovies().checkListDB(items, url)
 				if 'trakt' in url and 'watchlist' in url:
 					from resources.lib.menus import tvshows
-					items = tvshows.TVshows().traktWatchlist(url, create_directory=None)
+					items = tvshows.TVshows().traktWatchlist(url, create_directory=None, folderName='Trakt Watchlist')
 					items = libmovies().checkListDB(items, url)
 				if 'trakt' in url and 'me/collection' in url:
 					from resources.lib.menus import tvshows
-					items = tvshows.TVshows().traktCollection(url, create_directory=None)
+					items = tvshows.TVshows().traktCollection(url, create_directory=None, folderName='Trakt Collection')
 					items = libmovies().checkListDB(items, url)
 				if 'themoviedb' in url:
 					from resources.lib.indexers import tmdb

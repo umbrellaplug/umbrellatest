@@ -614,7 +614,7 @@ class TVshows:
 	def networks(self, folderName=''):
 		networks = tmdb_indexer().get_networks()
 		for i in networks:
-			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows&folderName=%s' % i[0]})
+			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows&folderName=%s' %  re.sub(r"[^a-zA-Z0-9 ]", "", i[0])})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 

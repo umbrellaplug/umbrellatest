@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.303">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.304">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -155,7 +155,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.303 - September 2nd, 2023[/B]
+[B]Update - v6.6.304 - September 3rd, 2023[/B]
 --[Enhancement] Added list titles to next buttons. (Remake your widgets)
 --[Enhancement] Added list titles to sections titles.
 --[Enhancement] Updated Next button to carry over title.
@@ -168,6 +168,8 @@
 --[Fix] Fixed TV Show lists exception caused by update.
 --[Fix] Watched TV Fixed.
 --[Fix] Removed Special Characters from list names.
+--[Fix] Removed Special Characters from network names.
+--[Fix] Fixed import I broke.
 		</news>
 	</extension>
 
