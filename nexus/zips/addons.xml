@@ -303,7 +303,7 @@
 - Fixed incorrect meta causing exception on marking as watched. -umbrella
 		</news>
 	</extension>
-</addon><addon id="script.umbrestuary.helper" name="Umbrestuary Helper" version="0.6.15d" provider-name="Umbrella, Ivar Brandt">
+</addon><addon id="script.umbrestuary.helper" name="Umbrestuary Helper" version="0.0.1" provider-name="Umbrella, Ivar Brandt">
     <requires>
         <import addon="xbmc.python" version="3.0.0" />
         <import addon="script.module.requests" version="2.19.1" />
@@ -360,8 +360,8 @@
 		<summary lang="en_GB">Umbrestuary skin by Ivar Brandt (Estuary MOD)</summary>
 		<summary lang="en_NZ">Umbrestuary skin by Ivar Brandt (Estuary MOD)</summary>
 		<summary lang="en_US">Umbrestuary skin by Ivar Brandt (Estuary MOD)</summary>
-		<description lang="en_GB">Umbrestuary is a modified version of the default Estuary skin for Kodi Nexus. It is intended for use only with FEN.[CR][CR]See [B]CHANGELOG[/B] located in Skin settings » Extra info for latest changes.</description>
-		<description lang="en_NZ">Umbrestuary is a modified version of the default Estuary skin for Kodi Nexus. It is intended for use only with FEN.[CR][CR]See [B]CHANGELOG[/B] located in Skin settings » Extra info for latest changes.</description>
-		<description lang="en_US">Umbrestuary is a modified version of the default Estuary skin for Kodi Nexus. It is intended for use only with FEN.[CR][CR]See [B]CHANGELOG[/B] located in Skin settings » Extra info for latest changes.</description>
+		<description lang="en_GB">Umbrestuary is a modified version of the default Estuary skin for Kodi Nexus. It is intended for use only with Umbrella.[CR][CR]See [B]CHANGELOG[/B] located in Skin settings » Extra info for latest changes.</description>
+		<description lang="en_NZ">Umbrestuary is a modified version of the default Estuary skin for Kodi Nexus. It is intended for use only with Umbrella.[CR][CR]See [B]CHANGELOG[/B] located in Skin settings » Extra info for latest changes.</description>
+		<description lang="en_US">Umbrestuary is a modified version of the default Estuary skin for Kodi Nexus. It is intended for use only with Umbrella.[CR][CR]See [B]CHANGELOG[/B] located in Skin settings » Extra info for latest changes.</description>
 	</extension>
 </addon></addons>
