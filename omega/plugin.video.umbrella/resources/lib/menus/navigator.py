@@ -290,6 +290,17 @@ class Navigator:
 		if media_type == 'movies': control.execute('ActivateWindow(Videos,plugin://plugin.video.umbrella/?action=movies_PublicLists&url=%s,return)' % (quote_plus(url)))
 		else: control.execute('ActivateWindow(Videos,plugin://plugin.video.umbrella/?action=tv_PublicLists&url=%s,return)' % (quote_plus(url)))
 
+	def traktSearchListsTerm(self, search, media_type):
+		if search:
+			page_limit = getSetting('page.item.limit')
+			url = 'https://api.trakt.tv/search/list?limit=%s&page=1&query=' % page_limit + quote_plus(search)
+			if media_type == 'movies':
+				from resources.lib.menus import movies
+				movies.Movies().getTraktPublicLists(url, folderName='')
+			else:
+				from resources.lib.menus import tvshows
+				tvshows.TVshows().getTraktPublicLists(url, folderName='')
+
 	def tools(self, folderName=''):
 		if self.useContainerTitles: control.setContainerName(folderName)
 		self.addDirectoryItem(32510, 'cache_Navigator&folderName=%s' % getLS(40462), 'settings.png', 'DefaultAddonService.png', isFolder=True)

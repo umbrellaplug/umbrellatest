@@ -54,19 +54,32 @@
 						<include>WidgetGroupListCommon</include>
 						<pagecontrol>27099</pagecontrol>
 						<include content="WidgetListBigPoster" condition="!Skin.HasSetting(HideMovieResults)">
-              <param name="content_path" value="plugin://plugin.video.fen/?mode=build_movie_list&amp;action=tmdb_movies_search&amp;query=$INFO[Skin.String(SearchInputEncoded)]"/>
+              <param name="content_path" value="plugin://plugin.video.umbrella/?action=movieSearchterm&amp;name=$INFO[Skin.String(SearchInputEncoded)]"/>
               <param name="widget_header" value="Movies"/>
               <!-- <param name="widget_header" value="$LOCALIZE[342]"/> -->
               <param name="widget_target" value="videos"/>
               <param name="list_id" value="27011"/>
             </include>
             <include content="WidgetListBigPoster" condition="!Skin.HasSetting(HideTVShowResults)">
-              <param name="content_path" value="plugin://plugin.video.fen/?mode=build_tvshow_list&amp;action=tmdb_tv_search&amp;query=$INFO[Skin.String(SearchInputEncoded)]"/>
+              <param name="content_path" value="plugin://plugin.video.umbrella/?action=tvSearchterm&amp;name=$INFO[Skin.String(SearchInputEncoded)]"/>
               <param name="widget_header" value="TV Shows"/>
               <!-- <param name="widget_header" value="$LOCALIZE[20343]"/> -->
               <param name="widget_target" value="videos"/>
               <param name="list_id" value="27012"/>
             </include>
+			<include content="WidgetListBigPoster" condition="!Skin.HasSetting(HideCollectionsResults)">
+              <param name="content_path" value="plugin://plugin.video.umbrella/?action=trakt_search_lists&amp;media_type=movies&amp;name=$INFO[Skin.String(SearchInputEncoded)]"/>
+              <param name="widget_header" value="Trakt Movie Lists"/>
+              <param name="widget_target" value="videos"/>
+              <param name="list_id" value="27013"/>
+            </include>
+			<include content="WidgetListBigPoster" condition="!Skin.HasSetting(HideCollectionsResults)">
+              <param name="content_path" value="plugin://plugin.video.umbrella/?action=trakt_search_lists&amp;media_type=tvshows&amp;name=$INFO[Skin.String(SearchInputEncoded)]"/>
+              <param name="widget_header" value="Trakt TV Lists"/>
+              <param name="widget_target" value="videos"/>
+              <param name="list_id" value="27014"/>
+            </include>
+			<!--
             <include content="WidgetListBigPoster" condition="!Skin.HasSetting(HideCollectionsResults)">
               <param name="content_path" value="plugin://plugin.video.fen/?mode=build_movie_list&amp;action=tmdb_movies_search_sets&amp;query=$INFO[Skin.String(SearchInputEncoded)]"/>
               <param name="widget_header" value="Collections"/>
@@ -80,7 +93,7 @@
               <param name="list_id" value="27014"/>
             </include>
             <include content="WidgetListBigPoster" condition="!Skin.HasSetting(HideMovieKeywordResults)">
-							<param name="content_path" value="plugin://plugin.video.fen/?mode=build_movie_list&amp;action=imdb_keywords_list_contents&amp;list_id=$INFO[Skin.String(SearchInputEncoded)]"/>
+							<param name="content_path" value="plugin://plugin.video.umbrella/?action=movieKeywordSearch&amp;name=$INFO[Skin.String(SearchInputEncoded)]"/>
               <param name="widget_header" value="IMDb Keywords (Movies)"/>
               <param name="widget_target" value="videos"/>
               <param name="list_id" value="27015"/>
@@ -90,8 +103,8 @@
               <param name="widget_header" value="IMDb Keywords (TV Shows)"/>
               <param name="widget_target" value="videos"/>
               <param name="list_id" value="27016"/>
-            </include>
-						<include content="WidgetListCategoryStacked" condition="!Skin.HasSetting(HideTraktResults)">
+            </include>-->
+						<!-- <include content="WidgetListCategoryStacked" condition="!Skin.HasSetting(HideTraktResults)">
 							<param name="content_path" value="plugin://plugin.video.fen/?mode=trakt.list.search_trakt_lists&amp;query=$INFO[Skin.String(SearchInputTraktEncoded)]"/>
 							<param name="widget_header" value="TRAKT Lists"/>
 							<param name="widget_target" value="videos"/>
@@ -102,7 +115,7 @@
 							<param name="widget_header" value="$INFO[Window(1121).Property(umbrestuary.27017.label)]"/>
 							<param name="widget_target" value="videos"/>
 							<param name="list_id" value="270171"/>
-						</include>
+						</include> -->
 					</control>
 					<include content="WidgetScrollbar" condition="Skin.HasSetting(touchmode)">
 						<param name="scrollbar_id" value="27099"/>

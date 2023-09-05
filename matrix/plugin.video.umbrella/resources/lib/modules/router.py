@@ -83,6 +83,9 @@ def router(argv2):
 	elif action == 'movieSearchterm':
 		from resources.lib.menus import movies
 		movies.Movies().search_term(name)
+	elif action == 'movieKeywordSearch':
+		from resources.lib.modules import search
+		search.Search().movieKeywordSearch(name)
 	#added for tmdb based searches for movies.
 	elif action == 'moviePerson':
 		from resources.lib.menus import movies
@@ -123,6 +126,9 @@ def router(argv2):
 	elif action == 'movies_SearchLists':
 		from resources.lib.menus import navigator
 		navigator.Navigator().traktSearchLists(params.get('media_type'))
+	elif action == 'trakt_search_lists':
+		from resources.lib.menus import navigator
+		navigator.Navigator().traktSearchListsTerm(name,params.get('media_type'))
 	elif action == 'movies_LikedLists':
 		from resources.lib.menus import movies
 		movies.Movies().traktLlikedlists(folderName=folderName)

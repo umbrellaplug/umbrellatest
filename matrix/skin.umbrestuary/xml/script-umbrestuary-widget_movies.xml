@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+    <include name="MovieWidgets">
+        <include content="WidgetListPoster">
+            <param name="content_path" value="plugin://plugin.video.umbrella/?action=movies&amp;url=trakttrending&amp;folderName=Trending (Trakt)"/>
+            <param name="widget_header" value="Trending Movies"/>
+            <param name="widget_target" value="videos"/>
+            <param name="list_id" value="19011"/>
+        </include>
+        <include content="WidgetListPoster">
+            <param name="content_path" value="plugin://plugin.video.umbrella/?action=tmdbmovies&amp;url=tmdb_discovery_this_month_released&amp;folderName=Released this Month (Digital and DVD) (TMDb)"/>
+            <param name="widget_header" value="Movies Released this Month"/>
+            <param name="widget_target" value="videos"/>
+            <param name="list_id" value="19012"/>
+        </include>
+        <include content="WidgetListPoster">
+            <param name="content_path" value="plugin://plugin.video.umbrella/?action=tvshows&amp;url=trakttrending&amp;folderName=Trending (Trakt)"/>
+            <param name="widget_header" value="Trending Shows"/>
+            <param name="widget_target" value="videos"/>
+            <param name="list_id" value="19013"/>
+        </include>
+        <include content="WidgetListPoster">
+            <param name="content_path" value="plugin://plugin.video.umbrella/?action=shows_progress&amp;url=progresstv&amp;folderName=Progress Shows"/>
+            <param name="widget_header" value="Progress Shows"/>
+            <param name="widget_target" value="videos"/>
+            <param name="list_id" value="19014"/>
+        </include>
+    </include>
+</includes>

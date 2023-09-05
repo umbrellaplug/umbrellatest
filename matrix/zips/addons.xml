@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.305">
+<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.306">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" />
@@ -156,18 +156,12 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.305 - September 3rd, 2023[/B]
---[Enhancement] Added list titles to next buttons. (Remake your widgets)
---[Enhancement] Added list titles to sections titles.
---[Enhancement] Updated Next button to carry over title.
---[Enhancement] Added more section titles.
---[Enhancement] Added ability to show titles on all sections.
+[B]Update - v6.6.306 - September 4th, 2023[/B]
+--[Enhancement] Added ability to show titles on all sections. (Remake any widgets made from Umbrella)
 --[Enhancement] Changed text on resolving popups to no longer be bold.
---[Enhancement] Added function to pass any function into to time.
+--[Enhancement] Added new search function for trakt lists from skin.
 --[Fix] Changed code for movie and show collection and watchlist import to improve speed.
 --[Fix] Made changes to tv show and seasonal level information to avoid imdb id being overwritten.
---[Fix] Fixed TV Show lists exception caused by update.
---[Fix] Watched TV Fixed.
 --[Fix] Removed special characters in multiple places.
 		</news>
 	</extension>
@@ -351,7 +345,7 @@
         <description lang="en_NZ">Umbrestuary Helper for the Umbrestuary Skin.</description>
         <description lang="en_US">Umbrestuary Helper for the Umbrestuary Skin.</description>
     </extension>
-</addon><addon id="skin.umbrestuary" version="1.0.18d" name="Umbrestuary" provider-name="Ivar Brandt">
+</addon><addon id="skin.umbrestuary" version="1.0.18e" name="Umbrestuary" provider-name="Ivar Brandt, Umbrella">
 	<requires>
 		<import addon="xbmc.gui" version="5.16.0" />
 		<import addon="script.umbrestuary.helper" />

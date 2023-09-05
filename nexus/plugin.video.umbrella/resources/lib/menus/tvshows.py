@@ -566,14 +566,17 @@ class TVshows:
 		control.execute('ActivateWindow(Videos,plugin://plugin.video.umbrella/?action=tvshows&url=%s,return)' % (quote_plus(url)))
 
 	def search_term(self, name):
-		if self.traktCredentials:
-			if getSetting('searchtv.indexer')== '1':
-				url = self.search_link + quote_plus(name)
+		if name:
+			if self.traktCredentials:
+				if getSetting('searchtv.indexer')== '1':
+					url = self.search_link + quote_plus(name)
+				else:
+					url = self.search_tmdb_link % ('%s', quote_plus(name))
 			else:
 				url = self.search_tmdb_link % ('%s', quote_plus(name))
+			self.get(url)
 		else:
-			url = self.search_tmdb_link % ('%s', quote_plus(name))
-		self.get(url)
+			return
 
 	def person(self, folderName=''):
 		k = control.keyboard('', getLS(32010))
