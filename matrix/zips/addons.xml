@@ -345,7 +345,7 @@
         <description lang="en_NZ">Umbrestuary Helper for the Umbrestuary Skin.</description>
         <description lang="en_US">Umbrestuary Helper for the Umbrestuary Skin.</description>
     </extension>
-</addon><addon id="skin.umbrestuary" version="1.0.18e" name="Umbrestuary" provider-name="Ivar Brandt, Umbrella">
+</addon><addon id="skin.umbrestuary" version="1.0.181" name="Umbrestuary" provider-name="Ivar Brandt, Umbrella">
 	<requires>
 		<import addon="xbmc.gui" version="5.16.0" />
 		<import addon="script.umbrestuary.helper" />

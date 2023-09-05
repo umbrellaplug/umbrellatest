@@ -1,3 +1,15 @@
 
 _repo_generator.py
 *.bat
+xml/script-umbrestuary-main_menu_movies.xml
+xml/script-umbrestuary-main_menu_tvshows.xml
+xml/script-umbrestuary-main_menu_custom1.xml
+xml/script-umbrestuary-main_menu_custom2.xml
+xml/script-umbrestuary-main_menu_custom3.xml
+xml/script-umbrestuary-widget_movies.xml
+xml/script-umbrestuary-widget_tvshows.xml
+xml/script-umbrestuary-widget_custom1.xml
+xml/script-umbrestuary-widget_custom2.xml
+xml/script-umbrestuary-widget_custom3.xml
+xml/script-umbrestuary-search_history.xml
+xml/script-skinshortcuts-includes.xml
