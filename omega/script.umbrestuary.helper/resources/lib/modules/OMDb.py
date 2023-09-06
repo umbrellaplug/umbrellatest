@@ -1,9 +1,12 @@
-import xbmc, xbmcvfs
+import xbmc, xbmcgui, xbmcvfs
 import datetime as dt
 import xml.etree.ElementTree as ET
 import sqlite3 as database
+import time
 import requests
 import json
+
+logger = xbmc.log
 
 settings_path = xbmcvfs.translatePath(
     "special://profile/addon_data/script.umbrestuary.helper/"
@@ -24,7 +27,7 @@ session = make_session("http://www.omdbapi.com/")
 
 
 class OMDbAPI:
-    # last_checked_imdb_id = None
+    last_checked_imdb_id = None
 
     def __init__(self):
         self.connect_database()
@@ -32,7 +35,7 @@ class OMDbAPI:
     def connect_database(self):
         if not xbmcvfs.exists(settings_path):
             xbmcvfs.mkdir(settings_path)
-        self.dbcon = database.connect(ratings_database_path, timeout=20)
+        self.dbcon = database.connect(ratings_database_path, timeout=60)
         self.dbcon.execute(
             """
         CREATE TABLE IF NOT EXISTS ratings (
@@ -44,27 +47,22 @@ class OMDbAPI:
         )
         self.dbcur = self.dbcon.cursor()
 
+    def datetime_workaround(self, data, str_format):
+        try:
+            datetime_object = dt.datetime.strptime(data, str_format)
+        except:
+            datetime_object = dt.datetime(*(time.strptime(data, str_format)[0:6]))
+        return datetime_object
+
     def insert_or_update_ratings(self, imdb_id, ratings):
-        self.dbcur.execute("SELECT imdb_id FROM ratings WHERE imdb_id=?", (imdb_id,))
-        entry = self.dbcur.fetchone()
         ratings_data = json.dumps(ratings)
-        if entry:
-            self.dbcur.execute(
-                """
-            UPDATE ratings 
-            SET ratings=?, last_updated=?
-            WHERE imdb_id=?
-            """,
-                (ratings_data, dt.datetime.now(), imdb_id),
-            )
-        else:
-            self.dbcur.execute(
-                """
-            INSERT INTO ratings (imdb_id, ratings, last_updated)
+        self.dbcur.execute(
+            """
+            INSERT OR REPLACE INTO ratings (imdb_id, ratings, last_updated)
             VALUES (?, ?, ?)
             """,
-                (imdb_id, ratings_data, dt.datetime.now()),
-            )
+            (imdb_id, ratings_data, dt.datetime.now()),
+        )
         self.dbcon.commit()
 
     def get_cached_ratings(self, imdb_id):
@@ -76,9 +74,8 @@ class OMDbAPI:
         if entry:
             _, ratings_data, last_updated = entry
             ratings = json.loads(ratings_data)
-            if dt.datetime.now() - dt.datetime.strptime(
-                last_updated, "%Y-%m-%d %H:%M:%S.%f"
-            ) < dt.timedelta(days=7):
+            last_updated_date = self.datetime_workaround(last_updated, "%Y-%m-%d %H:%M:%S.%f")
+            if dt.datetime.now() - last_updated_date < dt.timedelta(days=7):
                 return ratings
         return None
 
@@ -98,9 +95,7 @@ class OMDbAPI:
         if not api_key:
             # xbmc.log("No OMDb API key set in the skin settings.", level=xbmc.LOGERROR)
             return {}
-        url = (
-            f"http://www.omdbapi.com/?i={imdb_id}&apikey={api_key}&tomatoes=True&r=xml"
-        )
+        url = (f"http://www.omdbapi.com/?i={imdb_id}&apikey={api_key}&tomatoes=True&r=xml")
         # xbmc.log(
         #     "Fetching fresh ratings for IMDb ID {} from the OMDb API.".format(imdb_id),
         #     level=xbmc.LOGDEBUG,
@@ -116,37 +111,28 @@ class OMDbAPI:
         if data is None:
             return {}
         tmdb_rating = xbmc.getInfoLabel("ListItem.Rating")
-        data = {
-            "metascore": (data.get("metascore") + "%" if data.get("metascore") else "")
-            if data.get("metascore") != "N/A"
-            else "",
-            "tomatoMeter": (
-                data.get("tomatoMeter") + "%" if data.get("tomatoMeter") else ""
-            )
-            if data.get("tomatoMeter") != "N/A"
-            else "",
-            "tomatoUserMeter": (
-                data.get("tomatoUserMeter") + "%" if data.get("tomatoUserMeter") else ""
-            )
-            if data.get("tomatoUserMeter") != "N/A"
-            else "",
-            "tomatoImage": data.get("tomatoImage")
-            if data.get("tomatoImage") != "N/A"
-            else "",
-            "imdbRating": data.get("imdbRating")
-            if data.get("imdbRating") != "N/A"
-            else "",
-            "tmdbRating": tmdb_rating if tmdb_rating != "N/A" else "",
-        }
+        data = {"metascore": (data.get("metascore") + "%" if data.get("metascore") else "") if data.get("metascore") != "N/A" else "",
+            "tomatoMeter": (data.get("tomatoMeter") + "%" if data.get("tomatoMeter") else "") if data.get("tomatoMeter") != "N/A" else "",
+            "tomatoUserMeter": (data.get("tomatoUserMeter") + "%" if data.get("tomatoUserMeter") else "") if data.get("tomatoUserMeter") != "N/A" else "",
+            "tomatoImage": data.get("tomatoImage") if data.get("tomatoImage") != "N/A" else "",
+            "imdbRating": data.get("imdbRating") if data.get("imdbRating") != "N/A" else "",
+            "tmdbRating": tmdb_rating if tmdb_rating != "N/A" else ""}
         return data
+
+
+def set_api_key():
+    keyboard = xbmc.Keyboard("", "Enter OMDb API Key")
+    keyboard.doModal()
+    if keyboard.isConfirmed() and keyboard.getText():
+        xbmc.executebuiltin(f"Skin.SetString(omdb_api_key,{keyboard.getText()})")
 
 
 def test_api():
     # xbmc.log("test_api function triggered!", level=xbmc.LOGDEBUG)
     api_key = xbmc.getInfoLabel("Skin.String(omdb_api_key)")
     imdb_id = xbmc.getInfoLabel("ListItem.IMDBNumber")
-    # if imdb_id == OMDbAPI.last_checked_imdb_id:
-    #     return
+    if imdb_id == OMDbAPI.last_checked_imdb_id:
+        return
     if not api_key:
         # xbmc.log("No OMDb API key set in the skin settings.", level=xbmc.LOGDEBUG)
         return {}
@@ -175,5 +161,5 @@ def test_api():
             #     level=xbmc.LOGDEBUG,
             # )
     # xbmc.log(f"Ratings for IMDb ID {imdb_id}: {result}", level=xbmc.LOGDEBUG)
-    # OMDbAPI.last_checked_imdb_id = imdb_id
+    OMDbAPI.last_checked_imdb_id = imdb_id
     return result
