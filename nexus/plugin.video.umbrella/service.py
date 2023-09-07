@@ -54,7 +54,7 @@ class SettingsMonitor(control.monitor_class):
 		control.monitor_class.__init__(self)
 		control.refresh_playAction()
 		control.refresh_libPath()
-		window.setProperty('umbrella.debug.reversed', control.setting('debug.reversed'))
+		window.setProperty('umbrella.debug.reversed', str(control.setting('debug.reversed')))
 		for id in properties:
 			if control.setting(id) == 'true':
 				xbmc.executebuiltin('SetProperty({0},true,home)'.format(id))

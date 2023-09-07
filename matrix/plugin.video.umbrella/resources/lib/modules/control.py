@@ -452,9 +452,9 @@ def trigger_widget_refresh():
 	execute('UpdateLibrary(video,/fake/path/to/force/refresh/on/home)') # make sure this is ok coupled with above
 
 def refresh_playAction(): # for umbrella global CM play actions
-	autoPlayTV = 'true' if setting('play.mode.tv') == '1' else ''
+	autoPlayTV = 'true' if setting('play.mode.tv') == '1' else '0'
 	homeWindow.setProperty('umbrella.autoPlaytv.enabled', autoPlayTV)
-	autoPlayMovie = 'true' if setting('play.mode.movie') == '1' else ''
+	autoPlayMovie = 'true' if setting('play.mode.movie') == '1' else '0'
 	homeWindow.setProperty('umbrella.autoPlayMovie.enabled', autoPlayMovie)
 
 def refresh_libPath(): # for umbrella global CM library actions

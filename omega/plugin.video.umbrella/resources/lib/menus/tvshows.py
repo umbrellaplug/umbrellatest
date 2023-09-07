@@ -4,6 +4,7 @@
 """
 
 from datetime import datetime, timedelta
+import time
 from json import dumps as jsdumps
 import re
 import xbmc
@@ -474,6 +475,7 @@ class TVshows:
 						if 'added' not in self.list[i]: self.list[i]['added'] = ''
 					self.list = sorted(self.list, key=lambda k: k['added'], reverse=reverse)
 				elif attribute == 6:
+					nolastPlayed = []
 					for i in range(len(self.list)):
 						if 'lastplayed' not in self.list[i]: 
 							self.list[i]['lastplayed'] = ''
@@ -481,7 +483,7 @@ class TVshows:
 							log_utils.log('TVShow Last Played Blank Title: %' % self.list[i]['title'], 1)
 					#self.list = sorted(self.list, key=lambda k: k['lastplayed'], reverse=reverse)
 					if self.list:
-						self.list = sorted(self.list, key=lambda k: datetime.strptime(k['lastplayed'], "%Y-%m-%dT%H:%M:%S.%fZ"), reverse=reverse)
+						self.list = sorted(self.list, key=lambda k: time.strptime(k['lastplayed'], "%Y-%m-%dT%H:%M:%S.%fZ"), reverse=reverse)
 			elif reverse:
 				self.list = list(reversed(self.list))
 		except:

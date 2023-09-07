@@ -47,6 +47,8 @@ def clearViews():
 def addView(content):
 	try:
 		skin = control.skin
+		from resources.lib.modules import log_utils
+		log_utils.log('Add View Container View: %s' % str(control.getCurrentViewId()))
 		record = (skin, content, str(control.getCurrentViewId()))
 		control.makeFile(control.dataPath)
 		dbcon = db.connect(control.viewsFile)
@@ -80,7 +82,8 @@ def setView(content, viewDict=None):
 			except:
 				try:
 					if skin not in viewDict: return
-					else: return control.execute('Container.SetViewMode(%s)' % str(viewDict[skin]))
+					else:
+						return control.execute('Container.SetViewMode(%s)' % str(viewDict[skin]))
 				except:
 					from resources.lib.modules import log_utils
 					log_utils.error()

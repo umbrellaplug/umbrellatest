@@ -775,7 +775,7 @@
 
 	<!-- INFOPANEL RATINGS -->
 	<variable name="MC_Panel">
-		<value condition="!String.IsEmpty(Window.Property(umbrestuary.metascore))">[CR][CR]$INFO[Window.Property(Metascore),MC: ]</value>
+		<value condition="!String.IsEmpty(Window.Property(umbrestuary.metascore))">[CR][CR]$INFO[Window.Property(umbrestuary.metascore),MC: ]</value>
 	</variable>
 	<variable name="RT_Panel">
 		<value condition="!String.IsEmpty(Window.Property(umbrestuary.tomatoMeter))">$INFO[Window.Property(umbrestuary.tomatoMeter),[B] • [/B]RT: ]</value>
