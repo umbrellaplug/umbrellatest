@@ -14,7 +14,6 @@ import os
 
 if __name__ == '__main__':
 	item = sys.listitem
-	import web_pdb; web_pdb.set_trace()
 	# message = item.getLabel()
 	path = item.getPath()
 	plugin = 'plugin://plugin.video.umbrella/'
@@ -51,6 +50,14 @@ if __name__ == '__main__':
 			pass
 		try:
 			meta.update({'tvdb': params.get('tvdb')})
+		except:
+			pass
+		try:
+			meta.update({'season': params.get('season')})
+		except:
+			pass
+		try:
+			meta.update({'episode': params.get('episode')})
 		except:
 			pass
 	content = meta.get('mediatype')
@@ -97,16 +104,16 @@ if __name__ == '__main__':
 			dbcon = database.connect(favouritesFile)
 			dbcur = dbcon.cursor()
 			items = dbcur.execute("SELECT * FROM %s" % content).fetchall()
-			items = [(i[0], eval(i[1])) for i in items]
+			items = [(i[0], i[1], i[2], eval(i[3])) for i in items]
 		except: items = []
 		finally:
 			dbcur.close() ; dbcon.close()
-		items = [x[1].get('imdb') for x in items]
-		tvdb = meta.get('imdb')
-		if tvdb in items:
+		items = [x[0] for x in items]
+		id = meta.get('imdb') + str(meta.get('season'))+ str(meta.get('episode'))
+		if (id) in items:
 			xbmc.executebuiltin('RunPlugin(%s?action=remove_favorite&meta=%s&content=%s)' % (plugin, quote_plus(sysmeta), content))
 		else:
-			xbmc.executebuiltin('RunPlugin(%s?action=add_favorite&meta=%s&content=%s)' % (plugin, quote_plus(sysmeta), content))
+			xbmc.executebuiltin('RunPlugin(%s?action=add_favorite_episode&meta=%s&content=%s)' % (plugin, quote_plus(sysmeta), content))
 	
 	#if favorite
 	

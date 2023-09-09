@@ -660,13 +660,13 @@ class Episodes:
 		from resources.lib.modules import favourites
 		items = favourites.getFavourites(content='episode')
 		def items_list(i):
-			values = i[1]
-			tmdb, tvdb = i[1].get('tmdb'), i[1].get('tvdb')
+			values = i[3]
+			tmdb, tvdb = i[3].get('tmdb'), i[3].get('tvdb')
 			try:
 				itemyear = tmdb_indexer().get_showSeasons_meta(tmdb)
-				seasonEpisodes = cache.get(tmdb_indexer().get_seasonEpisodes_meta, 96, tmdb, i[1].get('season'))
+				seasonEpisodes = cache.get(tmdb_indexer().get_seasonEpisodes_meta, 96, tmdb, i[3].get('season'))
 				if not seasonEpisodes: return
-				try: episode_meta = [x for x in seasonEpisodes.get('episodes') if x.get('episode') == i[1].get('episode')][0] # to pull just the episode meta we need
+				try: episode_meta = [x for x in seasonEpisodes.get('episodes') if x.get('episode') == i[3].get('episode')][0] # to pull just the episode meta we need
 				except: return
 				if 'premiered' in values and values.get('premiered'):
 					episode_meta.pop('premiered') # prefer Trakt premiered because TMDb is fucked for some shows like Family Law off by months
@@ -843,7 +843,7 @@ class Episodes:
 		trailerMenu = getLS(40431)
 		from resources.lib.modules import favourites
 		favoriteItems = favourites.getFavourites(content='episode')
-		favoriteItems = [(x[1].get('imdb'), x[1].get('episode')) for x in favoriteItems]
+		favoriteItems = [(x[0]) for x in favoriteItems]
 		for i in items:
 			try:
 
@@ -977,7 +977,7 @@ class Episodes:
 				cm.append((queueMenu, 'RunPlugin(%s?action=playlist_QueueItem&name=%s)' % (sysaddon, syslabelProgress)))
 				cm.append((addToLibrary, 'RunPlugin(%s?action=library_tvshowToLibrary&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s)' % (sysaddon, systvshowtitle, year, imdb, tmdb, tvdb)))
 				if favoriteItems:
-					if (imdb,episode) in favoriteItems:
+					if (imdb+str(season)+str(episode)) in favoriteItems:
 						cm.append((removeFromFavourites, 'RunPlugin(%s?action=remove_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'episode')))
 					else:
 						cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite_episode&meta=%s&content=%s)' % (sysaddon, sysmeta, 'episode')))

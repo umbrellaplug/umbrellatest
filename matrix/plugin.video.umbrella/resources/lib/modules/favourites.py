@@ -19,7 +19,10 @@ def getFavourites(content):
 		dbcon = database.connect(favouritesFile)
 		dbcur = dbcon.cursor()
 		items = dbcur.execute("SELECT * FROM %s" % content).fetchall()
-		items = [(i[0], eval(i[1])) for i in items]
+		if content == 'episode':
+			items = [(i[0], i[1], i[2], eval(i[3])) for i in items]
+		else:
+			items = [(i[0], eval(i[1])) for i in items]
 	except: items = []
 	finally:
 		dbcur.close() ; dbcon.close()
@@ -74,8 +77,8 @@ def addEpisodes(meta, content):
 		item = dict()
 		meta = jsloads(meta)
 		content = "episode"
-		try: id = meta.get('imdb', '') or meta.get('tvdb', '')
-		except: id = meta['episodeIDS']['trakt']
+		try: imdb = meta.get('imdb', '') or meta.get('tvdb', '')
+		except: imdb = meta['episodeIDS']['trakt']
 		if 'title' in meta: title = item['title'] = meta['title']
 		if 'tvshowtitle' in meta: title = item['tvshowtitle'] = meta['tvshowtitle']
 		if 'year' in meta: item['year'] = meta['year']
@@ -87,16 +90,21 @@ def addEpisodes(meta, content):
 		if 'tmdb' in meta: item['tmdb'] = meta['tmdb']
 		if 'tvdb' in meta: item['tvdb'] = meta['tvdb']
 		if 'episodeIDS' in meta: item['episodeIDS'] = meta['episodeIDS']
-		if 'episode' in meta: item['episode'] = meta['episode']
-		if 'season' in meta: item['season'] = meta['season']
+		if 'episode' in meta: 
+			item['episode'] = meta['episode']
+			episode = item['episode']
+		if 'season' in meta: 
+			item['season'] = meta['season']
+			season = meta['season']
+		id = str(imdb)+str(season)+str(episode)
 		if 'premiered' in meta: item['premiered'] = meta['premiered']
 		if 'original_year' in meta: item['original_year'] = meta['original_year']
 		control.makeFile(dataPath)
 		dbcon = database.connect(favouritesFile)
 		dbcur = dbcon.cursor()
-		dbcur.execute('''CREATE TABLE IF NOT EXISTS %s (id TEXT,season TEXT, episode TEXT, items TEXT, UNIQUE(id));''' % content)
-		dbcur.execute('''DELETE FROM %s WHERE id = "%s" and episode = "%s"''' % (content, id, episode))
-		dbcur.execute('''INSERT INTO %s Values (?, ?, ?)''' % content, (id, repr(item), episode))
+		dbcur.execute('''CREATE TABLE IF NOT EXISTS %s (id TEXT, season TEXT, episode TEXT, items TEXT, imdb TEXT, UNIQUE(id));''' % content)
+		dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, id))
+		dbcur.execute('''INSERT INTO %s Values (?, ?, ?, ?, ?)''' % content, (id,str(season), str(episode), repr(item), str(imdb)))
 		dbcur.connection.commit()
 		control.refresh()
 		control.trigger_widget_refresh()
@@ -106,7 +114,6 @@ def addEpisodes(meta, content):
 		dbcur.close() ; dbcon.close()
 
 def deleteFavourite(meta, content):
-	#import web_pdb; web_pdb.set_trace()
 	try:
 		meta = jsloads(meta)
 		if 'title' in meta: title = meta['title']
@@ -121,7 +128,8 @@ def deleteFavourite(meta, content):
 		elif content =='tvshows':
 			dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, meta['imdb']))
 		elif content =='episode':
-			dbcur.execute('''DELETE FROM %s WHERE id = "%s" and episode = "%s"''' % (content, meta['imdb']))
+			id = meta['imdb']+str(meta['season'])+str(meta['episode'])
+			dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, id))
 		dbcur.connection.commit()
 		control.refresh()
 		control.trigger_widget_refresh()

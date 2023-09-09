@@ -154,7 +154,6 @@ class Movies:
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 
 	def get(self, url, idx=True, create_directory=True, folderName=''):
-		#import web_pdb; web_pdb.set_trace()
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')

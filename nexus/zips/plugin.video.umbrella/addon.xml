@@ -1,11 +1,10 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.307">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.308">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
 		<import addon="script.module.beautifulsoup4"/>
 		<import addon="script.module.metahandler" version="5.0.1a" optional="true"/>
 		<import addon="plugin.video.youtube" optional="true"/>
-		<import addon="script.module.web-pdb" />
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="umbrella.py">
 		<provides>video</provides>
