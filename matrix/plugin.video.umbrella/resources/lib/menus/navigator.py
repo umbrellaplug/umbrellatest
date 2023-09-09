@@ -7,6 +7,7 @@ from sys import exit as sysexit
 from urllib.parse import quote_plus
 from resources.lib.modules import control
 from resources.lib.modules.trakt import getTraktCredentialsInfo, getTraktIndicatorsInfo
+from resources.lib.modules import favourites
 from json import loads as jsloads
 
 getLS = control.lang
@@ -28,6 +29,9 @@ class Navigator:
 		self.highlight_color = getSetting('highlight.color')
 		self.hasLibMovies = len(jsloads(control.jsonrpc('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": { "limits": { "start" : 0, "end": 1 }, "properties" : ["title", "genre", "uniqueid", "art", "rating", "thumbnail", "playcount", "file"] }, "id": "1"}'))['result']['movies']) > 0
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
+		self.favoriteMovie = favourites.checkForFavourites(content='movies')
+		self.favoriteTVShows = favourites.checkForFavourites(content='tvshows')
+		self.favoriteEpisodes = favourites.checkForFavourites(content='episode')
 
 	def root(self):
 		if getMenuEnabled('navi.searchMovies'):self.addDirectoryItem(33042, 'movieSearch&folderName=%s' % getLS(33042), 'trakt.png' if self.iconLogos else 'searchmovies.png', 'DefaultAddonsSearch.png')
@@ -43,6 +47,8 @@ class Navigator:
 		self.addDirectoryItem(32008, 'tools_toolNavigator&folderName=%s' % getLS(32008), 'tools.png', 'tools.png')
 		downloads = True if getSetting('downloads') == 'true' and (len(control.listDir(getSetting('movie.download.path'))[0]) > 0 or len(control.listDir(getSetting('tv.download.path'))[0]) > 0) else False
 		if downloads: self.addDirectoryItem(32009, 'downloadNavigator&folderName=%s' % getLS(32009), 'downloads.png', 'DefaultFolder.png')
+		favorite = favourites.checkForFavourites()
+		if favorite: self.addDirectoryItem(40464, 'favouriteNavigator&folderName=%s' % getLS(40464), 'highly-rated.png', 'DefaultFolder.png')
 		if getMenuEnabled('navi.prem.services'): self.addDirectoryItem('Premium Services', 'premiumNavigator&folderName=Premium Services', 'premium.png', 'DefaultFolder.png')
 		if getMenuEnabled('navi.news'): self.addDirectoryItem(32013, 'tools_ShowNews', 'newsandinfo.png', 'DefaultAddonHelper.png', isFolder=False)
 		if getMenuEnabled('navi.changelog'): self.addDirectoryItem(32014, 'tools_ShowChangelog&name=Umbrella', 'changelog.png', 'DefaultAddonHelper.png', isFolder=False)
@@ -142,6 +148,8 @@ class Navigator:
 		#self.addDirectoryItem('Favorite Movies', 'movies_favorites', 'trakt.png', 'DefaultMovies.png')
 		if not lite:
 			if getMenuEnabled('mylists.widget'): self.addDirectoryItem(32003, 'mymovieliteNavigator&folderName=%s' % getLS(32003), 'mymovies.png', 'DefaultMovies.png')
+			if self.favoriteMovie:
+				self.addDirectoryItem(getLS(40465), 'getFavouritesMovies&url=favourites_movies&folderName=%s' % (getLS(40465)), 'movies.png', 'DefaultMovies.png')
 			self.addDirectoryItem(33044, 'moviePerson&folderName=%s' % getLS(33044), 'imdb.png' if self.iconLogos else 'people-search.png', 'DefaultAddonsSearch.png', isFolder=False)
 			self.addDirectoryItem(33042, 'movieSearch&folderName=%s' % getLS(33042), 'trakt.png' if self.iconLogos else 'search.png', 'DefaultAddonsSearch.png')
 		self.endDirectory()
@@ -150,6 +158,8 @@ class Navigator:
 		self.accountCheck()
 		if self.useContainerTitles: control.setContainerName(folderName)
 		self.addDirectoryItem(32039, 'movieUserlists&folderName=%s' % getLS(32039), 'userlists.png', 'DefaultVideoPlaylists.png')
+		if self.favoriteMovie:
+			self.addDirectoryItem(getLS(40465), 'getFavouritesMovies&url=favourites_movies&folderName=%s' % (getLS(40465)), 'movies.png', 'DefaultMovies.png')
 		if getMenuEnabled('navi.movie.mdblist.userList') and getSetting('mdblist.api') != '':
 			self.addDirectoryItem(40087, 'mdbUserListMovies&folderName=%s' % getLS(40087), 'mdblist.png' if self.iconLogos else 'movies.png', 'DefaultMovies.png')
 		if self.traktCredentials:
@@ -160,6 +170,8 @@ class Navigator:
 			self.addDirectoryItem(32032, 'movies&url=traktcollection&folderName=%s' % getLS(32032), 'trakt.png', 'trakt.png')
 			self.addDirectoryItem('My Liked Lists', 'movies_LikedLists&folderName=My Liked Lists', 'trakt.png', 'trakt.png', queue=True)
 		if self.imdbCredentials: self.addDirectoryItem(32682, 'movies&url=imdbwatchlist&folderName=%s' % getLS(32682), 'imdb.png', 'imdb.png', queue=True) #watchlist broken currently 10-2022
+		
+
 		if not lite:
 			self.addDirectoryItem(32031, 'movieliteNavigator&folderName=%s' % getLS(32031), 'movies.png', 'DefaultMovies.png')
 			self.addDirectoryItem(33044, 'moviePerson&folderName=%s' % getLS(33044), 'imdb.png' if self.iconLogos else 'people-search.png', 'DefaultAddonsSearch.png', isFolder=False)
@@ -240,6 +252,8 @@ class Navigator:
 			self.addDirectoryItem(32419, 'tv_SearchLists&media_type=shows', 'trakt.png' if self.iconLogos else 'tvshows.png', 'DefaultMovies.png', isFolder=False)
 		if not lite:
 			if getMenuEnabled('mylists.widget'): self.addDirectoryItem(32004, 'mytvliteNavigator&folderName=%s' % getLS(32004), 'mytvshows.png', 'DefaultTVShows.png')
+			if self.favoriteTVShows:
+				self.addDirectoryItem(getLS(40466), 'getFavouritesTVShows&url=favourites_tvshows&folderName=%s' % (getLS(40466)), 'tvshows.png', 'DefaultTVShows.png')
 			self.addDirectoryItem(33045, 'tvPerson', 'imdb.png' if self.iconLogos else 'people-search.png', 'DefaultAddonsSearch.png', isFolder=False)
 			self.addDirectoryItem(33043, 'tvSearch&folderName=%s' % getLS(33043), 'trakt.png' if self.iconLogos else 'search.png', 'DefaultAddonsSearch.png')
 		self.endDirectory()
@@ -248,6 +262,9 @@ class Navigator:
 		self.accountCheck()
 		if self.useContainerTitles: control.setContainerName(folderName)
 		self.addDirectoryItem(32040, 'tvUserlists&folderName=%s' % getLS(32040), 'userlists.png', 'DefaultVideoPlaylists.png')
+		if self.favoriteTVShows:
+			self.addDirectoryItem(getLS(40466), 'getFavouritesTVShows&url=favourites_tvshows&folderName=%s' % (getLS(40466)), 'tvshows.png', 'DefaultTVShows.png')
+		if self.favoriteEpisodes: self.addDirectoryItem(getLS(40467), 'getFavouritesEpisodes&folderName=%s' % (getLS(40467)), 'tvshows.png', 'DefaultTVShows.png')
 		if getMenuEnabled('navi.tv.mdblist.userList') and getSetting('mdblist.api') != '':
 			self.addDirectoryItem(40087, 'mdbUserListTV&folderName=%s' % getLS(40087), 'mdblist.png' if self.iconLogos else 'tvshows.png', 'DefaultMovies.png')
 		if self.traktCredentials:
@@ -407,6 +424,13 @@ class Navigator:
 		tv_downloads = getSetting('tv.download.path')
 		if len(control.listDir(movie_downloads)[0]) > 0: self.addDirectoryItem(32001, movie_downloads, 'movies.png', 'DefaultMovies.png', isAction=False)
 		if len(control.listDir(tv_downloads)[0]) > 0: self.addDirectoryItem(32002, tv_downloads, 'tvshows.png', 'DefaultTVShows.png', isAction=False)
+		if self.useContainerTitles: control.setContainerName(folderName)
+		self.endDirectory()
+
+	def favourites(self, folderName=''):
+		if self.favoriteMovie: self.addDirectoryItem(getLS(40465), 'getFavouritesMovies&url=favourites_movies&folderName=%s' % (getLS(40465)), 'movies.png', 'DefaultMovies.png')
+		if self.favoriteTVShows: self.addDirectoryItem(getLS(40466), 'getFavouritesTVShows&url=favourites_tvshows&folderName=%s' % (getLS(40466)), 'tvshows.png', 'DefaultTVShows.png')
+		if self.favoriteEpisodes: self.addDirectoryItem(getLS(40467), 'getFavouritesEpisodes&folderName=%s' % (getLS(40467)), 'tvshows.png', 'DefaultTVShows.png')
 		if self.useContainerTitles: control.setContainerName(folderName)
 		self.endDirectory()
 

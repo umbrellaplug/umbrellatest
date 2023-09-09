@@ -140,17 +140,19 @@ class TVshows:
 			except: pass
 			try: u = urlparse(url).netloc.lower()
 			except: pass
+			if url == 'favourites_tvshows':
+				return self.favouriteTVShows(folderName=folderName)
 			if url == 'traktbasedonrecent':
 				return self.trakt_based_on_recent(folderName=folderName)
-			if url == 'traktbasedonsimilar':
+			elif url == 'traktbasedonsimilar':
 				return self.trakt_based_on_similar(folderName=folderName)
-			if url == 'tmdbrecentday':
+			elif url == 'tmdbrecentday':
 				return self.tmdb_trending_recentday(folderName=folderName)
-			if url == 'tmdbrecentweek':
+			elif url == 'tmdbrecentweek':
 				return self.tmdb_trending_recentweek(folderName=folderName)
-			elif u in self.search_tmdb_link and url != 'tmdbrecentday' and url != 'tmdbrecentweek':
+			elif u in self.search_tmdb_link and url != 'tmdbrecentday' and url != 'tmdbrecentweek' and url != 'favourites_tvshows':
 				return self.getTMDb(url, folderName=folderName)
-			elif u in self.simkltrendingweek_link or u in self.simkltrendingmonth_link or u in self.simkltrendingtoday_link:
+			elif u in (self.simkltrendingweek_link or u in self.simkltrendingmonth_link or u in self.simkltrendingtoday_link) and url != 'favourites_tvshows':
 				return self.getSimkl(url, folderName=folderName)
 			if u in self.trakt_link and '/users/' in url:
 				try:
@@ -864,6 +866,34 @@ class TVshows:
 				log_utils.error()
 		return self.list
 
+	def favouriteTVShows(self, create_directory=True, folderName=''):
+			self.list = []
+			try:
+				from resources.lib.modules import favourites
+				results = favourites.getFavourites('tvshows')
+				if results:
+					for item in results:
+						try:
+							values = {}
+							values['title'] = item[1].get('title','')
+							values['premiered'] = item[1].get('year','')
+							values['year'] = item[1].get('year','')
+							values['imdb'] = item[1].get('imdb','')
+							values['tmdb'] = item[1].get('tmdb','')
+							self.list.append(values)
+						except:
+							from resources.lib.modules import log_utils
+							log_utils.error()
+				next = ''
+				for i in range(len(self.list)): self.list[i]['next'] = next
+				self.worker()
+				if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
+				return self.list
+			except:
+				from resources.lib.modules import log_utils
+				log_utils.error()
+				return []
+
 	def trakt_userList(self, url, create_directory=True, folderName=''):
 		self.list = []
 		q = dict(parse_qsl(urlsplit(url).query))
@@ -1391,8 +1421,11 @@ class TVshows:
 		else: watchedMenu, unwatchedMenu = getLS(32066), getLS(32067)
 		traktManagerMenu, queueMenu = getLS(32070), getLS(32065)
 		showPlaylistMenu, clearPlaylistMenu = getLS(35517), getLS(35516)
-		playRandom, addToLibrary = getLS(32535), getLS(32551)
+		playRandom, addToLibrary, addToFavourites, removeFromFavourites = getLS(32535), getLS(32551), getLS(40463), getLS(40468)
 		nextMenu, findSimilarMenu, trailerMenu = getLS(32053), getLS(32184), getLS(40431)
+		from resources.lib.modules import favourites
+		favoriteItems = favourites.getFavourites(content='tvshows')
+		favoriteItems = [x[1].get('tmdb') for x in favoriteItems]
 		for i in items:
 			try:
 				imdb, tmdb, tvdb, year, trailer = i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', ''), i.get('year', ''), i.get('trailer', '')
@@ -1456,6 +1489,13 @@ class TVshows:
 				# cm.append((showPlaylistMenu, 'RunPlugin(%s?action=playlist_Show)' % sysaddon))
 				# cm.append((clearPlaylistMenu, 'RunPlugin(%s?action=playlist_Clear)' % sysaddon))
 				cm.append((addToLibrary, 'RunPlugin(%s?action=library_tvshowToLibrary&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s)' % (sysaddon, systitle, year, imdb, tmdb, tvdb)))
+				if favoriteItems:
+					if tmdb in favoriteItems:
+						cm.append((removeFromFavourites, 'RunPlugin(%s?action=remove_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'tvshows')))
+					else:
+						cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'tvshows')))
+				else:
+					cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'tvshows')))
 				cm.append(('[COLOR red]Umbrella Settings[/COLOR]', 'RunPlugin(%s?action=tools_openSettings)' % sysaddon))
 ####################################
 				if trailer: meta.update({'trailer': trailer}) # removed temp so it's not passed to CM items, only skin
@@ -1568,7 +1608,7 @@ class TVshows:
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		addonThumb = control.addonThumb()
 		artPath = control.artPath()
-		queueMenu, playRandom, addToLibrary = getLS(32065), getLS(32535), getLS(32551)
+		queueMenu, playRandom, addToLibrary, addToFavourites = getLS(32065), getLS(32535), getLS(32551), getLS(40463)
 		likeMenu, unlikeMenu = getLS(32186), getLS(32187)
 		for i in items:
 			try:
@@ -1601,6 +1641,7 @@ class TVshows:
 					if getSetting('library.service.update') == 'true':
 						cm.append((addToLibrary, 'RunPlugin(%s?action=library_tvshowsToLibrary&url=%s&name=%s)' % (sysaddon, quote_plus(i['context']), name)))
 				except: pass
+				cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'tvshows')))
 				cm.append(('[COLOR red]Umbrella Settings[/COLOR]', 'RunPlugin(%s?action=tools_openSettings)' % sysaddon))
 				item = control.item(label=name, offscreen=True)
 				item.setArt({'icon': icon, 'poster': poster, 'thumb': icon, 'fanart': control.addonFanart(), 'banner': poster})
