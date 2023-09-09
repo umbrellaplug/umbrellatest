@@ -144,6 +144,12 @@ def router(argv2):
 	elif action == 'movies_favorites':
 		from resources.lib.modules import favourites
 		favourites.getFavouritesMoviesfromXML()
+	elif action == 'getFavouritesMovies':
+		from resources.lib.menus import movies
+		movies.Movies().get(url, folderName=folderName)
+	elif action == 'getFavouritesTVShows':
+		from resources.lib.menus import tvshows
+		tvshows.TVshows().get(url, folderName=folderName)
 	elif action == 'mdbTopListMovies':
 		from resources.lib.menus import movies
 		movies.Movies().getMBDTopLists(folderName=folderName)
@@ -307,6 +313,24 @@ def router(argv2):
 	elif action == 'seasons':
 		from resources.lib.menus import seasons
 		seasons.Seasons().get(tvshowtitle, year, imdb, tmdb, tvdb, params.get('art'))
+
+	####################################################
+	#---FAVOURITES
+	elif action == 'add_favorite':
+		from resources.lib.modules import favourites
+		favourites.addFavourite(params.get('meta'), params.get('content'))
+	elif action == 'remove_favorite':
+		from resources.lib.modules import favourites
+		favourites.deleteFavourite(params.get('meta'), params.get('content'))
+	elif action == 'add_favorite_episode':
+		from resources.lib.modules import favourites
+		favourites.addEpisodes(params.get('meta'), params.get('content'))
+	elif action == 'getFavouritesEpisodes':
+		from resources.lib.menus import episodes
+		episodes.Episodes().getFavoriteEpisodes(folderName=folderName)
+	if action == 'favouriteNavigator':
+			from resources.lib.menus import navigator
+			navigator.Navigator().favourites(folderName=folderName)
 
 	####################################################
 	#---EPISODES

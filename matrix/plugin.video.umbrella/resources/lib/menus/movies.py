@@ -154,21 +154,24 @@ class Movies:
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 
 	def get(self, url, idx=True, create_directory=True, folderName=''):
+		#import web_pdb; web_pdb.set_trace()
 		self.list = []
 		try:
 			try: url = getattr(self, url + '_link')
 			except: pass
 			try: u = urlparse(url).netloc.lower()
 			except: pass
-			if url == 'traktbasedonrecent':
+			if url == 'favourites_movies':
+				return self.favouriteMovies(folderName=folderName)
+			elif url == 'traktbasedonrecent':
 				return self.trakt_based_on_recent(folderName=folderName)
 			elif url == 'traktbasedonsimilar':
 				return self.trakt_based_on_similar(folderName=folderName)
-			if url == 'tmdbrecentday':
+			elif url == 'tmdbrecentday':
 				return self.tmdb_trending_recentday(folderName=folderName)
-			if url == 'tmdbrecentweek':
+			elif url == 'tmdbrecentweek':
 				return self.tmdb_trending_recentweek(folderName=folderName)
-			elif u in self.search_tmdb_link and url != 'tmdbrecentday' and url != 'tmdbrecentweek':
+			elif u in self.search_tmdb_link and url != 'tmdbrecentday' and url != 'tmdbrecentweek' and url != 'favourites_movies':
 				return self.getTMDb(url, folderName=folderName)
 			elif u in self.simkltrendingweek_link or u in self.simkltrendingmonth_link or u in self.simkltrendingtoday_link:
 				return self.getSimkl(url, folderName=folderName)
@@ -397,6 +400,35 @@ class Movies:
 		if self.list is None: self.list = []
 		if create_directory: self.movieDirectory(self.list, folderName=folderName)
 		return self.list
+
+	def favouriteMovies(self, create_directory=True, folderName=''):
+		self.list = []
+		try:
+			from resources.lib.modules import favourites
+			results = favourites.getFavourites('movies')
+			if results:
+				for item in results:
+					try:
+						values = {}
+						values['title'] = item[1].get('title','')
+						values['premiered'] = item[1].get('year','')
+						values['year'] = item[1].get('year','')
+						values['imdb'] = item[1].get('imdb','')
+						values['tmdb'] = item[1].get('tmdb','')
+						self.list.append(values)
+					except:
+						from resources.lib.modules import log_utils
+						log_utils.error()
+			next = ''
+			for i in range(len(self.list)): self.list[i]['next'] = next
+			self.worker()
+			if self.list is None: self.list = []
+			if create_directory: self.movieDirectory(self.list, folderName=folderName)
+			return self.list
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+			return []
 
 	def trakt_based_on_recent(self, create_directory=True, folderName=''):
 		self.list = []
@@ -1724,9 +1756,12 @@ class Movies:
 		if trakt.getTraktIndicatorsInfo(): watchedMenu, unwatchedMenu = getLS(32068), getLS(32069)
 		else: watchedMenu, unwatchedMenu = getLS(32066), getLS(32067)
 		playlistManagerMenu, queueMenu, trailerMenu = getLS(35522), getLS(32065), getLS(40431)
-		traktManagerMenu, addToLibrary = getLS(32070), getLS(32551)
+		traktManagerMenu, addToLibrary, addToFavourites, removeFromFavourites = getLS(32070), getLS(32551), getLS(40463), getLS(40468)
 		nextMenu, clearSourcesMenu = getLS(32053), getLS(32611)
 		rescrapeMenu, findSimilarMenu = getLS(32185), getLS(32184)
+		from resources.lib.modules import favourites
+		favoriteItems = favourites.getFavourites(content='movies')
+		favoriteItems = [x[1].get('imdb') for x in favoriteItems]
 		for i in items:
 			try:
 				imdb, tmdb, title, year = i.get('imdb', ''), i.get('tmdb', ''), i['title'], i.get('year', '')
@@ -1790,6 +1825,13 @@ class Movies:
 				cm.append((playlistManagerMenu, 'RunPlugin(%s?action=playlist_Manager&name=%s&url=%s&meta=%s&art=%s)' % (sysaddon, sysname, sysurl, sysmeta, sysart)))
 				cm.append((queueMenu, 'RunPlugin(%s?action=playlist_QueueItem&name=%s)' % (sysaddon, sysname)))
 				cm.append((addToLibrary, 'RunPlugin(%s?action=library_movieToLibrary&name=%s&title=%s&year=%s&imdb=%s&tmdb=%s)' % (sysaddon, sysname, systitle, year, imdb, tmdb)))
+				if favoriteItems:
+					if imdb in favoriteItems:
+						cm.append((removeFromFavourites, 'RunPlugin(%s?action=remove_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'movies')))
+					else:
+						cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'movies')))
+				else:
+					cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'movies')))
 				cm.append((findSimilarMenu, 'Container.Update(%s?action=movies&url=%s)' % (sysaddon, quote_plus('https://api.trakt.tv/movies/%s/related?limit=20&page=1,return' % imdb))))
 				if i.get('belongs_to_collection', ''):
 					cm.append(('Browse Collection', 'Container.Update(%s?action=collections&url=%s)' % (
@@ -1881,8 +1923,11 @@ class Movies:
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		addonThumb = control.addonThumb()
 		artPath = control.artPath()
-		queueMenu, playRandom, addToLibrary = getLS(32065), getLS(32535), getLS(32551)
+		queueMenu, playRandom, addToLibrary, addToFavourites, removeFromFavourites = getLS(32065), getLS(32535), getLS(32551), getLS(40463), getLS(40468)
 		likeMenu, unlikeMenu = getLS(32186), getLS(32187)
+		from resources.lib.modules import favourites
+		favoriteItems = favourites.getFavourites(content='movies')
+		favoriteItems = [x[1].get('imdb') for x in favoriteItems]
 		for i in items:
 			try:
 				content = i.get('content', '')

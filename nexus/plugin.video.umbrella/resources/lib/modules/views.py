@@ -47,8 +47,6 @@ def clearViews():
 def addView(content):
 	try:
 		skin = control.skin
-		from resources.lib.modules import log_utils
-		log_utils.log('Add View Container View: %s' % str(control.getCurrentViewId()))
 		record = (skin, content, str(control.getCurrentViewId()))
 		control.makeFile(control.dataPath)
 		dbcon = db.connect(control.viewsFile)

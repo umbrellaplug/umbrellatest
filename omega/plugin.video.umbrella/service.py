@@ -18,6 +18,7 @@ LOGDEBUG = log_utils.LOGDEBUG
 properties = [
 	'context.umbrella.settings',
 	'context.umbrella.addtoLibrary',
+	'context.umbrella.addtoFavourite',
 	'context.umbrella.playTrailer',
 	'context.umbrella.traktManager',
 	'context.umbrella.clearProviders',

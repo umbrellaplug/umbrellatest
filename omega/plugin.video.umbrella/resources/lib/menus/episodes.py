@@ -655,6 +655,51 @@ class Episodes:
 		[i.join() for i in threads]
 		return self.list
 
+	def getFavoriteEpisodes(self, create_directory=True, folderName=''):
+		self.list = []
+		from resources.lib.modules import favourites
+		items = favourites.getFavourites(content='episode')
+		def items_list(i):
+			values = i[1]
+			tmdb, tvdb = i[1].get('tmdb'), i[1].get('tvdb')
+			try:
+				itemyear = tmdb_indexer().get_showSeasons_meta(tmdb)
+				seasonEpisodes = cache.get(tmdb_indexer().get_seasonEpisodes_meta, 96, tmdb, i[1].get('season'))
+				if not seasonEpisodes: return
+				try: episode_meta = [x for x in seasonEpisodes.get('episodes') if x.get('episode') == i[1].get('episode')][0] # to pull just the episode meta we need
+				except: return
+				if 'premiered' in values and values.get('premiered'):
+					episode_meta.pop('premiered') # prefer Trakt premiered because TMDb is fucked for some shows like Family Law off by months
+					seasonEpisodes.pop('premiered') # this is series premiered so pop
+				values.update(seasonEpisodes)
+				values.update(episode_meta)
+				values['year'] = itemyear.get('year')
+				duration = values['duration']
+				if duration:
+					values.update({'duration': int(duration)*60})
+				for k in ('episodes',): values.pop(k, None) # pop() keys from seasonEpisodes that are not needed anymore
+				try: # used for fanart fetch since not available in seasonEpisodes request
+					art = cache.get(tmdb_indexer().get_art, 96, tmdb)
+					values.update(art)
+				except: pass
+				if self.enable_fanarttv:
+					extended_art = fanarttv_cache.get(FanartTv().get_tvshow_art, 336, tvdb)
+					if extended_art: values.update(extended_art)
+				values['extended'] = True # used to bypass calling "super_info()", super_info() no longer used as of 4-12-21 so this could be removed.
+				self.list.append(values)
+			except:
+				from resources.lib.modules import log_utils
+				log_utils.error()
+		threads = []
+		append = threads.append
+		for i in items:
+			append(Thread(target=items_list, args=(i,)))
+		[i.start() for i in threads]
+		[i.join() for i in threads]
+		if self.list is None: self.list = []
+		if create_directory: self.episodeDirectory(self.list, folderName=folderName)
+		return self.list
+
 	def tvmaze_list(self, url, limit):
 		try:
 			result = client.request(url, error=True)
@@ -793,10 +838,12 @@ class Episodes:
 		else:
 			watchedMenu, unwatchedMenu = getLS(32066), getLS(32067)
 		traktManagerMenu, playlistManagerMenu, queueMenu = getLS(32070), getLS(35522), getLS(32065)
-		tvshowBrowserMenu, addToLibrary = getLS(32071), getLS(32551)
+		tvshowBrowserMenu, addToLibrary, addToFavourites, removeFromFavourites = getLS(32071), getLS(32551), getLS(40463), getLS(40468)
 		clearSourcesMenu, rescrapeMenu, progressRefreshMenu = getLS(32611), getLS(32185), getLS(32194)
 		trailerMenu = getLS(40431)
-
+		from resources.lib.modules import favourites
+		favoriteItems = favourites.getFavourites(content='episode')
+		favoriteItems = [(x[1].get('imdb'), x[1].get('episode')) for x in favoriteItems]
 		for i in items:
 			try:
 
@@ -929,6 +976,13 @@ class Episodes:
 				cm.append((playlistManagerMenu, 'RunPlugin(%s?action=playlist_Manager&name=%s&url=%s&meta=%s&art=%s)' % (sysaddon, syslabelProgress, sysurl, sysmeta, sysart)))
 				cm.append((queueMenu, 'RunPlugin(%s?action=playlist_QueueItem&name=%s)' % (sysaddon, syslabelProgress)))
 				cm.append((addToLibrary, 'RunPlugin(%s?action=library_tvshowToLibrary&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s)' % (sysaddon, systvshowtitle, year, imdb, tmdb, tvdb)))
+				if favoriteItems:
+					if (imdb,episode) in favoriteItems:
+						cm.append((removeFromFavourites, 'RunPlugin(%s?action=remove_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'episode')))
+					else:
+						cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite_episode&meta=%s&content=%s)' % (sysaddon, sysmeta, 'episode')))
+				else:
+					cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite_episode&meta=%s&content=%s)' % (sysaddon, sysmeta, 'episode')))
 				if isMultiList and is_widget == False:
 					cm.append((tvshowBrowserMenu, 'Container.Update(%s?action=seasons&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&art=%s,return)' % (sysaddon, systvshowtitle, year, imdb, tmdb, tvdb, sysart)))
 					# cm.append((tvshowBrowserMenu, 'Container.Update(%s?action=episodes&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&meta=%s,return)' % (sysaddon, systvshowtitle, year, imdb, tmdb, tvdb, sysmeta)))

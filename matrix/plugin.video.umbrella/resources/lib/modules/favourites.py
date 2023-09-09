@@ -10,7 +10,7 @@ from xml.dom.minidom import parse as mdParse
 from urllib.parse import unquote
 
 dataPath = control.transPath(control.addonInfo('path'))
-favouritesFile = control.joinPath(dataPath, 'favourites.db')
+favouritesFile = control.favouritesFile
 progressFile = control.joinPath(dataPath, 'progress.db')
 
 
@@ -63,6 +63,7 @@ def addFavourite(meta, content):
 		dbcur.execute('''INSERT INTO %s Values (?, ?)''' % content, (id, repr(item)))
 		dbcur.connection.commit()
 		control.refresh()
+		control.trigger_widget_refresh()
 		control.notification(title=title, message=32117)
 	except: return
 	finally:
@@ -93,28 +94,37 @@ def addEpisodes(meta, content):
 		control.makeFile(dataPath)
 		dbcon = database.connect(favouritesFile)
 		dbcur = dbcon.cursor()
-		dbcur.execute('''CREATE TABLE IF NOT EXISTS %s (id TEXT, items TEXT, UNIQUE(id));''' % content)
-		dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, id))
-		dbcur.execute('''INSERT INTO %s Values (?, ?)''' % content, (id, repr(item)))
+		dbcur.execute('''CREATE TABLE IF NOT EXISTS %s (id TEXT,season TEXT, episode TEXT, items TEXT, UNIQUE(id));''' % content)
+		dbcur.execute('''DELETE FROM %s WHERE id = "%s" and episode = "%s"''' % (content, id, episode))
+		dbcur.execute('''INSERT INTO %s Values (?, ?, ?)''' % content, (id, repr(item), episode))
 		dbcur.connection.commit()
 		control.refresh()
+		control.trigger_widget_refresh()
 		control.notification(title=title, message=32117)
 	except: return
 	finally:
 		dbcur.close() ; dbcon.close()
 
 def deleteFavourite(meta, content):
+	#import web_pdb; web_pdb.set_trace()
 	try:
 		meta = jsloads(meta)
 		if 'title' in meta: title = meta['title']
 		if 'tvshowtitle' in meta: title = meta['tvshowtitle']
 		dbcon = database.connect(favouritesFile)
 		dbcur = dbcon.cursor()
-		dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, meta['imdb']))
-		dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, meta['tvdb']))
-		dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, meta['tmdb']))
+		#dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, meta['imdb']))
+		#dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, meta['tvdb']))
+		#dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, meta['tmdb']))
+		if content == 'movies':
+			dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, meta['imdb']))
+		elif content =='tvshows':
+			dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, meta['imdb']))
+		elif content =='episode':
+			dbcur.execute('''DELETE FROM %s WHERE id = "%s" and episode = "%s"''' % (content, meta['imdb']))
 		dbcur.connection.commit()
 		control.refresh()
+		control.trigger_widget_refresh()
 		control.notification(title=title, message=32118)
 	except: return
 	finally:
@@ -148,3 +158,21 @@ def getFavouritesMoviesfromXML():
 			url = url[:-2]
 			url = unquote(url)
 		log_utils.log('Favorites: %s' % url, 1)
+
+def checkForFavourites(content=''):
+	favourites = False
+	try:
+		dbcon = database.connect(favouritesFile)
+		dbcur = dbcon.cursor()
+		if content == '':
+			items = dbcur.execute("SELECT * FROM sqlite_master WHERE type='table' AND (name='movies' OR name='episodes' or name='tvshows')").fetchall()
+			if len(items) > 0:
+				favourites = True
+		else:
+			items = dbcur.execute("SELECT * FROM '%s'" % content).fetchall()
+			if len(items) > 0:
+				favourites = True
+	except: favourites = False
+	finally:
+		dbcur.close() ; dbcon.close()
+	return favourites

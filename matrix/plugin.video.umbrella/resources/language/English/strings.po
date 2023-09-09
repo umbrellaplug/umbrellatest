@@ -127,7 +127,7 @@ msgid "My Ratings"
 msgstr ""
 
 msgctxt "#32026"
-msgid "Favorites"
+msgid "Favourites"
 msgstr ""
 
 msgctxt "#32027"
@@ -491,11 +491,11 @@ msgid "This feature is only supported in kodi 18 and beyond"
 msgstr ""
 
 msgctxt "#32117"
-msgid "Added to Favorites"
+msgid "Added to Favourites"
 msgstr ""
 
 msgctxt "#32118"
-msgid "Removed From Favorites"
+msgid "Removed From Favourites"
 msgstr ""
 
 msgctxt "#32119"
@@ -2248,7 +2248,7 @@ msgid "Importing TMDb Watchlist..."
 msgstr ""
 
 msgctxt "#32680"
-msgid "Importing TMDb Favorites..."
+msgid "Importing TMDb Favourites..."
 msgstr ""
 
 msgctxt "#32681"
@@ -4793,4 +4793,28 @@ msgstr ""
 
 msgctxt "#40462"
 msgid "Cache Functions"
+msgstr ""
+
+msgctxt "#40463"
+msgid "Add to Umbrella Favourites"
+msgstr ""
+
+msgctxt "#40464"
+msgid "Umbrella Favourites"
+msgstr ""
+
+msgctxt "#40465"
+msgid "Favourite Movies"
+msgstr ""
+
+msgctxt "#40466"
+msgid "Favourite TV Shows"
+msgstr ""
+
+msgctxt "#40467"
+msgid "Favourite Episodes"
+msgstr ""
+
+msgctxt "#40468"
+msgid "Remove from Umbrella Favourites"
 msgstr ""
