@@ -666,7 +666,7 @@ class Episodes:
 				itemyear = tmdb_indexer().get_showSeasons_meta(tmdb)
 				seasonEpisodes = cache.get(tmdb_indexer().get_seasonEpisodes_meta, 96, tmdb, i[3].get('season'))
 				if not seasonEpisodes: return
-				try: episode_meta = [x for x in seasonEpisodes.get('episodes') if x.get('episode') == i[3].get('episode')][0] # to pull just the episode meta we need
+				try: episode_meta = [x for x in seasonEpisodes.get('episodes') if int(x.get('episode')) == int(i[3].get('episode'))][0] # to pull just the episode meta we need
 				except: return
 				if 'premiered' in values and values.get('premiered'):
 					episode_meta.pop('premiered') # prefer Trakt premiered because TMDb is fucked for some shows like Family Law off by months

@@ -12,6 +12,8 @@ from urllib.parse import unquote
 dataPath = control.transPath(control.addonInfo('path'))
 favouritesFile = control.favouritesFile
 progressFile = control.joinPath(dataPath, 'progress.db')
+refreshWidget = control.setting('favourite.refreshwidgets') == 'true'
+refreshContainer = control.setting('favourite.refreshcontainer') == 'true'
 
 
 def getFavourites(content):
@@ -65,8 +67,8 @@ def addFavourite(meta, content):
 		dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, id))
 		dbcur.execute('''INSERT INTO %s Values (?, ?)''' % content, (id, repr(item)))
 		dbcur.connection.commit()
-		control.refresh()
-		control.trigger_widget_refresh()
+		if refreshWidget: control.trigger_widget_refresh()
+		if refreshContainer: control.refresh()
 		control.notification(title=title, message=32117)
 	except: return
 	finally:
@@ -106,8 +108,8 @@ def addEpisodes(meta, content):
 		dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, id))
 		dbcur.execute('''INSERT INTO %s Values (?, ?, ?, ?, ?)''' % content, (id,str(season), str(episode), repr(item), str(imdb)))
 		dbcur.connection.commit()
-		control.refresh()
-		control.trigger_widget_refresh()
+		if refreshWidget: control.trigger_widget_refresh()
+		if refreshContainer: control.refresh()
 		control.notification(title=title, message=32117)
 	except: return
 	finally:
@@ -131,8 +133,8 @@ def deleteFavourite(meta, content):
 			id = meta['imdb']+str(meta['season'])+str(meta['episode'])
 			dbcur.execute('''DELETE FROM %s WHERE id = "%s"''' % (content, id))
 		dbcur.connection.commit()
-		control.refresh()
-		control.trigger_widget_refresh()
+		if refreshWidget: control.trigger_widget_refresh()
+		if refreshContainer: control.refresh()
 		control.notification(title=title, message=32118)
 	except: return
 	finally:

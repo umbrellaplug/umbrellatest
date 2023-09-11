@@ -14,6 +14,7 @@ import os
 
 if __name__ == '__main__':
 	item = sys.listitem
+	
 	# message = item.getLabel()
 	path = item.getPath()
 	plugin = 'plugin://plugin.video.umbrella/'

@@ -4818,3 +4818,15 @@ msgstr ""
 msgctxt "#40468"
 msgid "Remove from Umbrella Favourites"
 msgstr ""
+
+msgctxt "#40469"
+msgid "Refresh container on add / remove from favourites"
+msgstr ""
+
+msgctxt "#40470"
+msgid "Refresh widgets on add / remove from favourites"
+msgstr ""
+
+msgctxt "#40471"
+msgid "Add Library Item to Umbrella Favourites"
+msgstr ""

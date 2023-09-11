@@ -1,4 +1,5 @@
-[B]Update - v6.6.308 - September 9th, 2023[/B]
+[B]Update - v6.6.309 - September 11th, 2023[/B]
+--[Enhancement] Added Movies and Episodes from Library added to Favourites.
 --[Enhancement] Added Umbrella Favourites
 --[Enhancement] Added ability to show titles on all sections. (Remake any widgets made from Umbrella)
 --[Enhancement] Changed text on resolving popups to no longer be bold.

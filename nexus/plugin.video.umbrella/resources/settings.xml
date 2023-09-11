@@ -424,7 +424,16 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				
+				<setting id="favourite.refreshwidgets" type="boolean" label="40470" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="favourite.refreshcontainer" type="boolean" label="40469" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="2" label="35055">
 				<setting id="sort.imdbmovies.type" type="integer" label="35054" help="">
@@ -5285,6 +5294,12 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="context.umbrella.addLibtoFavourite" type="boolean" label="40471" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+
 				<setting id="context.umbrella.playTrailer" type="boolean" label="40431" help="">
 					<level>0</level>
 					<default>true</default>
