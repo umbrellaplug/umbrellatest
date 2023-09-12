@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.309">
+<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.310">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" />
@@ -79,16 +79,16 @@
 					[String.IsEqual(ListItem.dbtype,episode) | String.IsEqual(ListItem.dbtype,movie)]]
 				</visible>
 			</item>
-			<item library="resources\lib\context\libRescrape.py">
-				<label>$INFO[Window(home).Property(context.umbrella.showUmbrella)]Rescrape Lib Item</label>
+			<item library="resources\lib\context\addLibtoFavourite.py">
+				<label>$INFO[Window(home).Property(context.umbrella.showUmbrella)]Add/Remove Favourite</label>
 				<visible>
 					[String.Contains(Container.FolderPath,videodb://) | String.Contains(Container.ListItem.FolderPath,videodb://)] +
 					[String.Contains(Container.ListItem.Path,Window(home).Property(umbrella.movieLib.path)) | String.Contains(Container.ListItem.Path,Window(home).Property(umbrella.tvLib.path))] +
 					[String.IsEqual(ListItem.dbtype,episode) | String.IsEqual(ListItem.dbtype,movie)]
 				</visible>
 			</item>
-			<item library="resources\lib\context\addLibtoFavourite.py">
-				<label>$INFO[Window(home).Property(context.umbrella.showUmbrella)]Add/Remove Favourite</label>
+			<item library="resources\lib\context\libRescrape.py">
+				<label>$INFO[Window(home).Property(context.umbrella.showUmbrella)]Rescrape Lib Item</label>
 				<visible>
 					[String.Contains(Container.FolderPath,videodb://) | String.Contains(Container.ListItem.FolderPath,videodb://)] +
 					[String.Contains(Container.ListItem.Path,Window(home).Property(umbrella.movieLib.path)) | String.Contains(Container.ListItem.Path,Window(home).Property(umbrella.tvLib.path))] +
@@ -173,7 +173,8 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.309 - September 11th, 2023[/B]
+[B]Update - v6.6.310 - September 12th, 2023[/B]
+--[Enhancement] Added sorting for favourites.
 --[Enhancement] Added Movies and Episodes from Library added to Favourites.
 --[Enhancement] Added Umbrella Favourites
 --[Enhancement] Added ability to show titles on all sections. (Remake any widgets made from Umbrella)

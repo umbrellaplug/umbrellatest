@@ -887,6 +887,7 @@ class TVshows:
 				next = ''
 				for i in range(len(self.list)): self.list[i]['next'] = next
 				self.worker()
+				self.sort(type="shows.favourite")
 				if create_directory: self.tvshowDirectory(self.list, folderName=folderName)
 				return self.list
 			except:

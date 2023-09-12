@@ -422,6 +422,7 @@ class Movies:
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
 			if self.list is None: self.list = []
+			self.sort(type="movies.favourites")
 			if create_directory: self.movieDirectory(self.list, folderName=folderName)
 			return self.list
 		except:

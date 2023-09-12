@@ -4830,3 +4830,7 @@ msgstr ""
 msgctxt "#40471"
 msgid "Add Library Item to Umbrella Favourites"
 msgstr ""
+
+msgctxt "#40472"
+msgid "Favourites Sorting"
+msgstr ""
