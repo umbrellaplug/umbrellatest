@@ -525,6 +525,9 @@ def router(argv2):
 			from resources.lib.menus import tvshows
 			tvshows.TVshows().get(url, folderName=folderName)
 
+	elif action == 'trakt_Navigator':
+		from resources.lib.menus import navigator
+		navigator.Navigator().traktLists(folderName=folderName)
 	####################################################
 	#---YouTube
 	####################################################

@@ -69,7 +69,6 @@ def routing():
 
         return SPaths().open_search_window()
 
-
     # if mode == "test_api":
     #     from modules.OMDb import test_api
 

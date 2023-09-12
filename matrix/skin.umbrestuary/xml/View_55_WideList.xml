@@ -24,13 +24,6 @@
 					<ondown>55</ondown>
 					<viewtype label="$LOCALIZE[31107]">list</viewtype>
 					<focusedlayout height="85" condition="Container.Content(tvshows) | Container.Content(seasons) | Container.Content(episodes) | Container.Content(movies) | Container.Content(musicvideos) | Container.Content(videos) | Container.Content(games) | Window.IsActive(videoplaylist) | Window.IsActive(musicplaylist)">
-						<!-- <control type="image">
-							<left>0</left>
-							<right>0</right>
-							<bottom>0</bottom>
-							<texture colordiffuse="button_focus">masks/focus-long.png</texture>
-							<visible>Control.HasFocus(55)</visible>
-						</control> -->
 						<control type="image">
 							<left>35</left>
 							<centertop>50%</centertop>
@@ -42,9 +35,10 @@
 							<left>105</left>
 							<top>0</top>
 							<bottom>0</bottom>
-							<right>40</right>
+							<right>260</right>
 							<aligny>center</aligny>
 							<scroll>true</scroll>
+							<scrollspeed>160</scrollspeed>
 							<font>font52_title</font>
 							<label>$VAR[ListLabelVar]</label>
 							<shadowcolor>text_shadow</shadowcolor>
@@ -113,7 +107,7 @@
 							<right>40</right>
 							<aligny>center</aligny>
 							<font>font32</font>
-							<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+							<textcolor>unfocused_text</textcolor>
 							<label>$VAR[ListLabelVar]</label>
 							<shadowcolor>text_shadow</shadowcolor>
 						</control>
@@ -125,7 +119,7 @@
 							<align>right</align>
 							<aligny>center</aligny>
 							<font>font32</font>
-							<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+							<textcolor>unfocused_text</textcolor>
 							<label>$INFO[ListItem.Rating]</label>
 							<visible>!String.IsEqual(ListItem.DBtype,tvshow) + !String.IsEqual(ListItem.DbType,season)</visible>
 							<shadowcolor>text_shadow</shadowcolor>
@@ -138,7 +132,7 @@
 							<align>right</align>
 							<aligny>center</aligny>
 							<font>font32</font>
-							<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+							<textcolor>unfocused_text</textcolor>
 							<label>$INFO[ListItem.Property(WatchedEpisodes)]$INFO[ListItem.Property(TotalEpisodes), / ,]</label>
 							<visible>String.IsEqual(ListItem.DBtype,season)</visible>
 							<shadowcolor>text_shadow</shadowcolor>
@@ -152,7 +146,7 @@
 								<right>125</right>
 								<align>right</align>
 								<aligny>center</aligny>
-								<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+								<textcolor>unfocused_text</textcolor>
 								<label>$INFO[ListItem.Property(WatchedEpisodes)]$INFO[ListItem.Property(TotalEpisodes), / ,]</label>
 							</control>
 							<control type="label">
@@ -162,20 +156,13 @@
 								<right>40</right>
 								<align>right</align>
 								<aligny>center</aligny>
-								<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+								<textcolor>unfocused_text</textcolor>
 								<label>  •  $INFO[ListItem.Rating]</label>
 							</control>
 							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 					</itemlayout>
 					<focusedlayout height="85" condition="!Container.Content(songs) + !Container.Content(addons) + !Container.Content(playlists) + !Container.Content() + !Container.Content(tvshows) + !Container.Content(seasons) + !Container.Content(episodes) + !Container.Content(movies) + !Container.Content(musicvideos) + !Container.Content(videos)+ !Container.Content(favourites)">
-						<!-- <control type="image">
-							<left>0</left>
-							<right>0</right>
-							<bottom>0</bottom>
-							<texture colordiffuse="button_focus">masks/focus-long.png</texture>
-							<visible>Control.HasFocus(55)</visible>
-						</control> -->
 						<control type="image">
 							<left>35</left>
 							<centertop>50%</centertop>
@@ -220,7 +207,7 @@
 							<right>40</right>
 							<aligny>center</aligny>
 							<font>font32</font>
-							<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+							<textcolor>unfocused_text</textcolor>
 							<label>$VAR[ListLabelVar]</label>
 							<shadowcolor>text_shadow</shadowcolor>
 						</control>
@@ -232,19 +219,12 @@
 							<align>right</align>
 							<aligny>center</aligny>
 							<font>font32</font>
-							<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+							<textcolor>unfocused_text</textcolor>
 							<label>$VAR[ListLabel2Var]</label>
 							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 					</itemlayout>
 					<focusedlayout height="85" top="200" condition="Container.Content(playlists) | Container.Content(favourites) | Container.Content()">
-						<!-- <control type="image">
-							<left>0</left>
-							<right>0</right>
-							<bottom>0</bottom>
-							<texture colordiffuse="button_focus">masks/focus-long.png</texture>
-							<visible>Control.HasFocus(55)</visible>
-						</control> -->
 						<control type="image">
 							<left>20</left>
 							<centertop>50%</centertop>
@@ -282,7 +262,7 @@
 							<bottom>0</bottom>
 							<right>100</right>
 							<aligny>center</aligny>
-							<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+							<textcolor>unfocused_text</textcolor>
 							<label>$INFO[ListItem.Label]</label>
 							<shadowcolor>text_shadow</shadowcolor>
 						</control>
@@ -339,12 +319,6 @@
 	</include>
 	<include name="AddonsListLayout">
 		<focusedlayout height="85" condition="Container.Content(addons)">
-			<!-- <control type="image">
-				<left>0</left>
-				<right>0</right>
-				<texture colordiffuse="button_focus">masks/focus-long.png</texture>
-				<visible>Control.hasFocus(55)</visible>
-			</control> -->
 			<control type="image">
 				<left>20</left>
 				<width>37</width>
@@ -390,7 +364,7 @@
 				<left>75</left>
 				<right>40</right>
 				<aligny>center</aligny>
-				<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+				<textcolor>unfocused_text</textcolor>
 				<label>$INFO[ListItem.Label]</label>
 			</control>
 			<control type="label">
@@ -400,7 +374,7 @@
 				<aligny>center</aligny>
 				<font>font27</font>
 				<label>$VAR[AddonsLabel2Var]</label>
-				<textcolor>$VAR[UnfocusedTextColor]</textcolor>
+				<textcolor>unfocused_text</textcolor>
 				<shadowcolor>text_shadow</shadowcolor>
 			</control>
 			<control type="image">

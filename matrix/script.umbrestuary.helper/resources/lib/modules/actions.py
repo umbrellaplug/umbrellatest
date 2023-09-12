@@ -6,7 +6,7 @@ from xbmc import executebuiltin, getInfoLabel
 
 def person_search(params):
     return executebuiltin(
-        "RunPlugin(plugin://plugin.video.umbrella/?action=person_search&query=%s)"
+        "RunPlugin(plugin://plugin.video.umbrella/?mode=person_search_choice&query=%s)"
         % params["query"]
     )
 

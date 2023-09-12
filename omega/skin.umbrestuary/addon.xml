@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="skin.umbrestuary" version="1.0.182" name="Umbrestuary"
+<addon id="skin.umbrestuary" version="1.0.18k" name="umbrestuary"
 	provider-name="Ivar Brandt, Umbrella">
 	<requires>
 		<import addon="xbmc.gui" version="5.16.0" />

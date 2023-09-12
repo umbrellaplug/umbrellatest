@@ -296,6 +296,17 @@ class Navigator:
 		if self.useContainerTitles: control.setContainerName(folderName)
 		self.endDirectory()
 
+	def traktLists(self, lite=False, folderName=''):
+		self.addDirectoryItem(getLS(32001)+' - '+getLS(32417), 'movies_PublicLists&url=trakt_popularLists&folderName=%s' % getLS(32417), 'trakt.png' if self.iconLogos else 'movies.png', 'DefaultMovies.png')
+		self.addDirectoryItem(getLS(32001)+' - '+getLS(32418), 'movies_PublicLists&url=trakt_trendingLists&folderName=%s' % getLS(32418), 'trakt.png' if self.iconLogos else 'movies.png', 'DefaultMovies.png')
+		self.addDirectoryItem(getLS(32001)+' - '+getLS(32419), 'movies_SearchLists&media_type=movies', 'trakt.png' if self.iconLogos else 'movies.png', 'DefaultMovies.png', isFolder=False)
+		self.addDirectoryItem('My Liked Movie Lists', 'movies_LikedLists&folderName=My Liked Movie Lists', 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(32002)+ ' - '+getLS(32417), 'tv_PublicLists&url=trakt_popularLists&folderName=%s' % getLS(32417), 'trakt.png' if self.iconLogos else 'tvshows.png', 'DefaultMovies.png')
+		self.addDirectoryItem(getLS(32002)+ ' - '+getLS(32418), 'tv_PublicLists&url=trakt_trendingLists&folderName=%s' % getLS(32418), 'trakt.png' if self.iconLogos else 'tvshows.png', 'DefaultMovies.png')
+		self.addDirectoryItem(getLS(32002)+ ' - '+getLS(32419), 'tv_SearchLists&media_type=shows', 'trakt.png' if self.iconLogos else 'tvshows.png', 'DefaultMovies.png', isFolder=False)	
+		self.addDirectoryItem('My Liked TV Show Lists', 'shows_LikedLists&folderName=My Liked TV Show Lists', 'trakt.png', 'trakt.png', queue=True)
+		self.endDirectory()
+
 	def traktSearchLists(self, media_type):
 		k = control.keyboard('', getLS(32010))
 		k.doModal()

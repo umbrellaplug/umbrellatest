@@ -598,7 +598,7 @@ class CPaths:
         widget_type = self.widget_type()
         if widget_type[0] == "Category" and dialog.yesno(
             "Stacked widget",
-            "Make [COLOR button_focus][B]%s[/B][/COLOR] a stacked widget?"
+            "Make [COLOR accent_color][B]%s[/B][/COLOR] a stacked widget?"
             % cpath_header,
         ):
             widget_type = self.widget_type(label="Choose stacked widget display type")
