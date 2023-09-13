@@ -78,7 +78,7 @@
 						<onleft>4000</onleft>
 						<onright>4000</onright>
 						<ondown>5000</ondown>
-						<texturefocus colordiffuse="button_focus" border="21">masks/landscape.png</texturefocus>
+						<texturefocus colordiffuse="button_focus" border="21">masks/landscapeline.png</texturefocus>
 						<texturenofocus colordiffuse="button_focus2" border="21">masks/landscape-unfocused.png</texturenofocus>
 						<visible>Integer.IsGreater(Container(4000).NumItems,0)</visible>
 					</control>

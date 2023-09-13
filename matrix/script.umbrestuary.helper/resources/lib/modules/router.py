@@ -69,17 +69,7 @@ def routing():
 
         return SPaths().open_search_window()
 
-    # if mode == "test_api":
-    #     from modules.OMDb import test_api
-
-    #     return test_api()
-
     if mode == "set_api_key":
         from modules.OMDb import set_api_key
 
         return set_api_key()
-
-    # if mode == "start_service":
-    #     from modules.service import ratings_service
-
-    #     return ratings_service()

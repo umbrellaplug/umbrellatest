@@ -655,6 +655,7 @@
 					<width>1400</width>
 					<label>$PARAM[main_label]</label>
 					<font>font30_title</font>
+					<textcolor>unfocused_text</textcolor>
 					<shadowcolor>text_shadow</shadowcolor>
 					<height>35</height>
 					<scroll>true</scroll>
@@ -662,6 +663,7 @@
 				</control>
 				<control type="label" id="$PARAM[id]">
 					<label>$PARAM[sub_label]</label>
+					<textcolor>accent_color</textcolor>
 					<font>font12</font>
 					<left>85</left>
 					<shadowcolor>text_shadow</shadowcolor>
@@ -1056,16 +1058,6 @@
 						<texture>icons/power.png</texture>
 						<visible>System.HasAlarm(shutdowntimer)</visible>
 					</control>
-					
-					<!-- <control type="image">
-						<top>1</top>
-						<width>50</width>
-						<height>50</height>
-						<fadetime>300</fadetime>
-						<aspectratio aligny="center" align="left">keep</aspectratio>
-						<texture colordiffuse="unfocused_text">$INFO[Weather.FanartCode,weather/small/,.png]</texture>
-						<visible>Skin.HasSetting(show_weatherinfo) + Weather.IsFetched + ![String.IsEqual(Weather.FanartCode,na)]</visible>
-					</control> -->
 					<control type="image">
 						<top>8</top>
 						<left>-20</left>
