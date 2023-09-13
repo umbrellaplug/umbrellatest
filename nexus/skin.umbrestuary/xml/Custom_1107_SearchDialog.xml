@@ -28,26 +28,16 @@
 						<onclick>Dialog.Close(all)</onclick>
 						<onclick>ActivateWindow(Videos,"plugin://plugin.video.umbrella/?action=tvSearchterm&amp;name=",return)</onclick>
 					</item>
-					<!--<item>
-						<label>Search movie collections</label>
+					<item>
+						<label>Search actors/actresses Movies</label>
 						<onclick>Dialog.Close(all)</onclick>
-						<onclick>ActivateWindow(Videos,"plugin://plugin.video.fen/?mode=history.search&amp;action=tmdb_movie_sets&amp;iconImage=https%3A%2F%2Fi.imgur.com%2Fr0ITv0C.png",return)</onclick>
+						<onclick>ActivateWindow(Videos,"plugin://plugin.video.umbrella/?action=actorSearchMovies&amp;name=",return)</onclick>
 					</item>
 					<item>
-						<label>Search actors/actresses</label>
+						<label>Search actors/actresses TV</label>
 						<onclick>Dialog.Close(all)</onclick>
-						<onclick>ActivateWindow(Videos,"plugin://plugin.video.fen/?mode=history.search&amp;action=people&amp;iconImage=https%3A%2F%2Fi.imgur.com%2FF1EZyWz.png",return)</onclick>
+						<onclick>ActivateWindow(Videos,"plugin://plugin.video.umbrella/?action=actorSearchTV&amp;name=",return)</onclick>
 					</item>
-					<item>
-						<label>Search keywords (movies)</label>
-						<onclick>Dialog.Close(all)</onclick>
-						<onclick>ActivateWindow(Videos,"plugin://plugin.video.fen/?mode=history.search&amp;action=imdb_keyword_movie&amp;iconImage=https%3A%2F%2Fi.imgur.com%2Fz4C3PAx.png",return)</onclick>
-					</item>
-					<item>
-						<label>Search keywords (shows)</label>
-						<onclick>Dialog.Close(all)</onclick>
-						<onclick>ActivateWindow(Videos,"plugin://plugin.video.fen/?mode=history.search&amp;action=imdb_keyword_tvshow&amp;iconImage=https%3A%2F%2Fi.imgur.com%2Fz4C3PAx.png",return)</onclick>
-					</item>-->
 					<item>
 						<label>$LOCALIZE[31145]</label>
 						<onclick>Dialog.Close(all)</onclick>

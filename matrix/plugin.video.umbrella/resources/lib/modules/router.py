@@ -105,6 +105,14 @@ def router(argv2):
 	elif action == 'moviePersons':
 		from resources.lib.menus import movies
 		movies.Movies().persons(url, folderName=folderName)
+	elif action == 'actorSearchMovies':
+		link = 'https://www.imdb.com/search/name/?count=100&name='
+		name = params.get('name')
+		if name:
+			name = quote_plus(name.strip())
+			url = link + name
+			from resources.lib.menus import movies
+			movies.Movies().persons(url, folderName=folderName)
 	elif action == 'moviesUnfinished':
 		from resources.lib.menus import movies
 		movies.Movies().unfinished(url, folderName=folderName)
@@ -273,6 +281,14 @@ def router(argv2):
 	elif action == 'tvPersons':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().persons(url)
+	elif action == 'actorSearchTV':
+		link = 'https://www.imdb.com/search/name/?count=100&name='
+		name = params.get('name')
+		if name:
+			name = quote_plus(name.strip())
+			url = link + name
+			from resources.lib.menus import tvshows
+			tvshows.TVshows().persons(url, folderName=folderName)
 	elif action == 'tvUserlists':
 		from resources.lib.menus import tvshows
 		tvshows.TVshows().userlists(folderName=folderName, create_directory=True)

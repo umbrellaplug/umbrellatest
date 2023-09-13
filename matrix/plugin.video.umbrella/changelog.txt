@@ -1,5 +1,6 @@
-[B]Update - v6.6.311 - September 12th, 2023[/B]
+[B]Update - v6.6.312 - September 13th, 2023[/B]
 --[Enhancement] Added Trakt section for skin.
+--[Enhancement] Added People search for skin.
 --[Enhancement] Added sorting for favourites.
 --[Enhancement] Added Movies and Episodes from Library added to Favourites.
 --[Enhancement] Added Umbrella Favourites

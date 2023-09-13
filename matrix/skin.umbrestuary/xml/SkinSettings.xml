@@ -339,18 +339,18 @@
 					<selected>!Skin.HasSetting(HideTVShowResults)</selected>
 					<visible>!Skin.HasSetting(NoSearchResultsWindow)</visible>
 				</control>
+				<control type="radiobutton" id="6475">
+					<label>   - Actors/Actresses Movies</label>
+					<include>DefaultSettingButton</include>
+					<onclick>Skin.ToggleSetting(HidePeopleResults)</onclick>
+					<selected>!Skin.HasSetting(HidePeopleResults)</selected>
+					<visible>!Skin.HasSetting(NoSearchResultsWindow)</visible>
+				</control>
 				<!--<control type="radiobutton" id="6474">
 					<label>   - Collections</label>
 					<include>DefaultSettingButton</include>
 					<onclick>Skin.ToggleSetting(HideCollectionsResults)</onclick>
 					<selected>!Skin.HasSetting(HideCollectionsResults)</selected>
-					<visible>!Skin.HasSetting(NoSearchResultsWindow)</visible>
-				</control>
-				<control type="radiobutton" id="6475">
-					<label>   - Actors/Actresses</label>
-					<include>DefaultSettingButton</include>
-					<onclick>Skin.ToggleSetting(HidePeopleResults)</onclick>
-					<selected>!Skin.HasSetting(HidePeopleResults)</selected>
 					<visible>!Skin.HasSetting(NoSearchResultsWindow)</visible>
 				</control>
 				<control type="radiobutton" id="6476">
