@@ -152,6 +152,7 @@ class Movies:
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
+		self.useReleaseYear = getSetting('movies.showyear') == 'true'
 
 	def get(self, url, idx=True, create_directory=True, folderName=''):
 		self.list = []
@@ -1766,7 +1767,10 @@ class Movies:
 			try:
 				imdb, tmdb, title, year = i.get('imdb', ''), i.get('tmdb', ''), i['title'], i.get('year', '')
 				trailer, runtime = i.get('trailer'), i.get('duration')
-				label = '%s (%s)' % (title, year)
+				if self.useReleaseYear:
+					label = '%s (%s)' % (title, year)
+				else:
+					label = '%s' % title
 				try: labelProgress = label + '[COLOR %s]  [%s][/COLOR]' % (self.highlight_color, str(round(float(i['progress']), 1)) + '%')
 				except: labelProgress = label
 				try:

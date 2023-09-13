@@ -434,6 +434,11 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="movies.showyear" type="boolean" label="40473" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 			</group>
 			<group id="2" label="35055">
 				<setting id="sort.imdbmovies.type" type="integer" label="35054" help="">

@@ -4834,3 +4834,7 @@ msgstr ""
 msgctxt "#40472"
 msgid "Favourites Sorting"
 msgstr ""
+
+msgctxt "#40473"
+msgid "Show release year with movie title"
+msgstr ""
