@@ -4838,3 +4838,11 @@ msgstr ""
 msgctxt "#40473"
 msgid "Show release year with movie title"
 msgstr ""
+
+msgctxt "#40474"
+msgid "Digital Releases (DVDReleaseDates)"
+msgstr ""
+
+msgctxt "#40475"
+msgid "Digital Releases"
+msgstr ""

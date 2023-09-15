@@ -113,6 +113,9 @@ def router(argv2):
 			url = link + name
 			from resources.lib.menus import movies
 			movies.Movies().persons(url, folderName=folderName)
+	elif action == 'dvdReleaseList':
+		from resources.lib.menus import movies
+		movies.Movies().dvdReleaseList(folderName='DVD Releases')
 	elif action == 'moviesUnfinished':
 		from resources.lib.menus import movies
 		movies.Movies().unfinished(url, folderName=folderName)

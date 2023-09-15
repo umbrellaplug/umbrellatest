@@ -154,21 +154,6 @@ def deleteProgress(meta, content):
 	finally:
 		dbcur.close() ; dbcon.close()
 
-def getFavouritesMoviesfromXML():
-	#this is not ready you should not be using this.
-	xml_file = control.transPath('special://profile/favourites.xml')
-	tree = mdParse(xml_file)
-	favorites = tree.getElementsByTagName('favourite')
-	for count, favorite in enumerate(favorites):
-		from resources.lib.modules import log_utils
-		favor = favorite.childNodes[0].data
-		playmedia = favor[:9]
-		if playmedia == 'PlayMedia':
-			url = favor[9:]
-			url = url[:-2]
-			url = unquote(url)
-		log_utils.log('Favorites: %s' % url, 1)
-
 def checkForFavourites(content=''):
 	favourites = False
 	try:

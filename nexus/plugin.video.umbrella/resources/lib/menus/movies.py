@@ -4,6 +4,7 @@
 """
 
 from datetime import datetime, timedelta
+import time
 import calendar
 from json import dumps as jsdumps, loads as jsloads
 import re
@@ -1359,6 +1360,51 @@ class Movies:
 				log_utils.error()
 		list = sorted(list, key=lambda k: re.sub(r'(^the |^a |^an )', '', k['name'].lower()))
 		return list
+
+	def dvdReleaseList(self, create_directory=True, folderName=''):
+		self.list = cache.get(Movies().getDvdReleaseList, 96)
+		self.worker()
+		if self.list is None: self.list = []
+		if create_directory: self.movieDirectory(self.list, folderName=folderName)
+
+	def getDvdReleaseList(self):
+		self.list = []
+		try:
+			url = 'https://www.dvdsreleasedates.com/digital-releases/'
+			result = client.request(url).replace('\n', ' ')
+			items = client.parseDOM(result,'table', attrs = {'class': 'fieldtable-inner'})
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()
+			return
+		next = ''
+		for count, item in enumerate(items):
+			try:
+				
+				item0 = client.parseDOM(items[count], 'td', attrs = {'class': 'reldate past'})
+				if len(item0) == 0:
+					item0 = client.parseDOM(items[count], 'td', attrs = {'class': 'reldate '})
+				item0 = str(item0)
+				char1 = '</a>'
+				char2 = '<div '
+				dateitem = str(item0[item0.find(char1)+4 : item0.find(char2)])
+				#Friday September 1, 2023
+				try:
+					item0date = time.strptime(dateitem, '%A %B %d, %Y')
+				except:
+					dateitem = str(item0[2 : item0.find(char2)])
+					item0date = time.strptime(dateitem, '%A %B %d, %Y')
+				item2 = client.parseDOM(item, 'td', attrs = {'class': 'dvdcell'})
+				for x in item2:
+					title = client.parseDOM(x, 'a')[1]
+					year = datetime.fromtimestamp(time.mktime(item0date)).year
+					imdb = client.parseDOM(x, 'a', ret='href')[2]
+					imdb = imdb[imdb.find('title/')+6: -1]
+					self.list.append({'title': title, 'originaltitle': title, 'year': year, 'imdb': imdb, 'tmdb': '', 'tvdb': '', 'next': next}) # just let super_info() TMDb request provide the meta and pass min to retrieve it
+			except:
+				from resources.lib.modules import log_utils
+				log_utils.error()
+		return self.list
 
 	def reccomendedFromLibrary(self, folderName=''):
 		#from resources.lib.modules import log_utils

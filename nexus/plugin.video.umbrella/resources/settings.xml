@@ -935,6 +935,11 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="navi.movie.getdvdrelease" type="boolean" label="40474" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="navi.movie.trakt.popular" type="boolean" label="32433" help="">
 					<level>0</level>
 					<default>true</default>
