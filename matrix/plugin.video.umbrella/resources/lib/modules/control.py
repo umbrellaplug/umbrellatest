@@ -13,7 +13,7 @@ import xbmcvfs
 #import xml.etree.ElementTree as ET
 from threading import Thread
 from xml.dom.minidom import parse as mdParse
-from urllib.parse import unquote
+from urllib.parse import unquote, unquote_plus
 from re import sub as re_sub
 
 # Kodi JSON-RPC API endpoint
@@ -98,6 +98,7 @@ def getKodiVersion(full=False):
 	else: return int(xbmc.getInfoLabel("System.BuildVersion")[:2])
 
 def setContainerName(value):
+	value = unquote_plus(value)
 	import sys
 	xbmcplugin.setPluginCategory(int(sys.argv[1]), value)
 

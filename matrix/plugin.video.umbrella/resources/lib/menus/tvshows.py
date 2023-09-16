@@ -596,7 +596,7 @@ class TVshows:
 		else: self.list = cache.get(self.imdb_person_list, 1, url)
 		if self.list is None: self.list = []
 		if self.list:
-			for i in range(0, len(self.list)): self.list[i].update({'content': 'actors', 'icon': 'DefaultActor.png', 'action': 'tvshows&folderName=%s' % self.list[i]['name']})
+			for i in range(0, len(self.list)): self.list[i].update({'content': 'actors', 'icon': 'DefaultActor.png', 'action': 'tvshows&folderName=%s' % quote_plus(self.list[i]['name'])})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -621,14 +621,14 @@ class TVshows:
 	def networks(self, folderName=''):
 		networks = tmdb_indexer().get_networks()
 		for i in networks:
-			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows&folderName=%s' %  re.sub(r"[^a-zA-Z0-9 ]", "", i[0])})
+			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows&folderName=%s' % quote_plus(i[0])})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
 	def originals(self, folderName=''):
 		originals = tmdb_indexer().get_originals()
 		for i in originals:
-			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows&folderName=%s' % i[0]})
+			self.list.append({'content': 'studios', 'name': i[0], 'url': self.tmdb_networks_link % ('%s', i[1]), 'image': i[2], 'icon': i[2], 'action': 'tmdbTvshows&folderName=%s' % quote_plus(i[0])})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -639,7 +639,7 @@ class TVshows:
 			('Japanese', 'ja'), ('Korean', 'ko'), ('Norwegian', 'no'), ('Persian', 'fa'), ('Polish', 'pl'), ('Portuguese', 'pt'), ('Punjabi', 'pa'),
 			('Romanian', 'ro'), ('Russian', 'ru'), ('Serbian', 'sr'), ('Spanish', 'es'), ('Swedish', 'sv'), ('Turkish', 'tr'), ('Ukrainian', 'uk')]
 		for i in languages:
-			self.list.append({'content': 'countries', 'name': str(i[0]), 'url': self.language_link % i[1], 'image': 'languages.png', 'icon': 'DefaultAddonLanguage.png', 'action': 'tvshows&folderName=%s' % str(i[0])})
+			self.list.append({'content': 'countries', 'name': str(i[0]), 'url': self.language_link % i[1], 'image': 'languages.png', 'icon': 'DefaultAddonLanguage.png', 'action': 'tvshows&folderName=%s' % quote_plus(str(i[0]))})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -652,7 +652,7 @@ class TVshows:
 			('Youth Audience (TV-14)', 'US%3ATV-14'),
 			('Mature Audience (TV-MA)', 'US%3ATV-MA')]
 		for i in certificates:
-			self.list.append({'content': 'tags', 'name': str(i[0]), 'url': self.certification_link % i[1], 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'tvshows&folderName=%s' % str(i[0])})
+			self.list.append({'content': 'tags', 'name': str(i[0]), 'url': self.certification_link % i[1], 'image': 'certificates.png', 'icon': 'certificates.png', 'action': 'tvshows&folderName=%s' % quote_plus(str(i[0]))})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -661,8 +661,8 @@ class TVshows:
 		except: pass
 		year = (self.date_time.strftime('%Y'))
 		for i in range(int(year)-0, 1900, -1):
-			if self.imdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % (str(i), str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tvshows&folderName=%s' % str(i)})
-			if self.tmdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % ('%s', str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tmdbTvshows&folderName=%s' % str(i)})
+			if self.imdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % (str(i), str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tvshows&folderName=%s' % quote_plus(str(i))})
+			if self.tmdb_link in url: self.list.append({'content': 'years', 'name': str(i), 'url': url % ('%s', str(i)), 'image': 'years.png', 'icon': 'DefaultYear.png', 'action': 'tmdbTvshows&folderName=%s' % quote_plus(str(i))})
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -733,9 +733,9 @@ class TVshows:
 			url = self.tmdb_link + '/3/account/{account_id}/watchlist/tv?api_key=%s&session_id=%s&sort_by=created_at.asc&page=1' % ('%s', self.tmdb_session_id)
 			self.list.insert(0, {'name': getLS(32033), 'url': url, 'image': 'tmdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tmdbTvshows'})
 		if self.imdb_user != '': # imdb Watchlist
-			self.list.insert(0, {'name': getLS(32033), 'url': self.imdbwatchlist_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows&folderName=%s' % getLS(32033)})
+			self.list.insert(0, {'name': getLS(32033), 'url': self.imdbwatchlist_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows&folderName=%s' % quote_plus(getLS(32033))})
 		if self.imdb_user != '': # imdb My Ratings
-			self.list.insert(0, {'name': getLS(32025), 'url': self.imdbratings_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows&folderName=%s' % getLS(32025)})
+			self.list.insert(0, {'name': getLS(32025), 'url': self.imdbratings_link, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows&folderName=%s' % quote_plus(getLS(32025))})
 		if create_directory: self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -758,7 +758,7 @@ class TVshows:
 				q.update({'page': str(int(q['page']) + 1)})
 				q = (urlencode(q)).replace('%2C', ',')
 				next = url.replace('?' + urlparse(url).query, '') + '?' + q
-				next = next + '&folderName=%s' % folderName
+				next = next + '&folderName=%s' % quote_plus(folderName)
 			except: next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
@@ -788,7 +788,7 @@ class TVshows:
 				q.update({'page': str(int(q['page']) + 1)})
 				q = (urlencode(q)).replace('%2C', ',')
 				next = url.replace('?' + urlparse(url).query, '') + '?' + q
-				next = next + '&folderName=%s' % folderName
+				next = next + '&folderName=%s' % quote_plus(folderName)
 			except: next = ''
 			for i in range(len(self.list)): self.list[i]['next'] = next
 			self.worker()
@@ -808,7 +808,7 @@ class TVshows:
 				if item['content_type'] == 'mixed': continue
 				list_name = item['list_name']
 				listAction = 'tvshows'
-				listAction = listAction+'&folderName=%s' % list_name.replace("&",'')
+				listAction = listAction+'&folderName=%s' % quote_plus(list_name)
 				list_owner = item['list_owner']
 				list_owner_slug = item['list_owner_slug']
 				list_id = item['trakt_id']
@@ -838,7 +838,7 @@ class TVshows:
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
 			next = url.replace('?' + urlparse(url).query, '') + '?' + q
-			next = next + '&folderName=%s' % folderName
+			next = next + '&folderName=%s' % quote_plus(folderName)
 		except: next = ''
 		for item in items: # rating and votes via TMDb, or I must use `extended=full and it slows down
 			try:
@@ -954,7 +954,7 @@ class TVshows:
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
 			next = url.replace('?' + urlparse(url).query, '') + '?' + q
-			next = next + '&folderName=%s' % folderName
+			next = next + '&folderName=%s' % quote_plus(folderName)
 		except: next = ''
 		for i in range(len(self.list)): self.list[i]['next'] = next
 		self.worker()
@@ -971,7 +971,7 @@ class TVshows:
 				if item['content_type'] == 'mixed':
 					listAction = 'mixed'
 				list_name = item['list_name']
-				listAction = listAction+'&folderName=%s' % re.sub(r"[^a-zA-Z0-9 ]", "", list_name)
+				listAction = listAction+'&folderName=%s' % quote_plus(list_name)
 				list_owner = item['list_owner']
 				list_owner_slug = item['list_owner_slug']
 				list_id = item['trakt_id']
@@ -1026,7 +1026,7 @@ class TVshows:
 					label = '%s - [COLOR %s]%s[/COLOR]' % (list_name, self.highlight_color, list_owner)
 				else:
 					label = '%s' % (list_name)
-				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'trakt.png', 'icon': 'trakt.png', 'action': 'tvshows&folderName=%s' % list_name})
+				self.list.append({'name': label, 'list_type': 'traktPulicList', 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'trakt.png', 'icon': 'trakt.png', 'action': 'tvshows&folderName=%s' % quote_plus(list_name)})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -1047,7 +1047,7 @@ class TVshows:
 				list_count = item.get('params', {}).get('list_count', '')
 				list_url = self.mbdlist_list_items % (list_id)
 				label = '%s - %s shows' % (list_name, list_count)
-				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'tvshows&folderName=%s' % list_name})
+				self.list.append({'name': label, 'url': list_url, 'list_owner': list_owner, 'list_name': list_name, 'list_id': list_id, 'context': list_url, 'next': next, 'image': 'mdblist.png', 'icon': 'mdblist.png', 'action': 'tvshows&folderName=%s' % quote_plus(list_name)})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -1088,7 +1088,7 @@ class TVshows:
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
 			next = url.replace('?' + urlparse(url).query, '') + '?' + q
-			next = next + '&folderName=%s' % folderName
+			next = next + '&folderName=%s' % quote_plus(folderName)
 		except: next = ''
 		for i in range(len(self.list)): self.list[i]['next'] = next
 		self.worker()
@@ -1157,7 +1157,7 @@ class TVshows:
 				next = [i[0] for i in next if 'Next' in i[1]]
 			next = url.replace(urlparse(url).query, urlparse(next[0]).query)
 			next = client.replaceHTMLCodes(next)
-			next = next + '&folderName=%s' % folderName
+			next = next + '&folderName=%s' % quote_plus(folderName)
 		except: next = ''
 		for item in items:
 			try:
@@ -1233,7 +1233,7 @@ class TVshows:
 				url = url.split('/list/', 1)[-1].strip('/')
 				url = self.imdblist_link % url
 				url = client.replaceHTMLCodes(url)
-				list.append({'name': name, 'url': url, 'context': url, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows&folderName=%s' % name})
+				list.append({'name': name, 'url': url, 'context': url, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': 'tvshows&folderName=%s' % quote_plus(name)})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()
@@ -1581,13 +1581,13 @@ class TVshows:
 				nextMenu = '[COLOR skyblue]' + nextMenu + page + '[/COLOR]'
 				u = urlparse(url).netloc.lower()
 				if u in self.imdb_link or u in self.trakt_link:
-					url = '%s?action=tvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
+					url = '%s?action=tvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), quote_plus(folderName))
 				elif u in self.tmdb_link:
-					url = '%s?action=tmdbTvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
+					url = '%s?action=tmdbTvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), quote_plus(folderName))
 				elif u in self.tvmaze_link:
-					url = '%s?action=tvmazeTvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
+					url = '%s?action=tvmazeTvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), quote_plus(folderName))
 				elif u in self.mbdlist_list_items:
-					url = '%s?action=tvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
+					url = '%s?action=tvshowPage&url=%s&folderName=%s' % (sysaddon, quote_plus(url), quote_plus(folderName))
 				item = control.item(label=nextMenu, offscreen=True)
 				icon = control.addonNext()
 				item.setArt({'icon': icon, 'thumb': icon, 'poster': icon, 'banner': icon})

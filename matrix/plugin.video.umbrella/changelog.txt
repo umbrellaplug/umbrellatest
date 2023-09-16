@@ -1,18 +1,17 @@
-[B]Update - v6.6.315 - September 16th, 2023[/B]
+[B]Update - v6.6.316 - September 16th, 2023[/B]
 --[Enhancement] Removed Copy to Clipboard from Authorization screens.
 --[Enhancement] Added new list for Digital Releases.
 --[Enhancement] Added setting to show or hide release year with movies in general settings.
 --[Enhancement] Added Trakt section for skin.
 --[Enhancement] Added People search for skin.
 --[Enhancement] Added sorting for favourites.
---[Enhancement] Added Movies and Episodes from Library added to Favourites.
 --[Enhancement] Added Umbrella Favourites Movies, TV Shows, and Episodes can now be added as favourites.
 --[Enhancement] Added ability to show titles on all sections. (Remake any widgets made from Umbrella)
 --[Enhancement] Changed text on resolving popups to no longer be bold.
 --[Enhancement] Added new search function for trakt lists from skin.
 --[Fix] Changed code for movie and show collection and watchlist import to improve speed.
 --[Fix] Made changes to tv show and seasonal level information to avoid imdb id being overwritten.
---[Fix] Removed special characters in multiple places.
+--[Fix] Changed all occurences of container names to encode for url.
 --[Fix] Fixed sort TV Shows sort.
 
 [B]Update - v6.6.29 - August 23rd, 2023[/B]

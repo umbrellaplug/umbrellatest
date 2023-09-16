@@ -28,7 +28,7 @@ class Search:
 				url = url.split('/list/', 1)[-1].strip('/')
 				url = self.imdblist_link % url
 				url = client.replaceHTMLCodes(url)
-				list.append({'name': name, 'url': url, 'context': url, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': media+'&folderName=%s' % name})
+				list.append({'name': name, 'url': url, 'context': url, 'image': 'imdb.png', 'icon': 'DefaultVideoPlaylists.png', 'action': media+'&folderName=%s' % quote_plus(name)})
 			except:
 				from resources.lib.modules import log_utils
 				log_utils.error()

@@ -546,7 +546,7 @@ class Episodes:
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
 			next = url.replace('?' + urlparse(url).query, '') + '?' + q
-			next = next + '&folderName=%s' % folderName
+			next = next + '&folderName=%s' % quote_plus(folderName)
 		except: next = ''
 		for item in items:
 			try:
@@ -1097,7 +1097,7 @@ class Episodes:
 					page = url_params.get('page')
 					page = '  [I](%s)[/I]' % page
 				nextMenu = '[COLOR skyblue]' + nextMenu + page + '[/COLOR]'
-				if '/users/me/history/' in url: url = '%s?action=calendar&url=%s&folderName=%s' % (sysaddon, quote_plus(url), folderName)
+				if '/users/me/history/' in url: url = '%s?action=calendar&url=%s&folderName=%s' % (sysaddon, quote_plus(url), quote_plus(folderName))
 				item = control.item(label=nextMenu, offscreen=True)
 				icon = control.addonNext()
 				item.setArt({'icon': icon, 'thumb': icon, 'poster': icon, 'banner': icon})
