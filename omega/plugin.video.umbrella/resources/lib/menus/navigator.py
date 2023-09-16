@@ -50,7 +50,6 @@ class Navigator:
 		favorite = favourites.checkForFavourites()
 		if favorite: self.addDirectoryItem(40464, 'favouriteNavigator&folderName=%s' % getLS(40464), 'highly-rated.png', 'DefaultFolder.png')
 		if getMenuEnabled('navi.prem.services'): self.addDirectoryItem('Premium Services', 'premiumNavigator&folderName=Premium Services', 'premium.png', 'DefaultFolder.png')
-		if getMenuEnabled('navi.news'): self.addDirectoryItem(32013, 'tools_ShowNews', 'newsandinfo.png', 'DefaultAddonHelper.png', isFolder=False)
 		if getMenuEnabled('navi.changelog'): self.addDirectoryItem(32014, 'tools_ShowChangelog&name=Umbrella', 'changelog.png', 'DefaultAddonHelper.png', isFolder=False)
 		self.endDirectory()
 

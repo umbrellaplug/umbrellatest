@@ -39,7 +39,6 @@ def router(argv2):
 			from resources.lib.modules import changelog
 			changelog.get('Umbrella')
 		navigator.Navigator().root()
-		control.syncAccounts()
 	####################################################
 	#---MOVIES
 	####################################################
