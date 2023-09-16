@@ -661,6 +661,8 @@ def syncAccounts():
 			setSetting('sources.filepursuit.color', 'FF00CC29')
 			setSetting('sources.filepursuit.color.display', '[COLOR=FF00CC29]FF00CC29[/COLOR]')
 			setSetting('umbrella.colorSecond', 'true')
+			notification('Umbrella', 'Reloading addon due to new settings added.')
+			return reload_addon()
 		if setting('umbrella.externalWarning') != 'true':
 			setSetting('umbrella.externalWarning', 'true')
 			from resources.help import help

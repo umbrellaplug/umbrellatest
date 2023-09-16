@@ -1,4 +1,5 @@
-[B]Update - v6.6.314 - September 15th, 2023[/B]
+[B]Update - v6.6.315 - September 16th, 2023[/B]
+--[Enhancement] Removed Copy to Clipboard from Authorization screens.
 --[Enhancement] Added new list for Digital Releases.
 --[Enhancement] Added setting to show or hide release year with movies in general settings.
 --[Enhancement] Added Trakt section for skin.

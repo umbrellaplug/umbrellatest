@@ -67,14 +67,35 @@ class SettingsMonitor(control.monitor_class):
 			window.clearProperty('umbrella_settings') # Kodi callback when the addon settings are changed
 		except:
 			control.log('[ plugin.video.umbrella ]  Exception clearing settings property...', LOGDEBUG)
-		control.sleep(50)
-		refreshed = control.make_settings_dict()
-		control.refresh_playAction()
-		control.refresh_libPath()
-		control.checkPlayNextEpisodes()
-		control.refresh_debugReversed()
-		control.setContextColors()
-		control.checkModules()
+		try:
+			control.sleep(50)
+			refreshed = control.make_settings_dict()
+		except:
+			control.log('[ plugin.video.umbrella ]  Exception making settings dict...', LOGDEBUG)
+		try:
+			control.refresh_playAction()
+		except:
+			control.log('[ plugin.video.umbrella ]  Exception making refreshing playAction...', LOGDEBUG)
+		try:
+			control.refresh_libPath()
+		except:
+			control.log('[ plugin.video.umbrella ]  Exception refreshing libpath...', LOGDEBUG)
+		try:
+			control.checkPlayNextEpisodes()
+		except:
+			control.log('[ plugin.video.umbrella ]  Exception checking playnext episodes...', LOGDEBUG)
+		try:
+			control.refresh_debugReversed()
+		except:
+			control.log('[ plugin.video.umbrella ]  Exception checking debug reversed', LOGDEBUG)
+		try:
+			control.setContextColors()
+		except:
+			control.log('[ plugin.video.umbrella ]  Exception setting context colors...', LOGDEBUG)
+		try:
+			control.checkModules()
+		except:
+			control.log('[ plugin.video.umbrella ]  Exception checking modules...', LOGDEBUG)
 		try:
 			for id in properties:
 				if control.setting(id) == 'true':

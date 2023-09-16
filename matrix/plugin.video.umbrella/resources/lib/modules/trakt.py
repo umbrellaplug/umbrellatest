@@ -193,15 +193,10 @@ def getTraktDeviceToken(traktDeviceCode):
 		verification_url = control.lang(32513) % (highlight_color, str(traktDeviceCode['verification_url']))
 		user_code = control.lang(32514) % (highlight_color, str(traktDeviceCode['user_code']))
 		line = '%s\n%s\n%s'
-		try:
-			from resources.lib.modules.source_utils import copy2clip
-			copy2clip(traktDeviceCode['user_code'])
-		except:
-			log_utils.error()
 		if control.setting('dialogs.useumbrelladialog') == 'true':
 			progressDialog = control.getProgressWindow(getLS(32073), trakt_qr, 1)
 			progressDialog.set_controls()
-			progressDialog.update(0, control.progress_line % (verification_url, user_code, getLS(40390)))
+			progressDialog.update(0, control.progress_line % (verification_url, user_code))
 		else:
 			progressDialog = control.progressDialog
 			progressDialog.create(control.lang(32073), control.progress_line % (verification_url, user_code, getLS(40390)))
