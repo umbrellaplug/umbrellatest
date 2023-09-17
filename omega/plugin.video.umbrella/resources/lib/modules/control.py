@@ -98,9 +98,16 @@ def getKodiVersion(full=False):
 	else: return int(xbmc.getInfoLabel("System.BuildVersion")[:2])
 
 def setContainerName(value):
-	value = unquote_plus(value)
-	import sys
-	xbmcplugin.setPluginCategory(int(sys.argv[1]), value)
+	try:
+		if value:
+			value = unquote_plus(value)
+		else:
+			value = ''
+		import sys
+		xbmcplugin.setPluginCategory(int(sys.argv[1]), value)
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()
 
 def setHomeWindowProperty(propertyname, property):
 	win = xbmcgui.Window(10000)

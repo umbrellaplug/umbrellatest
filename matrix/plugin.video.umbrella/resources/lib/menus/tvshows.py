@@ -132,6 +132,7 @@ class TVshows:
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
 		self.showCounts = getSetting('tvshows.episodecount') == 'true'
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
+		self.is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
 
 	def get(self, url, idx=True, create_directory=True, folderName=''):
 		self.list = []
@@ -195,7 +196,7 @@ class TVshows:
 			log_utils.error()
 			if not self.list:
 				control.hide()
-				if self.notifications: control.notification(title=32002, message=33049)
+				if self.notifications and self.is_widget != True: control.notification(title=32002, message=33049)
 	def getMBDTopLists(self, create_directory=True, folderName=''):
 		self.list = []
 		try:
@@ -226,7 +227,7 @@ class TVshows:
 			log_utils.error()
 			if not self.list:
 				control.hide()
-				if self.notifications: control.notification(title=32002, message=33049)
+				if self.notifications and self.is_widget != True: control.notification(title=32002, message=33049)
     
 	def getSimkl(self, url, create_directory=True, folderName=''):
 		self.list = []
@@ -248,7 +249,7 @@ class TVshows:
 			log_utils.error()
 			if not self.list:
 				control.hide()
-				if self.notifications: control.notification(title=32002, message=33049)
+				if self.notifications and self.is_widget != True: control.notification(title=32002, message=33049)
 
 	def getTVmaze(self, url, idx=True, folderName=''):
 		from resources.lib.indexers import tvmaze
@@ -1254,7 +1255,7 @@ class TVshows:
 			log_utils.error()
 			if not self.list:
 				control.hide()
-				if self.notifications: control.notification(title=32326, message=33049)
+				if self.notifications and self.is_widget != True: control.notification(title=32326, message=33049)
 
 	def trakt_tvshow_progress(self, create_directory=True, folderName=''):
 		self.list = []
@@ -1298,7 +1299,7 @@ class TVshows:
 			log_utils.error()
 			if not self.list:
 				control.hide()
-				if self.notifications: control.notification(title=32326, message=33049)
+				if self.notifications and self.is_widget != True: control.notification(title=32326, message=33049)
 
 	def trakt_tvshow_watched(self, create_directory=True, folderName=''):
 		self.list = []
@@ -1412,7 +1413,9 @@ class TVshows:
 		else:
 			control.playlist.clear()
 		if not items: # with reuselanguageinvoker on an empty directory must be loaded, do not use sys.exit()
-			control.hide() ; control.notification(title=32002, message=33049)
+			control.hide()
+			if self.is_widget != True:
+				control.notification(title=32002, message=33049)
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
 		settingFanart = getSetting('fanart') == 'true'
@@ -1604,7 +1607,9 @@ class TVshows:
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 		control.playlist.clear()
 		if not items: # with reuselanguageinvoker on an empty directory must be loaded, do not use sys.exit()
-			content = '' ; control.hide() ; control.notification(title=32002, message=33049)
+			content = ''
+			control.hide()
+			if self.is_widget != True: control.notification(title=32002, message=33049)
 		if self.useContainerTitles: control.setContainerName(folderName)
 		sysaddon, syshandle = 'plugin://plugin.video.umbrella/', int(argv[1])
 		addonThumb = control.addonThumb()
