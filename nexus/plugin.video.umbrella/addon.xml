@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.318">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.319">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -182,6 +182,8 @@
 --[Enhancement] Added sorting for favourites.
 --[Enhancement] Changed text on resolving popups to no longer be bold.
 --[Enhancement] Added new search function for trakt lists from skin.
+--[Enhancement] Added context menu item to return to movie or tv shows main list.
+--[Fix] Removed Refresh Container from Similar from Library.
 --[Fix] Removed Copy to Clipboard from Authorization screens.
 --[Fix] Changed code for movie and show collection and watchlist import to improve speed.
 --[Fix] Made changes to tv show and seasonal level information to avoid imdb id being overwritten.

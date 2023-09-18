@@ -361,6 +361,9 @@ def closeOk():
 def refresh():
 	return execute('Container.Refresh')
 
+def folderPath():
+    return infoLabel('Container.FolderPath')
+
 def queueItem():
 	return execute('Action(Queue)') # seems broken in 19 for show and season level, works fine in 18
 
@@ -727,6 +730,15 @@ def checkModules():
 	if setting('provider.external.enabled') == 'false':
 		setSetting('external_provider.name', '')
 		setSetting('external_provider.module', '')
+
+def backToMain(folder):
+	if folder == 'movies':
+		url = 'plugin://plugin.video.umbrella/?action=movieNavigator&folderName=Discover%20Movies'
+	elif folder =='tvshows':
+		url = 'plugin://plugin.video.umbrella/?action=tvNavigator&folderName=Discover%20TV%20Shows'
+	else:
+		url = None
+	if url: execute('Container.Refresh(%s)'% url)
 
 def timeFunction(function, *args):
 	from timeit import default_timer as timer

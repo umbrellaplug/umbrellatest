@@ -26,6 +26,7 @@ from resources.lib.modules import tools
 getLS = control.lang
 getSetting = control.setting
 LOGINFO = log_utils.LOGINFO
+homeWindow = control.homeWindow
 
 class TVshows:
 	def __init__(self, notifications=True):
@@ -1408,6 +1409,8 @@ class TVshows:
 	def tvshowDirectory(self, items, next=True, isProgress=False, isWatched=False, folderName='Umbrella'):
 		from sys import argv # some functions like ActivateWindow() throw invalid handle less this is imported here.
 		if self.useContainerTitles: control.setContainerName(folderName)
+		returnHome = control.folderPath()
+		control.setHomeWindowProperty('umbrella.returnhome', returnHome)
 		if getSetting('trakt.directProgress.scrape') == 'true' and getSetting('enable.playnext') == 'true':
 			pass
 		else:
@@ -1430,6 +1433,14 @@ class TVshows:
 		from resources.lib.modules import favourites
 		favoriteItems = favourites.getFavourites(content='tvshows')
 		favoriteItems = [x[1].get('tmdb') for x in favoriteItems]
+		try:
+			nexturl = items[0]['next']
+			url_params = dict(parse_qsl(urlsplit(nexturl).query))
+			if 'imdb.com' in nexturl and 'start' in url_params: page = int(((int(url_params.get('start')) - 1) / int(self.page_limit)) + 1)
+			elif 'www.imdb.com/movies-coming-soon/' in nexturl: page = int(re.search(r'(\d{4}-\d{2})', nexturl).group(1))
+			else: page = int(url_params.get('page'))
+		except:
+			page = 1
 		for i in items:
 			try:
 				imdb, tmdb, tvdb, year, trailer = i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', ''), i.get('year', ''), i.get('trailer', '')
@@ -1500,6 +1511,8 @@ class TVshows:
 						cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'tvshows')))
 				else:
 					cm.append((addToFavourites, 'RunPlugin(%s?action=add_favorite&meta=%s&content=%s)' % (sysaddon, sysmeta, 'tvshows')))
+				if not is_widget and page > 2:
+					cm.append((getLS(40477), 'RunPlugin(%s?action=return_home&folder=%s)' % (sysaddon, 'tvshows')))
 				cm.append(('[COLOR red]Umbrella Settings[/COLOR]', 'RunPlugin(%s?action=tools_openSettings)' % sysaddon))
 ####################################
 				if trailer: meta.update({'trailer': trailer}) # removed temp so it's not passed to CM items, only skin
