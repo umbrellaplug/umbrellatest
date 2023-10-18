@@ -2904,7 +2904,7 @@
 						<dependency type="visible">
 							<and>
 								<condition operator="is" setting="sources.highlightmethod">1</condition>
-								<condition operator="!is" setting="plex.token"/>
+								<condition operator="!is" setting="plextoken"/>
 							</and>
 						</dependency>
 					</dependencies>
@@ -4225,72 +4225,34 @@
 				</setting>
 			</group>
 			<group id="2" label="40196">
-				<setting id="plex.enable" type="boolean" label="32081" help="">
+				<setting id="plextoken" type="string" label="40479" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>40479</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting id="plexshare.enabled" type="boolean" label="32081" help="">
 					<level>0</level>
 					<default>true</default>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="!is" setting="plex.token"/>
+							<condition operator="!is" setting="plextoken"/>
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>
-				</setting>
-				<setting id="plex.token" type="string" label="40197" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>40197</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
-				<setting id="plex.client_id" type="string" label="40198" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>40198</heading>
-						<hidden>true</hidden>
-					</control>
-				</setting>
-				<setting id="plex.device_id" type="string" label="40199" help="">
-					<level>0</level>
-					<default/>
-					<constraints>
-						<allowempty>true</allowempty>
-					</constraints>
-					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-						<dependency type="visible">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
-					</dependencies>
-					<control type="edit" format="string">
-						<heading>40199</heading>
-						<hidden>true</hidden>
-					</control>
 				</setting>
 				<setting id="plexshare.priority" type="integer" label="40005" help="">
 					<level>0</level>
@@ -4306,13 +4268,174 @@
 						</dependency>
 						<dependency type="visible">
 							<and>
-								<condition operator="!is" setting="plex.token"/>
-								<condition operator="is" setting="plex.enable">true</condition>
+								<condition operator="!is" setting="plextoken"/>
+								<condition operator="is" setting="plexshare.enabled">true</condition>
 							</and>
 						</dependency>
 					</dependencies>
 					<control type="slider" format="integer">
 						<popup>false</popup>
+					</control>
+				</setting>
+				<setting id="plex.client_id" type="string" label="40480" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>40480</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting id="plex.device_id" type="string" label="40481" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>40481</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting id="plexshare.sourceTitle" type="string" label="40482" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>40482</heading>
+					</control>
+				</setting>
+				<setting id="plexshare.accessToken" type="string" label="40483" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>40483</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting id="plexshare.url" type="string" label="40484" help="">
+					<level>0</level>
+					<default/>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="enable">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
+					</dependencies>
+					<control type="edit" format="string">
+						<heading>40484</heading>
+						<hidden>true</hidden>
+					</control>
+				</setting>
+				<setting id="plexAuthButton" type="action" label="40485" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=plexAuth)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="is" setting="plex.device_id"/>
+								<condition operator="is" setting="plex.client_id"/>
+								<condition operator="is" setting="plextoken"/>
+							</or>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+				<setting id="plexSeeActiveShares" type="action" label="40486" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=plexSeeShare)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="plextoken"/>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+					</control>
+				</setting>
+				<setting id="plexSelectShareButton" type="action" label="40487" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=plexSelectShare)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="!is" setting="plextoken"/>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<close>true</close>
+					</control>
+				</setting>
+				<setting id="plexRevokeButton" type="action" label="40488" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=plexRevoke)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<or>
+								<condition operator="!is" setting="plex.device_id"/>
+								<condition operator="!is" setting="plex.client_id"/>
+								<condition operator="!is" setting="plextoken"/>
+							</or>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<close>true</close>
 					</control>
 				</setting>
 			</group>
