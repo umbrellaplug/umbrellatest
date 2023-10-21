@@ -635,8 +635,6 @@ def syncAccounts():
 			pass
 		else:
 			modulename = setting('external_provider.module')
-			setSetting('easynews.user', addon(modulename).getSetting('easynews.user'))
-			setSetting('easynews.password', addon(modulename).getSetting('easynews.password'))
 			setSetting('filepursuit.api', addon(modulename).getSetting('filepursuit.api'))
 			setSetting('gdrive.cloudflare_url', addon(modulename).getSetting('gdrive.cloudflare_url'))
 

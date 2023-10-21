@@ -21,7 +21,7 @@ kodiVersion = control.getKodiVersion(full=True)
 class Plex():
 	def __init__(self):
 		self.chosen_share = None
-		self.token = control.setting('plextoken')
+		self.token = control.setting('plexsharetoken')
 		self.client_id = control.setting('plex.client_id')
 		self.device_id = control.setting('plex.device_id')
 		self.headers = {
@@ -47,7 +47,7 @@ class Plex():
 		if self.token:
 			self.client_id = re.search(r'<client-identifier>(.*?)</client-identifier>', data.text, re.I).group(1)
 			self.progressDialog.close()
-			control.setSetting('plextoken', self.token)
+			control.setSetting('plexsharetoken', self.token)
 			control.setSetting('plex.client_id', self.client_id)
 			control.sleep(500)
 			new_id = self.get_authID()
@@ -62,7 +62,6 @@ class Plex():
 		code_data = code_data.text
 		code = re.search(r'<code>(.*?)</code>', code_data, re.I).group(1)
 		self.device_id = re.search(r'<id.+?>(.*?)</id>', code_data, re.I).group(1)
-		#import web_pdb; web_pdb.set_trace()
 		if control.setting('dialogs.useumbrelladialog') == 'true':
 			self.progressDialog = control.getProgressWindow('Plex Auth', self.plex_qr, 1)
 			self.progressDialog.set_controls()
@@ -130,7 +129,7 @@ class Plex():
 		url = "https://plex.tv/devices/%s.xml?X-Plex-Token=%s" % (self.device_id, self.token)
 		result = requests.delete(url)
 		if result.status_code != 200: self.plex_error(result.status_code)
-		control.setSetting('plextoken', '')
+		control.setSetting('plexsharetoken', '')
 		control.setSetting('plex.client_id', '')
 		control.setSetting('plex.device_id', '')
 		#control.setSetting('plexshare.sourceTitle', '')

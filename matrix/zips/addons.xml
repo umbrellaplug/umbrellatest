@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.330">
+<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.331">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" />
@@ -173,10 +173,11 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.330 - October 18th, 2023[/B]
+[B]Update - v6.6.331 - October 21st, 2023[/B]
 --[ENHANCEMENT] First internal scraper completed. Plex is now built in.
+--[ENHANCEMENT] Second internal scraper completed. Easynews is now built in.
 --[INFO] This version could be very broken. This is for testing.
---[INFO] Easynews, File Pursuit, and Google Drive will all be moved to internal scrapers also.
+--[INFO] File Pursuit, and Google Drive will all be moved to internal scrapers also.
 		</news>
 	</extension>
 

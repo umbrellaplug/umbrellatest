@@ -27,13 +27,16 @@ def internalSources():
 		return []
 
 def enabledCheck(scraper):
-	parent_dict = {'plexshare': 'plex'}
+	parent_dict = {'plexshare': 'plexshare', 'easynews':'easynews'}
 	try:
 		parent_setting = parent_dict[scraper]
 		from resources.lib.modules import log_utils
-		log_utils.log('internal scraper token check: %stoken' % (parent_setting), level=log_utils.LOGDEBUG)
-		if not getSetting(parent_setting + 'token'): return False
-		if getSetting(parent_setting + '.enable') == 'true' and getSetting(scraper + '.enabled') == 'true': return True
+		log_utils.log('internal scraper token check: %s ' % (parent_setting), level=log_utils.LOGDEBUG)
+		if parent_setting == 'easynews':
+			pass
+		else:
+			if not getSetting(parent_setting + 'token'): return False
+		if getSetting(parent_setting + '.enable') == 'true': return True
 		else: return False
 	except:
 		from resources.lib.modules import log_utils

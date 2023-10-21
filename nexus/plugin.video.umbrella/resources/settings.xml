@@ -2904,7 +2904,7 @@
 						<dependency type="visible">
 							<and>
 								<condition operator="is" setting="sources.highlightmethod">1</condition>
-								<condition operator="!is" setting="plextoken"/>
+								<condition operator="!is" setting="plexsharetoken"/>
 							</and>
 						</dependency>
 					</dependencies>
@@ -4225,7 +4225,7 @@
 				</setting>
 			</group>
 			<group id="2" label="40196">
-				<setting id="plextoken" type="string" label="40479" help="">
+				<setting id="plexsharetoken" type="string" label="40479" help="">
 					<level>0</level>
 					<default/>
 					<constraints>
@@ -4244,12 +4244,12 @@
 						<hidden>true</hidden>
 					</control>
 				</setting>
-				<setting id="plexshare.enabled" type="boolean" label="32081" help="">
+				<setting id="plexshare.enable" type="boolean" label="32081" help="">
 					<level>0</level>
 					<default>true</default>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="!is" setting="plextoken"/>
+							<condition operator="!is" setting="plexsharetoken"/>
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>
@@ -4268,8 +4268,8 @@
 						</dependency>
 						<dependency type="visible">
 							<and>
-								<condition operator="!is" setting="plextoken"/>
-								<condition operator="is" setting="plexshare.enabled">true</condition>
+								<condition operator="!is" setting="plexsharetoken"/>
+								<condition operator="is" setting="plexshare.enable">true</condition>
 							</and>
 						</dependency>
 					</dependencies>
@@ -4382,7 +4382,7 @@
 							<or>
 								<condition operator="is" setting="plex.device_id"/>
 								<condition operator="is" setting="plex.client_id"/>
-								<condition operator="is" setting="plextoken"/>
+								<condition operator="is" setting="plexsharetoken"/>
 							</or>
 						</dependency>
 					</dependencies>
@@ -4398,7 +4398,7 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="!is" setting="plextoken"/>
+							<condition operator="!is" setting="plexsharetoken"/>
 						</dependency>
 					</dependencies>
 					<control type="button" format="action">
@@ -4412,7 +4412,7 @@
 					</constraints>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="!is" setting="plextoken"/>
+							<condition operator="!is" setting="plexsharetoken"/>
 						</dependency>
 					</dependencies>
 					<control type="button" format="action">
@@ -4430,7 +4430,7 @@
 							<or>
 								<condition operator="!is" setting="plex.device_id"/>
 								<condition operator="!is" setting="plex.client_id"/>
-								<condition operator="!is" setting="plextoken"/>
+								<condition operator="!is" setting="plexsharetoken"/>
 							</or>
 						</dependency>
 					</dependencies>
@@ -4442,56 +4442,71 @@
 			<group id="3" label="32327">
 				<setting id="easynews.enable" type="boolean" label="32081" help="">
 					<level>0</level>
-					<default>true</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="!is" setting="easynews.user"/>
-						</dependency>
-					</dependencies>
+					<default>false</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="easynews.user" type="string" label="40006" help="">
+				<setting id="easynews.user" type="string" label="40006" help="" parent="easynews.enable">
 					<level>0</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
 					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
 						<dependency type="visible">
-							<and>
-								<condition operator="!is" setting="easynews.user"/>
-								<condition operator="is" setting="easynews.enable">true</condition>
-							</and>
+							<condition operator="is" setting="easynews.enable">true</condition>
 						</dependency>
 					</dependencies>
 					<control type="edit" format="string">
 						<heading>40006</heading>
 					</control>
 				</setting>
-				<setting id="easynews.password" type="string" label="32307" help="">
+				<setting id="easynews.password" type="string" label="32307" help="" parent="easynews.enable">
 					<level>0</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
 					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
 						<dependency type="visible">
-							<and>
-								<condition operator="!is" setting="easynews.user"/>
-								<condition operator="is" setting="easynews.enable">true</condition>
-							</and>
+							<condition operator="is" setting="easynews.enable">true</condition>
 						</dependency>
 					</dependencies>
 					<control type="edit" format="string">
 						<heading>32307</heading>
-						<hidden>true</hidden>
 					</control>
+				</setting>
+				<setting id="easynews.moderation" type="boolean" label="40490" help="" parent="easynews.enable">
+					<level>0</level>
+					<default>false</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="easynews.enable">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="easynews.title.chk" type="boolean" label="40491" help="" parent="easynews.enable">
+					<level>0</level>
+					<default>true</default>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="easynews.enable">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="toggle"/>
+				</setting>
+				<setting id="easyNewsTitleCheckButton" type="action" label="32137" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_ShowHelp&amp;name=EasyNews_titleCheck)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="easynews.password">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action"/>
 				</setting>
 				<setting id="easynews.priority" type="integer" label="40005" help="">
 					<level>0</level>

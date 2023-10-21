@@ -4898,3 +4898,15 @@ msgstr ""
 msgctxt "#40488"
 msgid "Revoke Plex"
 msgstr ""
+
+msgctxt "#40489"
+msgid "EASYNEWS"
+msgstr ""
+
+msgctxt "#40490"
+msgid "Exclude Adult Results"
+msgstr ""
+
+msgctxt "#40491"
+msgid "Title Check Results"
+msgstr ""

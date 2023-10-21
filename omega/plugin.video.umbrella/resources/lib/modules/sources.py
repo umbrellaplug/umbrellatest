@@ -617,7 +617,6 @@ class Sources:
 				try: aliases.extend([i for i in trakt_aliases if not i in aliases]) # combine TMDb and Trakt aliases
 				except: pass
 				data = {'title': title, 'aliases': aliases, 'year': year, 'imdb': imdb}
-				#import web_pdb; web_pdb.set_trace()
 				for i in sourceDict: threads_append(Thread(target=self.getMovieSource, args=(imdb, data, i[0], i[1]), name=i[0].upper()))
 			else:
 				scraperDict = [(i[0], i[1], '') for i in sourceDict] if ((not self.dev_mode) or (not self.dev_disable_single)) else []
@@ -641,7 +640,6 @@ class Sources:
 					if pack == 'season': name = '%s (season pack)' % name
 					elif pack == 'show': name = '%s (show pack)' % name
 					threads_append(Thread(target=self.getEpisodeSource, args=(imdb, season, episode, data, i[0], i[1], pack), name=name))
-			#import web_pdb; web_pdb.set_trace()
 			[i.start() for i in threads]
 			sdc = getSetting('scraper.dialog.color')
 			string1 = getLS(32404) % (self.highlight_color, sdc, '%s') # msgid "[COLOR %s]Time elapsed:[/COLOR]  [COLOR %s]%s seconds[/COLOR]"
@@ -1040,11 +1038,10 @@ class Sources:
 		self.sources = [i for i in self.sources if not i in local]
 		direct = [i for i in self.sources if i['direct'] == True] # acct scrapers (skips cache check)
 		directstart = [] # blank start for enabled only
-		#import web_pdb; web_pdb.set_trace()
 		if getSetting('easynews.enable') == 'true':
 			easynewsList = [i for i in direct if i['provider'] == 'easynews']
 			directstart.extend(easynewsList)
-		if getSetting('plex.enable') == 'true':
+		if getSetting('plexshare.enable') == 'true':
 			plexList = [i for i in direct if i['provider'] == 'plexshare']
 			directstart.extend(plexList)
 		if getSetting('gdrive.enable') == 'true':
@@ -1530,8 +1527,6 @@ class Sources:
 						self.sourceDict = fs_sources(ret_all=True)
 						self.sourceDict.extend(internalSources())
 					else:
-						#import web_pdb; web_pdb.set_trace()
-						#self.sourceDict = self.get_internal_scrapers()
 						self.sourceDict = fs_sources()
 						self.sourceDict.extend(cloudSources())
 						self.sourceDict.extend(internalSources())
@@ -1544,13 +1539,12 @@ class Sources:
 			self.sourceDict.extend(cloudSources())
 		from resources.lib.debrid import premium_hosters
 		self.debrid_resolvers = debrid.debrid_resolvers()
-
 		self.prem_providers = [] # for sorting by debrid and direct source links priority
 		if control.setting('easynews.user'): self.prem_providers += [('easynews', int(getSetting('easynews.priority')))]
 		if control.setting('filepursuit.api'): self.prem_providers += [('filepursuit', int(getSetting('filepursuit.priority')))]
 		#if control.setting('furk.user_name'): self.prem_providers += [('furk', int(getSetting('furk.priority')))]
 		if control.setting('gdrive.cloudflare_url'): self.prem_providers += [('gdrive', int(getSetting('gdrive.priority')))]
-		if control.setting('plextoken'): self.prem_providers += [('plexshare', int(getSetting('plexshare.priority')))]
+		if control.setting('plexsharetoken'): self.prem_providers += [('plexshare', int(getSetting('plexshare.priority')))]
 		self.prem_providers += [(d.name, int(d.sort_priority)) for d in self.debrid_resolvers]
 
 		def cache_prDict():

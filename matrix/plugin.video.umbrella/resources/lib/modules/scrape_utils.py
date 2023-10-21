@@ -5,6 +5,7 @@
 
 import re
 from resources.lib.modules import cleantitle
+from string import printable
 
 RES_4K = ('2160', '216o', '.4k', 'ultrahd', 'ultra.hd', '.uhd.')
 RES_1080 = ('1080', '1o8o', '108o', '1o80', '.fhd.')
@@ -12,6 +13,30 @@ RES_720 = ('720', '72o')
 SCR = ('dvdscr', 'screener', '.scr.', '.r5', '.r6')
 CAM = ('1xbet', 'betwin', '.cam.', 'camrip', 'cam.rip', 'dvdcam', 'dvd.cam', 'dvdts', 'hdcam', '.hd.cam', '.hctc', '.hc.tc', '.hdtc',
 				'.hd.tc', 'hdts', '.hd.ts', 'hqcam', '.hg.cam', '.tc.', '.tc1', '.tc7', '.ts.', '.ts1', '.ts7', 'tsrip', 'telecine', 'telesync', 'tele.sync')
+
+unwanted_tags = ('tamilrockers.com', 'www.tamilrockers.com', 'www.tamilrockers.ws', 'www.tamilrockers.pl',
+			'www-tamilrockers-cl', 'www.tamilrockers.cl', 'www.tamilrockers.li', 'www-tamilrockers-tw',
+			'www.tamilrockerrs.pl',
+			'www.tamilmv.bid', 'www.tamilmv.biz', 'www.1tamilmv.org',
+			'gktorrent-bz', 'gktorrent-com',
+			'www.torrenting.com', 'www.torrenting.org', 'www-torrenting-com', 'www-torrenting-org',
+			'katmoviehd.pw', 'katmoviehd-pw',
+			'www.torrent9.nz', 'www-torrent9-uno', 'torrent9-cz', 'torrent9.cz', 'torrent9-red', 'torrent9-bz',
+			'agusiq-torrents-pl',
+			'oxtorrent-bz', 'oxtorrent-com', 'oxtorrent.com', 'oxtorrent-sh', 'oxtorrent-vc',
+			'www.movcr.tv', 'movcr-com', 'www.movcr.to',
+			'(imax)', 'imax',
+			'xtorrenty.org', 'nastoletni.wilkoak', 'www.scenetime.com', 'kst-vn',
+			'www.movierulz.vc', 'www-movierulz-ht', 'www.2movierulz.ac', 'www.2movierulz.ms',
+			'www.3movierulz.com', 'www.3movierulz.tv', 'www.3movierulz.ws', 'www.3movierulz.ms',
+			'www.7movierulz.pw', 'www.8movierulz.ws',
+			'mkvcinemas.live', 'torrentcounter-to',
+			'www.bludv.tv', 'ramin.djawadi', 'extramovies.casa', 'extramovies.wiki',
+			'13+', '18+', 'taht.oyunlar', 'crazy4tv.com', 'karibu', '989pa.com',
+			'best-torrents-net', '1-3-3-8.com', 'ssrmovies.club',
+			'va:', 'zgxybbs-fdns-uk', 'www.tamilblasters.mx',
+			'www.1tamilmv.work', 'www.xbay.me',
+			'crazy4tv-com', '(es)')
 
 def info_from_name(release_title, title, year, hdlr=None, episode_title=None, season=None, pack=None):
 	try:
@@ -152,7 +177,7 @@ def get_release_quality(release_info, release_link=None):
 			else: quality = 'SD'
 		return quality, info
 	except:
-		from cocoscrapers.modules import log_utils
+		from resources.lib.modules import log_utils
 		log_utils.error()
 		return 'SD', []
 
@@ -192,3 +217,30 @@ def info_from_name(release_title, title, year, hdlr=None, episode_title=None, se
 		from resources.lib.modules import log_utils
 		log_utils.error()
 		return release_title
+
+def clean_name(release_title):
+	try:
+		release_title = re.sub(r'【.*?】', '', release_title)
+		release_title = strip_non_ascii_and_unprintable(release_title).lstrip('+.-:/ ').replace(' ', '.')
+		releasetitle_startswith = release_title.lower().startswith
+		if releasetitle_startswith('rifftrax'): return release_title # removed by "undesirables" anyway so exit
+		for i in unwanted_tags:
+			if releasetitle_startswith(i):
+				release_title = re.sub(r'^%s' % i.replace('+', '\+'), '', release_title, 1, re.I)
+		release_title = release_title.lstrip('+.-:/ ')
+		release_title = re.sub(r'^\[.*?]', '', release_title, 1, re.I)
+		release_title = release_title.lstrip('.-[](){}:/')
+		return release_title
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()
+		return release_title
+
+def strip_non_ascii_and_unprintable(text):
+	try:
+		result = ''.join(char for char in text if char in printable)
+		return result.encode('ascii', errors='ignore').decode('ascii', errors='ignore')
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()
+		return text
