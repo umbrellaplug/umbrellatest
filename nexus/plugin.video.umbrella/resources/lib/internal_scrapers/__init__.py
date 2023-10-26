@@ -27,7 +27,7 @@ def internalSources():
 		return []
 
 def enabledCheck(scraper):
-	parent_dict = {'plexshare': 'plexshare', 'easynews':'easynews'}
+	parent_dict = {'plexshare': 'plexshare', 'easynews':'easynews', 'filepursuit': 'filepursuit', 'gdrive':'gdrive'}
 	try:
 		parent_setting = parent_dict[scraper]
 		from resources.lib.modules import log_utils

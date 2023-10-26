@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.331">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.332">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -172,9 +172,12 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.331 - October 21st, 2023[/B]
+[B]Update - v6.6.332 - October 26th, 2023[/B]
+--[FIX] Changes made for database name difference in Kodi 21.
 --[ENHANCEMENT] First internal scraper completed. Plex is now built in.
 --[ENHANCEMENT] Second internal scraper completed. Easynews is now built in.
+--[ENHANCEMENT] Third internal scraper completed. FilePursuit is now built in.
+--[ENHANCEMENT] Forth internal scraper completed. GDrive is now built in.
 --[INFO] This version could be very broken. This is for testing.
 --[INFO] File Pursuit, and Google Drive will all be moved to internal scrapers also.
 		</news>

@@ -1541,9 +1541,9 @@ class Sources:
 		self.debrid_resolvers = debrid.debrid_resolvers()
 		self.prem_providers = [] # for sorting by debrid and direct source links priority
 		if control.setting('easynews.user'): self.prem_providers += [('easynews', int(getSetting('easynews.priority')))]
-		if control.setting('filepursuit.api'): self.prem_providers += [('filepursuit', int(getSetting('filepursuit.priority')))]
+		if control.setting('filepursuittoken'): self.prem_providers += [('filepursuit', int(getSetting('filepursuit.priority')))]
 		#if control.setting('furk.user_name'): self.prem_providers += [('furk', int(getSetting('furk.priority')))]
-		if control.setting('gdrive.cloudflare_url'): self.prem_providers += [('gdrive', int(getSetting('gdrive.priority')))]
+		if control.setting('gdrivetoken'): self.prem_providers += [('gdrive', int(getSetting('gdrive.priority')))]
 		if control.setting('plexsharetoken'): self.prem_providers += [('plexshare', int(getSetting('plexshare.priority')))]
 		self.prem_providers += [(d.name, int(d.sort_priority)) for d in self.debrid_resolvers]
 

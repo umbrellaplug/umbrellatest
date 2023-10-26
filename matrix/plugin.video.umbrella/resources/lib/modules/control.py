@@ -635,7 +635,6 @@ def syncAccounts():
 			pass
 		else:
 			modulename = setting('external_provider.module')
-			setSetting('filepursuit.api', addon(modulename).getSetting('filepursuit.api'))
 			setSetting('gdrive.cloudflare_url', addon(modulename).getSetting('gdrive.cloudflare_url'))
 
 		if setting('umbrella.colorSecond') == 'false':

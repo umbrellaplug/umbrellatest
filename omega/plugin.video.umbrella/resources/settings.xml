@@ -2929,7 +2929,7 @@
 						<dependency type="visible">
 							<and>
 								<condition operator="is" setting="sources.highlightmethod">1</condition>
-								<condition operator="!is" setting="gdrive.cloudflare_url"/>
+								<condition operator="!is" setting="gdrivetoken"/>
 							</and>
 						</dependency>
 					</dependencies>
@@ -2954,7 +2954,7 @@
 						<dependency type="visible">
 							<and>
 								<condition operator="is" setting="sources.highlightmethod">1</condition>
-								<condition operator="!is" setting="filepursuit.api"/>
+								<condition operator="!is" setting="filepursuittoken"/>
 							</and>
 						</dependency>
 					</dependencies>
@@ -4536,23 +4536,15 @@
 				<setting id="filepursuit.enable" type="boolean" label="32081" help="">
 					<level>0</level>
 					<default>true</default>
-					<dependencies>
-						<dependency type="visible">
-							<condition operator="!is" setting="filepursuit.api"/>
-						</dependency>
-					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting id="filepursuit.api" type="string" label="32309" help="">
+				<setting id="filepursuittoken" type="string" label="32309" help="">
 					<level>0</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
 					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
 						<dependency type="visible">
 							<condition operator="is" setting="filepursuit.enable">true</condition>
 						</dependency>
@@ -4575,7 +4567,7 @@
 						</dependency>
 						<dependency type="visible">
 							<and>
-								<condition operator="!is" setting="filepursuit.api"/>
+								<condition operator="!is" setting="filepursuittoken"/>
 								<condition operator="is" setting="filepursuit.enable">true</condition>
 							</and>
 						</dependency>
@@ -4588,24 +4580,39 @@
 			<group id="5" label="40205">
 				<setting id="gdrive.enable" type="boolean" label="32081" help="">
 					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="gdrive.title.chk" type="boolean" label="40491" help="" parent="gdrive.enable">
+					<level>0</level>
 					<default>true</default>
 					<dependencies>
 						<dependency type="visible">
-							<condition operator="!is" setting="gdrive.cloudflare_url"/>
+							<condition operator="is" setting="gdrive.enable">true</condition>
 						</dependency>
 					</dependencies>
 					<control type="toggle"/>
 				</setting>
-				<setting id="gdrive.cloudflare_url" type="string" label="40206" help="">
+				<setting id="googleDriveTitleCheck" type="action" label="32137" help="">
+					<level>0</level>
+					<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_ShowHelp&amp;name=gdrive_titleCheck)</data>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+							<condition operator="is" setting="gdrive.enable">true</condition>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action"/>
+				</setting>
+				<setting id="gdrivetoken" type="string" label="40206" help="">
 					<level>0</level>
 					<default/>
 					<constraints>
 						<allowempty>true</allowempty>
 					</constraints>
 					<dependencies>
-						<dependency type="enable">
-							<condition on="property" name="InfoBool">false</condition>
-						</dependency>
 						<dependency type="visible">
 							<condition operator="is" setting="gdrive.enable">true</condition>
 						</dependency>
@@ -4628,7 +4635,7 @@
 						</dependency>
 						<dependency type="visible">
 							<and>
-								<condition operator="!is" setting="gdrive.cloudflare_url"/>
+								<condition operator="!is" setting="gdrivetoken"/>
 								<condition operator="is" setting="gdrive.enable">true</condition>
 							</and>
 						</dependency>
