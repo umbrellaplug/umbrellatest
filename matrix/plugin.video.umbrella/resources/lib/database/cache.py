@@ -356,7 +356,7 @@ def get_video_database_path():
 	elif kodi_version == 19: database_path = control.joinPath(database_path, 'MyVideos119.db')
 	elif kodi_version == 20: 
 		full_version = control.getKodiVersion(full=True)
-		full_version = float(full_version[4:])
+		full_version = full_version[4:]
 		if full_version > 20.2:
 			database_path = control.joinPath(database_path, 'MyVideos122.db')
 		else:

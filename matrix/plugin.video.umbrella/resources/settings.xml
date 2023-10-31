@@ -4246,7 +4246,7 @@
 				</setting>
 				<setting id="plexshare.enable" type="boolean" label="32081" help="">
 					<level>0</level>
-					<default>true</default>
+					<default>false</default>
 					<dependencies>
 						<dependency type="visible">
 							<condition operator="!is" setting="plexsharetoken"/>
@@ -4535,7 +4535,7 @@
 			<group id="4" label="40203">
 				<setting id="filepursuit.enable" type="boolean" label="32081" help="">
 					<level>0</level>
-					<default>true</default>
+					<default>false</default>
 					<control type="toggle"/>
 				</setting>
 				<setting id="filepursuittoken" type="string" label="32309" help="">

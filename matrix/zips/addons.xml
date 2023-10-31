@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.332">
+<addons><addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.341">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 		<import addon="script.module.requests" />
@@ -156,7 +156,7 @@
 	<extension point="xbmc.service" library="service.py" start="startup" />
 	<extension point="xbmc.python.module" library="resources/lib/" />
 	<extension point="xbmc.addon.metadata">
-		<reuselanguageinvoker>false</reuselanguageinvoker>
+		<reuselanguageinvoker>true</reuselanguageinvoker>
 		<summary lang="en">[B]Umbrella[/B] - We do not host any of the contents streamed</summary>
 		<description lang="en">[B]Umbrella[/B][CR] This addon does not form part of the Kodi Media Centre. Please do not seek assistance with this addon from any of the Official Kodi Support Channels.[CR]The author does not host any of the content in this addon and takes no responsibility for content found. We do not know anything about a lab under Raccoon City.</description>
 		<platform>all</platform>
@@ -173,14 +173,10 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.332 - October 26th, 2023[/B]
---[FIX] Changes made for database name difference in Kodi 21.
---[ENHANCEMENT] First internal scraper completed. Plex is now built in.
---[ENHANCEMENT] Second internal scraper completed. Easynews is now built in.
---[ENHANCEMENT] Third internal scraper completed. FilePursuit is now built in.
---[ENHANCEMENT] Forth internal scraper completed. GDrive is now built in.
---[INFO] This version could be very broken. This is for testing.
---[INFO] File Pursuit, and Google Drive will all be moved to internal scrapers also.
+[B]Update - v6.6.34 - October 31st, 2023[/B]
+--[THANKS] Great testing....
+--[FIX] More Changes made for database name difference in Kodi 21.
+
 		</news>
 	</extension>
 

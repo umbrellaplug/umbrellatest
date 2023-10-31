@@ -635,7 +635,6 @@ def syncAccounts():
 			pass
 		else:
 			modulename = setting('external_provider.module')
-			setSetting('gdrive.cloudflare_url', addon(modulename).getSetting('gdrive.cloudflare_url'))
 
 		if setting('umbrella.colorSecond') == 'false':
 			setSetting('highlight.color', 'FFFFFF33')
