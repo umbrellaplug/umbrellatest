@@ -67,7 +67,7 @@ def addView(content):
 
 def setView(content, viewDict=None):
 	for i in range(0, 200):
-		control.sleep(200)
+		control.sleep(300)
 		if control.condVisibility('Container.Content(%s)' % content):
 			try:
 				skin = control.skin
@@ -89,4 +89,3 @@ def setView(content, viewDict=None):
 					return
 			finally:
 				dbcur.close() ; dbcon.close()
-	control.sleep(100)
