@@ -89,3 +89,4 @@ def setView(content, viewDict=None):
 					return
 			finally:
 				dbcur.close() ; dbcon.close()
+	control.sleep(100)

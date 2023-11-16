@@ -4912,5 +4912,5 @@ msgid "Title Check Results"
 msgstr ""
 
 msgctxt "#40492"
-msgid "IMDb genre list limit"
+msgid "IMDb list amount"
 msgstr ""

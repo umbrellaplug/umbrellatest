@@ -1,4 +1,5 @@
-[B]Update - v6.6.344 - November 16th, 2023[/B]
+[B]Update - v6.6.345 - November 16th, 2023[/B]
+--[Fix] Changes made for IMDb lists now have an amount. Set the setting in Settings General
 --[Fix] Changes made to IMDb generated lists for new website format.
 --[Fix] 1 second delay added for view to resolve bug of view not being set correctly.
 
