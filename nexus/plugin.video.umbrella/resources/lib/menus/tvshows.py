@@ -1132,7 +1132,6 @@ class TVshows:
 		return self.list
 
 	def imdb_list(self, url, isRatinglink=False, folderName=''):
-		import web_pdb; web_pdb.set_trace()
 		list = [] ; items = [] ; dupes = []
 		try:
 			for i in re.findall(r'date\[(\d+)\]', url):
