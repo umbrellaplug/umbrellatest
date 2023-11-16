@@ -67,7 +67,7 @@ def addView(content):
 
 def setView(content, viewDict=None):
 	for i in range(0, 200):
-		control.sleep(100)
+		control.sleep(200)
 		if control.condVisibility('Container.Content(%s)' % content):
 			try:
 				skin = control.skin
