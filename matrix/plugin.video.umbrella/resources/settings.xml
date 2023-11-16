@@ -441,6 +441,18 @@
 				</setting>
 			</group>
 			<group id="2" label="35055">
+				<setting id="limit.imdb.genres" type="integer" label="40492" help="">
+					<level>0</level>
+					<default>20</default>
+					<constraints>
+						<minimum>20</minimum>
+						<maximum>250</maximum>
+						<step>10</step>
+					</constraints>
+					<control type="slider" format="integer">
+						<popup>false</popup>
+					</control>
+				</setting>
 				<setting id="sort.imdbmovies.type" type="integer" label="35054" help="">
 					<level>0</level>
 					<default>0</default>

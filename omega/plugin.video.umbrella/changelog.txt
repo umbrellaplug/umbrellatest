@@ -1,3 +1,7 @@
+[B]Update - v6.6.344 - November 16th, 2023[/B]
+--[Fix] Changes made to IMDb generated lists for new website format.
+--[Fix] 1 second delay added for view to resolve bug of view not being set correctly.
+
 [B]Update - v6.6.343 - November 8th, 2023[/B]
 --[Fix] Removed release date to fix imdb genres.
 

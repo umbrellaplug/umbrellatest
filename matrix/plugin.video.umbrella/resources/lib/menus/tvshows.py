@@ -184,7 +184,7 @@ class TVshows:
 				if idx: self.worker()
 				# self.sort() # switched to request sorting for imdb
 			elif u in self.imdb_link:
-				self.list = cache.get(self.imdb_list, self.imdblist_hours, url, folderName)
+				self.list = cache.get(self.imdb_genre_list, self.imdblist_hours, url, folderName)
 				if idx: self.worker()
 			elif u in self.mbdlist_list_items:
 				self.list = self.mdb_list_items(url, create_directory=False)
@@ -1132,6 +1132,7 @@ class TVshows:
 		return self.list
 
 	def imdb_list(self, url, isRatinglink=False, folderName=''):
+		import web_pdb; web_pdb.set_trace()
 		list = [] ; items = [] ; dupes = []
 		try:
 			for i in re.findall(r'date\[(\d+)\]', url):
@@ -1196,6 +1197,42 @@ class TVshows:
 				from resources.lib.modules import log_utils
 				log_utils.error()
 		return list
+
+	def imdb_genre_list(self, url, isRatinglink=False, folderName=''):
+			list = [] ; items = [] ; dupes = []
+			try:
+				for i in re.findall(r'date\[(\d+)\]', url):
+					url = url.replace('date[%s]' % i, (self.date_time - timedelta(days=int(i))).strftime('%Y-%m-%d'))
+				def imdb_watchlist_id(url):
+					return client.parseDOM(client.request(url), 'meta', ret='content', attrs = {'property': 'pageId'})[0]
+				if url == self.imdbwatchlist_link:
+					url = cache.get(imdb_watchlist_id, 8640, url)
+					url = self.imdbwatchlist2_link % url
+				result = client.request(url)
+				result = result.replace('\n', ' ')
+				items = client.parseDOM(result, 'div', attrs = {'class': 'ipc-metadata-list-summary-item__tc'})
+			except:
+				from resources.lib.modules import log_utils
+				log_utils.error()
+				return
+			next= ''
+			for item in items:
+				try:
+					main_title = client.parseDOM(item, 'h3', attrs = {'class': 'ipc-title__text'})
+					title = main_title[0].split('. ')[1]
+					year = client.parseDOM(item, 'span', attrs = {'class': '.*?dli-title-metadata-item'})[0]
+					year = year[:4]
+					if int(year) > int((self.date_time).strftime('%Y')): raise Exception()
+					imdb = client.parseDOM(item, 'a', ret='href')[0]
+					imdb = re.findall(r'(tt\d*)', imdb)[0]
+					if imdb in dupes: raise Exception()
+					dupes.append(imdb)
+					rating = votes = ''
+					list.append({'title': title, 'tvshowtitle': title, 'originaltitle': title, 'year': year, 'imdb': imdb, 'tmdb': '', 'tvdb': '', 'rating': rating, 'votes': votes, 'next': next})
+				except:
+					from resources.lib.modules import log_utils
+					log_utils.error()
+			return list
 
 	def imdb_person_list(self, url):
 		list = []

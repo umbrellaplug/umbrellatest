@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.343">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.344">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -172,8 +172,9 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.343 - November 8th, 2023[/B]
---[Fix] Removed release date to fix imdb genres.
+[B]Update - v6.6.344 - November 16th, 2023[/B]
+--[Fix] Changes made to IMDb generated lists for new website format.
+--[Fix] 1 second delay added for view to resolve bug of view not being set correctly.
 
 		</news>
 	</extension>

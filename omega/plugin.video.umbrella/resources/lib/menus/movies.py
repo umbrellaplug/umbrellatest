@@ -37,6 +37,7 @@ class Movies:
 	def __init__(self, notifications=True):
 		self.list = []
 		self.page_limit = getSetting('page.item.limit')
+		self.genre_limit = getSetting('limit.imdb.genres')
 		self.search_page_limit = getSetting('search.page.limit')
 		self.notifications = notifications
 		self.date_time = datetime.now()
@@ -94,7 +95,7 @@ class Movies:
 			self.mostpopular_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=1000,&production_status=released&groups=top_1000&release_date=,date[%s]&sort=moviemeter,asc&count=%s&start=1' % (hidecinema_rollback, self.page_limit )
 			self.mostvoted_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=1000,&production_status=released&release_date=,date[%s]&sort=num_votes,desc&count=%s&start=1' % (hidecinema_rollback, self.page_limit )
 			self.featured_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=1000,&production_status=released&release_date=,date[%s]&sort=moviemeter,asc&count=%s&start=1' % (hidecinema_rollback, self.page_limit )
-			self.genre_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie,documentary&num_votes=3000,&genres=%s&sort=%s&count=%s&start=1' % (hidecinema_rollback, '%s', self.imdb_sort(type='imdbmovies'), self.page_limit)
+			self.genre_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie,documentary&num_votes=3000,&release_date=,date[%s]&genres=%s&sort=%s&count=%s&start=1' % (hidecinema_rollback, '%s', self.imdb_sort(type='imdbmovies'), self.genre_limit)
 			self.language_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=100,&production_status=released&primary_language=%s&release_date=,date[%s]&sort=%s&count=%s&start=1' % ('%s', hidecinema_rollback, self.imdb_sort(type='imdbmovies'), self.page_limit)
 			self.certification_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=100,&production_status=released&certificates=%s&release_date=,date[%s]&sort=%s&count=%s&start=1' % ('%s', hidecinema_rollback, self.imdb_sort(type='imdbmovies'), self.page_limit)
 			self.imdbboxoffice_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&production_status=released&sort=boxoffice_gross_us,desc&release_date=,date[%s]&count=%s&start=1' % (hidecinema_rollback, self.page_limit)
@@ -102,7 +103,7 @@ class Movies:
 			self.mostpopular_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=1000,&production_status=released&groups=top_1000&sort=moviemeter,asc&count=%s&start=1' % self.page_limit
 			self.mostvoted_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=1000,&production_status=released&sort=num_votes,desc&count=%s&start=1' % self.page_limit
 			self.featured_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=1000,&production_status=released&sort=moviemeter,asc&count=%s&start=1' % self.page_limit
-			self.genre_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie,documentary&num_votes=3000,&genres=%s&sort=%s&count=%s&start=1' % ('%s', self.imdb_sort(type='imdbmovies'), self.page_limit)
+			self.genre_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=3000,&release_date=,date[0]&genres=%s&sort=%s&count=%s&start=1' % ('%s', self.imdb_sort(type='imdbmovies'), self.genre_limit)
 			self.language_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=100,&production_status=released&primary_language=%s&sort=%s&count=%s&start=1' % ('%s', self.imdb_sort(type='imdbmovies'), self.page_limit)
 			self.certification_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&num_votes=100,&production_status=released&certificates=%s&sort=%s&count=%s&start=1' % ('%s', self.imdb_sort(type='imdbmovies'), self.page_limit)
 			self.imdbboxoffice_link = 'https://www.imdb.com/search/title/?title_type=feature,tv_movie&production_status=released&sort=boxoffice_gross_us,desc&count=%s&start=1' % self.page_limit
@@ -206,9 +207,11 @@ class Movies:
 				if idx: self.worker()
 				# self.sort() # switched to request sorting for imdb
 			elif u in self.imdb_link:
-				if 'calendar' in url:
+				if 'genres' in url:
+					self.list = cache.get(self.imdb_genre_list, self.imdblist_hours, url, folderName)
+				elif 'calendar' in url:
 					self.list = cache.get(self.imdb_list, self.imdblist_hours, url, True, folderName)
-				else: self.list = cache.get(self.imdb_list, self.imdblist_hours, url, folderName)
+				else: self.list = cache.get(self.imdb_genre_list, self.imdblist_hours, url, folderName)
 				if idx: self.worker()
 			elif u in self.mbdlist_list_items:
 				self.list = self.mdb_list_items(url, create_directory=False)
@@ -791,7 +794,10 @@ class Movies:
 			('Mystery', 'mystery', True, '9648'), ('Romance', 'romance', True, '10749'), ('Science Fiction', 'sci-fi', True, '878'),
 			('Sport', 'sport', True), ('Thriller', 'thriller', True, '53'), ('War', 'war', True, '10752'), ('Western', 'western', True, '37')]
 		for i in genres:
-			if self.imdb_link in url: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % i[1] if i[2] else self.keyword_link % i[1], 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'movies&folderName=%s' % cleangenre.lang(i[0], self.lang)})
+			if self.imdb_link in url:
+				for j in re.findall(r'date\[(\d+)\]', url):
+					url = url.replace('date[%s]' % j, (self.date_time - timedelta(days=int(j))).strftime('%Y-%m-%d'))
+				self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % i[1] if i[2] else self.keyword_link % i[1], 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'movies&folderName=%s' % cleangenre.lang(i[0], self.lang)})
 			if self.tmdb_link in url:
 				try: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % ('%s', i[3]), 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tmdbmovies&folderName=%s' % cleangenre.lang(i[0], self.lang)})
 				except: pass
@@ -1243,6 +1249,8 @@ class Movies:
 		return self.list
 
 	def imdb_list(self, url, comingSoon=False, isRatinglink=False, folderName=''):
+		from resources.lib.modules import log_utils
+		log_utils.log('Umbrella IMDB list generation. URL: %s'% str(url), 1)
 		list = []
 		try:
 			for i in re.findall(r'date\[(\d+)\]', url):
@@ -1319,6 +1327,48 @@ class Movies:
 				from resources.lib.modules import log_utils
 				log_utils.error()
 		return list
+
+	def imdb_genre_list(self, url, comingSoon=False, isRatinglink=False, folderName=''):
+			from resources.lib.modules import log_utils
+			log_utils.log('Umbrella Genre IMDB list generation. URL: %s'% str(url), 1)
+			list = []
+			try:
+				for i in re.findall(r'date\[(\d+)\]', url):
+					url = url.replace('date[%s]' % i, (self.date_time - timedelta(days=int(i))).strftime('%Y-%m-%d'))
+				def imdb_watchlist_id(url):
+					return client.parseDOM(client.request(url), 'meta', ret='content', attrs = {'property': 'pageId'})[0]
+				if url == self.imdbwatchlist_link:
+					url = cache.get(imdb_watchlist_id, 8640, url)
+					url = self.imdbwatchlist2_link % url
+				result = client.request(url).replace('\n', ' ')
+				items = client.parseDOM(result, 'div', attrs = {'class': 'ipc-metadata-list-summary-item__tc'})
+			except:
+				from resources.lib.modules import log_utils
+				log_utils.error()
+				return
+
+			next = ''
+
+			for item in items:
+				try:
+					main_title = client.parseDOM(item, 'h3', attrs = {'class': 'ipc-title__text'})
+					title = main_title[0].split('. ')[1]
+					year = client.parseDOM(item, 'span', attrs = {'class': '.*?dli-title-metadata-item'})[0]
+					if not year: continue
+					if not comingSoon:
+						if int(year) > int((self.date_time).strftime('%Y')): continue
+					imdb = client.parseDOM(item, 'a', ret='href')[0]
+					imdb = re.findall(r'(tt\d*)', imdb)[0]
+					try: show = '–'.decode('utf-8') in str(year).decode('utf-8') or '-'.decode('utf-8') in str(year).decode('utf-8') # check with Matrix
+					except: show = False
+					if show or ('Episode:' in item): raise Exception() # Some lists contain TV shows.
+					rating = votes = ''
+					rating = ''
+					list.append({'title': title, 'originaltitle': title, 'year': year, 'imdb': imdb, 'tmdb': '', 'tvdb': '', 'rating': rating, 'votes': votes, 'next': next}) # just let super_info() TMDb request provide the meta and pass min to retrieve it
+				except:
+					from resources.lib.modules import log_utils
+					log_utils.error()
+			return list
 
 	def imdb_person_list(self, url):
 		self.list = []
