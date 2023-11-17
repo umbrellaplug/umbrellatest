@@ -611,7 +611,7 @@ class TVshows:
 			('Biography', 'biography', True), ('Comedy', 'comedy', True, '35'), ('Crime', 'crime', True, '80'), ('Drama', 'drama', True, '18'),
 			('Family', 'family', True, '10751'), ('Fantasy', 'fantasy', True), ('Game-Show', 'game_show', True), ('History', 'history', True),
 			('Horror', 'horror', True), ('Music', 'music', True), ('Musical', 'musical', True), ('Mystery', 'mystery', True, '9648'),
-			('News', 'news', True, '10763'), ('Reality', 'reality_tv', True, '10764'), ('Romance', 'romance', True), ('Science Fiction', 'sci_fi', True, '10765'),
+			('News', 'news', True, '10763'), ('Romance', 'romance', True), ('Science Fiction', 'sci_fi', True, '10765'),
 			('Sport', 'sport', True), ('Talk-Show', 'talk_show', True, '10767'), ('Thriller', 'thriller', True), ('War', 'war', True, '10768'), ('Western', 'western', True, '37')]
 		for i in genres:
 			if self.imdb_link in url: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % i[1] if i[2] else self.keyword_link % i[1], 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tvshows&folderName=%s' % cleangenre.lang(i[0], self.lang)})

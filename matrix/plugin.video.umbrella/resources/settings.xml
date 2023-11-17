@@ -1042,11 +1042,6 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="navi.movie.imdb.oscarwinners" type="boolean" label="32452" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
 				<setting id="navi.movie.imdb.oscarnominees" type="boolean" label="32454" help="">
 					<level>0</level>
 					<default>true</default>
@@ -1062,27 +1057,12 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="navi.movie.imdb.years" type="boolean" label="32458" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
 				<setting id="navi.movie.tmdb.years" type="boolean" label="32485" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
 				<setting id="navi.movie.imdb.people" type="boolean" label="32460" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="navi.movie.imdb.languages" type="boolean" label="32462" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="navi.movie.imdb.certificates" type="boolean" label="32464" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
@@ -1221,32 +1201,12 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="navi.tv.imdb.genres" type="boolean" label="32456" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
 				<setting id="navi.tv.tmdb.genres" type="boolean" label="32486" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
 				<setting id="navi.tv.tvmaze.networks" type="boolean" label="32470" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="navi.tv.imdb.languages" type="boolean" label="32462" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="navi.tv.imdb.certificates" type="boolean" label="32464" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="navi.tv.imdb.years" type="boolean" label="32458" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
@@ -1261,22 +1221,7 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
-				<setting id="navi.tv.imdb.airingtoday" type="boolean" label="32466" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
 				<setting id="navi.tv.tmdb.ontv" type="boolean" label="32472" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="navi.tv.imdb.returningtvshows" type="boolean" label="32474" help="">
-					<level>0</level>
-					<default>true</default>
-					<control type="toggle"/>
-				</setting>
-				<setting id="navi.tv.imdb.newtvshows" type="boolean" label="32476" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
