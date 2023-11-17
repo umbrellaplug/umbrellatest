@@ -118,6 +118,8 @@ class Navigator:
 			self.addDirectoryItem(32454 if self.indexLabels else 32453, 'movies&url=oscarsnominees', 'imdb.png' if self.iconLogos else 'oscar-winners.png', 'DefaultMovies.png')
 		if getMenuEnabled('navi.movie.tmdb.genres'):
 			self.addDirectoryItem(32486 if self.indexLabels else 32455, 'movieGenres&url=tmdb_genre&folderName=%s' % quote_plus(getLS(32486 if self.indexLabels else 32455)), 'tmdb.png' if self.iconLogos else 'genres.png', 'DefaultGenre.png')
+		if getMenuEnabled('navi.movie.trakt.genres'):
+			self.addDirectoryItem(40493 if self.indexLabels else 32455, 'movieGenres&url=trakt_movie_genre&folderName=%s' % quote_plus(getLS(40493 if self.indexLabels else 32455)), 'trakt.png' if self.iconLogos else 'genres.png', 'DefaultGenre.png')
 		if getMenuEnabled('navi.movie.tmdb.years'):
 			self.addDirectoryItem(32485 if self.indexLabels else 32457, 'movieYears&url=tmdb_year&folderName=%s' % quote_plus(getLS(32485 if self.indexLabels else 32457)), 'tmdb.png' if self.iconLogos else 'years.png', 'DefaultYear.png')
 		if getMenuEnabled('navi.movie.tmdb.certificates'):
@@ -204,6 +206,8 @@ class Navigator:
 			self.addDirectoryItem(40260 if self.indexLabels else 40261, 'tvshows&url=traktbasedonsimilar&folderName=%s' % quote_plus(getLS(40260 if self.indexLabels else 40261)), 'trakt.png' if self.iconLogos else 'years.png', 'DefaultMovies.png')
 		if getMenuEnabled('navi.tv.tmdb.genres'):
 			self.addDirectoryItem(32486 if self.indexLabels else 32455, 'tvGenres&url=tmdb_genre&folderName=%s' % quote_plus(getLS(32486 if self.indexLabels else 32455)), 'tmdb.png' if self.iconLogos else 'genres.png', 'DefaultGenre.png')
+		if getMenuEnabled('navi.tv.trakt.genres'):
+			self.addDirectoryItem(40493 if self.indexLabels else 32455, 'tvGenres&url=trakt_tvshow_genre&folderName=%s' % quote_plus(getLS(40493 if self.indexLabels else 32455)), 'trakt.png' if self.iconLogos else 'genres.png', 'DefaultGenre.png')
 		if getMenuEnabled('navi.tv.tvmaze.networks'):
 			self.addDirectoryItem(32468 if self.indexLabels else 32469, 'tvNetworks&folderName=%s' % quote_plus(getLS(32468 if self.indexLabels else 32469)), 'tmdb.png' if self.iconLogos else 'networks.png', 'DefaultNetwork.png')
 		# if getMenuEnabled('navi.tv.tmdb.certificates'):
@@ -266,6 +270,17 @@ class Navigator:
 	def anime(self, lite=False, folderName=''):
 		self.addDirectoryItem(32001, 'anime_Movies&url=anime&folderName=%s' % quote_plus(getLS(32001)), 'movies.png', 'DefaultMovies.png')
 		self.addDirectoryItem(32002, 'anime_TVshows&url=anime&folderName=%s' % quote_plus(getLS(32002)), 'tvshows.png', 'DefaultTVShows.png')
+		if self.useContainerTitles: control.setContainerName(folderName)
+		self.endDirectory()
+
+	def trakt_genre(self, mediatype='', genre='',url='',lite=False, folderName=''):
+		genre = str(genre)
+		mediatype = str(mediatype)
+		self.addDirectoryItem(getLS(40494) % (genre, mediatype), 'trakt_genre&listtype=trending&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40494) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40495) % (genre, mediatype), 'trakt_genre&listtype=popular&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40495) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40496) % (genre, mediatype), 'trakt_genre&listtype=mostplayed&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40496) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40497) % (genre, mediatype), 'trakt_genre&listtype=mostwatched&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40497) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40498) % (genre, mediatype), 'trakt_genre&listtype=anticipated&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40498) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
 		if self.useContainerTitles: control.setContainerName(folderName)
 		self.endDirectory()
 

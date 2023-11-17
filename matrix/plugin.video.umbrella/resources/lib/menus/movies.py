@@ -126,6 +126,9 @@ class Movies:
 		self.traktunfinished_link = 'https://api.trakt.tv/sync/playback/movies?limit=40'
 		self.traktanticipated_link = 'https://api.trakt.tv/movies/anticipated?limit=%s&page=1' % self.page_limit 
 		self.trakttrending_link = 'https://api.trakt.tv/movies/trending?limit=%s&page=1' % self.page_limit
+		self.traktmostplayed_link = 'https://api.trakt.tv/movies/played/weekly?limit=%s&page=1' % self.page_limit
+		self.traktmostwatched_link = 'https://api.trakt.tv/movies/watched/weekly?limit=%s&page=1' % self.page_limit
+		self.trakt_genres = 'https://api.trakt.tv/genres/movies/'
 		if datetime.today().month > 6:
 			traktyears='years='+str(datetime.today().year)
 		else:
@@ -793,14 +796,20 @@ class Movies:
 			('Horror', 'horror', True, '27'), ('Music', 'music', True, '10402'), ('Musical', 'musical', True),
 			('Mystery', 'mystery', True, '9648'), ('Romance', 'romance', True, '10749'), ('Science Fiction', 'sci-fi', True, '878'),
 			('Sport', 'sport', True), ('Thriller', 'thriller', True, '53'), ('War', 'war', True, '10752'), ('Western', 'western', True, '37')]
-		for i in genres:
-			if self.imdb_link in url:
-				for j in re.findall(r'date\[(\d+)\]', url):
-					url = url.replace('date[%s]' % j, (self.date_time - timedelta(days=int(j))).strftime('%Y-%m-%d'))
-				self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % i[1] if i[2] else self.keyword_link % i[1], 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'movies&folderName=%s' % cleangenre.lang(i[0], self.lang)})
-			if self.tmdb_link in url:
-				try: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % ('%s', i[3]), 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tmdbmovies&folderName=%s' % cleangenre.lang(i[0], self.lang)})
-				except: pass
+		if 'trakt_movie_genre' in url:
+				titems = trakt.getTraktAsJson(self.trakt_genres)
+				for l in titems:
+					if l.get('name') != 'None':
+						self.list.append({'content': 'genres', 'name': l.get('name'), 'url':l.get('slug'), 'image': l.get('name') + '.jpg', 'icon': l.get('name') + '.png', 'action': 'trakt_movie_genre&mediatype=Movies&genre=%s&folderName=%s' % (l.get('name'),cleangenre.lang(l.get('name'), self.lang))})
+		else:
+			for i in genres:
+				if self.imdb_link in url:
+					for j in re.findall(r'date\[(\d+)\]', url):
+						url = url.replace('date[%s]' % j, (self.date_time - timedelta(days=int(j))).strftime('%Y-%m-%d'))
+					self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % i[1] if i[2] else self.keyword_link % i[1], 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'movies&folderName=%s' % cleangenre.lang(i[0], self.lang)})
+				if self.tmdb_link in url:
+					try: self.list.append({'content': 'genres', 'name': cleangenre.lang(i[0], self.lang), 'url': url % ('%s', i[3]), 'image': i[0] + '.jpg', 'icon': i[0] + '.png', 'action': 'tmdbmovies&folderName=%s' % cleangenre.lang(i[0], self.lang)})
+					except: pass
 		self.addDirectory(self.list, folderName=folderName)
 		return self.list
 
@@ -865,6 +874,29 @@ class Movies:
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
+
+	def trakt_genre_list(self, listType='', genre='', url='', folderName=''):
+		genreslug = url
+		if listType == 'trending':
+			url = self.trakttrending_link +'&genres=%s'% genreslug
+			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt trending with genre
+		if listType == 'popular':
+			url = self.traktpopular_link+'&genres=%s'% genreslug
+			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt popular with genre.
+		if listType =='mostplayed':
+			url =self.traktmostplayed_link+'&genres=%s'% genreslug
+			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt mostplayed with genre.
+		if listType == 'mostwatched':
+			url = self.traktmostwatched_link+'&genres=%s'% genreslug
+			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt mostwatched with genre.
+		if listType == 'anticipated':
+			url = self.traktanticipated_link+'&genres=%s'% genreslug
+			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt most anticipated with genre.
+		if self.list: self.worker()
+		if self.list: self.movieDirectory(self.list, folderName=folderName)
+		if self.list is None: self.list = []
+		return self.list
+
 	
 	def multiMoviesListToLibrary(self, url):
 		url = getattr(self, url + '_link')
