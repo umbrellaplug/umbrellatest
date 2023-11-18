@@ -173,8 +173,9 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.348 - November 17th, 2023[/B]
+[B]Update - v6.6.349 - November 17th, 2023[/B]
 --[Enhancement] Added Trakt genres for TV and Movies.
+--[Fix] More code for delayed custom view.
 --[Fix] Changes made for IMDb lists now have an amount. Set the setting in Settings General
 --[Fix] Several IMDb lists removed.
 --[Fix] 3 second delay added for view to resolve bug of view not being set correctly.
