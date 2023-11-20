@@ -158,6 +158,7 @@ class Movies:
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 		self.useReleaseYear = getSetting('movies.showyear') == 'true'
+		self.lang = control.apiLanguage()['trakt']
 
 	def get(self, url, idx=True, create_directory=True, folderName=''):
 		self.list = []
@@ -876,21 +877,25 @@ class Movies:
 			log_utils.error()
 
 	def trakt_genre_list(self, listType='', genre='', url='', folderName=''):
+		if self.lang == 'en':
+			filterLang = 'en'
+		else:
+			filterLang = self.lang+',en'
 		genreslug = url
 		if listType == 'trending':
-			url = self.trakttrending_link +'&genres=%s'% genreslug
+			url = self.trakttrending_link +'&genres=%s&language=%s'% (genreslug, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt trending with genre
 		if listType == 'popular':
-			url = self.traktpopular_link+'&genres=%s'% genreslug
+			url = self.traktpopular_link +'&genres=%s&language=%s'% (genreslug, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt popular with genre.
 		if listType =='mostplayed':
-			url =self.traktmostplayed_link+'&genres=%s'% genreslug
+			url =self.traktmostplayed_link +'&genres=%s&language=%s'% (genreslug, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt mostplayed with genre.
 		if listType == 'mostwatched':
-			url = self.traktmostwatched_link+'&genres=%s'% genreslug
+			url = self.traktmostwatched_link +'&genres=%s&language=%s'% (genreslug, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt mostwatched with genre.
 		if listType == 'anticipated':
-			url = self.traktanticipated_link+'&genres=%s'% genreslug
+			url = self.traktanticipated_link +'&genres=%s&language=%s'% (genreslug, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt most anticipated with genre.
 		if listType == 'decades':
 			from resources.lib.menus import navigator
@@ -901,6 +906,10 @@ class Movies:
 		return self.list
 
 	def trakt_genre_list_decade(self, decade='', listType='', genre='', url='', folderName=''):
+		if self.lang == 'en':
+			filterLang = 'en'
+		else:
+			filterLang = self.lang+',en'
 		genreslug = url
 		decade = decade
 		folderName = folderName + ' ('+decade+')'
@@ -925,16 +934,16 @@ class Movies:
 		elif decade == '2020-2029':
 			decades = '2020-2024'
 		if listType == 'trending':
-			url = self.trakttrending_link +'&genres=%s&years=%s'% (genreslug, decades)
+			url = self.trakttrending_link +'&genres=%s&years=%s&languages=%s'% (genreslug, decades, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt trending with genre
 		if listType == 'popular':
-			url = self.traktpopular_link+'&genres=%s&years=%s'% (genreslug, decades)
+			url = self.traktpopular_link+'&genres=%s&years=%s&languages=%s'% (genreslug, decades, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt popular with genre.
 		if listType =='mostplayed':
-			url =self.traktmostplayed_link+'&genres=%s&years=%s'% (genreslug, decades)
+			url =self.traktmostplayed_link+'&genres=%s&years=%s&languages=%s'% (genreslug, decades, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt mostplayed with genre.
 		if listType == 'mostwatched':
-			url = self.traktmostwatched_link+'&genres=%s&years=%s'% (genreslug, decades)
+			url = self.traktmostwatched_link+'&genres=%s&years=%s&languages=%s'% (genreslug, decades, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt mostwatched with genre.
 		if self.list: self.worker()
 		if self.list: self.movieDirectory(self.list, folderName=folderName)
