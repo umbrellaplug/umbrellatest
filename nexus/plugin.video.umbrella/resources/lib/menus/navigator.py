@@ -217,6 +217,8 @@ class Navigator:
 			self.addDirectoryItem(32467 if self.indexLabels else 32465, 'tmdbTvshows&url=tmdb_airingtoday&folderName=%s' % quote_plus(getLS(32467 if self.indexLabels else 32465)), 'tmdb.png' if self.iconLogos else 'airing-today.png', 'DefaultRecentlyAddedEpisodes.png')
 		if getMenuEnabled('navi.tv.tmdb.ontv'):
 			self.addDirectoryItem(32472 if self.indexLabels else 32471, 'tmdbTvshows&url=tmdb_ontheair&folderName=%s' % quote_plus(getLS(32472 if self.indexLabels else 32471)), 'tmdb.png' if self.iconLogos else 'new-tvshows.png', 'DefaultRecentlyAddedEpisodes.png')
+		if getMenuEnabled('navi.tv.imdb.newtvshows'):
+			self.addDirectoryItem(32476 if self.indexLabels else 32475, 'tvshows&url=premiere&folderName=%s' % quote_plus(getLS(32476 if self.indexLabels else 32475)), 'imdb.png' if self.iconLogos else 'new-tvshows.png', 'DefaultRecentlyAddedEpisodes.png')
 		if getMenuEnabled('navi.tv.tvmaze.calendar'):
 			self.addDirectoryItem(32450 if self.indexLabels else 32027, 'calendars&folderName=%s' % quote_plus(getLS(32450 if self.indexLabels else 32027)), 'tvmaze.png' if self.iconLogos else 'calendar.png', 'DefaultYear.png')
 		if getMenuEnabled('navi.tv.mdblist.topList') and getSetting('mdblist.api') != '':

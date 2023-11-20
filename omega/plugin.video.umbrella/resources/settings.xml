@@ -1231,6 +1231,11 @@
 					<default>true</default>
 					<control type="toggle"/>
 				</setting>
+				<setting id="navi.tv.imdb.newtvshows" type="boolean" label="32476" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="navi.tv.tvmaze.calendar" type="boolean" label="32450" help="">
 					<level>0</level>
 					<default>true</default>
