@@ -4938,3 +4938,11 @@ msgstr ""
 msgctxt "#40498"
 msgid "Anticipated %s %s"
 msgstr ""
+
+msgctxt "#40499"
+msgid "Decades %s %s"
+msgstr ""
+
+msgctxt "#40500"
+msgid "%s %s %s"
+msgstr ""

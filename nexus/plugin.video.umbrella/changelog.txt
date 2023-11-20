@@ -1,4 +1,5 @@
-[B]Update - v6.6.350 - November 20th, 2023[/B]
+[B]Update - v6.6.351 - November 20th, 2023[/B]
+--[Enhancement] Added Decades for Trakt genres.
 --[Enhancement] Added Trakt genres for TV and Movies.
 --[Enhancement] Added new icons for different genres from trakt.
 --[Fix] More code for delayed custom view.

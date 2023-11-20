@@ -13,6 +13,7 @@ from json import loads as jsloads
 getLS = control.lang
 getSetting = control.setting
 getMenuEnabled = control.getMenuEnabled
+decades = ['1930-1939', '1940-1949','1950-1959', '1960-1969', '1970-1979', '1980-1989', '1990-1999', '2000-2009', '2010-2019','2020-2029']
 
 
 class Navigator:
@@ -278,11 +279,41 @@ class Navigator:
 	def trakt_genre(self, mediatype='', genre='',url='',lite=False, folderName=''):
 		genre = str(genre)
 		mediatype = str(mediatype)
-		self.addDirectoryItem(getLS(40494) % (genre, mediatype), 'trakt_genre&listtype=trending&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40494) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
-		self.addDirectoryItem(getLS(40495) % (genre, mediatype), 'trakt_genre&listtype=popular&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40495) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
-		self.addDirectoryItem(getLS(40496) % (genre, mediatype), 'trakt_genre&listtype=mostplayed&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40496) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
-		self.addDirectoryItem(getLS(40497) % (genre, mediatype), 'trakt_genre&listtype=mostwatched&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40497) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
-		self.addDirectoryItem(getLS(40498) % (genre, mediatype), 'trakt_genre&listtype=anticipated&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40498) % (genre, mediatype))), 'trakt.png', 'trakt.png', queue=True)
+		if mediatype == 'TVShows':
+			displayMediaType = 'TV Shows'
+		else:
+			displayMediaType = 'Movies'
+		self.addDirectoryItem(getLS(40494) % (genre, displayMediaType), 'trakt_genre&listtype=trending&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40494) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40495) % (genre, displayMediaType), 'trakt_genre&listtype=popular&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40495) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40496) % (genre, displayMediaType), 'trakt_genre&listtype=mostplayed&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40496) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40497) % (genre, displayMediaType), 'trakt_genre&listtype=mostwatched&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40497) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40498) % (genre, displayMediaType), 'trakt_genre&listtype=anticipated&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40498) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40499) % (genre, displayMediaType), 'trakt_genre&listtype=decades&mediatype=%s&genre=%s&url=%s&folderName=%s' % (mediatype, genre, url, quote_plus(getLS(40498) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		if self.useContainerTitles: control.setContainerName(folderName)
+		self.endDirectory()
+
+	def trakt_decades(self, mediatype='', genre='',url='',lite=False, folderName=''):
+		mediatype = str(mediatype)
+		if mediatype == 'TVShows':
+			displayMediaType = 'TV Shows'
+		else:
+			displayMediaType = 'Movies'
+		for i in decades:
+			self.addDirectoryItem(getLS(40500) % (str(i), genre, displayMediaType), 'trakt_genre_decades&decades=%s&mediatype=%s&genre=%s&url=%s&folderName=%s' % (str(i), mediatype, genre, url, quote_plus(getLS(40500) % (str(i), genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		if self.useContainerTitles: control.setContainerName(folderName)
+		self.endDirectory()
+
+	def trakt_genre_decade(self, mediatype='', decade='', genre='',url='',lite=False, folderName=''):
+		genre = str(genre)
+		mediatype = str(mediatype)
+		if mediatype == 'TVShows':
+			displayMediaType = 'TV Shows'
+		else:
+			displayMediaType = 'Movies'
+		self.addDirectoryItem(getLS(40494) % (genre, displayMediaType)+' ('+decade+')', 'trakt_genre_decade&listtype=trending&decades=%s&mediatype=%s&genre=%s&url=%s&folderName=%s' % (str(decade), mediatype, genre, url, quote_plus(getLS(40494) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40495) % (genre, displayMediaType)+' ('+decade+')', 'trakt_genre_decade&listtype=popular&decades=%s&mediatype=%s&genre=%s&url=%s&folderName=%s' % (str(decade), mediatype, genre, url, quote_plus(getLS(40495) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40496) % (genre, displayMediaType)+' ('+decade+')', 'trakt_genre_decade&listtype=mostplayed&decades=%s&mediatype=%s&genre=%s&url=%s&folderName=%s' % (str(decade), mediatype, genre, url, quote_plus(getLS(40496) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
+		self.addDirectoryItem(getLS(40497) % (genre, displayMediaType)+' ('+decade+')', 'trakt_genre_decade&listtype=mostwatched&decades=%s&mediatype=%s&genre=%s&url=%s&folderName=%s' % (str(decade), mediatype, genre, url, quote_plus(getLS(40497) % (genre, displayMediaType))), 'trakt.png', 'trakt.png', queue=True)
 		if self.useContainerTitles: control.setContainerName(folderName)
 		self.endDirectory()
 
