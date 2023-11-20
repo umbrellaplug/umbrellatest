@@ -905,25 +905,25 @@ class Movies:
 		decade = decade
 		folderName = folderName + ' ('+decade+')'
 		if decade == '1930-1939':
-			decades = '1930,1931,1932,1933,1934,1935,1936,1937,1938,1939'
+			decades = '1930-1939'
 		elif decade == '1940-1949':
-			decades = '1940,1941,1942,1943,1944,1945,1946,1947,1948,1949'
+			decades = '1940-1949'
 		elif decade == '1950-1959':
-			decades = '1950,1951,1952,1953,1954,1955,1956,1957,1958,1959'
+			decades = '1950-1959'
 		elif decade == '1960-1969':
-			decades = '1960,1961,1962,1963,1964,1965,1966,1967,1968,1969'
+			decades = '1960-1969'
 		elif decade == '1970-1979':
-			decades = '1970,1971,1972,1973,1974,1975,1976,1977,1978,1979'
+			decades = '1970-1979'
 		elif decade == '1980-1989':
-			decades = '1980,1981,1982,1983,1984,1985,1986,1987,1988,1989'
+			decades = '1980-1989'
 		elif decade == '1990-1999':
-			decades = '1990,1991,1992,1993,1994,1995,1996,1997,1998,1999'
+			decades = '1990-1999'
 		elif decade == '2000-2009':
-			decades = '2000,2001,2002,2003,2004,2005,2006,2007,2008,2009'
+			decades = '2000-2009'
 		elif decade == '2010-2019':
-			decades = '2010,2011,2012,2013,2014,2015,2016,2017,2018,2019'
+			decades = '2010-2019'
 		elif decade == '2020-2029':
-			decades = '2020,2021,2022,2023,2024'
+			decades = '2020-2024'
 		if listType == 'trending':
 			url = self.trakttrending_link +'&genres=%s&years=%s'% (genreslug, decades)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt trending with genre
