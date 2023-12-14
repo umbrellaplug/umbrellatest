@@ -655,9 +655,9 @@ class TVshows:
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt most anticipated with genre.
 		if listType == 'decades':
 			from resources.lib.menus import navigator
-			navigator.Navigator().trakt_decades(genre=genre, mediatype='Movies',url=url, folderName=folderName)
+			navigator.Navigator().trakt_decades(genre=genre, mediatype='TVShows',url=url, folderName=folderName)
 		if self.list: self.worker()
-		if self.list: self.movieDirectory(self.list, folderName=folderName)
+		if self.list: self.tvshowDirectory(self.list, folderName=folderName)
 		if self.list is None: self.list = []
 		return self.list
 
@@ -702,7 +702,7 @@ class TVshows:
 			url = self.traktmostwatched_link+'&genres=%s&years=%s&languages=%s'% (genreslug, decades, filterLang)
 			self.list = cache.get(self.trakt_list,self.trakt_hours, url, self.trakt_user, folderName) #trakt mostwatched with genre.
 		if self.list: self.worker()
-		if self.list: self.movieDirectory(self.list, folderName=folderName)
+		if self.list: self.tvshowDirectory(self.list, folderName=folderName)
 		if self.list is None: self.list = []
 		return self.list
 

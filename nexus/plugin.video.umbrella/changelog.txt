@@ -1,4 +1,10 @@
-[B]Update - v6.6.353 - November 20th, 2023[/B]
+[B]Update - v6.6.39 - November 22nd, 2023[/B]
+--[Fix] Added IMDb Years back in for movies.
+
+[B]Update - v6.6.38 - November 21st, 2023[/B]
+--[Fix] Fixed YouTube section.
+
+[B]Update - v6.6.37 - November 20th, 2023[/B]
 --[Enhancement] Added language filter for trakt genres.
 --[Enhancement] Added Decades for Trakt genres.
 --[Enhancement] Added Trakt genres for TV and Movies.

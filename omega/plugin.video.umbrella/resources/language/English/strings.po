@@ -787,7 +787,7 @@ msgid "Select All"
 msgstr ""
 
 msgctxt "#32191"
-msgid "%s - Lang Downloaded from OPENSUBTILES.ORG"
+msgid "%s - Lang Downloaded from Subscene.com"
 msgstr ""
 
 msgctxt "#32192"
