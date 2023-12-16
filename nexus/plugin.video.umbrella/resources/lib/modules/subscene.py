@@ -94,7 +94,7 @@ def get_download_url(kurl):
 	return downloadPage
 
 def delete_all_subs():
-	download_path = 'special://temp/'
+	download_path = control.transPath('special://home/addons/plugin.video.umbrella/subtitles/')
 	subtitle = control.transPath(download_path)
 	def find(pattern, path):
 		result = []
@@ -104,7 +104,7 @@ def delete_all_subs():
 					result.append(os.path.join(root, name))
 		return result
 
-	subtitles = find('*.srt', subtitle)
+	subtitles = find('*.*', subtitle)
 	for x in subtitles:
 		try:
 			os.remove(x)

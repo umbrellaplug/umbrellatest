@@ -5258,6 +5258,9 @@
 						<dependency type="enable">
 							<condition operator="is" setting="subtitles">true</condition>
 						</dependency>
+						<dependency type="visible">
+							<condition on="property" name="InfoBool">false</condition>
+						</dependency>
 					</dependencies>
 					<control type="list" format="string">
 						<heading>32357</heading>
