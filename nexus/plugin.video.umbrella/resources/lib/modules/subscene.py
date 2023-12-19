@@ -94,6 +94,8 @@ def get_download_url(kurl):
 	return downloadPage
 
 def delete_all_subs():
+	from resources.lib.modules import log_utils
+	log_utils.log('removing all subtitle files.', level=log_utils.LOGDEBUG)
 	download_path = control.transPath('special://home/addons/plugin.video.umbrella/subtitles/')
 	subtitle = control.transPath(download_path)
 	def find(pattern, path):

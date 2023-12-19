@@ -17,7 +17,7 @@ from resources.lib.modules import log_utils
 from resources.lib.modules import playcount
 from resources.lib.modules import trakt
 from difflib import SequenceMatcher
-from resources.lib.modules.source_utils import seas_ep_filter
+from resources.lib.modules.source_utils import seas_ep_filter, seas_filter
 from urllib.request import urlopen, Request
 from io import BytesIO
 from zipfile import ZipFile
@@ -927,20 +927,35 @@ class Subtitles:
 			# 	return log_utils.log('OpenSubtitles Login failed: token=%s' % token, level=log_utils.LOGWARNING)
 			# else: 
 			# 	token = token['token']
-
+			subservice = getSetting('subtitles.service')
+			if subservice == '1':
+				from resources.lib.modules import opensubs
+				if opensubs.Opensubs().auth():
+					log_utils.log('OpenSubs Authorized.', level=log_utils.LOGDEBUG)
+				else:
+					return control.notification(message="OpenSubs Not Authorized.", time=5000)
 			if not (season is None or episode is None):
 				#tv show
 				#result = server.SearchSubtitles(token, [{'sublanguageid': sublanguageid, 'imdbid': imdbid, 'season': season, 'episode': episode}])['data']
 				#fmt = ['hdtv']
-				from resources.lib.modules import subscene
-				result = subscene.get_subtitles(title, year, season, episode)
+				if subservice =='0':
+					from resources.lib.modules import subscene
+					result = subscene.get_subtitles(title, year, season, episode)
+				else:
+					from resources.lib.modules import opensubs
+					result = opensubs.Opensubs().getSubs(title, imdb, year, season, episode)
+				
 				fmt = ['hdtv']
 
 			else:
 				#movie
 				#result = server.SearchSubtitles(token, [{'sublanguageid': sublanguageid, 'imdbid': imdbid}])['data']
-				from resources.lib.modules import subscene
-				result = subscene.get_subtitles(title, year, season, episode)
+				if subservice =='0':
+					from resources.lib.modules import subscene
+					result = subscene.get_subtitles(title, year, season, episode)
+				else:
+					from resources.lib.modules import opensubs
+					result = opensubs.Opensubs().getSubs(title, imdb, year, season, episode)
 				if not result: return
 				try: vidPath = xbmc.Player().getPlayingFile()
 				except: vidPath = ''
@@ -955,16 +970,33 @@ class Subtitles:
 			pFileName = unquote(os.path.basename(vidPath))
 			pFileName = os.path.splitext(pFileName)[0]
 			matches = []
-			for j in result:
-				if j['language'] == langs[0].lower():
-					if season:
-						if seas_ep_filter(season, episode, j['fileName']):
+			if result:
+				if subservice == '0':
+					for j in result:
+						if j['language'] == langs[0].lower():
+							if season:
+								if seas_ep_filter(season, episode, j['fileName']):
+									seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
+									matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
+								if len(matches) == 0:
+									
+									log_utils.log('Subtitle service using Subscene found no matches for episode and season so will now look for season pack match', log_utils.LOGDEBUG)
+									if seas_filter(season, j['fileName']):
+										seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
+										matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
+							else:
+								seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
+								matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
+				else:
+					for j in result:
+						if season:
+								if seas_ep_filter(season, episode, j['fileName']):
+									seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
+									matches.append({'fileName': j['fileName'], 'fileID': j['fileID'],  'ratio': seq.ratio()})
+						else:
 							seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
-							matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
-					else:
-						seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
-						matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
-			matches.sort(key = lambda i: i['ratio'], reverse = True)
+							matches.append({'fileName': j['fileName'], 'fileID': j['fileID'], 'ratio': seq.ratio()})
+				matches.sort(key = lambda i: i['ratio'], reverse = True)
 
 			filter = matches
 			#for lang in langs:
@@ -977,13 +1009,18 @@ class Subtitles:
 			#		filter = [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in fmt)]
 			if not filter: return control.notification(message=getLS(32395))
 			
-			try: lang = xbmc.convertLanguage(filter[0]['language'], xbmc.ISO_639_1)
-			except: lang = filter[0]['language']
+			try: lang = xbmc.convertLanguage(getSetting('subtitles.lang.1'), xbmc.ISO_639_1)
+			except: lang = getSetting('subtitles.lang.1')
 			filename = filter[0]['fileName']
 			if self.debuglog:
 				log_utils.log('downloaded subtitle=%s' % filename, level=log_utils.LOGDEBUG)
-			from resources.lib.modules import subscene
-			downloadURL = subscene.get_download_url(filter[0]['subtitleUrl'])
+			if subservice == '0':
+				from resources.lib.modules import subscene
+				downloadURL = subscene.get_download_url(filter[0]['subtitleUrl'])
+			else:
+				from resources.lib.modules import opensubs
+				downloadURL, downloadFileName = opensubs.Opensubs().downloadSubs(filter[0]['fileID'], filter[0]['fileName'])
+			#download_path = control.transPath('special://userdata/addon_data/plugin.video.umbrella/subs/')
 			download_path = control.transPath('special://home/addons/plugin.video.umbrella/subtitles/')
 			subtitle = control.transPath(download_path)
 			
@@ -996,21 +1033,42 @@ class Subtitles:
 				return result
 
 			def download_and_unzip(downloadURL, extract_to='.'):
+				log_utils.log('downloading and unzipping from subscene', level=log_utils.LOGDEBUG)
 				reqqqq = Request(downloadURL, headers={'User-Agent' : "Magic Browser"})
 				http_response = urlopen(reqqqq)
 				zipfile = ZipFile(BytesIO(http_response.read()))
 				zipfile.extractall(path=extract_to)
+			def download_opensubs(downloadURL, downloadFileName):
+				log_utils.log('downloading srt file from opensubs.', level=log_utils.LOGDEBUG)
+				reqqqq = Request(downloadURL, headers={'User-Agent' : "Magic Browser"})
+				http_response = urlopen(reqqqq)
+				file = open(control.transPath(download_path)+downloadFileName+'.srt', 'wb')
+				file.write(http_response.read())
+				file.close()
+			from resources.lib.modules import subscene
 			subscene.delete_all_subs()
-			download_and_unzip(downloadURL, subtitle)
+			if subservice == '0':
+				download_and_unzip(downloadURL, subtitle)
+			else:
+				download_opensubs(downloadURL, downloadFileName)
 			subtitles = find('*.srt', subtitle)
 			subtitle_matches = []
 			if len(subtitles) > 1:
-				for count, i in enumerate(subtitles):
-					sFileName = os.path.splitext(i[count])[0]
-					seq = SequenceMatcher(None, pFileName.lower(), sFileName.lower())
-					subtitle_matches.append({'fullPath': subtitles[count], 'matchRatio': seq.ratio()})
+				if season:
+					for count, i in enumerate(subtitles):
+						sFileName = unquote(os.path.basename(i))
+						sFileName = os.path.splitext(sFileName)[0]
+						if seas_ep_filter(season, episode, sFileName.lower()):
+							seq = SequenceMatcher(None, pFileName.lower(), sFileName.lower())
+							subtitle_matches.append({'fullPath': subtitles[count], 'matchRatio': seq.ratio()})
+				else:
+					for count, i in enumerate(subtitles):
+						sFileName = unquote(os.path.basename(i))
+						sFileName = os.path.splitext(sFileName)[0]
+						seq = SequenceMatcher(None, pFileName.lower(), sFileName.lower())
+						subtitle_matches.append({'fullPath': subtitles[count], 'matchRatio': seq.ratio()})
 				subtitle_matches.sort(key = lambda i: i['matchRatio'], reverse = True)
-				subtitles = subtitle_matches[0]
+				subtitles = subtitle_matches[0]['fullPath']
 			else:
 				subtitles = subtitles[0]
 			xbmc.sleep(1000)
@@ -1027,7 +1085,10 @@ class Subtitles:
 			if getSetting('subtitles.notification') == 'true':
 				if Player().isPlayback():
 					control.sleep(500)
-					control.notification(title=filename, message=getLS(32191) % lang.upper())
+					if subservice == '0':
+						control.notification(title=filename, message=getLS(32191) % lang.upper())
+					else:
+						control.notification(title=filename, message=getLS(40506) % lang.upper())
 			if self.playnext_method== '2' and getSetting('enable.playnext')== 'true' and Player().subtitletime == None: #added to check for playnext using subtitles if downloaded.
 				times = []
 				pattern = r'(\d{2}:\d{2}:\d{2},d{3}$)|(\d{2}:\d{2}:\d{2})'
@@ -1046,6 +1107,29 @@ class Subtitles:
 		except: log_utils.error()
 
 	def downloadForPlayNext(self,  title, year, imdb, season, episode, media_length):
+		try:
+			tempFileName = control.transPath(download_path)+'TemporarySubs.%s.srt' % lang
+			if os.path.isFile(tempFileName):
+				log_utils.log('downloaded subtitle file found. getting time from file.', level=log_utils.LOGDEBUG)
+				xbmc.sleep(1000)
+				times = []
+				pattern = r'(\d{2}:\d{2}:\d{2},d{3}$)|(\d{2}:\d{2}:\d{2})'
+				with control.openFile(tempFileName) as file:
+					text = file.read()
+					times = re.findall(pattern, text)
+					times = times[len(times)-4][-1]
+					file.close()
+				if len(times) > 0:
+					total_time = media_length
+					h, m, s = str(times).split(':')
+					totalSeconds =  int(h) * 3600 + int(m) * 60 + int(s)
+					playnextTime = int(total_time) - int(totalSeconds)
+				else:
+					log_utils.log('subtitle time not found returning default', level=log_utils.LOGDEBUG)
+					playnextTime = 'default'
+				return playnextTime
+		except:
+			log_utils.error()
 		try:
 			import gzip, codecs
 			from io import BytesIO
@@ -1101,20 +1185,35 @@ class Subtitles:
 			# 	return log_utils.log('OpenSubtitles Login failed: token=%s' % token, level=log_utils.LOGWARNING)
 			# else: 
 			# 	token = token['token']
-
+			subservice = getSetting('subtitles.service')
+			if subservice == '1':
+				from resources.lib.modules import opensubs
+				if opensubs.Opensubs().auth():
+					pass
+				else:
+					return control.notification(message="OpenSubs Not Authorized.", time=5000)
 			if not (season is None or episode is None):
 				#tv show
 				#result = server.SearchSubtitles(token, [{'sublanguageid': sublanguageid, 'imdbid': imdbid, 'season': season, 'episode': episode}])['data']
 				#fmt = ['hdtv']
-				from resources.lib.modules import subscene
-				result = subscene.get_subtitles(title, year, season, episode)
+				if subservice =='0':
+					from resources.lib.modules import subscene
+					result = subscene.get_subtitles(title, year, season, episode)
+				else:
+					from resources.lib.modules import opensubs
+					result = opensubs.Opensubs().getSubs(title, imdb, year, season, episode)
+				
 				fmt = ['hdtv']
 
 			else:
 				#movie
 				#result = server.SearchSubtitles(token, [{'sublanguageid': sublanguageid, 'imdbid': imdbid}])['data']
-				from resources.lib.modules import subscene
-				result = subscene.get_subtitles(title, year, season, episode)
+				if subservice =='0':
+					from resources.lib.modules import subscene
+					result = subscene.get_subtitles(title, year, season, episode)
+				else:
+					from resources.lib.modules import opensubs
+					result = opensubs.Opensubs().getSubs(title, imdb, year, season, episode)
 				if not result: return
 				try: vidPath = xbmc.Player().getPlayingFile()
 				except: vidPath = ''
@@ -1129,16 +1228,31 @@ class Subtitles:
 			pFileName = unquote(os.path.basename(vidPath))
 			pFileName = os.path.splitext(pFileName)[0]
 			matches = []
-			for j in result:
-				if j['language'] == langs[0].lower():
-					if season:
-						if seas_ep_filter(season, episode, j['fileName']):
+			if result:
+				if subservice == '0':
+					for j in result:
+						if j['language'] == langs[0].lower():
+							if season:
+								if seas_ep_filter(season, episode, j['fileName']):
+									seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
+									matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
+								if len(matches) == 0:
+									if seas_filter(season, j['fileName']):
+										seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
+										matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
+							else:
+								seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
+								matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
+				else:
+					for j in result:
+						if season:
+								if seas_ep_filter(season, episode, j['fileName']):
+									seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
+									matches.append({'fileName': j['fileName'], 'fileID': j['fileID'],  'ratio': seq.ratio()})
+						else:
 							seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
-							matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
-					else:
-						seq = SequenceMatcher(None, pFileName.lower(), j['fileName'].lower())
-						matches.append({'language': j['language'], 'fileName': j['fileName'], 'subtitleUrl': j['subtitleUrl'],  'ratio': seq.ratio()})
-			matches.sort(key = lambda i: i['ratio'], reverse = True)
+							matches.append({'fileName': j['fileName'], 'fileID': j['fileID'], 'ratio': seq.ratio()})
+				matches.sort(key = lambda i: i['ratio'], reverse = True)
 
 			filter = matches
 			#for lang in langs:
@@ -1151,13 +1265,18 @@ class Subtitles:
 			#		filter = [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in fmt)]
 			if not filter: return control.notification(message=getLS(32395))
 			
-			try: lang = xbmc.convertLanguage(filter[0]['language'], xbmc.ISO_639_1)
-			except: lang = filter[0]['language']
+			try: lang = xbmc.convertLanguage(getSetting('subtitles.lang.1'), xbmc.ISO_639_1)
+			except: lang = getSetting('subtitles.lang.1')
 			filename = filter[0]['fileName']
 			if self.debuglog:
 				log_utils.log('downloaded subtitle=%s' % filename, level=log_utils.LOGDEBUG)
-			from resources.lib.modules import subscene
-			downloadURL = subscene.get_download_url(filter[0]['subtitleUrl'])
+			if subservice == '0':
+				from resources.lib.modules import subscene
+				downloadURL = subscene.get_download_url(filter[0]['subtitleUrl'])
+			else:
+				from resources.lib.modules import opensubs
+				downloadURL, downloadFileName = opensubs.Opensubs().downloadSubs(filter[0]['fileID'], filter[0]['fileName'])
+			#download_path = control.transPath('special://userdata/addon_data/plugin.video.umbrella/subs/')
 			download_path = control.transPath('special://home/addons/plugin.video.umbrella/subtitles/')
 			subtitle = control.transPath(download_path)
 			
@@ -1174,17 +1293,36 @@ class Subtitles:
 				http_response = urlopen(reqqqq)
 				zipfile = ZipFile(BytesIO(http_response.read()))
 				zipfile.extractall(path=extract_to)
+			def download_opensubs(downloadURL, downloadFileName):
+				reqqqq = Request(downloadURL, headers={'User-Agent' : "Magic Browser"})
+				http_response = urlopen(reqqqq)
+				file = open(control.transPath(download_path)+downloadFileName+'.srt', 'wb')
+				file.write(http_response.read())
+				file.close()
+			from resources.lib.modules import subscene
 			subscene.delete_all_subs()
-			download_and_unzip(downloadURL, subtitle)
+			if subservice == '0':
+				download_and_unzip(downloadURL, subtitle)
+			else:
+				download_opensubs(downloadURL, downloadFileName)
 			subtitles = find('*.srt', subtitle)
 			subtitle_matches = []
 			if len(subtitles) > 1:
-				for count, i in enumerate(subtitles):
-					sFileName = os.path.splitext(i[count])[0]
-					seq = SequenceMatcher(None, pFileName.lower(), sFileName.lower())
-					subtitle_matches.append({'fullPath': subtitles[count], 'matchRatio': seq.ratio()})
+				if season:
+					for count, i in enumerate(subtitles):
+						sFileName = unquote(os.path.basename(i))
+						sFileName = os.path.splitext(sFileName)[0]
+						if seas_ep_filter(season, episode, sFileName.lower()):
+							seq = SequenceMatcher(None, pFileName.lower(), sFileName.lower())
+							subtitle_matches.append({'fullPath': subtitles[count], 'matchRatio': seq.ratio()})
+				else:
+					for count, i in enumerate(subtitles):
+						sFileName = unquote(os.path.basename(i))
+						sFileName = os.path.splitext(sFileName)[0]
+						seq = SequenceMatcher(None, pFileName.lower(), sFileName.lower())
+						subtitle_matches.append({'fullPath': subtitles[count], 'matchRatio': seq.ratio()})
 				subtitle_matches.sort(key = lambda i: i['matchRatio'], reverse = True)
-				subtitles = subtitle_matches[0]
+				subtitles = subtitle_matches[0]['fullPath']
 			else:
 				subtitles = subtitles[0]
 			xbmc.sleep(1000)
@@ -1210,6 +1348,7 @@ class Subtitles:
 				playnextTime = int(total_time) - int(totalSeconds)
 			else:
 				playnextTime = 'default'
+			log_utils.log('Playnext Returning %s for time.' % playnextTime, level=log_utils.LOGDEBUG)
 			return playnextTime
 		except:
 			log_utils.error()

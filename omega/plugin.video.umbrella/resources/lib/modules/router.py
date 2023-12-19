@@ -721,6 +721,9 @@ def router(argv2):
 		if action == 'tools_ShowNews':
 			from resources.lib.modules import newsinfo
 			newsinfo.news()
+		if action == 'tools_openSubsTest':
+			from resources.lib.modules import opensubs
+			opensubs.Opensubs().getAccountStatus()
 		elif action == 'tools_ShowChangelog':
 			from resources.lib.modules import changelog
 			changelog.get(name)

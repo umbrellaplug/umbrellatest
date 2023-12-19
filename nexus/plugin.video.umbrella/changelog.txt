@@ -1,6 +1,8 @@
-[B]Update - v6.6.402 - Decemeber 15th, 2023[/B]
+[B]Update - v6.6.403 - Decemeber 19th, 2023[/B]
 --[Enhancement] Subtitle service change.
+--[Enhancement] Support for season packs of subtitles added.
 --[Enhancement] Subtitle download for playnext service changed.
+--[Enhancement] Subtitles from opensubtitles.com using an account added.
 
 [B]Update - v6.6.39 - November 22nd, 2023[/B]
 --[Fix] Added IMDb Years back in for movies.
