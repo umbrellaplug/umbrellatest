@@ -670,6 +670,7 @@ class Player(xbmc.Player):
 				try:
 					from resources.lib.modules import subscene
 					subscene.delete_all_subs()
+					
 				except:
 					log_utils.error()
 				log_utils.log('onPlayBackStopped callback', level=log_utils.LOGDEBUG)
@@ -931,7 +932,6 @@ class Subtitles:
 			if subservice == '1':
 				from resources.lib.modules import opensubs
 				if opensubs.Opensubs().auth():
-					from resources.lib.modules import log_utils
 					log_utils.log('OpenSubs Authorized.', level=log_utils.LOGDEBUG)
 				else:
 					return control.notification(message="OpenSubs Not Authorized.", time=5000)
@@ -1022,8 +1022,9 @@ class Subtitles:
 				from resources.lib.modules import opensubs
 				downloadURL, downloadFileName = opensubs.Opensubs().downloadSubs(filter[0]['fileID'], filter[0]['fileName'])
 			#download_path = control.transPath('special://userdata/addon_data/plugin.video.umbrella/subs/')
-			download_path = control.transPath('special://home/addons/plugin.video.umbrella/subtitles/')
-			subtitle = control.transPath(download_path)
+			if not control.existsPath(control.subtitlesPath): control.makeFile(control.subtitlesPath)
+			download_path = control.subtitlesPath
+			subtitle = download_path
 			
 			def find(pattern, path):
 				result = []
@@ -1043,8 +1044,14 @@ class Subtitles:
 				log_utils.log('downloading srt file from opensubs.', level=log_utils.LOGDEBUG)
 				reqqqq = Request(downloadURL, headers={'User-Agent' : "Magic Browser"})
 				http_response = urlopen(reqqqq)
-				file = open(control.transPath(download_path)+downloadFileName+'.srt', 'w')
-				file.write(http_response.read())
+				response = http_response.read()
+				response = response.decode('utf-8')
+				log_utils.log('built http_response opensubs.', level=log_utils.LOGDEBUG)
+				srtFile = os.path.join(download_path, downloadFileName+'.srt')
+				file = open(srtFile, 'w')
+				log_utils.log('opened file %s' % srtFile, level=log_utils.LOGDEBUG)
+				file.write(response)
+				log_utils.log('wrote to file.', level=log_utils.LOGDEBUG)
 				file.close()
 			from resources.lib.modules import subscene
 			subscene.delete_all_subs()
@@ -1052,13 +1059,11 @@ class Subtitles:
 				try:
 					download_and_unzip(downloadURL, subtitle)
 				except:
-					from resources.lib.modules import log_utils
 					log_utils.error()
 			else:
 				try:
 					download_opensubs(downloadURL, downloadFileName)
 				except:
-					from resources.lib.modules import log_utils
 					log_utils.error()
 			subtitles = find('*.srt', subtitle)
 			subtitle_matches = []
@@ -1081,16 +1086,16 @@ class Subtitles:
 			else:
 				subtitles = subtitles[0]
 			xbmc.sleep(1000)
-			tempFileName = control.transPath(download_path)+'TemporarySubs.%s.srt' % lang
+			tempFileName = control.joinPath(download_path,'TemporarySubs.%s.srt' % lang)
 			f = open(subtitles,"r")
-			f1 = open(tempFileName,"a")
+			f1 = open(tempFileName,"w")
 			for line in f.readlines():
 				f1.write(line)
 			f.close()
 			f1.close()
 			
 		
-			xbmc.Player().setSubtitles(str(tempFileName).replace(os.path.sep, '/'))
+			xbmc.Player().setSubtitles(tempFileName)
 			if getSetting('subtitles.notification') == 'true':
 				if Player().isPlayback():
 					control.sleep(500)
@@ -1116,6 +1121,10 @@ class Subtitles:
 		except: log_utils.error()
 
 	def downloadForPlayNext(self,  title, year, imdb, season, episode, media_length):
+		try: lang = xbmc.convertLanguage(getSetting('subtitles.lang.1'), xbmc.ISO_639_1)
+		except: lang = getSetting('subtitles.lang.1')
+		if not control.existsPath(control.subtitlesPath): control.makeFile(control.subtitlesPath)
+		download_path = control.subtitlesPath
 		try:
 			tempFileName = control.transPath(download_path)+'TemporarySubs.%s.srt' % lang
 			if os.path.isFile(tempFileName):
@@ -1286,7 +1295,6 @@ class Subtitles:
 				from resources.lib.modules import opensubs
 				downloadURL, downloadFileName = opensubs.Opensubs().downloadSubs(filter[0]['fileID'], filter[0]['fileName'])
 			#download_path = control.transPath('special://userdata/addon_data/plugin.video.umbrella/subs/')
-			download_path = control.transPath('special://home/addons/plugin.video.umbrella/subtitles/')
 			subtitle = control.transPath(download_path)
 			
 			def find(pattern, path):
@@ -1298,15 +1306,23 @@ class Subtitles:
 				return result
 
 			def download_and_unzip(downloadURL, extract_to='.'):
+				log_utils.log('downloading and unzipping from subscene', level=log_utils.LOGDEBUG)
 				reqqqq = Request(downloadURL, headers={'User-Agent' : "Magic Browser"})
 				http_response = urlopen(reqqqq)
 				zipfile = ZipFile(BytesIO(http_response.read()))
 				zipfile.extractall(path=extract_to)
 			def download_opensubs(downloadURL, downloadFileName):
+				log_utils.log('downloading srt file from opensubs.', level=log_utils.LOGDEBUG)
 				reqqqq = Request(downloadURL, headers={'User-Agent' : "Magic Browser"})
 				http_response = urlopen(reqqqq)
-				file = open(control.transPath(download_path)+downloadFileName+'.srt', 'wb')
-				file.write(http_response.read())
+				response = http_response.read()
+				response = response.decode('utf-8')
+				log_utils.log('built http_response opensubs.', level=log_utils.LOGDEBUG)
+				srtFile = os.path.join(download_path, downloadFileName+'.srt')
+				file = open(srtFile, 'w')
+				log_utils.log('opened file %s' % srtFile, level=log_utils.LOGDEBUG)
+				file.write(response)
+				log_utils.log('wrote to file.', level=log_utils.LOGDEBUG)
 				file.close()
 			from resources.lib.modules import subscene
 			subscene.delete_all_subs()
@@ -1335,7 +1351,7 @@ class Subtitles:
 			else:
 				subtitles = subtitles[0]
 			xbmc.sleep(1000)
-			tempFileName = control.transPath(download_path)+'TemporarySubs2.%s.srt' % lang
+			tempFileName = control.joinPath(download_path,'TemporarySubs2.%s.srt' % lang)
 			f = open(subtitles,"r")
 			f1 = open(tempFileName,"a")
 			for line in f.readlines():

@@ -4976,7 +4976,7 @@ msgid "Check Opensubtitles Account"
 msgstr ""
 
 msgctxt "#40508"
-msgid "Logged in Username: %s [CR] Allowed Downloads: %s [CR] Downloads: %s [CR] Reset Time: %s"
+msgid "Logged in Username: %s [CR] Allowed Downloads: %s"
 msgstr ""
 
 msgctxt "#40509"

@@ -112,26 +112,25 @@ class Opensubs():
 
 	def getAccountStatus(self):
 		try:
-			if self.auth():
-				url = base_url + '/infos/user'
-				headers2 = {
-				'Content-Type': 'application/json',
-				'Api-Key': api_key,
-				'Authorization': self.jwt_token,
-				'User-Agent': 'Umbrella 1.6'
-				}
-				response = requests.get(url,headers=headers2)
-				response = response.json()
-				response = response.get('data')
-				username = response.get('username')
-				a_downloads = response.get('allowed_downloads')
-				downloads = response.get('downloads_count')
-				reset_time = response.get('reset_time')
-				control.openSettings('15.0', 'plugin.video.umbrella')
-				return control.okDialog(title=40503, message=control.getLangString(40508) % (username, a_downloads, downloads, reset_time))
-			else:
-				control.openSettings('15.0', 'plugin.video.umbrella')
-				return control.okDialog(title=40503, message='Unable to authorize opensubs. Please check username and password.')
+			url = base_url + '/login'
+			if not self.username or not self.password: return control.okDialog(title=40503, message='Please enter username and password.')
+			data = {
+				"username": self.username,
+				"password": self.password,
+			}
+			headers = {
+			'Content-Type': 'application/json',
+			'Api-Key': api_key,
+			'User-Agent': 'Umbrella 1.6'}
+			response = requests.post(url,headers=headers, json=data)
+			response = response.json()
+			responseUser = response.get('user')
+			responseToken = response.get('token')
+			username = self.username
+			a_downloads = responseUser.get('allowed_downloads')
+			control.setSetting('opensubstoken', responseToken)
+			control.openSettings('15.0', 'plugin.video.umbrella')
+			return control.okDialog(title=40503, message=control.getLangString(40508) % (username, a_downloads))
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
