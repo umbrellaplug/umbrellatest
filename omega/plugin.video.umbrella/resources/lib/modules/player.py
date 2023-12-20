@@ -22,6 +22,7 @@ from urllib.request import urlopen, Request
 from io import BytesIO
 from zipfile import ZipFile
 import fnmatch
+import os
 
 LOGINFO = 1
 getLS = control.lang
@@ -874,10 +875,7 @@ class Subtitles:
 
 	def get(self, title, year, imdb, season, episode):
 		try:
-			import gzip, codecs
-			from io import BytesIO
-			import re, base64
-			import xmlrpc.client as xmlrpc_client
+			import re
 		except: return log_utils.error()
 		try:
 			langDict = {'Afrikaans': 'afr', 'Albanian': 'alb', 'Arabic': 'ara', 'Armenian': 'arm', 'Basque': 'baq', 'Bengali': 'ben',
@@ -922,12 +920,6 @@ class Subtitles:
 						control.sleep(1000)
 						control.notification(message=getLS(32394) % subLang.upper(), time=5000)
 				return log_utils.log(getLS(32394) % subLang.upper(), level=log_utils.LOGDEBUG)
-			# server = xmlrpc_client.Server('https://api.opensubtitles.org/xml-rpc', verbose=0)
-			# token = server.LogIn('', '', 'en', 'XBMC_Subtitles_Unofficial_v5.2.14') # service.subtitles.opensubtitles_by_opensubtitles
-			# if 'token' not in token:
-			# 	return log_utils.log('OpenSubtitles Login failed: token=%s' % token, level=log_utils.LOGWARNING)
-			# else: 
-			# 	token = token['token']
 			subservice = getSetting('subtitles.service')
 			if subservice == '1':
 				from resources.lib.modules import opensubs
@@ -937,8 +929,6 @@ class Subtitles:
 					return control.notification(message="OpenSubs Not Authorized.", time=5000)
 			if not (season is None or episode is None):
 				#tv show
-				#result = server.SearchSubtitles(token, [{'sublanguageid': sublanguageid, 'imdbid': imdbid, 'season': season, 'episode': episode}])['data']
-				#fmt = ['hdtv']
 				if subservice =='0':
 					from resources.lib.modules import subscene
 					result = subscene.get_subtitles(title, year, season, episode)
@@ -950,7 +940,6 @@ class Subtitles:
 
 			else:
 				#movie
-				#result = server.SearchSubtitles(token, [{'sublanguageid': sublanguageid, 'imdbid': imdbid}])['data']
 				if subservice =='0':
 					from resources.lib.modules import subscene
 					result = subscene.get_subtitles(title, year, season, episode)
@@ -964,8 +953,6 @@ class Subtitles:
 				fmt = [i.lower() for i in fmt]
 				fmt = [i for i in fmt if i in quality]
 			filter = []
-			#result = [i for i in result if i['SubSumCD'] == '1']
-			import os
 			try: vidPath = xbmc.Player().getPlayingFile()
 			except: vidPath = ''
 			pFileName = unquote(os.path.basename(vidPath))
@@ -1000,14 +987,6 @@ class Subtitles:
 				matches.sort(key = lambda i: i['ratio'], reverse = True)
 
 			filter = matches
-			#for lang in langs:
-				# filter += [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in fmt)]
-				# filter += [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in quality)]
-			#	filter =  [i for i in filter if i['language'] == lang.lower() and i['fileName'] in pFileName]
-			#	if not filter:
-			#		filter = [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in quality)]
-			#	if not filter:
-			#		filter = [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in fmt)]
 			if not filter: return control.notification(message=getLS(32395))
 			
 			try: lang = xbmc.convertLanguage(getSetting('subtitles.lang.1'), xbmc.ISO_639_1)
@@ -1021,7 +1000,6 @@ class Subtitles:
 			else:
 				from resources.lib.modules import opensubs
 				downloadURL, downloadFileName = opensubs.Opensubs().downloadSubs(filter[0]['fileID'], filter[0]['fileName'])
-			#download_path = control.transPath('special://userdata/addon_data/plugin.video.umbrella/subs/')
 			if not control.existsPath(control.subtitlesPath): control.makeFile(control.subtitlesPath)
 			download_path = control.subtitlesPath
 			subtitle = download_path
@@ -1149,10 +1127,7 @@ class Subtitles:
 		except:
 			log_utils.error()
 		try:
-			import gzip, codecs
-			from io import BytesIO
-			import re, base64
-			import xmlrpc.client as xmlrpc_client
+			import re
 		except: return log_utils.error()
 		try:
 			langDict = {'Afrikaans': 'afr', 'Albanian': 'alb', 'Arabic': 'ara', 'Armenian': 'arm', 'Basque': 'baq', 'Bengali': 'ben',
@@ -1169,8 +1144,6 @@ class Subtitles:
 									'he': 'cp1255', 'tur': 'cp1254', 'tr': 'cp1254', 'rus': 'cp1251', 'ru': 'cp1251'}
 			quality = ['bluray', 'hdrip', 'brrip', 'bdrip', 'dvdrip', 'webrip', 'hdtv']
 
-			#langs = langDict[getSetting('subtitles.lang.1')].split(',')
-			#langs = langs + langDict[getSetting('subtitles.lang.2')].split(',')
 			langs = []
 			langs.append(getSetting('subtitles.lang.1'))
 			langs.append(getSetting('subtitles.lang.2'))
@@ -1197,12 +1170,6 @@ class Subtitles:
 						control.sleep(1000)
 						control.notification(message=getLS(32394) % subLang.upper(), time=5000)
 				return log_utils.log(getLS(32394) % subLang.upper(), level=log_utils.LOGDEBUG)
-			# server = xmlrpc_client.Server('https://api.opensubtitles.org/xml-rpc', verbose=0)
-			# token = server.LogIn('', '', 'en', 'XBMC_Subtitles_Unofficial_v5.2.14') # service.subtitles.opensubtitles_by_opensubtitles
-			# if 'token' not in token:
-			# 	return log_utils.log('OpenSubtitles Login failed: token=%s' % token, level=log_utils.LOGWARNING)
-			# else: 
-			# 	token = token['token']
 			subservice = getSetting('subtitles.service')
 			if subservice == '1':
 				from resources.lib.modules import opensubs
@@ -1211,21 +1178,16 @@ class Subtitles:
 				else:
 					return control.notification(message="OpenSubs Not Authorized.", time=5000)
 			if not (season is None or episode is None):
-				#tv show
-				#result = server.SearchSubtitles(token, [{'sublanguageid': sublanguageid, 'imdbid': imdbid, 'season': season, 'episode': episode}])['data']
-				#fmt = ['hdtv']
 				if subservice =='0':
 					from resources.lib.modules import subscene
 					result = subscene.get_subtitles(title, year, season, episode)
 				else:
 					from resources.lib.modules import opensubs
 					result = opensubs.Opensubs().getSubs(title, imdb, year, season, episode)
-				
 				fmt = ['hdtv']
 
 			else:
 				#movie
-				#result = server.SearchSubtitles(token, [{'sublanguageid': sublanguageid, 'imdbid': imdbid}])['data']
 				if subservice =='0':
 					from resources.lib.modules import subscene
 					result = subscene.get_subtitles(title, year, season, episode)
@@ -1239,8 +1201,6 @@ class Subtitles:
 				fmt = [i.lower() for i in fmt]
 				fmt = [i for i in fmt if i in quality]
 			filter = []
-			#result = [i for i in result if i['SubSumCD'] == '1']
-			import os
 			try: vidPath = xbmc.Player().getPlayingFile()
 			except: vidPath = ''
 			pFileName = unquote(os.path.basename(vidPath))
@@ -1273,14 +1233,6 @@ class Subtitles:
 				matches.sort(key = lambda i: i['ratio'], reverse = True)
 
 			filter = matches
-			#for lang in langs:
-				# filter += [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in fmt)]
-				# filter += [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in quality)]
-			#	filter =  [i for i in filter if i['language'] == lang.lower() and i['fileName'] in pFileName]
-			#	if not filter:
-			#		filter = [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in quality)]
-			#	if not filter:
-			#		filter = [i for i in result if i['language'] == lang.lower() and any(x in i['fileName'].lower() for x in fmt)]
 			if not filter: return control.notification(message=getLS(32395))
 			
 			try: lang = xbmc.convertLanguage(getSetting('subtitles.lang.1'), xbmc.ISO_639_1)
@@ -1294,7 +1246,6 @@ class Subtitles:
 			else:
 				from resources.lib.modules import opensubs
 				downloadURL, downloadFileName = opensubs.Opensubs().downloadSubs(filter[0]['fileID'], filter[0]['fileName'])
-			#download_path = control.transPath('special://userdata/addon_data/plugin.video.umbrella/subs/')
 			subtitle = control.transPath(download_path)
 			
 			def find(pattern, path):
