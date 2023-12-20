@@ -1,4 +1,4 @@
-[B]Update - v6.6.403 - Decemeber 19th, 2023[/B]
+[B]Update - v6.6.404 - Decemeber 19th, 2023[/B]
 --[Enhancement] Subtitle service change.
 --[Enhancement] Support for season packs of subtitles added.
 --[Enhancement] Subtitle download for playnext service changed.

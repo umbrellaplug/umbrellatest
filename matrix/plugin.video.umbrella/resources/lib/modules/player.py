@@ -1042,15 +1042,23 @@ class Subtitles:
 				log_utils.log('downloading srt file from opensubs.', level=log_utils.LOGDEBUG)
 				reqqqq = Request(downloadURL, headers={'User-Agent' : "Magic Browser"})
 				http_response = urlopen(reqqqq)
-				file = open(control.transPath(download_path)+downloadFileName+'.srt', 'wb')
+				file = open(control.transPath(download_path)+downloadFileName+'.srt', 'w')
 				file.write(http_response.read())
 				file.close()
 			from resources.lib.modules import subscene
 			subscene.delete_all_subs()
 			if subservice == '0':
-				download_and_unzip(downloadURL, subtitle)
+				try:
+					download_and_unzip(downloadURL, subtitle)
+				except:
+					from resources.lib.modules import log_utils
+					log_utils.error()
 			else:
-				download_opensubs(downloadURL, downloadFileName)
+				try:
+					download_opensubs(downloadURL, downloadFileName)
+				except:
+					from resources.lib.modules import log_utils
+					log_utils.error()
 			subtitles = find('*.srt', subtitle)
 			subtitle_matches = []
 			if len(subtitles) > 1:

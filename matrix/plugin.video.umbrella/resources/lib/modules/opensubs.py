@@ -135,3 +135,4 @@ class Opensubs():
 		except:
 			from resources.lib.modules import log_utils
 			log_utils.error()
+			return control.okDialog(title=40503, message='Error checking opensubs. Please check username and password. Press Ok to save and try checking again.')
