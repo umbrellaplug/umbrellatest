@@ -139,7 +139,7 @@ class Opensubs():
 
 	def revokeAccess(self):
 		try:
-			control.setSettingtting('opensubsusername','')
+			control.setSetting('opensubsusername','')
 			control.setSetting('opensubspassword','')
 			control.setSetting('opensubstoken','')
 			self.jwt_token = ''
