@@ -931,6 +931,7 @@ class Subtitles:
 			if subservice == '1':
 				from resources.lib.modules import opensubs
 				if opensubs.Opensubs().auth():
+					from resources.lib.modules import log_utils
 					log_utils.log('OpenSubs Authorized.', level=log_utils.LOGDEBUG)
 				else:
 					return control.notification(message="OpenSubs Not Authorized.", time=5000)

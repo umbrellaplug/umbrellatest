@@ -136,3 +136,14 @@ class Opensubs():
 			from resources.lib.modules import log_utils
 			log_utils.error()
 			return control.okDialog(title=40503, message='Error checking opensubs. Please check username and password. Press Ok to save and try checking again.')
+
+	def revokeAccess(self):
+		try:
+			control.setSettingtting('opensubsusername','')
+			control.setSetting('opensubspassword','')
+			control.setSetting('opensubstoken','')
+			self.jwt_token = ''
+			control.openSettings('15.0', 'plugin.video.umbrella')
+		except:
+			from resources.lib.modules import log_utils
+			log_utils.error()

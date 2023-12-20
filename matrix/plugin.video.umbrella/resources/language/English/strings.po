@@ -4982,3 +4982,7 @@ msgstr ""
 msgctxt "#40509"
 msgid "Unable to authorize opensubs. Please check username and password."
 msgstr ""
+
+msgctxt "#40510"
+msgid "Revoke OpenSubtitles Token"
+msgstr ""

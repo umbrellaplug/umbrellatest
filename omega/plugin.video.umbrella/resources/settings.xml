@@ -5150,6 +5150,22 @@
 						<close>true</close>
 					</control>
 				</setting>
+				<setting id="openSubsRevoke" type="string" label="40510" help="">
+					<level>0</level>
+					<default></default>
+					<constraints>
+						<allowempty>true</allowempty>
+					</constraints>
+					<dependencies>
+						<dependency type="visible">
+								<condition operator="is" setting="subtitles.service">1</condition>
+						</dependency>
+					</dependencies>
+					<control type="button" format="action">
+						<data>RunPlugin(plugin://plugin.video.umbrella/?action=tools_openSubsRevoke)</data>
+						<close>true</close>
+					</control>
+				</setting>
 				<setting id="opensubstoken" type="string" label="" help="">
 					<level>0</level>
 					<default/>

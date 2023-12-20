@@ -724,6 +724,9 @@ def router(argv2):
 		if action == 'tools_openSubsTest':
 			from resources.lib.modules import opensubs
 			opensubs.Opensubs().getAccountStatus()
+		if action == 'tools_openSubsRevoke':
+			from resources.lib.modules import opensubs
+			opensubs.Opensubs().revokeAccess()
 		elif action == 'tools_ShowChangelog':
 			from resources.lib.modules import changelog
 			changelog.get(name)
