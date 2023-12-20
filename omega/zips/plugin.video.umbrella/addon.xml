@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.414">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.415">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -172,7 +172,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.414 - Decemeber 20th, 2023[/B]
+[B]Update - v6.6.415 - Decemeber 20th, 2023[/B]
 --[Fix] Code cleanup.
 --[Enhancement] Added Revoke button for opensubs to avoid chapped nips..
 --[Enhancement] Subtitle service change.
