@@ -1,4 +1,4 @@
-[B]Update - v6.6.411 - Decemeber 20th, 2023[/B]
+[B]Update - v6.6.412 - Decemeber 20th, 2023[/B]
 --[Fix] Fixed where I cannot spell.
 --[Enhancement] Added Revoke button for opensubs to avoid chapped nips..
 --[Enhancement] Subtitle service change.
