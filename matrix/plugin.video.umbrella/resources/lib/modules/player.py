@@ -926,7 +926,8 @@ class Subtitles:
 				if opensubs.Opensubs().auth():
 					log_utils.log('OpenSubs Authorized.', level=log_utils.LOGDEBUG)
 				else:
-					return control.notification(message="OpenSubs Not Authorized.", time=5000)
+					control.setSetting('subtitles.service', '0')
+					subservice = '0'
 			if not (season is None or episode is None):
 				#tv show
 				if subservice =='0':
@@ -987,7 +988,11 @@ class Subtitles:
 				matches.sort(key = lambda i: i['ratio'], reverse = True)
 
 			filter = matches
-			if not filter: return control.notification(message=getLS(32395))
+			if not filter: 
+				if getSetting('subtitles.notification') == 'true':
+					return control.notification(message=getLS(32395))
+				else:
+					return None
 			
 			try: lang = xbmc.convertLanguage(getSetting('subtitles.lang.1'), xbmc.ISO_639_1)
 			except: lang = getSetting('subtitles.lang.1')
@@ -1150,33 +1155,13 @@ class Subtitles:
 
 			try: subLang = xbmc.Player().getSubtitles()
 			except: subLang = ''
-			if subLang == 'gre': subLang = 'ell'
-			if subLang == langs[0]: 
-				if getSetting('subtitles.notification') == 'true':
-					if Player().isPlayback():
-						control.sleep(1000)
-						control.notification(message=getLS(32393) % subLang.upper(), time=5000)
-				return log_utils.log(getLS(32393) % subLang.upper(), level=log_utils.LOGDEBUG)
-			try:
-				subLangs = xbmc.Player().getAvailableSubtitleStreams()
-				if 'gre' in subLangs: subLangs[subLangs.index('gre')] = 'ell'
-				subLang = [i for i in subLangs if i == langs[0]][0]
-			except: subLangs = subLang = ''
-			if subLangs and subLang == langs[0]:
-				control.sleep(1000)
-				xbmc.Player().setSubtitleStream(subLangs.index(subLang))
-				if getSetting('subtitles.notification') == 'true':
-					if Player().isPlayback():
-						control.sleep(1000)
-						control.notification(message=getLS(32394) % subLang.upper(), time=5000)
-				return log_utils.log(getLS(32394) % subLang.upper(), level=log_utils.LOGDEBUG)
 			subservice = getSetting('subtitles.service')
 			if subservice == '1':
 				from resources.lib.modules import opensubs
 				if opensubs.Opensubs().auth():
 					pass
 				else:
-					return control.notification(message="OpenSubs Not Authorized.", time=5000)
+					return None
 			if not (season is None or episode is None):
 				if subservice =='0':
 					from resources.lib.modules import subscene
@@ -1233,7 +1218,7 @@ class Subtitles:
 				matches.sort(key = lambda i: i['ratio'], reverse = True)
 
 			filter = matches
-			if not filter: return control.notification(message=getLS(32395))
+			if not filter: return None
 			
 			try: lang = xbmc.convertLanguage(getSetting('subtitles.lang.1'), xbmc.ISO_639_1)
 			except: lang = getSetting('subtitles.lang.1')
