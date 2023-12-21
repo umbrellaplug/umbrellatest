@@ -60,32 +60,36 @@ class Opensubs():
 			return True
 
 	def getSubs(self, title, imdb, year, season=None, episode=None):
-		language = xbmc.convertLanguage(control.setting('subtitles.lang.1'), xbmc.ISO_639_1)
-		if season:
-			url = base_url + '/subtitles?imdb_id=%s&season_number=%s&episode_number=%s&languages=%s' % (imdb, season, episode,language)
-		else:
-			url = base_url + '/subtitles?imdb_id=%s&year=%s&languages=%s' % (imdb, year, language)
-		headers = {
-			'Content-Type': 'application/json',
-			'Api-Key': api_key,
-			'Authorization': self.jwt_token,
-			'User-Agent': 'Umbrella 1.6'
-			}
-		response = requests.get(url,headers=headers)
-		response = response.json()
-		response = response['data']
-		results = []
-		from resources.lib.modules import log_utils
-		log_utils.log('OpenSubs Searching: Imdb:%s Season: %s Episode: %s Language: %s.' % (imdb, season, episode,language), level=log_utils.LOGDEBUG)
-		for count, x in enumerate(response):
-			try:
-				fileName = response[count]['attributes'].get('files')[0].get('file_name')
-				fileID = response[count]['attributes'].get('files')[0].get('file_id')
-				results.append({'fileName': fileName, 'fileID': fileID})
-			except:
-				from resources.lib.modules import log_utils
-				log_utils.error()
-		return results
+		try:
+			language = xbmc.convertLanguage(control.setting('subtitles.lang.1'), xbmc.ISO_639_1)
+			if season:
+				url = base_url + '/subtitles?imdb_id=%s&season_number=%s&episode_number=%s&languages=%s' % (imdb, season, episode,language)
+			else:
+				url = base_url + '/subtitles?imdb_id=%s&year=%s&languages=%s' % (imdb, year, language)
+			headers = {
+				'Content-Type': 'application/json',
+				'Api-Key': api_key,
+				'Authorization': self.jwt_token,
+				'User-Agent': 'Umbrella 1.6'
+				}
+			response = requests.get(url,headers=headers)
+			response = response.json()
+			response = response['data']
+			results = []
+			from resources.lib.modules import log_utils
+			log_utils.log('OpenSubs Searching: Imdb:%s Season: %s Episode: %s Language: %s.' % (imdb, season, episode,language), level=log_utils.LOGDEBUG)
+			for count, x in enumerate(response):
+				try:
+					fileName = response[count]['attributes'].get('files')[0].get('file_name')
+					fileID = response[count]['attributes'].get('files')[0].get('file_id')
+					results.append({'fileName': fileName, 'fileID': fileID})
+				except:
+					from resources.lib.modules import log_utils
+					log_utils.error()
+			return results
+		except:
+			results = []
+			return results
 
 	def downloadSubs(self, fileID, fileName):
 		try:

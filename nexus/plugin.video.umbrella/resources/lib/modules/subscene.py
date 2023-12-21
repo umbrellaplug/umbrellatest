@@ -17,8 +17,7 @@ def get_subtitles(title, year, season=None, episode=None):
 	try:
 		return search_request(title, year, season, episode)
 	except:
-		from resources.lib.modules import log_utils
-		log_utils.error()
+		return None
 
 def match_title(title, year, response):
 	title_plus_year = '%s (%s)' % (title, year)
@@ -51,39 +50,43 @@ def find_title(title, year, season, response):
 	return request
 
 def search_request(title, year, season=None, episode=None):
-	if season == None and episode == None:
-		#movie
-		searchUrl = url+'/subtitles/searchbytitle?query='+quote_plus(title)
-		searchResponse = client.request(searchUrl)
-	else:
-		#tvshow
-		ordinal_season = number2ordinal.convert(season).strip()
-		title = '%s - %s Season' % (title, ordinal_season)
-		searchUrl = url+'/subtitles/searchbytitle?query='+quote_plus(title)
-		searchResponse = client.request(searchUrl)
+	if title:
+		if season == None and episode == None:
+			#movie
+			searchUrl = url+'/subtitles/searchbytitle?query='+quote_plus(title)
+			searchResponse = client.request(searchUrl)
+		else:
+			#tvshow
+			ordinal_season = number2ordinal.convert(season).strip()
+			title = '%s - %s Season' % (title, ordinal_season)
+			searchUrl = url+'/subtitles/searchbytitle?query='+quote_plus(title)
+			searchResponse = client.request(searchUrl)
 
-	title_href = find_title(title, year, season, searchResponse)
-	title_result = client.request(url+title_href)
-	any_regex = r'.*?'
-	results_regex = (
-			r'<a href="' + re.escape(title_href) + r'(.*?)">' +
-				any_regex + r'</span>' + any_regex +
-				r'<span>(.*?)</span>' + any_regex +
-			r'</a>' + any_regex +
-			r'(<td class="a41">)?' + any_regex +
-		r'</tr>'
-	)
-	results = re.findall(results_regex, title_result, re.DOTALL)
-	if not results:
-		return None
+		title_href = find_title(title, year, season, searchResponse)
+		title_result = client.request(url+title_href)
+		any_regex = r'.*?'
+		results_regex = (
+				r'<a href="' + re.escape(title_href) + r'(.*?)">' +
+					any_regex + r'</span>' + any_regex +
+					r'<span>(.*?)</span>' + any_regex +
+				r'</a>' + any_regex +
+				r'(<td class="a41">)?' + any_regex +
+			r'</tr>'
+		)
+		results = re.findall(results_regex, title_result, re.DOTALL)
+		if not results:
+			return None
+		else:
+			langResults = []
+			for count, x in enumerate(results):
+				detectedLanguage = results[count][0].split('/')[1]
+				fileName = results[count][1].lstrip().rstrip()
+				subtitleUrl = url+title_href+results[count][0]
+				langResults.append({'language': detectedLanguage, 'fileName': fileName, 'subtitleUrl': subtitleUrl})
+			return langResults
 	else:
-		langResults = []
-		for count, x in enumerate(results):
-			detectedLanguage = results[count][0].split('/')[1]
-			fileName = results[count][1].lstrip().rstrip()
-			subtitleUrl = url+title_href+results[count][0]
-			langResults.append({'language': detectedLanguage, 'fileName': fileName, 'subtitleUrl': subtitleUrl})
-		return langResults
+		from resources.lib.modules import log_utils
+		return log_utils.log('Cannot search. No title sent')
 
 def get_download_url(kurl):
 	downloadPage = client.request(kurl)

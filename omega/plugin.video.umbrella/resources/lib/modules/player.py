@@ -1004,7 +1004,10 @@ class Subtitles:
 				downloadURL = subscene.get_download_url(filter[0]['subtitleUrl'])
 			else:
 				from resources.lib.modules import opensubs
-				downloadURL, downloadFileName = opensubs.Opensubs().downloadSubs(filter[0]['fileID'], filter[0]['fileName'])
+				try:
+					downloadURL, downloadFileName = opensubs.Opensubs().downloadSubs(filter[0]['fileID'], filter[0]['fileName'])
+				except:
+					return log_utils.log('Error getting downloadurl or filename from opensubs.')
 			if not control.existsPath(control.subtitlesPath): control.makeFile(control.subtitlesPath)
 			download_path = control.subtitlesPath
 			subtitle = download_path

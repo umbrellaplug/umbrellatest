@@ -5087,7 +5087,7 @@
 				</setting>
 				<setting id="subtitles.service" type="integer" label="40501" help="">
 					<level>0</level>
-					<default>1</default>
+					<default>0</default>
 					<constraints>
 						<options>
 							<option label="40502">0</option>
