@@ -1107,6 +1107,9 @@ class Subtitles:
 		except: log_utils.error()
 
 	def downloadForPlayNext(self,  title, year, imdb, season, episode, media_length):
+		try:
+			import re
+		except: return log_utils.error()
 		try: lang = xbmc.convertLanguage(getSetting('subtitles.lang.1'), xbmc.ISO_639_1)
 		except: lang = getSetting('subtitles.lang.1')
 		if not control.existsPath(control.subtitlesPath): control.makeFile(control.subtitlesPath)
@@ -1134,9 +1137,6 @@ class Subtitles:
 				return playnextTime
 		except:
 			log_utils.error()
-		try:
-			import re
-		except: return log_utils.error()
 		try:
 			langDict = {'Afrikaans': 'afr', 'Albanian': 'alb', 'Arabic': 'ara', 'Armenian': 'arm', 'Basque': 'baq', 'Bengali': 'ben',
 			'Bosnian': 'bos', 'Breton': 'bre', 'Bulgarian': 'bul', 'Burmese': 'bur', 'Catalan': 'cat', 'Chinese': 'chi', 'Croatian': 'hrv',
