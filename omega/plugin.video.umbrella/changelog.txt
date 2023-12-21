@@ -1,5 +1,6 @@
 [B]Update - v6.6.417 - Decemeber 20th, 2023[/B]
 --[Fix] Code cleanup.
+--[Omega] Updated value for database to use for Kodi21 MyVideos database file.
 --[Enhancement] Added Revoke button for opensubs to avoid chapped nips..
 --[Enhancement] Subtitle service change.
 --[Enhancement] Support for season packs of subtitles added.

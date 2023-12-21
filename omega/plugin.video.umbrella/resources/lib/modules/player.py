@@ -1112,7 +1112,7 @@ class Subtitles:
 		if not control.existsPath(control.subtitlesPath): control.makeFile(control.subtitlesPath)
 		download_path = control.subtitlesPath
 		try:
-			tempFileName = control.transPath(download_path)+'TemporarySubs.%s.srt' % lang
+			tempFileName = control.joinPath(download_path,'TemporarySubs.%s.srt' % lang)
 			if os.path.isfile(tempFileName):
 				log_utils.log('downloaded subtitle file found. getting time from file.', level=log_utils.LOGDEBUG)
 				xbmc.sleep(1000)
