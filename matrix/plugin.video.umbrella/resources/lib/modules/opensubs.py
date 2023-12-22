@@ -12,6 +12,7 @@ import xbmc
 
 base_url = 'https://api.opensubtitles.com/api/v1'
 api_key = 'cQBWQwPugvGVDrpdU9MDRlvdfcu4WNTx'
+version = control.getUmbrellaVersion()
 
 
 class Opensubs():
@@ -22,7 +23,7 @@ class Opensubs():
 		self.headers = {
 			'Content-Type': 'application/json',
 			'Api-Key': api_key,
-			'User-Agent': 'Umbrella 1.6'}
+			'User-Agent': 'Umbrella v'+version}
 		self.highlight_color = control.setting('highlight.color')
 
 	def auth(self):
@@ -38,7 +39,7 @@ class Opensubs():
 			'Content-Type': 'application/json',
 			'Api-Key': api_key,
 			'Authorization': self.jwt_token,
-			'User-Agent': 'Umbrella 1.6'
+			'User-Agent': 'Umbrella v'+version
 			}
 			response = requests.get(url,headers=headers2)
 			if response.status_code == 200:
@@ -70,7 +71,7 @@ class Opensubs():
 				'Content-Type': 'application/json',
 				'Api-Key': api_key,
 				'Authorization': self.jwt_token,
-				'User-Agent': 'Umbrella 1.6'
+				'User-Agent': 'Umbrella v'+version
 				}
 			response = requests.get(url,headers=headers)
 			response = response.json()
@@ -98,7 +99,7 @@ class Opensubs():
 				'Content-Type': 'application/json',
 				'Api-Key': api_key,
 				'Authorization': self.jwt_token,
-				'User-Agent': 'Umbrella 1.6'
+				'User-Agent': 'Umbrella v'+version
 				}
 			data = {
 				"file_id": fileID,
@@ -125,7 +126,7 @@ class Opensubs():
 			headers = {
 			'Content-Type': 'application/json',
 			'Api-Key': api_key,
-			'User-Agent': 'Umbrella 1.6'}
+			'User-Agent': 'Umbrella v'+version}
 			response = requests.post(url,headers=headers, json=data)
 			response = response.json()
 			responseUser = response.get('user')

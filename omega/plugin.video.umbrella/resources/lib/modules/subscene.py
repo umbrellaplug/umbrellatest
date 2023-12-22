@@ -97,22 +97,26 @@ def get_download_url(kurl):
 	return downloadPage
 
 def delete_all_subs():
-	from resources.lib.modules import log_utils
-	log_utils.log('removing all subtitle files.', level=log_utils.LOGDEBUG)
-	download_path = control.subtitlesPath
-	subtitle = download_path
-	def find(pattern, path):
-		result = []
-		for root, dirs, files in os.walk(path):
-			for name in files:
-				if fnmatch.fnmatch(name, pattern):
-					result.append(os.path.join(root, name))
-		return result
+	try:
+		from resources.lib.modules import log_utils
+		log_utils.log('removing all subtitle files.', level=log_utils.LOGDEBUG)
+		download_path = control.subtitlesPath
+		subtitle = download_path
+		def find(pattern, path):
+			result = []
+			for root, dirs, files in os.walk(path):
+				for name in files:
+					if fnmatch.fnmatch(name, pattern):
+						result.append(os.path.join(root, name))
+			return result
 
-	subtitles = find('*.*', subtitle)
-	for x in subtitles:
-		try:
-			os.remove(x)
-		except:
-			from resources.lib.modules import log_utils
-			log_utils.error()
+		subtitles = find('*.*', subtitle)
+		for x in subtitles:
+			try:
+				os.remove(x)
+			except:
+				from resources.lib.modules import log_utils
+				log_utils.error()
+	except:
+		from resources.lib.modules import log_utils
+		log_utils.error()
