@@ -20,9 +20,6 @@ class Trailer:
 		except:
 			control.hide()
 			return control.notification('YouTube', 'The YouTube addon is required for this feature.', icon=None)
-		# if self.ytkey_link == '':
-		# 	control.hide()
-		# 	return control.notification('YouTube', 'API Keys must be added to YouTube addon to use this feature.', icon=None)
 		if self.ytkey_link == '': self.ytkey_link = random.choice([
 			'AIzaSyBW-Z3TneLX-aG9TC5G061BTc9bBgftmPA'
 			'AIzaSyA0LiS7G-KlrlfmREcCAXjyGqa_h_zfrSE',
@@ -141,7 +138,9 @@ class Trailer:
 			log_utils.error()
 
 	def play_select(self, type, name, year, windowedtrailer=0):
-
+		if self.ytkey_link == '':
+			control.hide()
+			return control.notification('YouTube', 'API Keys must be added to YouTube addon to use this feature.', icon=None)
 		control.busy()
 		try:
 			url = self.worker2(type, name, year)
