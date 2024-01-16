@@ -632,11 +632,6 @@ def jsondate_to_datetime(jsondate_object, resformat, remove_time=False):
 
 def syncAccounts():
 	try:
-		if setting('external_provider.module','') == '':
-			pass
-		else:
-			modulename = setting('external_provider.module')
-
 		if setting('umbrella.colorSecond') == 'false':
 			setSetting('highlight.color', 'FFFFFF33')
 			setSetting('highlight.color.display', '[COLOR=FFFFFF33]FFFFFF33[/COLOR]')

@@ -20,6 +20,7 @@ properties = [
 	'context.umbrella.addtoLibrary',
 	'context.umbrella.addtoFavourite',
 	'context.umbrella.playTrailer',
+	'context.umbrella.playTrailerSelect',
 	'context.umbrella.traktManager',
 	'context.umbrella.clearProviders',
 	'context.umbrella.clearBookmark',
@@ -80,10 +81,10 @@ class SettingsMonitor(control.monitor_class):
 			control.refresh_libPath()
 		except:
 			control.log('[ plugin.video.umbrella ]  Exception refreshing libpath...', LOGDEBUG)
-		try:
-			control.checkPlayNextEpisodes()
-		except:
-			control.log('[ plugin.video.umbrella ]  Exception checking playnext episodes...', LOGDEBUG)
+		#try:
+			#control.checkPlayNextEpisodes()
+		#except:
+			#control.log('[ plugin.video.umbrella ]  Exception checking playnext episodes...', LOGDEBUG)
 		try:
 			control.refresh_debugReversed()
 		except:
@@ -100,7 +101,7 @@ class SettingsMonitor(control.monitor_class):
 			for id in properties:
 				if control.setting(id) == 'true':
 					xbmc.executebuiltin('SetProperty({0},true,home)'.format(id))
-					#xbmc.log('[ plugin.video.umbrella.context ]  menu item enabled: {0}'.format(id), LOGINFO)
+					#xbmc.log('[ umbrella settings change ] item enabled: {0}'.format(id), LOGINFO)
 				else:
 					xbmc.executebuiltin('ClearProperty({0},home)'.format(id))
 					#xbmc.log('[ plugin.video.umbrella.context ]  menu item disabled: {0}'.format(id), LOGINFO)
@@ -383,7 +384,7 @@ def main():
 		PremAccntNotification().run()
 		ReuseLanguageInvokerCheck().run()
 		SyncMovieLibrary().run()
-		control.checkPlayNextEpisodes()
+		#control.checkPlayNextEpisodes()
 		if control.setting('library.service.update') == 'true':
 			libraryService = Thread(target=LibraryService().run)
 			libraryService.start()

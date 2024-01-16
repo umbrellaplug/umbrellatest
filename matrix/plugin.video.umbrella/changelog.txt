@@ -1,3 +1,9 @@
+[B]Update - v6.6.423 - January 16th, 2024[/B]
+--[Fix] Removed code checking for playnext setup correct in settings change detection.
+--[Fix] Fixed Search Movies by Actor / Search TV Shows by Actor. Thanks Venom123
+--[Enhancement] Added new context menu item for Play Trailer (Select). Venom123 request.
+--[Omega] Made a change for auto detect of MyVideos.db file.
+
 [B]Update - v6.6.422 - January 1st, 2024[/B]
 --[Omega] Made a change for auto detect of MyVideos.db file.
 
