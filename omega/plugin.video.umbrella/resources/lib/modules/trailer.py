@@ -171,7 +171,7 @@ class Trailer:
 			if error:
 				control.hide()
 				message = error.get('message', [])
-				icon = control.Addon('plugin.video.youtube').getAddonInfo('icon')
+				icon = control.addon('plugin.video.youtube').getAddonInfo('icon')
 				control.notification('YOUTUBE', message, icon=icon)
 				return None
 			json_items = response.get('items', [])
