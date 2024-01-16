@@ -10,16 +10,24 @@ from sys import argv
 from urllib.parse import quote_plus
 from resources.lib.modules import client
 from resources.lib.modules import control
-
+import random
 
 class Trailer:
 	def __init__(self):
 		self.base_link = 'https://www.youtube.com'
-		self.ytkey_link = control.addon('plugin.video.youtube').getSetting('youtube.api.key')
+		try:
+			self.ytkey_link = control.addon('plugin.video.youtube').getSetting('youtube.api.key')
+		except:
+			return control.notification('YouTube', 'The YouTube addon is required for this feature.', icon=None)
+		if self.ytkey_link == '':
+			return control.notification('YouTube', 'API Keys must be added to YouTube addon to use this feature.', icon=None)
+		if self.ytkey_link == '': self.ytkey_link = random.choice([
+			'AIzaSyBW-Z3TneLX-aG9TC5G061BTc9bBgftmPA'
+			'AIzaSyA0LiS7G-KlrlfmREcCAXjyGqa_h_zfrSE',
+			'AIzaSyDgcri5Aipa9EBeE48IJAYyd71aiPOpwWw',
+			'AIzaSyBOXZVC-xzrdXSAmau5UM3rG7rc8eFIuFw'])
 		self.max_results = '15'
-		self.rckey_link = choice(['AIzaSyA0LiS7G-KlrlfmREcCAXjyGqa_h_zfrSE', 'AIzaSyBOXZVC-xzrdXSAmau5UM3rG7rc8eFIuFw'])
-		if self.ytkey_link != '': self.key_link = '&key=%s' % self.ytkey_link
-		else: self.key_link = '&key=%s' % self.rckey_link
+		self.key_link = '&key=%s' % self.ytkey_link
 		self.search_link = 'https://www.googleapis.com/youtube/v3/search?part=id&type=video&maxResults=15&q=%s'+ self.key_link
 		self.search_link_select = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=15&q=%s%s' % ('%s', self.key_link)
 		# self.search_link = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=%s' + self.key_link
@@ -131,6 +139,7 @@ class Trailer:
 			log_utils.error()
 
 	def play_select(self, type, name, year, windowedtrailer=0):
+
 		control.busy()
 		try:
 			url = self.worker2(type, name, year)

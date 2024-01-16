@@ -1,4 +1,5 @@
 [B]Update - v6.6.423 - January 16th, 2024[/B]
+--[Fix] Added code to check for youtube addon setup with api keys.
 --[Fix] Removed code checking for playnext setup correct in settings change detection.
 --[Fix] Fixed Search Movies by Actor / Search TV Shows by Actor. Thanks Venom123
 --[Enhancement] Added new context menu item for Play Trailer (Select). Venom123 request.
