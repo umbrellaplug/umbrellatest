@@ -1126,7 +1126,6 @@ def markMovieAsWatched(imdb):
 		result = getTraktAsJson('/sync/history', {"movies": [{"ids": {"imdb": imdb}}]})
 		result = result['added']['movies'] != 0
 		if getSetting('debug.level') == '1':
-			from resources.lib.modules import log_utils
 			log_utils.log('Trakt markMovieAsWatched IMDB: %s Result: %s' % (imdb, result), level=log_utils.LOGDEBUG)
 		return result
 	except: log_utils.error()
@@ -1196,7 +1195,6 @@ def markEpisodeAsWatched(imdb, tvdb, season, episode):
 		else:
 			result = result['added']['episodes'] !=0
 		if getSetting('debug.level') == '1':
-			from resources.lib.modules import log_utils
 			log_utils.log('Trakt markEpisodeAsWatched IMDB: %s TVDB: %s Season: %s Episode: %s Result: %s' % (imdb, tvdb, season, episode, result), level=log_utils.LOGDEBUG)
 		return result
 	except: log_utils.error()

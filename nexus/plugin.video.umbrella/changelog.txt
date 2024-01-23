@@ -1,6 +1,7 @@
-[B]Update - v6.6.432 - January 23rd, 2024[/B]
+[B]Update - v6.6.433 - January 23rd, 2024[/B]
 --[Enhancement] Added code to enable Trakt scrobble when Trakt authorized.
 --[Enhancement] Added code to scrobble on Pause.
+--[Fix] Changed some logging in marking watched to prove a point.
 
 [B]Update - v6.6.43 - January 19th, 2024[/B]
 --[Fix] Added code to check for youtube addon setup with api keys.
