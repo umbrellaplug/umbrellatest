@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.430">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.432">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -181,13 +181,9 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.430 - January 19th, 2024[/B]
---[Enhancement] Added code to pause settings monitor in situations of multiple settings being set.
---[Fix] Added code to check for youtube addon setup with api keys.
---[Fix] Removed code checking for playnext setup correct in settings change detection.
---[Fix] Fixed Search Movies by Actor / Search TV Shows by Actor. Thanks Venom123
---[Enhancement] Added new context menu item for Play Trailer (Select). Venom123 request.
---[Omega] Made a change for auto detect of MyVideos.db file.
+[B]Update - v6.6.432 - January 23rd, 2024[/B]
+--[Enhancement] Added code to enable Trakt scrobble when Trakt authorized.
+--[Enhancement] Added code to scrobble on Pause.
 		</news>
 	</extension>
 
