@@ -1398,7 +1398,8 @@ class Bookmarks:
 				hours, minutes = divmod(minutes, 60)
 				label = ('%02d:%02d:%02d' % (hours, minutes, seconds))
 				message = getLS(32660)
-				control.notification(title=name, message=message + '(' + label + ')')
+				if getSetting('localnotify') == 'true':
+					control.notification(title=name, message=message + '(' + label + ')')
 			dbcur.connection.commit()
 			try: dbcur.close ; dbcon.close()
 			except: pass

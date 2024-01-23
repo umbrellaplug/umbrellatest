@@ -1,4 +1,5 @@
-[B]Update - v6.6.433 - January 23rd, 2024[/B]
+[B]Update - v6.6.434 - January 23rd, 2024[/B]
+--[Enhancement] Added setting for local resume point notification.
 --[Enhancement] Added code to enable Trakt scrobble when Trakt authorized.
 --[Enhancement] Added code to scrobble on Pause.
 --[Fix] Changed some logging in marking watched to prove a point.
