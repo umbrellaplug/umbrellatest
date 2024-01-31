@@ -781,12 +781,13 @@ class TVshows(TMDb):
 				except: episode_meta['duration'] = ''
 				episode_meta['season'] = episode['season_number']
 				episode_meta['episode_type'] = episode.get('episode_type','')
-				if episode.get('episode_type') == 'mid-season':
+				if midseason == 1:
+					episode_meta['episode_type'] = 'mid_season_premiere'
+					midseason = 0
+				if episode.get('episode_type') == 'mid_season':
 					if midseason == 0:
 						midseason = 1
 						episode_meta['episode_type'] = 'mid_season_finale'
-				if midseason == '1':
-					episode_meta['episode_type'] = 'mid_season_premiere'
 				if episode.get('episode_type') == 'finale':
 					episode_meta['episode_type'] = 'season_finale'
 				episode_meta['plot'] = episode.get('overview', '') if episode.get('overview') else ''
