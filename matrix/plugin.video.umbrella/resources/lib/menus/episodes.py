@@ -325,6 +325,7 @@ class Episodes:
 				from resources.lib.modules import log_utils
 				return log_utils.log('tvshowtitle: (%s) missing tmdb_id: ids={imdb: %s, tmdb: %s, tvdb: %s}' % (tvshowtitle, imdb, tmdb, tvdb), __name__, log_utils.LOGDEBUG) # log TMDb shows that they do not have
 		seasonEpisodes = tmdb_indexer().get_seasonEpisodes_meta(tmdb, season)
+
 		if not seasonEpisodes: return
 		if not isinstance(meta, dict): showSeasons = jsloads(meta)
 		else: showSeasons = meta
@@ -364,6 +365,7 @@ class Episodes:
 					from resources.lib.modules import log_utils
 					log_utils.error()
 				values['poster'] = item.get('poster') or showSeasons.get('poster')
+				values['episode_type'] = item.get('episode_type')
 				values['season_poster'] = item.get('season_poster') or showSeasons.get('season_poster')
 				values['fanart'] = showSeasons.get('fanart')
 				values['icon'] = showSeasons.get('icon')
@@ -857,7 +859,14 @@ class Episodes:
 				tvshowtitle, title, imdb, tmdb, tvdb = i.get('tvshowtitle'), i.get('title'), i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', '')
 				year, season, episode, premiered = i.get('year', ''), i.get('season'), i.get('episode'), i.get('premiered', '')
 				trailer, runtime = i.get('trailer', ''), i.get('duration')
-				episodeType = trakt.getEpisodeType(imdb, season, episode)
+				if getSetting('episodetag.provider') == '0': #tmdb
+					episodeType = i.get('episode_type')
+					if int(season) == 1 and int(episode) == 1: episodeType = 'series_premiere'
+					if int(episode) == 1 and int(season) != 1: episodeType = 'season_premiere'
+				else:
+					episodeType = trakt.getEpisodeType(imdb, season, episode)
+
+				
 				if 'label' not in i: i['label'] = title
 				if (not i['label'] or i['label'] == '0'): label = '%sx%02d . %s %s' % (season, int(episode), 'Episode', episode)
 				else: label = '%sx%02d . %s' % (season, int(episode), i['label'])

@@ -1,5 +1,6 @@
-[B]Update - v6.6.441 - January 31st, 2024[/B]
+[B]Update - v6.6.442 - January 31st, 2024[/B]
 --[Enhancement] Added episode type for certain skins.
+--[Enhancement] Added ability to get episode type from trakt or tmdb.
 
 [B]Update - v6.6.44 - January 25th, 2024[/B]
 --[Enhancement] Added setting for local resume point notification.

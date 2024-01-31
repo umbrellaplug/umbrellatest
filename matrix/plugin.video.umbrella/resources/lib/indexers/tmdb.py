@@ -757,6 +757,7 @@ class TVshows(TMDb):
 			meta['premiered'] = str(result.get('air_date', '')) if result.get('air_date') else '' # Kodi season level Information gui seems no longer available in 19 unless you use "mediatype = tvshow" for seasons
 			episodes = []
 			unaired_count = 0
+			midseason = 0
 			for episode in result['episodes']:
 				episode_meta = {}
 				episode_meta['mediatype'] = 'episode'
@@ -779,6 +780,15 @@ class TVshows(TMDb):
 				try: episode_meta['duration'] = episode['runtime']
 				except: episode_meta['duration'] = ''
 				episode_meta['season'] = episode['season_number']
+				episode_meta['episode_type'] = episode.get('episode_type','')
+				if episode.get('episode_type') == 'mid-season':
+					if midseason == 0:
+						midseason = 1
+						episode_meta['episode_type'] = 'mid_season_finale'
+				if midseason == '1':
+					episode_meta['episode_type'] = 'mid_season_premiere'
+				if episode.get('episode_type') == 'finale':
+					episode_meta['episode_type'] = 'season_finale'
 				episode_meta['plot'] = episode.get('overview', '') if episode.get('overview') else ''
 				if self.lang != 'en' and episode_meta['plot'] in ('', None, 'None'): episode_meta['plot'] = self.get_en_overview(tmdb, episode_meta['season'], episode_meta['episode'], 'episode')
 				episode_meta['code'] = episode['production_code']
