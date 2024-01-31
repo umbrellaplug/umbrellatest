@@ -795,7 +795,6 @@ class Episodes:
 		addonPoster, addonFanart, addonBanner = control.addonPoster(), control.addonFanart(), control.addonBanner()
 
 
-
 		try: traktUpcomingProgress = False if 'traktUpcomingProgress' not in items[0] else True
 		except: traktUpcomingProgress = False
 
@@ -858,6 +857,7 @@ class Episodes:
 				tvshowtitle, title, imdb, tmdb, tvdb = i.get('tvshowtitle'), i.get('title'), i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', '')
 				year, season, episode, premiered = i.get('year', ''), i.get('season'), i.get('episode'), i.get('premiered', '')
 				trailer, runtime = i.get('trailer', ''), i.get('duration')
+				episodeType = trakt.getEpisodeType(imdb, season, episode)
 				if 'label' not in i: i['label'] = title
 				if (not i['label'] or i['label'] == '0'): label = '%sx%02d . %s %s' % (season, int(episode), 'Episode', episode)
 				else: label = '%sx%02d . %s' % (season, int(episode), i['label'])
@@ -1040,6 +1040,7 @@ class Episodes:
 							log_utils.error()
 				item.setProperty('IsPlayable', 'true')
 				item.setProperty('tvshow.tmdb_id', tmdb)
+				item.setProperty('episode_type', episodeType)
 				if is_widget: 
 					item.setProperty('isUmbrella_widget', 'true')
 					if self.hide_watched_in_widget:
