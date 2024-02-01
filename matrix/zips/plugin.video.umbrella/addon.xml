@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.442">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.443">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -181,9 +181,10 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.442 - January 31st, 2024[/B]
+[B]Update - v6.6.443 - February 1st, 2024[/B]
 --[Enhancement] Added episode type for certain skins.
---[Enhancement] Added ability to get episode type from trakt or tmdb.
+--[Enhancement] Removed trakt as episode label provider and changed logic to include mid-season premier and series finale.
+--[Fix] Changed scrobble on pause to only happen if before marking watched percentage.
 		</news>
 	</extension>
 

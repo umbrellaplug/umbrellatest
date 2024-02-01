@@ -859,13 +859,11 @@ class Episodes:
 				tvshowtitle, title, imdb, tmdb, tvdb = i.get('tvshowtitle'), i.get('title'), i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', '')
 				year, season, episode, premiered = i.get('year', ''), i.get('season'), i.get('episode'), i.get('premiered', '')
 				trailer, runtime = i.get('trailer', ''), i.get('duration')
-				if getSetting('episodetag.provider') == '0': #tmdb
-					episodeType = i.get('episode_type')
-					if int(season) == 1 and int(episode) == 1: episodeType = 'series_premiere'
-					if int(episode) == 1 and int(season) != 1: episodeType = 'season_premiere'
-				else:
-					episodeType = trakt.getEpisodeType(imdb, season, episode)
-
+				episodeType = i.get('episode_type')
+				if int(season) == 1 and int(episode) == 1: episodeType = 'series_premiere'
+				if int(episode) == 1 and int(season) != 1: episodeType = 'season_premiere'
+				
+				
 				
 				if 'label' not in i: i['label'] = title
 				if (not i['label'] or i['label'] == '0'): label = '%sx%02d . %s %s' % (season, int(episode), 'Episode', episode)
