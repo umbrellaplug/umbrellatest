@@ -1,6 +1,10 @@
-[B]Update - v6.6.443 - February 1st, 2024[/B]
---[Enhancement] Added episode type for certain skins.
---[Enhancement] Removed trakt as episode label provider and changed logic to include mid-season premier and series finale.
+[B]Update - v6.6.461 - February 7th, 2024[/B]
+--[Fix] Changed settings that were reversed. ATVP and AV1
+--[Fix] Added fix for progress window causing issues when caching to real-debrid.
+--[Enhancement] Added episode type labels to playnext windows for all 4 themes.
+
+[B]Update - v6.6.45 - February 1st, 2024[/B]
+--[Enhancement] Added episode type label.
 --[Fix] Changed scrobble on pause to only happen if before marking watched percentage.
 
 [B]Update - v6.6.44 - January 25th, 2024[/B]
