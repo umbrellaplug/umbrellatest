@@ -1,6 +1,7 @@
-[B]Update - v6.6.471 - March 4th, 2024[/B]
+[B]Update - v6.6.472 - March 6th, 2024[/B]
 --[Fix] Removed subscene for subtitle options.
 --[Fix] Allow resume trakt setting to be set even when scrobble from umbrella is not set.
+--[Fix] Added adjustment for episode size being wrong from elfhosted and selfhosted.
 
 [B]Update - v6.6.46 - February 8th, 2024[/B]
 --[Fix] Changed settings that were reversed. ATVP and AV1

@@ -935,7 +935,7 @@ class Subtitles:
 			if opensubs.Opensubs().auth():
 				log_utils.log('OpenSubs Authorized.', level=log_utils.LOGDEBUG)
 			else:
-				pass
+				return control.notification(message=getLS(40509), time=5000)
 			if not (season is None or episode is None):
 				#tv show
 				from resources.lib.modules import opensubs
