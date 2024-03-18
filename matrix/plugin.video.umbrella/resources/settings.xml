@@ -441,7 +441,7 @@
 				</setting>
 				<setting id="limit.imdb.genres" type="integer" label="40492" help="">
 					<level>0</level>
-					<default>20</default>
+					<default>100</default>
 					<constraints>
 						<minimum>20</minimum>
 						<maximum>250</maximum>
@@ -1068,6 +1068,11 @@
 					<control type="toggle"/>
 				</setting>
 				<setting id="navi.movie.imdb.people" type="boolean" label="32460" help="">
+					<level>0</level>
+					<default>true</default>
+					<control type="toggle"/>
+				</setting>
+				<setting id="navi.movie.imdb.languages" type="boolean" label="32462" help="">
 					<level>0</level>
 					<default>true</default>
 					<control type="toggle"/>
