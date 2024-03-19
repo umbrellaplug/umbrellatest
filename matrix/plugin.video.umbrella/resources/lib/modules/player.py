@@ -623,7 +623,7 @@ class Player(xbmc.Player):
 			else: control.sleep(200)
 		if self.offset != '0' and self.playback_resumed is False:
 			control.sleep(200)
-			if getSetting('trakt.scrobble') == 'true' and getSetting('resume.source') == '1': # re-adjust the resume point since dialog is based on meta runtime vs. getTotalTime() and inaccurate
+			if self.traktCredentials and getSetting('resume.source') == '1': # re-adjust the resume point since dialog is based on meta runtime vs. getTotalTime() and inaccurate
 				try:
 					total_time = self.getTotalTime()
 					progress = float(fetch_bookmarks(self.imdb, self.tmdb, self.tvdb, self.season, self.episode))
@@ -1251,7 +1251,7 @@ class Bookmarks:
 		offset = '0'
 		scrobbble = 'Local Bookmark'
 		if getSetting('bookmarks') != 'true': return offset
-		if getSetting('trakt.scrobble') == 'true' and getSetting('resume.source') == '1':
+		if self.traktCredentials and getSetting('resume.source') == '1':
 			scrobbble = 'Trakt Scrobble'
 			try:
 				if not runtime or runtime == 'None': return offset # TMDB sometimes return None as string. duration pulled from kodi library if missing from meta
