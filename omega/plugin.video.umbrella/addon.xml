@@ -1,4 +1,4 @@
-<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.474">
+<addon id="plugin.video.umbrella" name="Umbrella" provider-name="Umbrella" version="6.6.475">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0"/>
 		<import addon="script.module.requests"/>
@@ -181,7 +181,7 @@
 			<screenshot>resources/screenshots/screenshot003.jpg</screenshot>
 		</assets>
 		<news>
-[B]Update - v6.6.474 - March 19th, 2024[/B]
+[B]Update - v6.6.475 - March 19th, 2024[/B]
 --[Fix] Removed subscene for subtitle options.
 --[Fix] Allow resume trakt setting to be set even when scrobble from umbrella is not set.
 --[Fix] Added adjustment for episode size being wrong from elfhosted and selfhosted.

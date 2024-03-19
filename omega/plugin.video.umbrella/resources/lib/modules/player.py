@@ -1246,6 +1246,7 @@ class Subtitles:
 class Bookmarks:
 	def __init__(self):
 		self.debuglog = control.setting('debug.level') == '1'
+		self.traktCredentials = trakt.getTraktCredentialsInfo()
 	def get(self, name, imdb=None, tmdb=None, tvdb=None, season=None, episode=None, year='0', runtime=None, ck=False):
 		markwatched_percentage = int(getSetting('markwatched.percent')) or 85
 		offset = '0'
