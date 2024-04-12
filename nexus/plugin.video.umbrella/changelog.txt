@@ -1,4 +1,10 @@
-[B]Update - v6.6.475 - March 19th, 2024[/B]
+[B]Update - v6.6.491 - April 12th, 2024[/B]
+--[Fix] Made change to resolve issues identifying MyVideos database on some systems.
+
+[B]Update - v6.6.48 - March 22nd, 2024[/B]
+--[Fix] Settings change to fix allowing resume from Trakt without Trakt scrobble.
+
+[B]Update - v6.6.47 - March 20th, 2024[/B]
 --[Fix] Removed subscene for subtitle options.
 --[Fix] Allow resume trakt setting to be set even when scrobble from umbrella is not set.
 --[Fix] Added adjustment for episode size being wrong from elfhosted and selfhosted.
