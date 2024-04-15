@@ -1,2 +1,2 @@
-# UmbrellaTest - Thank You
+# UmbrellaTest
 
