@@ -1,14 +1,14 @@
-[B]Update - v6.6.492 - April 13th, 2024[/B]
+[B]Update - v6.6.493 - April 15th, 2024[/B]
 --[Fix] Made change to resolve issues identifying MyVideos database on some systems.
 --[Fix] Removed subscene module and moved delete all function to tools.
---[Enhancement] Changes to TMDb api url to add images. Thanks onemoar!
---[Enhancement] Changes to Episodes, Seasons to include clearlogo. Thanks onemoar! (Not sure if this even works.)
---[Enhancement] Changes to Movies to include clearlogo, except I did it correctly. Thanks onemoar!
---[Enhancement] Changes made to allow user fanart background. Thanks onemoar!
---[Fix] Changes made to control module for checking external modules. Thanks onemoar!
---[Fix] Changes made to service module for settings module. Thanks onemoar!
---[Enhancement] Changes made flatten tv shows. Thanks onemoar!
---[Enhancement] Changes made to settings to accomodate changes from onemoar.
+--[Enhancement] Changes to TMDb api url to add images. credit -onemoar
+--[Enhancement] Changes to Episodes, Seasons to include clearlogo. credit -onemoar
+--[Enhancement] Changes to Movies to include clearlogo, except I did it correctly. credit -onemoar
+--[Enhancement] Changes made to allow user fanart background. credit -onemoar
+--[Fix] Changes made to control module for checking external modules. credit -onemoar
+--[Fix] Changes made to service module for settings module. credit -onemoar!
+--[Enhancement] Changes made flatten tv shows. credit -onemoar
+--[Enhancement] Changes made to settings to accomodate changes.
 
 [B]Update - v6.6.48 - March 22nd, 2024[/B]
 --[Fix] Settings change to fix allowing resume from Trakt without Trakt scrobble.
