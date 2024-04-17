@@ -1,4 +1,5 @@
-[B]Update - v6.6.493 - April 15th, 2024[/B]
+[B]Update - v6.6.494 - April 17th, 2024[/B]
+--[Fix] Fixed 4k icon missing on some devices.
 --[Fix] Made change to resolve issues identifying MyVideos database on some systems.
 --[Fix] Removed subscene module and moved delete all function to tools.
 --[Enhancement] Changes to TMDb api url to add images. credit -onemoar
