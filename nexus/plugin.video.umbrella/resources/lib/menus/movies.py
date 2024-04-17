@@ -1987,7 +1987,7 @@ class Movies:
 				meta.update({'code': imdb, 'imdbnumber': imdb, 'mediatype': 'movie', 'tag': [imdb, tmdb]})
 				try: meta.update({'genre': cleangenre.lang(meta['genre'], self.lang)})
 				except: pass
-
+				#since you are so bored you are reading my comments in my code from my test repo. below is how you do it correctly. when you figure out a variable it is important to actually apply it. you can fix yours by putting clearlogo in the art.update below or just copy what I did here. "i am mad about comments in your code" cannot wait for that one.
 				if self.prefer_tmdbArt: 
 					poster = meta.get('poster3') or meta.get('poster') or meta.get('poster2') or addonPoster
 					clearlogo = meta.get('tmdblogo') or meta.get('clearlogo','')

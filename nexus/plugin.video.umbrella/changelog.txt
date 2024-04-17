@@ -1,14 +1,15 @@
-[B]Update - v6.6.494 - April 17th, 2024[/B]
+[B]Update - v6.6.495 - April 17th, 2024[/B]
+--[Enhancement] Removed another unneeded file. Better update onEMoAr to match quick.
 --[Fix] Fixed 4k icon missing on some devices.
 --[Fix] Made change to resolve issues identifying MyVideos database on some systems.
 --[Fix] Removed subscene module and moved delete all function to tools.
---[Enhancement] Changes to TMDb api url to add images. credit -onemoar
---[Enhancement] Changes to Episodes, Seasons to include clearlogo. credit -onemoar
---[Enhancement] Changes to Movies to include clearlogo, except I did it correctly. credit -onemoar
---[Enhancement] Changes made to allow user fanart background. credit -onemoar
---[Fix] Changes made to control module for checking external modules. credit -onemoar
---[Fix] Changes made to service module for settings module. credit -onemoar!
---[Enhancement] Changes made flatten tv shows. credit -onemoar
+--[Enhancement] Changes to TMDb api url to add images. credit -onEMoAr
+--[Enhancement] Changes to Episodes, Seasons to include clearlogo. credit -onEMoAr
+--[Enhancement] Changes to Movies to include clearlogo, except I did it correctly. credit -onEMoAr
+--[Enhancement] Changes made to allow user fanart background. credit -onEMoAr
+--[Fix] Changes made to control module for checking external modules. credit -onEMoAr
+--[Fix] Changes made to service module for settings module. credit -onEMoAr
+--[Enhancement] Changes made flatten tv shows. credit -onEMoAr
 --[Enhancement] Changes made to settings to accomodate changes.
 
 [B]Update - v6.6.48 - March 22nd, 2024[/B]
