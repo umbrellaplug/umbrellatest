@@ -159,6 +159,7 @@ class Movies:
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 		self.useReleaseYear = getSetting('movies.showyear') == 'true'
 		self.lang = control.apiLanguage()['trakt']
+		self.prefer_fanArt = getSetting('prefer.fanarttv') == 'true'
 
 	def get(self, url, idx=True, create_directory=True, folderName=''):
 		self.list = []
@@ -2005,7 +2006,12 @@ class Movies:
 					if self.prefer_tmdbArt: fanart = meta.get('fanart3') or meta.get('fanart') or meta.get('fanart2') or addonFanart
 					else: fanart = meta.get('fanart2') or meta.get('fanart3') or meta.get('fanart') or addonFanart
 				landscape = meta.get('landscape') or fanart
-				thumb = meta.get('thumb') or poster or landscape
+				if self.prefer_fanArt:
+					if fanart: thumb = fanart or meta.get('thumb') or poster or landscape
+					else:
+						meta.get('fanart') or poster or landscape
+				else:
+					thumb = meta.get('thumb') or poster or landscape
 				icon = meta.get('icon') or poster
 				banner = meta.get('banner3') or meta.get('banner2') or meta.get('banner') or addonBanner
 				art = {}

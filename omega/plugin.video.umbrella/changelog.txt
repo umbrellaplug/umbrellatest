@@ -1,4 +1,6 @@
-[B]Update - v6.6.496 - April 18th, 2024[/B]
+[B]Update - v6.6.497 - April 18th, 2024[/B]
+--[Enhancement] Made change to allow for fanart to be used for thumbs.
+--[Change] Removed Title of Show from Episode Progress in widgets.
 --[Fix] Made changes to pagination for lists equal to the limit.
 --[Enhancement] Removed another unneeded file. Better update onEMoAr to match quick.
 --[Fix] Fixed 4k icon missing on some devices.
@@ -12,7 +14,6 @@
 --[Fix] Changes made to service module for settings module. credit -onEMoAr
 --[Enhancement] Changes made flatten tv shows. credit -onEMoAr
 --[Enhancement] Changes made to settings to accomodate changes.
-
 [B]Update - v6.6.48 - March 22nd, 2024[/B]
 --[Fix] Settings change to fix allowing resume from Trakt without Trakt scrobble.
 

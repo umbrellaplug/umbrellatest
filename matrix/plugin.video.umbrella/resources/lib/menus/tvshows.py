@@ -140,6 +140,7 @@ class TVshows:
 		self.showCounts = getSetting('tvshows.episodecount') == 'true'
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
 		self.is_widget = 'plugin' not in control.infoLabel('Container.PluginName')
+		self.prefer_fanArt = getSetting('prefer.fanarttv') == 'true'
 
 	def get(self, url, idx=True, create_directory=True, folderName=''):
 		self.list = []
@@ -1607,7 +1608,12 @@ class TVshows:
 				if settingFanart:
 					if self.prefer_tmdbArt: fanart = meta.get('fanart3') or meta.get('fanart') or meta.get('fanart2') or addonFanart
 					else: fanart = meta.get('fanart2') or meta.get('fanart3') or meta.get('fanart') or addonFanart
-				thumb = meta.get('thumb') or poster or landscape # set to show level poster
+				if self.prefer_fanArt:
+					if fanart: thumb = fanart or meta.get('thumb') or poster or landscape
+					else:
+						thumb = meta.get('fanart') or meta.get('thumb') or poster or landscape
+				else:
+					thumb = meta.get('thumb') or poster or landscape
 				icon = meta.get('icon') or poster
 				banner = meta.get('banner3') or meta.get('banner2') or meta.get('banner') or None #changed due to some skins using banner.
 				art = {}

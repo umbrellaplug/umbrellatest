@@ -37,6 +37,7 @@ class Seasons:
 		self.tmdblist_hours = int(getSetting('cache.tmdblist'))
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
+		self.prefer_fanArt = getSetting('prefer.fanarttv') == 'true'
 
 	def get(self, tvshowtitle, year, imdb, tmdb, tvdb, art, idx=True, create_directory=True): # may need to add a cache duration over-ride param to pass
 		self.list = []
@@ -175,13 +176,19 @@ class Seasons:
 				if settingFanart: fanart = meta.get('fanart') or addonFanart
 				if settingFanart: landscape = meta.get('landscape2')
 				else: landscape = meta.get('landscape')
+				if self.prefer_fanArt:
+					if fanart: thumb = fanart or season_poster
+					else:
+						thumb = meta.get('fanart') or season_poster
+				else:
+					thumb = season_poster
 				icon = meta.get('icon') or poster
 				banner = meta.get('banner') or addonBanner
 				art = {}
-				art.update({'poster': season_poster, 'tvshow.poster': poster, 'season.poster': season_poster, 'fanart': fanart, 'icon': icon, 'thumb': season_poster, 'banner': banner,
+				art.update({'poster': season_poster, 'tvshow.poster': poster, 'season.poster': season_poster, 'fanart': fanart, 'icon': icon, 'thumb': thumb, 'banner': banner,
 						'clearlogo': meta.get('clearlogo', ''), 'tvshow.clearlogo': meta.get('clearlogo', ''), 'clearart': meta.get('clearart', ''), 'tvshow.clearart': meta.get('clearart', ''), 'landscape': landscape})
 				# for k in ('poster2', 'poster3', 'fanart2', 'fanart3', 'banner2', 'banner3'): meta.pop(k, None)
-				meta.update({'poster': poster, 'fanart': fanart, 'banner': banner, 'thumb': season_poster, 'season_poster': season_poster, 'icon': icon, 'title': label, 'clearlogo': meta.get('clearart', '')})
+				meta.update({'poster': poster, 'fanart': fanart, 'banner': banner, 'thumb': thumb, 'season_poster': season_poster, 'icon': icon, 'title': label, 'clearlogo': meta.get('clearart', '')})
 				sysmeta = quote_plus(jsdumps(meta))
 				url = '%s?action=episodes&tvshowtitle=%s&year=%s&imdb=%s&tmdb=%s&tvdb=%s&meta=%s&season=%s' % (sysaddon, systitle, year, imdb, tmdb, tvdb, sysmeta, season)
 ####-Context Menu and Overlays-####

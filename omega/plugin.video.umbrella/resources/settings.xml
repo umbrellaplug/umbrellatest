@@ -361,6 +361,11 @@
 					</constraints>
 					<control type="spinner" format="string"/>
 				</setting>
+				<setting id="prefer.fanarttv" type="boolean" label="40517" help="">
+					<level>0</level>
+					<default>false</default>
+					<control type="toggle"/>
+				</setting>
 				<setting id="hidecinema" type="boolean" label="32571" help="">
 					<level>0</level>
 					<default>false</default>

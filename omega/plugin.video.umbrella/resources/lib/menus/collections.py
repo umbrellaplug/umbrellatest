@@ -47,6 +47,7 @@ class Collections:
 		self.hide_watched_in_widget = getSetting('enable.umbrellahidewatched') == 'true'
 		self.useFullContext = getSetting('enable.umbrellawidgetcontext') == 'true'
 		self.useContainerTitles = getSetting('enable.containerTitles') == 'true'
+		self.prefer_fanArt = getSetting('prefer.fanarttv') == 'true'
 
 	def collections_Navigator(self, lite=False, folderName=''):
 		self.addDirectoryItem('Movies', 'collections_Boxset&folderName=%s' % getLS(32001), 'boxsets.png', 'DefaultVideoPlaylists.png')
@@ -663,7 +664,10 @@ class Collections:
 					if self.prefer_tmdbArt: fanart = meta.get('fanart3') or meta.get('fanart') or meta.get('fanart2') or addonFanart
 					else: fanart = meta.get('fanart2') or meta.get('fanart3') or meta.get('fanart') or addonFanart
 				landscape = meta.get('landscape') or fanart
-				thumb = meta.get('thumb') or poster or landscape
+				if self.prefer_fanArt:
+					thumb = meta.get('fanart') or meta.get('thumb') or landscape
+				else:
+					thumb = meta.get('thumb') or poster or landscape
 				icon = meta.get('icon') or poster
 				banner = meta.get('banner3') or meta.get('banner2') or meta.get('banner') or addonBanner
 				art = {}

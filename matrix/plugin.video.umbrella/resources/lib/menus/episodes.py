@@ -36,6 +36,7 @@ class Episodes:
 		self.showunaired = getSetting('showunaired') == 'true'
 		self.unairedcolor = getSetting('unaired.identify')
 		self.showspecials = getSetting('tv.specials') == 'true'
+		self.prefer_fanArt = getSetting('prefer.fanarttv') == 'true'
 		self.highlight_color = control.setting('highlight.color')
 		self.date_time = datetime.now()
 		self.today_date = (self.date_time).strftime('%Y-%m-%d')
@@ -854,7 +855,7 @@ class Episodes:
 					if not self.progress_showunaired and i.get('unaired', '') == 'true': continue
 				else:
 					if not self.showunaired and i.get('unaired', '') == 'true': continue
-
+				
 
 				tvshowtitle, title, imdb, tmdb, tvdb = i.get('tvshowtitle'), i.get('title'), i.get('imdb', ''), i.get('tmdb', ''), i.get('tvdb', '')
 				year, season, episode, premiered = i.get('year', ''), i.get('season'), i.get('episode'), i.get('premiered', '')
@@ -867,8 +868,11 @@ class Episodes:
 				
 				if 'label' not in i: i['label'] = title
 				if (not i['label'] or i['label'] == '0'): label = '%sx%02d . %s %s' % (season, int(episode), 'Episode', episode)
-				else: label = '%sx%02d . %s' % (season, int(episode), i['label'])
-				if isMultiList: label = '[COLOR %s]%s[/COLOR] - %s' % (self.highlight_color, tvshowtitle, label)
+				else: label = '%sx%02d. %s' % (season, int(episode), i['label'])
+				if is_widget:
+					labelProgress = label
+				else:
+					if isMultiList: label = '[COLOR %s]%s[/COLOR] - %s' % (self.highlight_color, tvshowtitle, label)
 				try: labelProgress = label + '[COLOR %s]  [%s][/COLOR]' % (self.highlight_color, str(round(float(i['progress']), 1)) + '%')
 				except: labelProgress = label
 				try:
@@ -947,7 +951,12 @@ class Episodes:
 				if settingFanart:
 					if self.prefer_tmdbArt: fanart = meta.get('fanart3') or meta.get('fanart') or meta.get('fanart2') or addonFanart
 					else: fanart = meta.get('fanart2') or meta.get('fanart3') or meta.get('fanart') or addonFanart
-				thumb = meta.get('thumb') or landscape or fanart or season_poster
+				if self.prefer_fanArt:
+					if fanart: thumb = fanart or meta.get('thumb') or landscape or season_poster
+					else:
+						thumb = meta.get('thumb') or landscape or fanart or season_poster
+				else:
+					thumb = meta.get('thumb') or landscape or fanart or season_poster
 				icon = meta.get('icon') or season_poster or poster
 				banner = meta.get('banner') or addonBanner
 				art = {}
