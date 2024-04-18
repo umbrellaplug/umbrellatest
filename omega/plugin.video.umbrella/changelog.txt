@@ -1,4 +1,5 @@
-[B]Update - v6.6.495 - April 17th, 2024[/B]
+[B]Update - v6.6.496 - April 18th, 2024[/B]
+--[Fix] Made changes to pagination for lists equal to the limit.
 --[Enhancement] Removed another unneeded file. Better update onEMoAr to match quick.
 --[Fix] Fixed 4k icon missing on some devices.
 --[Fix] Made change to resolve issues identifying MyVideos database on some systems.

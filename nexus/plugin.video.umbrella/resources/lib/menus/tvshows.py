@@ -845,6 +845,7 @@ class TVshows:
 					self.list = paginated_ids[index]
 			try:
 				if int(q['limit']) != len(self.list): raise Exception()
+				if len(self.list) == int(self.page_limit): raise Exception()
 				q.update({'page': str(int(q['page']) + 1)})
 				q = (urlencode(q)).replace('%2C', ',')
 				next = url.replace('?' + urlparse(url).query, '') + '?' + q
@@ -875,6 +876,7 @@ class TVshows:
 					self.list = paginated_ids[index]
 			try:
 				if int(q['limit']) != len(self.list): raise Exception()
+				if len(self.list) == int(self.page_limit): raise Exception()
 				q.update({'page': str(int(q['page']) + 1)})
 				q = (urlencode(q)).replace('%2C', ',')
 				next = url.replace('?' + urlparse(url).query, '') + '?' + q
@@ -1041,6 +1043,7 @@ class TVshows:
 			self.list = paginated_ids[index]
 		try:
 			if int(q['limit']) != len(self.list): raise Exception()
+			if len(self.list) == int(self.page_limit): raise Exception()
 			if int(q['page']) == total_pages: raise Exception()
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
@@ -1175,6 +1178,7 @@ class TVshows:
 		self.list = paginated_ids[index]
 		try:
 			if int(q['limit']) != len(self.list): raise Exception()
+			if len(self.list) == int(self.page_limit): raise Exception()
 			if int(q['page']) == total_pages: raise Exception()
 			q.update({'page': str(int(q['page']) + 1)})
 			q = (urlencode(q)).replace('%2C', ',')
